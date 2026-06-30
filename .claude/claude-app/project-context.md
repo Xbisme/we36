@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-06-30 (Project bootstrap: constitution v1.0.0 ratified + `.claude/claude-app/` docs authored from the imported claude_design "We36" project. **No specs started yet.** **Next: #001 Project Foundation, Design System & Navigation**.)
+> Last updated: 2026-06-30 (**Spec #001 Project Foundation, Design System & Navigation merged into `main`** — 85/85 tasks, 46 tests green incl. 12 goldens. **Next: #002 Networking, Cache & Realtime Core**.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,17 +29,18 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Project bootstrap complete (docs only).** Constitution v1.0.0 ratified at [`.specify/memory/constitution.md`](../../.specify/memory/constitution.md); `.claude/claude-app/` docs authored from the imported claude_design `We36` project (design system + 31 screen mockups). **No Flutter code exists yet.**
-- **Next spec: #001 Project Foundation, Design System & Navigation** — Clean Architecture shell, auth-guarded router (pre-auth flow + 5-tab `StatefulShellRoute`), fixed light/dark design tokens, shared widget library (`PostCard`/`Avatar`/`BottomNav`/`Toast`…), `Result`/`AppFailure`/4-state `AppCubit`, DI, l10n EN+VI. See [`sdd-roadmap.md`](sdd-roadmap.md) §Spec #001 + [`ui-design-context.md`](ui-design-context.md).
-- **Decisions to confirm at #001/#002 planning**: local cache engine (**drift** vs **hive**); the Lucide icon package; bundle ids (`app.we36` / `app.we36.dev` proposed); dev/prod API base URL + realtime endpoint; OAuth provider setup (Google/Apple) for #003.
+- **Now**: **Spec #001 complete + merged into `main`.** Clean Architecture shell, auth-guarded router (pre-auth flow + 5-tab `StatefulShellRoute`), adaptive shell + two-pane primitive, fixed light/dark token system, full shared component library, `Result`/`AppFailure`/4-state `AppCubit`, DI, EN+VI l10n — all on mock data, no networking yet. 73 Dart files; 46 tests green incl. 12 goldens. See [`changelog.md`](changelog.md) for the ship entry.
+- **Next spec: #002 Networking, Cache & Realtime Core** — `dio` API client + auth/refresh interceptor + HTTP→`AppFailure` mapping, cursor-pagination envelope + paginated-list controller, WebSocket realtime client (reconnect/backoff/heartbeat, typed events — scaffold), local cache DB + DAO base, repository base + in-memory fakes. **No UI.** See [`sdd-roadmap.md`](sdd-roadmap.md) §Spec #002 + Architecture Primer.
+- **Decisions to confirm at #002 planning**: local cache engine (**drift** vs **hive**); dev/prod API base URL + realtime endpoint; bundle ids (`app.we36` / `app.we36.dev` proposed); cursor-pagination envelope shape. (Lucide package + icon set resolved at #001 → `lucide_icons_flutter`.)
+- **Carried from #001**: bounded `cacheWidth`/`cached_network_image` for feed thumbnails (lands with media in #004); on-device VoiceOver/TalkBack + rotation recording (release gate at #015).
 - **Active blockers**: none. (Backend contract is defined per-spec as features need it; #002 stands up the client + fakes against the agreed envelope.)
 
 ## Spec Status
 
 | # | Name | Status | Branch / merge |
 |---|---|---|---|
-| 001 | Project Foundation, Design System & Navigation | ⬜ **Next** | `001-project-foundation` |
-| 002 | Networking, Cache & Realtime Core | ⬜ Not started | `002-networking-core` |
+| 001 | Project Foundation, Design System & Navigation | ✅ **Merged** | `001-project-foundation` (PR #1) |
+| 002 | Networking, Cache & Realtime Core | 🟡 **Next** | `002-networking-core` |
 | 003 | Auth & Onboarding | ⬜ Not started | `003-auth-onboarding` |
 | 004 | Home Feed & Stories ⭐ | ⬜ Not started | `004-home-feed-stories` |
 | 005 | Create Story & Tools | ⬜ Not started | `005-create-story` |

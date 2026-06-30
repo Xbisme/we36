@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-06-30 (Initial roadmap. No specs started yet. Next: #001 Project Foundation.)
+> Last updated: 2026-06-30 (#001 Project Foundation merged into `main`. Next: #002 Networking, Cache & Realtime Core.)
 
 ---
 
@@ -105,15 +105,15 @@ Create Story     Post Detail &    Create Post      Reels
 
 > Status legend: ⬜ Not started · 🟡 Next · 🔵 In progress · ✅ Merged. All specs below are ⬜ until work begins.
 
-### Spec #001: Project Foundation, Design System & Navigation  ⬜
+### Spec #001: Project Foundation, Design System & Navigation  ✅
 - **Depends on**: none (foundation).
 - **Design**: [`ui-design-context.md`](ui-design-context.md) — Navigation IA + Design Tokens + Shared Components are the build spec.
 - **Scope**: Clean Architecture folders (`core/` + `features/`); 2 flavors (dev/prod) + entry points; **auth-guarded router** skeleton (pre-auth flow vs 5-tab `StatefulShellRoute`) with placeholder tab pages; **adaptive shell** (phone bottom-nav `<700` ↔ tablet/iPad **SidebarRail** `≥700`, compact/full by `≥980`) + a reusable **two-pane/master-detail** primitive (used by #006/#012); **fixed light & dark design-token layer** (semantic aliases, Plus Jakarta Sans + Inter, spacing/radius/shadow/motion, gradients) ported from claude_design; **shared widget library** built once (`Button`, `IconButton`, `Icon`[Lucide], `Avatar`+ring, `Badge`, `Tag`, `PostCard`, `SearchBar`, `Switch`, `BottomNav`, `SidebarRail`, `StoriesRail`, `TopBar`, `PaneHeader`, `Wordmark`, `Toast`, `ActionSheet`, `Dialog`); foundation primitives (`Result<T>`, `AppFailure`, `AppCubit<T>` 4-state, `AppLogger`, formatters [count/relative-time]); DI; l10n ARB **English primary + Vietnamese**.
 - **New packages**: `flutter_bloc`, `get_it`, `injectable`, `go_router`, `freezed`, `json_serializable`, `build_runner`, a Lucide icon pkg, `google_fonts`, `cached_network_image`, `intl`, a toast pkg, `flutter_svg`, `very_good_analysis`.
 - **Out of scope**: any networking, auth, real data.
 
-### Spec #002: Networking, Cache & Realtime Core  ⬜
-- **Depends on**: #001. **Blocking**: all data features.
+### Spec #002: Networking, Cache & Realtime Core  🟡
+- **Depends on**: #001 ✅. **Blocking**: all data features.
 - **Scope**: `dio` API client + interceptors (auth token attach, **single-flight refresh**, logging-without-secrets); centralized HTTP→`AppFailure` mapping; **cursor pagination envelope** + a shared paginated-list controller; **WebSocket realtime client** (reconnect/backoff/heartbeat, typed events) — scaffold, wired by #012/#013; **local cache DB** (`drift`/`hive`) + DAO base; **repository base + in-memory fakes** so the app runs without a server; centralized endpoint + socket-event constants; per-flavor base URL/realtime endpoint.
 - **New packages**: `dio`, `web_socket_channel`, `flutter_secure_storage`, `drift`(+`drift_flutter`/`drift_dev`) **or** `hive` (decide at plan), `uuid`.
 - **Out of scope**: any screen, auth UI, real endpoints (contract + fakes only).
