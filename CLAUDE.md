@@ -19,7 +19,13 @@ We36 — cross-platform (iOS + Android phones + iPad/Android tablets) **Instagra
 - Icons `lucide_icons_flutter ^3.1.14` (wrap in `AppIcon`) · Fonts Plus Jakarta Sans + Inter via `google_fonts ^8.1.0` **bundled** (no runtime fetch) · `cached_network_image ^3.4.1` · `flutter_svg ^2.3.0`.
 - i18n Flutter `gen-l10n` + `intl ^0.20.3`, ARB in `lib/l10n/arb/` (EN primary + VI). Lint `very_good_analysis ^10.3.0` + `bloc_lint`. Test `bloc_test ^10.0.0` + `mocktail ^1.0.5` + goldens.
 - **Custom, no package**: Toast (overlay ink-pill — never `ScaffoldMessenger.showSnackBar`), `AdaptiveShell`, `TwoPaneScaffold`, `Result<T>`/`AppFailure`, `AppCubit`, `AppLogger`, formatters.
-- Persistence engine (drift vs hive) **deferred to #002**.
+- **Networking/cache (added #002)**: HTTP `dio ^5.10.0` · realtime `socket_io_client ^3.1.6` (Socket.IO — matches backend gateway) · cache `drift ^2.34.0` + `drift_flutter ^0.3.0` (+ `drift_dev ^2.34.0` dev, pinned: 2.34.1 needs analyzer 13) · `flutter_secure_storage ^10.3.1` (token store seam, impl #003) · `uuid ^4.5.3` (UUIDv7 ids + idempotency keys).
+
+## Networking conventions (#002 — `lib/core/data/`)
+- One `ApiClient` (single `Dio`) behind interceptors: idempotency → auth-token → single-flight refresh → logging. Repos call it; widgets/Cubits never touch HTTP. Errors centralized in `FailureMapper` (envelope `{error:{code,message,details}}` → `AppFailure`; `code`s contract-stable). Returns `Result<T>`.
+- Single-flight refresh on `401 SESSION_EXPIRED` via `TokenStore`/`TokenRefresher`/`AuthEventsSink` seams (fakes now; real in #003). Cursor pagination = `CursorPage<T>` + reusable `PaginatedListCubit<T>` (4-state). Endpoints/events in `core/constants/{api_endpoints,socket_events}.dart` — never inline literals.
+- Cache = `AppDatabase` (drift) + DAO base; reactive `.watch()` reads (one canonical copy). Realtime = one `RealtimeClient` (scaffold; wired #012/#013).
+- **DI environments**: app runs `environment: 'fake'` (in-memory fakes, no backend) until #003; real impls annotated `env: ['real']`. Every repo has a real + fake behind one interface.
 
 ## Architecture anchors
 - Clean Architecture, feature-first. `lib/core/` MUST NOT import `lib/features/`; features don't import each other's internals (handoff via core/router/DI).
@@ -45,4 +51,4 @@ dart run bloc_tools:bloc lint .  # zero violations
 ```
 
 ## Current focus
-**Spec #001 Project Foundation, Design System & Navigation** — planned (`specs/001-project-foundation/`): adaptive shell + two-pane primitive, light/dark token system, full shared component library, foundation primitives, DI, EN+VI l10n, placeholder destinations with mock data. **No real networking/auth/persistence** (those are #002/#003). Next after #001: #002 Networking, Cache & Realtime Core.
+**Spec #002 Networking, Cache & Realtime Core** — implemented on branch `002-networking-core` (50/50 tasks; 103 tests green, `dart analyze` clean). Built: `ApiClient` + single-flight refresh + `FailureMapper`, cursor pagination + `PaginatedListCubit`, drift cache base + reactive reads, `RealtimeClient` (Socket.IO scaffold), repository pattern + fakes proven by the `User` reference slice — all on fakes (zero-network). #001 (Foundation) shipped earlier. **No auth UI/session persistence yet** (that's #003). Next: #003 Auth & Onboarding (backend B#002 Auth already implemented).

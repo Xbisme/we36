@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:we36/core/domain/app_cubit.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/core/domain/app_state.dart",
+    "package:we36/core/domain/result.dart"
+  ]
+}

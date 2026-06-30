@@ -1,0 +1,12 @@
+{
+  "elements": {},
+  "imports": [
+    "package:dio/dio.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:we36/core/data/api/interceptors/auth_token_interceptor.dart",
+    "package:we36/core/data/api/interceptors/refresh_interceptor.dart",
+    "package:we36/core/services/session/auth_events.dart",
+    "package:we36/core/services/session/token_refresher.dart",
+    "package:we36/core/services/session/token_store.dart"
+  ]
+}

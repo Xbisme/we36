@@ -1,0 +1,17 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:we36/core/mock/mock_data.dart",
+    "package:we36/core/presentation/app_icon.dart",
+    "package:we36/core/presentation/app_icon_button.dart",
+    "package:we36/core/presentation/max_width_box.dart",
+    "package:we36/core/presentation/post_card.dart",
+    "package:we36/core/presentation/stories_rail.dart",
+    "package:we36/core/presentation/wordmark.dart",
+    "package:we36/core/theme/app_colors_x.dart",
+    "package:we36/core/theme/app_dimens.dart",
+    "package:we36/core/utils/count_formatter.dart",
+    "package:we36/core/utils/relative_time_formatter.dart"
+  ]
+}

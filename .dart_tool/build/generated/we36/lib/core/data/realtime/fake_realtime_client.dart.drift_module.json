@@ -1,0 +1,8 @@
+{
+  "elements": {},
+  "imports": [
+    "package:injectable/injectable.dart",
+    "package:we36/core/data/realtime/realtime_client.dart",
+    "package:we36/core/data/realtime/realtime_event.dart"
+  ]
+}

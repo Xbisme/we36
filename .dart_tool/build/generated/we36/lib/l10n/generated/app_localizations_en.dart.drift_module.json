@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:intl/intl.dart",
+    "package:we36/l10n/generated/app_localizations.dart"
+  ]
+}

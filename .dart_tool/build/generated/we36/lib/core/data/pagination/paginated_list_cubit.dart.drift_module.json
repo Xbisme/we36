@@ -1,0 +1,10 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:freezed_annotation/freezed_annotation.dart",
+    "package:we36/core/data/pagination/cursor_page.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/core/domain/result.dart"
+  ]
+}

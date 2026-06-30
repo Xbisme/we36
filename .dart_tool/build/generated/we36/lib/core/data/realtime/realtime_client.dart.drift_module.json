@@ -1,0 +1,10 @@
+{
+  "elements": {},
+  "imports": [
+    "package:injectable/injectable.dart",
+    "package:socket_io_client/socket_io_client.dart",
+    "package:we36/core/config/app_config.dart",
+    "package:we36/core/data/realtime/realtime_event.dart",
+    "package:we36/core/utils/app_logger.dart"
+  ]
+}

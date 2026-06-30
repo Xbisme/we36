@@ -1,0 +1,1 @@
+{"valid_import":true,"imports":[{"uri":"package:flutter_test/flutter_test.dart","transitive":false},{"uri":"package:we36/app/app.dart","transitive":false},{"uri":"package:we36/bootstrap.dart","transitive":false},{"uri":"package:we36/core/config/app_config.dart","transitive":false}],"elements":[]}

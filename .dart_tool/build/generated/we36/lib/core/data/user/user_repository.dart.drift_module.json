@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:we36/core/data/user/user.dart",
+    "package:we36/core/domain/result.dart"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "elements": {},
+  "imports": [
+    "package:we36/core/constants/app_breakpoints.dart"
+  ]
+}

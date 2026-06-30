@@ -21,7 +21,8 @@ sealed class AppFailure with _$AppFailure {
     required Map<String, String> fields,
   }) = AppFailureValidation;
   const factory AppFailure.conflict() = AppFailureConflict;
-  const factory AppFailure.rateLimited() = AppFailureRateLimited;
+  const factory AppFailure.rateLimited({Duration? retryAfter}) =
+      AppFailureRateLimited;
 
   const factory AppFailure.uploadFailed() = AppFailureUploadFailed;
   const factory AppFailure.mediaTooLarge() = AppFailureMediaTooLarge;

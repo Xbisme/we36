@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/widgets.dart",
+    "package:we36/core/constants/app_routes.dart",
+    "package:we36/core/presentation/app_icon.dart",
+    "package:we36/l10n/generated/app_localizations.dart"
+  ]
+}

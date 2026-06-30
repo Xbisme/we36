@@ -182,7 +182,7 @@ return unknown(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  unauthenticated,TResult Function()?  sessionExpired,TResult Function()?  invalidCredentials,TResult Function()?  oauthCancelled,TResult Function()?  oauthFailed,TResult Function()?  forbidden,TResult Function()?  notFound,TResult Function()?  accountSuspended,TResult Function( Map<String, String> fields)?  validation,TResult Function()?  conflict,TResult Function()?  rateLimited,TResult Function()?  uploadFailed,TResult Function()?  mediaTooLarge,TResult Function()?  unsupportedMedia,TResult Function()?  cameraUnavailable,TResult Function()?  permissionDenied,TResult Function()?  realtimeDisconnected,TResult Function()?  messageFailed,TResult Function()?  networkError,TResult Function()?  serverError,TResult Function()?  timeout,TResult Function()?  offline,TResult Function( String? message,  Object? error)?  unknown,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  unauthenticated,TResult Function()?  sessionExpired,TResult Function()?  invalidCredentials,TResult Function()?  oauthCancelled,TResult Function()?  oauthFailed,TResult Function()?  forbidden,TResult Function()?  notFound,TResult Function()?  accountSuspended,TResult Function( Map<String, String> fields)?  validation,TResult Function()?  conflict,TResult Function( Duration? retryAfter)?  rateLimited,TResult Function()?  uploadFailed,TResult Function()?  mediaTooLarge,TResult Function()?  unsupportedMedia,TResult Function()?  cameraUnavailable,TResult Function()?  permissionDenied,TResult Function()?  realtimeDisconnected,TResult Function()?  messageFailed,TResult Function()?  networkError,TResult Function()?  serverError,TResult Function()?  timeout,TResult Function()?  offline,TResult Function( String? message,  Object? error)?  unknown,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case AppFailureUnauthenticated() when unauthenticated != null:
 return unauthenticated();case AppFailureSessionExpired() when sessionExpired != null:
@@ -195,7 +195,7 @@ return notFound();case AppFailureAccountSuspended() when accountSuspended != nul
 return accountSuspended();case AppFailureValidation() when validation != null:
 return validation(_that.fields);case AppFailureConflict() when conflict != null:
 return conflict();case AppFailureRateLimited() when rateLimited != null:
-return rateLimited();case AppFailureUploadFailed() when uploadFailed != null:
+return rateLimited(_that.retryAfter);case AppFailureUploadFailed() when uploadFailed != null:
 return uploadFailed();case AppFailureMediaTooLarge() when mediaTooLarge != null:
 return mediaTooLarge();case AppFailureUnsupportedMedia() when unsupportedMedia != null:
 return unsupportedMedia();case AppFailureCameraUnavailable() when cameraUnavailable != null:
@@ -225,7 +225,7 @@ return unknown(_that.message,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  unauthenticated,required TResult Function()  sessionExpired,required TResult Function()  invalidCredentials,required TResult Function()  oauthCancelled,required TResult Function()  oauthFailed,required TResult Function()  forbidden,required TResult Function()  notFound,required TResult Function()  accountSuspended,required TResult Function( Map<String, String> fields)  validation,required TResult Function()  conflict,required TResult Function()  rateLimited,required TResult Function()  uploadFailed,required TResult Function()  mediaTooLarge,required TResult Function()  unsupportedMedia,required TResult Function()  cameraUnavailable,required TResult Function()  permissionDenied,required TResult Function()  realtimeDisconnected,required TResult Function()  messageFailed,required TResult Function()  networkError,required TResult Function()  serverError,required TResult Function()  timeout,required TResult Function()  offline,required TResult Function( String? message,  Object? error)  unknown,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  unauthenticated,required TResult Function()  sessionExpired,required TResult Function()  invalidCredentials,required TResult Function()  oauthCancelled,required TResult Function()  oauthFailed,required TResult Function()  forbidden,required TResult Function()  notFound,required TResult Function()  accountSuspended,required TResult Function( Map<String, String> fields)  validation,required TResult Function()  conflict,required TResult Function( Duration? retryAfter)  rateLimited,required TResult Function()  uploadFailed,required TResult Function()  mediaTooLarge,required TResult Function()  unsupportedMedia,required TResult Function()  cameraUnavailable,required TResult Function()  permissionDenied,required TResult Function()  realtimeDisconnected,required TResult Function()  messageFailed,required TResult Function()  networkError,required TResult Function()  serverError,required TResult Function()  timeout,required TResult Function()  offline,required TResult Function( String? message,  Object? error)  unknown,}) {final _that = this;
 switch (_that) {
 case AppFailureUnauthenticated():
 return unauthenticated();case AppFailureSessionExpired():
@@ -238,7 +238,7 @@ return notFound();case AppFailureAccountSuspended():
 return accountSuspended();case AppFailureValidation():
 return validation(_that.fields);case AppFailureConflict():
 return conflict();case AppFailureRateLimited():
-return rateLimited();case AppFailureUploadFailed():
+return rateLimited(_that.retryAfter);case AppFailureUploadFailed():
 return uploadFailed();case AppFailureMediaTooLarge():
 return mediaTooLarge();case AppFailureUnsupportedMedia():
 return unsupportedMedia();case AppFailureCameraUnavailable():
@@ -264,7 +264,7 @@ return unknown(_that.message,_that.error);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  unauthenticated,TResult? Function()?  sessionExpired,TResult? Function()?  invalidCredentials,TResult? Function()?  oauthCancelled,TResult? Function()?  oauthFailed,TResult? Function()?  forbidden,TResult? Function()?  notFound,TResult? Function()?  accountSuspended,TResult? Function( Map<String, String> fields)?  validation,TResult? Function()?  conflict,TResult? Function()?  rateLimited,TResult? Function()?  uploadFailed,TResult? Function()?  mediaTooLarge,TResult? Function()?  unsupportedMedia,TResult? Function()?  cameraUnavailable,TResult? Function()?  permissionDenied,TResult? Function()?  realtimeDisconnected,TResult? Function()?  messageFailed,TResult? Function()?  networkError,TResult? Function()?  serverError,TResult? Function()?  timeout,TResult? Function()?  offline,TResult? Function( String? message,  Object? error)?  unknown,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  unauthenticated,TResult? Function()?  sessionExpired,TResult? Function()?  invalidCredentials,TResult? Function()?  oauthCancelled,TResult? Function()?  oauthFailed,TResult? Function()?  forbidden,TResult? Function()?  notFound,TResult? Function()?  accountSuspended,TResult? Function( Map<String, String> fields)?  validation,TResult? Function()?  conflict,TResult? Function( Duration? retryAfter)?  rateLimited,TResult? Function()?  uploadFailed,TResult? Function()?  mediaTooLarge,TResult? Function()?  unsupportedMedia,TResult? Function()?  cameraUnavailable,TResult? Function()?  permissionDenied,TResult? Function()?  realtimeDisconnected,TResult? Function()?  messageFailed,TResult? Function()?  networkError,TResult? Function()?  serverError,TResult? Function()?  timeout,TResult? Function()?  offline,TResult? Function( String? message,  Object? error)?  unknown,}) {final _that = this;
 switch (_that) {
 case AppFailureUnauthenticated() when unauthenticated != null:
 return unauthenticated();case AppFailureSessionExpired() when sessionExpired != null:
@@ -277,7 +277,7 @@ return notFound();case AppFailureAccountSuspended() when accountSuspended != nul
 return accountSuspended();case AppFailureValidation() when validation != null:
 return validation(_that.fields);case AppFailureConflict() when conflict != null:
 return conflict();case AppFailureRateLimited() when rateLimited != null:
-return rateLimited();case AppFailureUploadFailed() when uploadFailed != null:
+return rateLimited(_that.retryAfter);case AppFailureUploadFailed() when uploadFailed != null:
 return uploadFailed();case AppFailureMediaTooLarge() when mediaTooLarge != null:
 return mediaTooLarge();case AppFailureUnsupportedMedia() when unsupportedMedia != null:
 return unsupportedMedia();case AppFailureCameraUnavailable() when cameraUnavailable != null:
@@ -661,33 +661,67 @@ String toString() {
 
 
 class AppFailureRateLimited implements AppFailure {
-  const AppFailureRateLimited();
+  const AppFailureRateLimited({this.retryAfter});
   
 
+ final  Duration? retryAfter;
 
-
+/// Create a copy of AppFailure
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AppFailureRateLimitedCopyWith<AppFailureRateLimited> get copyWith => _$AppFailureRateLimitedCopyWithImpl<AppFailureRateLimited>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppFailureRateLimited);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppFailureRateLimited&&(identical(other.retryAfter, retryAfter) || other.retryAfter == retryAfter));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,retryAfter);
 
 @override
 String toString() {
-  return 'AppFailure.rateLimited()';
+  return 'AppFailure.rateLimited(retryAfter: $retryAfter)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $AppFailureRateLimitedCopyWith<$Res> implements $AppFailureCopyWith<$Res> {
+  factory $AppFailureRateLimitedCopyWith(AppFailureRateLimited value, $Res Function(AppFailureRateLimited) _then) = _$AppFailureRateLimitedCopyWithImpl;
+@useResult
+$Res call({
+ Duration? retryAfter
+});
 
 
+
+
+}
+/// @nodoc
+class _$AppFailureRateLimitedCopyWithImpl<$Res>
+    implements $AppFailureRateLimitedCopyWith<$Res> {
+  _$AppFailureRateLimitedCopyWithImpl(this._self, this._then);
+
+  final AppFailureRateLimited _self;
+  final $Res Function(AppFailureRateLimited) _then;
+
+/// Create a copy of AppFailure
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? retryAfter = freezed,}) {
+  return _then(AppFailureRateLimited(
+retryAfter: freezed == retryAfter ? _self.retryAfter : retryAfter // ignore: cast_nullable_to_non_nullable
+as Duration?,
+  ));
+}
+
+
+}
 
 /// @nodoc
 

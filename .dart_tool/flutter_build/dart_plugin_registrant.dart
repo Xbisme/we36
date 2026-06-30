@@ -13,6 +13,7 @@ import 'package:sqflite_darwin/sqflite_darwin.dart' as sqflite_darwin;
 import 'package:path_provider_linux/path_provider_linux.dart' as path_provider_linux;
 import 'package:path_provider_foundation/path_provider_foundation.dart' as path_provider_foundation;
 import 'package:sqflite_darwin/sqflite_darwin.dart' as sqflite_darwin;
+import 'package:flutter_secure_storage_windows/flutter_secure_storage_windows.dart' as flutter_secure_storage_windows;
 import 'package:path_provider_windows/path_provider_windows.dart' as path_provider_windows;
 
 @pragma('vm:entry-point')
@@ -88,6 +89,15 @@ class _PluginRegistrant {
       }
 
     } else if (Platform.isWindows) {
+      try {
+        flutter_secure_storage_windows.FlutterSecureStorageWindows.registerWith();
+      } catch (err) {
+        print(
+          '`flutter_secure_storage_windows` threw an error: $err. '
+          'The app may not function as expected until you remove this plugin from pubspec.yaml'
+        );
+      }
+
       try {
         path_provider_windows.PathProviderWindows.registerWith();
       } catch (err) {

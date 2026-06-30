@@ -1,0 +1,21 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/widgets.dart",
+    "package:go_router/go_router.dart",
+    "package:injectable/injectable.dart",
+    "package:we36/core/constants/app_routes.dart",
+    "package:we36/core/router/adaptive_shell.dart",
+    "package:we36/core/router/auth_guard_stub.dart",
+    "package:we36/core/router/centered_mobile.dart",
+    "package:we36/features/dev/presentation/gallery_page.dart",
+    "package:we36/features/dev/presentation/states_demo_page.dart",
+    "package:we36/features/dev/presentation/two_pane_demo_page.dart",
+    "package:we36/features/explore/presentation/explore_page.dart",
+    "package:we36/features/feed/presentation/home_page.dart",
+    "package:we36/features/messaging/presentation/messages_page.dart",
+    "package:we36/features/placeholder_page.dart",
+    "package:we36/features/profile/presentation/profile_page.dart",
+    "package:we36/features/reels/presentation/reels_page.dart"
+  ]
+}

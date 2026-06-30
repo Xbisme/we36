@@ -1,0 +1,277 @@
+{
+  "elements": {
+    "users": {
+      "id": {
+        "library_uri": "package:we36/core/data/cache/tables/users_table.dart",
+        "name": "users"
+      },
+      "declaration": {
+        "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+        "offset": 294,
+        "name": "Users"
+      },
+      "references": [],
+      "type": "table",
+      "columns": [
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "id",
+          "nameInDart": "id",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 333,
+            "name": "id"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "username",
+          "nameInDart": "username",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 366,
+            "name": "username"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [
+            {
+              "type": "unique"
+            }
+          ],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": false,
+          "nameInSql": "display_name",
+          "nameInDart": "displayName",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 414,
+            "name": "displayName"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": true,
+          "nameInSql": "avatar_url",
+          "nameInDart": "avatarUrl",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 456,
+            "name": "avatarUrl"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": true,
+          "nameInSql": "bio",
+          "nameInDart": "bio",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 507,
+            "name": "bio"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "bool"
+          },
+          "nullable": false,
+          "nameInSql": "is_private",
+          "nameInDart": "isPrivate",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 552,
+            "name": "isPrivate"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "bool"
+          },
+          "nullable": false,
+          "nameInSql": "is_verified",
+          "nameInDart": "isVerified",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 595,
+            "name": "isVerified"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "followers_count",
+          "nameInDart": "followersCount",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 638,
+            "name": "followersCount"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "following_count",
+          "nameInDart": "followingCount",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 685,
+            "name": "followingCount"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "posts_count",
+          "nameInDart": "postsCount",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 732,
+            "name": "postsCount"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "dateTime"
+          },
+          "nullable": false,
+          "nameInSql": "cached_at",
+          "nameInDart": "cachedAt",
+          "declaration": {
+            "source_uri": "package:we36/core/data/cache/tables/users_table.dart",
+            "offset": 780,
+            "name": "cachedAt"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": null,
+          "constraints": [],
+          "customConstraints": null
+        }
+      ],
+      "existing_data_class": null,
+      "table_constraints": [
+        {
+          "type": "primary_key",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "custom_parent_class": null,
+      "interfaces_for_row_class": [],
+      "fixed_entity_info_name": null,
+      "base_dart_name": "Users",
+      "row_class_name": "CachedUser",
+      "companion_class_name": null,
+      "without_rowid": false,
+      "strict": false,
+      "write_default_constraints": true,
+      "custom_constraints": [],
+      "attached_indices": []
+    }
+  },
+  "imports": [
+    "package:drift/drift.dart"
+  ]
+}
