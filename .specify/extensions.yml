@@ -1,0 +1,15 @@
+# Speckit extension hooks for We36.
+# Hooks fire inside the speckit slash-commands (specify/plan/tasks/...). Each hook's
+# `command` is converted to a slash command by replacing dots with hyphens
+# (speckit.git.branch -> /speckit-git-branch) and run by the agent at the hook point.
+#
+# `optional: false` = mandatory: the speckit command MUST run it and wait for the result.
+hooks:
+  # After /speckit.specify writes the spec, auto-create (or switch to) the feature's
+  # git branch so spec work never lands on the protected `main`. Branch name is derived
+  # from the spec directory name, so branch == spec dir (e.g. 002-networking-core).
+  after_specify:
+    - extension: git-branch
+      command: speckit.git.branch
+      optional: false
+      description: "Create or switch to the feature git branch (branch name = spec directory name)."
