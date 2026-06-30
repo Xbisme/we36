@@ -53,5 +53,21 @@
   "errServer": "Đã xảy ra lỗi từ phía chúng tôi.",
   "errTimeout": "Quá thời gian chờ. Vui lòng thử lại.",
   "errOffline": "Bạn đang ngoại tuyến.",
-  "errUnknown": "Đã xảy ra lỗi."
+  "errUnknown": "Đã xảy ra lỗi.",
+
+  "authEmailLabel": "Email",
+  "authPasswordLabel": "Mật khẩu",
+  "authEmailHint": "you@example.com",
+  "authSignInTitle": "Chào mừng trở lại",
+  "authSignInSubtitle": "Đăng nhập để tiếp tục",
+  "authSignInCta": "Đăng nhập",
+  "authForgotPasswordLink": "Quên mật khẩu?",
+  "authOrDivider": "hoặc",
+  "authContinueWithGoogle": "Tiếp tục với Google",
+  "authContinueWithApple": "Tiếp tục với Apple",
+  "authNoAccountQuestion": "Chưa có tài khoản?",
+  "authCreateAccountLink": "Tạo tài khoản",
+  "authSignOut": "Đăng xuất",
+  "authEmailInvalid": "Nhập email hợp lệ.",
+  "authPasswordTooShort": "Mật khẩu phải có ít nhất 8 ký tự."
 }

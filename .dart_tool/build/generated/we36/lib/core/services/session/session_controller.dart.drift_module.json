@@ -1,0 +1,14 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/foundation.dart",
+    "package:injectable/injectable.dart",
+    "package:we36/core/data/auth/dto/session.dart",
+    "package:we36/core/data/cache/app_database.dart",
+    "package:we36/core/data/me/me_profile.dart",
+    "package:we36/core/data/me/me_repository.dart",
+    "package:we36/core/services/session/auth_events.dart",
+    "package:we36/core/services/session/local_flags.dart",
+    "package:we36/core/services/session/token_store.dart"
+  ]
+}

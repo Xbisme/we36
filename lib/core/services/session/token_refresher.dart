@@ -12,10 +12,9 @@ abstract interface class TokenRefresher {
   Future<bool> refresh();
 }
 
-/// Default #002 implementation: always reports failure (no credentials yet), so
-/// a `401` cleanly degrades to `sessionExpired` until #003 wires real refresh.
-/// Test instances can script success + count calls to prove single-flight.
-@LazySingleton(as: TokenRefresher)
+/// Fake implementation (`fake` env): scriptable success + call count to prove
+/// single-flight in tests, and to run the app on fakes without a backend.
+@LazySingleton(as: TokenRefresher, env: ['fake'])
 class FakeTokenRefresher implements TokenRefresher {
   /// Whether [refresh] reports success (default: fail, until #003).
   bool succeeds = false;

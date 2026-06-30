@@ -391,6 +391,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong.'**
   String get errUnknown;
+
+  /// Email field label (auth)
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authEmailLabel;
+
+  /// Password field label (auth)
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authPasswordLabel;
+
+  /// Email field hint (auth)
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com'**
+  String get authEmailHint;
+
+  /// Sign in screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get authSignInTitle;
+
+  /// Sign in screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue'**
+  String get authSignInSubtitle;
+
+  /// Sign in primary button
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get authSignInCta;
+
+  /// Link to the forgot-password flow
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get authForgotPasswordLink;
+
+  /// Divider label between password and OAuth
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get authOrDivider;
+
+  /// Google OAuth button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get authContinueWithGoogle;
+
+  /// Apple OAuth button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get authContinueWithApple;
+
+  /// Sign in footer prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get authNoAccountQuestion;
+
+  /// Link from sign in to sign up
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get authCreateAccountLink;
+
+  /// Sign out action
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get authSignOut;
+
+  /// Client-side email validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email.'**
+  String get authEmailInvalid;
+
+  /// Client-side password length validation
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters.'**
+  String get authPasswordTooShort;
 }
 
 class _AppLocalizationsDelegate

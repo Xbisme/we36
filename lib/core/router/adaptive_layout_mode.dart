@@ -6,8 +6,7 @@ enum AdaptiveLayoutMode {
   phone,
   tabletCompact,
   tabletFull,
-  tabletWide
-  ;
+  tabletWide;
 
   static AdaptiveLayoutMode fromWidth(double width) {
     if (width < AppBreakpoints.tablet) return AdaptiveLayoutMode.phone;

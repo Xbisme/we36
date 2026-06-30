@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-06-30 (#001 Project Foundation merged into `main`. Next: #002 Networking, Cache & Realtime Core.)
+> Last updated: 2026-06-30 (#001 + #002 merged into `main`. Next: #003 Auth & Onboarding — branch `003-auth-onboarding` created.)
 
 ---
 
@@ -112,14 +112,14 @@ Create Story     Post Detail &    Create Post      Reels
 - **New packages**: `flutter_bloc`, `get_it`, `injectable`, `go_router`, `freezed`, `json_serializable`, `build_runner`, a Lucide icon pkg, `google_fonts`, `cached_network_image`, `intl`, a toast pkg, `flutter_svg`, `very_good_analysis`.
 - **Out of scope**: any networking, auth, real data.
 
-### Spec #002: Networking, Cache & Realtime Core  🟡
+### Spec #002: Networking, Cache & Realtime Core  ✅
 - **Depends on**: #001 ✅. **Blocking**: all data features.
 - **Scope**: `dio` API client + interceptors (auth token attach, **single-flight refresh**, logging-without-secrets); centralized HTTP→`AppFailure` mapping; **cursor pagination envelope** + a shared paginated-list controller; **WebSocket realtime client** (reconnect/backoff/heartbeat, typed events) — scaffold, wired by #012/#013; **local cache DB** (`drift`/`hive`) + DAO base; **repository base + in-memory fakes** so the app runs without a server; centralized endpoint + socket-event constants; per-flavor base URL/realtime endpoint.
 - **New packages**: `dio`, `web_socket_channel`, `flutter_secure_storage`, `drift`(+`drift_flutter`/`drift_dev`) **or** `hive` (decide at plan), `uuid`.
 - **Out of scope**: any screen, auth UI, real endpoints (contract + fakes only).
 
-### Spec #003: Auth & Onboarding  ⬜
-- **Depends on**: #001, #002. **Blocking**: everything behind the gate.
+### Spec #003: Auth & Onboarding  🟡
+- **Depends on**: #001 ✅, #002 ✅. **Blocking**: everything behind the gate.
 - **Design**: Group A (Splash, Onboarding, Sign in, Sign up, Forgot password, Profile setup).
 - **Scope**: email/phone + password sign in/up; **OAuth Google/Apple**; forgot-password + OTP; first-run profile setup (username/display name/bio/avatar); **session service** (access+refresh tokens in secure storage, single-flight refresh, logout); **auth-guard redirect**; onboarding slides (first-launch only).
 - **New packages**: `google_sign_in`, `sign_in_with_apple`, image pick/crop for avatar.

@@ -156,4 +156,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errUnknown => 'Something went wrong.';
+
+  @override
+  String get authEmailLabel => 'Email';
+
+  @override
+  String get authPasswordLabel => 'Password';
+
+  @override
+  String get authEmailHint => 'you@example.com';
+
+  @override
+  String get authSignInTitle => 'Welcome back';
+
+  @override
+  String get authSignInSubtitle => 'Sign in to continue';
+
+  @override
+  String get authSignInCta => 'Log in';
+
+  @override
+  String get authForgotPasswordLink => 'Forgot password?';
+
+  @override
+  String get authOrDivider => 'or';
+
+  @override
+  String get authContinueWithGoogle => 'Continue with Google';
+
+  @override
+  String get authContinueWithApple => 'Continue with Apple';
+
+  @override
+  String get authNoAccountQuestion => 'Don\'t have an account?';
+
+  @override
+  String get authCreateAccountLink => 'Create account';
+
+  @override
+  String get authSignOut => 'Log out';
+
+  @override
+  String get authEmailInvalid => 'Enter a valid email.';
+
+  @override
+  String get authPasswordTooShort => 'Password must be at least 8 characters.';
 }

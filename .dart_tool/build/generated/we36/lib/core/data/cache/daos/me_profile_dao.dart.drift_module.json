@@ -1,0 +1,53 @@
+{
+  "elements": {
+    "MeProfileDao": {
+      "id": {
+        "library_uri": "package:we36/core/data/cache/daos/me_profile_dao.dart",
+        "name": "MeProfileDao"
+      },
+      "declaration": {
+        "source_uri": "package:we36/core/data/cache/daos/me_profile_dao.dart",
+        "offset": 501,
+        "name": "MeProfileDao"
+      },
+      "references": [
+        {
+          "library_uri": "package:we36/core/data/cache/tables/me_profile_table.dart",
+          "name": "me_profiles"
+        }
+      ],
+      "type": "dao",
+      "tables": [
+        {
+          "library_uri": "package:we36/core/data/cache/tables/me_profile_table.dart",
+          "name": "me_profiles"
+        }
+      ],
+      "views": [],
+      "includes": [],
+      "queries": [],
+      "dart_type": {
+        "elements": [
+          {
+            "lexeme": "MeProfileDao",
+            "import_uri": "package:we36/core/data/cache/daos/me_profile_dao.dart"
+          }
+        ]
+      },
+      "database": {
+        "elements": [
+          {
+            "lexeme": "AppDatabase",
+            "import_uri": "package:we36/core/data/cache/app_database.dart"
+          }
+        ]
+      }
+    }
+  },
+  "imports": [
+    "package:drift/drift.dart",
+    "package:we36/core/data/cache/app_database.dart",
+    "package:we36/core/data/cache/tables/me_profile_table.dart",
+    "package:we36/core/data/me/me_profile.dart"
+  ]
+}

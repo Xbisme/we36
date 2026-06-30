@@ -1,0 +1,13 @@
+{
+  "elements": {},
+  "imports": [
+    "package:dio/dio.dart",
+    "package:flutter/foundation.dart",
+    "package:injectable/injectable.dart",
+    "package:we36/core/config/app_config.dart",
+    "package:we36/core/constants/api_endpoints.dart",
+    "package:we36/core/data/auth/dto/session.dart",
+    "package:we36/core/services/session/token_refresher.dart",
+    "package:we36/core/services/session/token_store.dart"
+  ]
+}

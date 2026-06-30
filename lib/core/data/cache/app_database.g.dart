@@ -682,16 +682,798 @@ class UsersCompanion extends UpdateCompanion<CachedUser> {
   }
 }
 
+class $MeProfilesTable extends MeProfiles
+    with TableInfo<$MeProfilesTable, CachedMeProfile> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MeProfilesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+    'email',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _usernameMeta = const VerificationMeta(
+    'username',
+  );
+  @override
+  late final GeneratedColumn<String> username = GeneratedColumn<String>(
+    'username',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _avatarMediaIdMeta = const VerificationMeta(
+    'avatarMediaId',
+  );
+  @override
+  late final GeneratedColumn<String> avatarMediaId = GeneratedColumn<String>(
+    'avatar_media_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _bioMeta = const VerificationMeta('bio');
+  @override
+  late final GeneratedColumn<String> bio = GeneratedColumn<String>(
+    'bio',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _websiteMeta = const VerificationMeta(
+    'website',
+  );
+  @override
+  late final GeneratedColumn<String> website = GeneratedColumn<String>(
+    'website',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _pronounsMeta = const VerificationMeta(
+    'pronouns',
+  );
+  @override
+  late final GeneratedColumn<String> pronouns = GeneratedColumn<String>(
+    'pronouns',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isPrivateMeta = const VerificationMeta(
+    'isPrivate',
+  );
+  @override
+  late final GeneratedColumn<bool> isPrivate = GeneratedColumn<bool>(
+    'is_private',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_private" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _isVerifiedMeta = const VerificationMeta(
+    'isVerified',
+  );
+  @override
+  late final GeneratedColumn<bool> isVerified = GeneratedColumn<bool>(
+    'is_verified',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_verified" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _profileCompletedMeta = const VerificationMeta(
+    'profileCompleted',
+  );
+  @override
+  late final GeneratedColumn<bool> profileCompleted = GeneratedColumn<bool>(
+    'profile_completed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("profile_completed" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cachedAtMeta = const VerificationMeta(
+    'cachedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> cachedAt = GeneratedColumn<DateTime>(
+    'cached_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    email,
+    username,
+    displayName,
+    avatarMediaId,
+    bio,
+    website,
+    pronouns,
+    isPrivate,
+    isVerified,
+    profileCompleted,
+    createdAt,
+    cachedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'me_profiles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CachedMeProfile> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('username')) {
+      context.handle(
+        _usernameMeta,
+        username.isAcceptableOrUnknown(data['username']!, _usernameMeta),
+      );
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('avatar_media_id')) {
+      context.handle(
+        _avatarMediaIdMeta,
+        avatarMediaId.isAcceptableOrUnknown(
+          data['avatar_media_id']!,
+          _avatarMediaIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('bio')) {
+      context.handle(
+        _bioMeta,
+        bio.isAcceptableOrUnknown(data['bio']!, _bioMeta),
+      );
+    }
+    if (data.containsKey('website')) {
+      context.handle(
+        _websiteMeta,
+        website.isAcceptableOrUnknown(data['website']!, _websiteMeta),
+      );
+    }
+    if (data.containsKey('pronouns')) {
+      context.handle(
+        _pronounsMeta,
+        pronouns.isAcceptableOrUnknown(data['pronouns']!, _pronounsMeta),
+      );
+    }
+    if (data.containsKey('is_private')) {
+      context.handle(
+        _isPrivateMeta,
+        isPrivate.isAcceptableOrUnknown(data['is_private']!, _isPrivateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isPrivateMeta);
+    }
+    if (data.containsKey('is_verified')) {
+      context.handle(
+        _isVerifiedMeta,
+        isVerified.isAcceptableOrUnknown(data['is_verified']!, _isVerifiedMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isVerifiedMeta);
+    }
+    if (data.containsKey('profile_completed')) {
+      context.handle(
+        _profileCompletedMeta,
+        profileCompleted.isAcceptableOrUnknown(
+          data['profile_completed']!,
+          _profileCompletedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_profileCompletedMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('cached_at')) {
+      context.handle(
+        _cachedAtMeta,
+        cachedAt.isAcceptableOrUnknown(data['cached_at']!, _cachedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cachedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CachedMeProfile map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CachedMeProfile(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      )!,
+      username: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}username'],
+      ),
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      ),
+      avatarMediaId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}avatar_media_id'],
+      ),
+      bio: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bio'],
+      ),
+      website: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}website'],
+      ),
+      pronouns: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}pronouns'],
+      ),
+      isPrivate: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_private'],
+      )!,
+      isVerified: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_verified'],
+      )!,
+      profileCompleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}profile_completed'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      cachedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}cached_at'],
+      )!,
+    );
+  }
+
+  @override
+  $MeProfilesTable createAlias(String alias) {
+    return $MeProfilesTable(attachedDatabase, alias);
+  }
+}
+
+class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
+  final String id;
+  final String email;
+  final String? username;
+  final String? displayName;
+  final String? avatarMediaId;
+  final String? bio;
+  final String? website;
+  final String? pronouns;
+  final bool isPrivate;
+  final bool isVerified;
+  final bool profileCompleted;
+  final DateTime createdAt;
+  final DateTime cachedAt;
+  const CachedMeProfile({
+    required this.id,
+    required this.email,
+    this.username,
+    this.displayName,
+    this.avatarMediaId,
+    this.bio,
+    this.website,
+    this.pronouns,
+    required this.isPrivate,
+    required this.isVerified,
+    required this.profileCompleted,
+    required this.createdAt,
+    required this.cachedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['email'] = Variable<String>(email);
+    if (!nullToAbsent || username != null) {
+      map['username'] = Variable<String>(username);
+    }
+    if (!nullToAbsent || displayName != null) {
+      map['display_name'] = Variable<String>(displayName);
+    }
+    if (!nullToAbsent || avatarMediaId != null) {
+      map['avatar_media_id'] = Variable<String>(avatarMediaId);
+    }
+    if (!nullToAbsent || bio != null) {
+      map['bio'] = Variable<String>(bio);
+    }
+    if (!nullToAbsent || website != null) {
+      map['website'] = Variable<String>(website);
+    }
+    if (!nullToAbsent || pronouns != null) {
+      map['pronouns'] = Variable<String>(pronouns);
+    }
+    map['is_private'] = Variable<bool>(isPrivate);
+    map['is_verified'] = Variable<bool>(isVerified);
+    map['profile_completed'] = Variable<bool>(profileCompleted);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['cached_at'] = Variable<DateTime>(cachedAt);
+    return map;
+  }
+
+  MeProfilesCompanion toCompanion(bool nullToAbsent) {
+    return MeProfilesCompanion(
+      id: Value(id),
+      email: Value(email),
+      username: username == null && nullToAbsent
+          ? const Value.absent()
+          : Value(username),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
+      avatarMediaId: avatarMediaId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(avatarMediaId),
+      bio: bio == null && nullToAbsent ? const Value.absent() : Value(bio),
+      website: website == null && nullToAbsent
+          ? const Value.absent()
+          : Value(website),
+      pronouns: pronouns == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pronouns),
+      isPrivate: Value(isPrivate),
+      isVerified: Value(isVerified),
+      profileCompleted: Value(profileCompleted),
+      createdAt: Value(createdAt),
+      cachedAt: Value(cachedAt),
+    );
+  }
+
+  factory CachedMeProfile.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CachedMeProfile(
+      id: serializer.fromJson<String>(json['id']),
+      email: serializer.fromJson<String>(json['email']),
+      username: serializer.fromJson<String?>(json['username']),
+      displayName: serializer.fromJson<String?>(json['displayName']),
+      avatarMediaId: serializer.fromJson<String?>(json['avatarMediaId']),
+      bio: serializer.fromJson<String?>(json['bio']),
+      website: serializer.fromJson<String?>(json['website']),
+      pronouns: serializer.fromJson<String?>(json['pronouns']),
+      isPrivate: serializer.fromJson<bool>(json['isPrivate']),
+      isVerified: serializer.fromJson<bool>(json['isVerified']),
+      profileCompleted: serializer.fromJson<bool>(json['profileCompleted']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      cachedAt: serializer.fromJson<DateTime>(json['cachedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'email': serializer.toJson<String>(email),
+      'username': serializer.toJson<String?>(username),
+      'displayName': serializer.toJson<String?>(displayName),
+      'avatarMediaId': serializer.toJson<String?>(avatarMediaId),
+      'bio': serializer.toJson<String?>(bio),
+      'website': serializer.toJson<String?>(website),
+      'pronouns': serializer.toJson<String?>(pronouns),
+      'isPrivate': serializer.toJson<bool>(isPrivate),
+      'isVerified': serializer.toJson<bool>(isVerified),
+      'profileCompleted': serializer.toJson<bool>(profileCompleted),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'cachedAt': serializer.toJson<DateTime>(cachedAt),
+    };
+  }
+
+  CachedMeProfile copyWith({
+    String? id,
+    String? email,
+    Value<String?> username = const Value.absent(),
+    Value<String?> displayName = const Value.absent(),
+    Value<String?> avatarMediaId = const Value.absent(),
+    Value<String?> bio = const Value.absent(),
+    Value<String?> website = const Value.absent(),
+    Value<String?> pronouns = const Value.absent(),
+    bool? isPrivate,
+    bool? isVerified,
+    bool? profileCompleted,
+    DateTime? createdAt,
+    DateTime? cachedAt,
+  }) => CachedMeProfile(
+    id: id ?? this.id,
+    email: email ?? this.email,
+    username: username.present ? username.value : this.username,
+    displayName: displayName.present ? displayName.value : this.displayName,
+    avatarMediaId: avatarMediaId.present
+        ? avatarMediaId.value
+        : this.avatarMediaId,
+    bio: bio.present ? bio.value : this.bio,
+    website: website.present ? website.value : this.website,
+    pronouns: pronouns.present ? pronouns.value : this.pronouns,
+    isPrivate: isPrivate ?? this.isPrivate,
+    isVerified: isVerified ?? this.isVerified,
+    profileCompleted: profileCompleted ?? this.profileCompleted,
+    createdAt: createdAt ?? this.createdAt,
+    cachedAt: cachedAt ?? this.cachedAt,
+  );
+  CachedMeProfile copyWithCompanion(MeProfilesCompanion data) {
+    return CachedMeProfile(
+      id: data.id.present ? data.id.value : this.id,
+      email: data.email.present ? data.email.value : this.email,
+      username: data.username.present ? data.username.value : this.username,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      avatarMediaId: data.avatarMediaId.present
+          ? data.avatarMediaId.value
+          : this.avatarMediaId,
+      bio: data.bio.present ? data.bio.value : this.bio,
+      website: data.website.present ? data.website.value : this.website,
+      pronouns: data.pronouns.present ? data.pronouns.value : this.pronouns,
+      isPrivate: data.isPrivate.present ? data.isPrivate.value : this.isPrivate,
+      isVerified: data.isVerified.present
+          ? data.isVerified.value
+          : this.isVerified,
+      profileCompleted: data.profileCompleted.present
+          ? data.profileCompleted.value
+          : this.profileCompleted,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      cachedAt: data.cachedAt.present ? data.cachedAt.value : this.cachedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedMeProfile(')
+          ..write('id: $id, ')
+          ..write('email: $email, ')
+          ..write('username: $username, ')
+          ..write('displayName: $displayName, ')
+          ..write('avatarMediaId: $avatarMediaId, ')
+          ..write('bio: $bio, ')
+          ..write('website: $website, ')
+          ..write('pronouns: $pronouns, ')
+          ..write('isPrivate: $isPrivate, ')
+          ..write('isVerified: $isVerified, ')
+          ..write('profileCompleted: $profileCompleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('cachedAt: $cachedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    email,
+    username,
+    displayName,
+    avatarMediaId,
+    bio,
+    website,
+    pronouns,
+    isPrivate,
+    isVerified,
+    profileCompleted,
+    createdAt,
+    cachedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CachedMeProfile &&
+          other.id == this.id &&
+          other.email == this.email &&
+          other.username == this.username &&
+          other.displayName == this.displayName &&
+          other.avatarMediaId == this.avatarMediaId &&
+          other.bio == this.bio &&
+          other.website == this.website &&
+          other.pronouns == this.pronouns &&
+          other.isPrivate == this.isPrivate &&
+          other.isVerified == this.isVerified &&
+          other.profileCompleted == this.profileCompleted &&
+          other.createdAt == this.createdAt &&
+          other.cachedAt == this.cachedAt);
+}
+
+class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
+  final Value<String> id;
+  final Value<String> email;
+  final Value<String?> username;
+  final Value<String?> displayName;
+  final Value<String?> avatarMediaId;
+  final Value<String?> bio;
+  final Value<String?> website;
+  final Value<String?> pronouns;
+  final Value<bool> isPrivate;
+  final Value<bool> isVerified;
+  final Value<bool> profileCompleted;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> cachedAt;
+  final Value<int> rowid;
+  const MeProfilesCompanion({
+    this.id = const Value.absent(),
+    this.email = const Value.absent(),
+    this.username = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.avatarMediaId = const Value.absent(),
+    this.bio = const Value.absent(),
+    this.website = const Value.absent(),
+    this.pronouns = const Value.absent(),
+    this.isPrivate = const Value.absent(),
+    this.isVerified = const Value.absent(),
+    this.profileCompleted = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.cachedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MeProfilesCompanion.insert({
+    required String id,
+    required String email,
+    this.username = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.avatarMediaId = const Value.absent(),
+    this.bio = const Value.absent(),
+    this.website = const Value.absent(),
+    this.pronouns = const Value.absent(),
+    required bool isPrivate,
+    required bool isVerified,
+    required bool profileCompleted,
+    required DateTime createdAt,
+    required DateTime cachedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       email = Value(email),
+       isPrivate = Value(isPrivate),
+       isVerified = Value(isVerified),
+       profileCompleted = Value(profileCompleted),
+       createdAt = Value(createdAt),
+       cachedAt = Value(cachedAt);
+  static Insertable<CachedMeProfile> custom({
+    Expression<String>? id,
+    Expression<String>? email,
+    Expression<String>? username,
+    Expression<String>? displayName,
+    Expression<String>? avatarMediaId,
+    Expression<String>? bio,
+    Expression<String>? website,
+    Expression<String>? pronouns,
+    Expression<bool>? isPrivate,
+    Expression<bool>? isVerified,
+    Expression<bool>? profileCompleted,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? cachedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (email != null) 'email': email,
+      if (username != null) 'username': username,
+      if (displayName != null) 'display_name': displayName,
+      if (avatarMediaId != null) 'avatar_media_id': avatarMediaId,
+      if (bio != null) 'bio': bio,
+      if (website != null) 'website': website,
+      if (pronouns != null) 'pronouns': pronouns,
+      if (isPrivate != null) 'is_private': isPrivate,
+      if (isVerified != null) 'is_verified': isVerified,
+      if (profileCompleted != null) 'profile_completed': profileCompleted,
+      if (createdAt != null) 'created_at': createdAt,
+      if (cachedAt != null) 'cached_at': cachedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MeProfilesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? email,
+    Value<String?>? username,
+    Value<String?>? displayName,
+    Value<String?>? avatarMediaId,
+    Value<String?>? bio,
+    Value<String?>? website,
+    Value<String?>? pronouns,
+    Value<bool>? isPrivate,
+    Value<bool>? isVerified,
+    Value<bool>? profileCompleted,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? cachedAt,
+    Value<int>? rowid,
+  }) {
+    return MeProfilesCompanion(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      username: username ?? this.username,
+      displayName: displayName ?? this.displayName,
+      avatarMediaId: avatarMediaId ?? this.avatarMediaId,
+      bio: bio ?? this.bio,
+      website: website ?? this.website,
+      pronouns: pronouns ?? this.pronouns,
+      isPrivate: isPrivate ?? this.isPrivate,
+      isVerified: isVerified ?? this.isVerified,
+      profileCompleted: profileCompleted ?? this.profileCompleted,
+      createdAt: createdAt ?? this.createdAt,
+      cachedAt: cachedAt ?? this.cachedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (avatarMediaId.present) {
+      map['avatar_media_id'] = Variable<String>(avatarMediaId.value);
+    }
+    if (bio.present) {
+      map['bio'] = Variable<String>(bio.value);
+    }
+    if (website.present) {
+      map['website'] = Variable<String>(website.value);
+    }
+    if (pronouns.present) {
+      map['pronouns'] = Variable<String>(pronouns.value);
+    }
+    if (isPrivate.present) {
+      map['is_private'] = Variable<bool>(isPrivate.value);
+    }
+    if (isVerified.present) {
+      map['is_verified'] = Variable<bool>(isVerified.value);
+    }
+    if (profileCompleted.present) {
+      map['profile_completed'] = Variable<bool>(profileCompleted.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (cachedAt.present) {
+      map['cached_at'] = Variable<DateTime>(cachedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MeProfilesCompanion(')
+          ..write('id: $id, ')
+          ..write('email: $email, ')
+          ..write('username: $username, ')
+          ..write('displayName: $displayName, ')
+          ..write('avatarMediaId: $avatarMediaId, ')
+          ..write('bio: $bio, ')
+          ..write('website: $website, ')
+          ..write('pronouns: $pronouns, ')
+          ..write('isPrivate: $isPrivate, ')
+          ..write('isVerified: $isVerified, ')
+          ..write('profileCompleted: $profileCompleted, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('cachedAt: $cachedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $UsersTable users = $UsersTable(this);
+  late final $MeProfilesTable meProfiles = $MeProfilesTable(this);
   late final UsersDao usersDao = UsersDao(this as AppDatabase);
+  late final MeProfileDao meProfileDao = MeProfileDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [users];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [users, meProfiles];
 }
 
 typedef $$UsersTableCreateCompanionBuilder =
@@ -1011,10 +1793,372 @@ typedef $$UsersTableProcessedTableManager =
       CachedUser,
       PrefetchHooks Function()
     >;
+typedef $$MeProfilesTableCreateCompanionBuilder =
+    MeProfilesCompanion Function({
+      required String id,
+      required String email,
+      Value<String?> username,
+      Value<String?> displayName,
+      Value<String?> avatarMediaId,
+      Value<String?> bio,
+      Value<String?> website,
+      Value<String?> pronouns,
+      required bool isPrivate,
+      required bool isVerified,
+      required bool profileCompleted,
+      required DateTime createdAt,
+      required DateTime cachedAt,
+      Value<int> rowid,
+    });
+typedef $$MeProfilesTableUpdateCompanionBuilder =
+    MeProfilesCompanion Function({
+      Value<String> id,
+      Value<String> email,
+      Value<String?> username,
+      Value<String?> displayName,
+      Value<String?> avatarMediaId,
+      Value<String?> bio,
+      Value<String?> website,
+      Value<String?> pronouns,
+      Value<bool> isPrivate,
+      Value<bool> isVerified,
+      Value<bool> profileCompleted,
+      Value<DateTime> createdAt,
+      Value<DateTime> cachedAt,
+      Value<int> rowid,
+    });
+
+class $$MeProfilesTableFilterComposer
+    extends Composer<_$AppDatabase, $MeProfilesTable> {
+  $$MeProfilesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get avatarMediaId => $composableBuilder(
+    column: $table.avatarMediaId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get bio => $composableBuilder(
+    column: $table.bio,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get website => $composableBuilder(
+    column: $table.website,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get pronouns => $composableBuilder(
+    column: $table.pronouns,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPrivate => $composableBuilder(
+    column: $table.isPrivate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isVerified => $composableBuilder(
+    column: $table.isVerified,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get profileCompleted => $composableBuilder(
+    column: $table.profileCompleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get cachedAt => $composableBuilder(
+    column: $table.cachedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MeProfilesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MeProfilesTable> {
+  $$MeProfilesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get username => $composableBuilder(
+    column: $table.username,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get avatarMediaId => $composableBuilder(
+    column: $table.avatarMediaId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get bio => $composableBuilder(
+    column: $table.bio,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get website => $composableBuilder(
+    column: $table.website,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get pronouns => $composableBuilder(
+    column: $table.pronouns,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPrivate => $composableBuilder(
+    column: $table.isPrivate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isVerified => $composableBuilder(
+    column: $table.isVerified,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get profileCompleted => $composableBuilder(
+    column: $table.profileCompleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get cachedAt => $composableBuilder(
+    column: $table.cachedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MeProfilesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MeProfilesTable> {
+  $$MeProfilesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get username =>
+      $composableBuilder(column: $table.username, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get avatarMediaId => $composableBuilder(
+    column: $table.avatarMediaId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get bio =>
+      $composableBuilder(column: $table.bio, builder: (column) => column);
+
+  GeneratedColumn<String> get website =>
+      $composableBuilder(column: $table.website, builder: (column) => column);
+
+  GeneratedColumn<String> get pronouns =>
+      $composableBuilder(column: $table.pronouns, builder: (column) => column);
+
+  GeneratedColumn<bool> get isPrivate =>
+      $composableBuilder(column: $table.isPrivate, builder: (column) => column);
+
+  GeneratedColumn<bool> get isVerified => $composableBuilder(
+    column: $table.isVerified,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get profileCompleted => $composableBuilder(
+    column: $table.profileCompleted,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get cachedAt =>
+      $composableBuilder(column: $table.cachedAt, builder: (column) => column);
+}
+
+class $$MeProfilesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MeProfilesTable,
+          CachedMeProfile,
+          $$MeProfilesTableFilterComposer,
+          $$MeProfilesTableOrderingComposer,
+          $$MeProfilesTableAnnotationComposer,
+          $$MeProfilesTableCreateCompanionBuilder,
+          $$MeProfilesTableUpdateCompanionBuilder,
+          (
+            CachedMeProfile,
+            BaseReferences<_$AppDatabase, $MeProfilesTable, CachedMeProfile>,
+          ),
+          CachedMeProfile,
+          PrefetchHooks Function()
+        > {
+  $$MeProfilesTableTableManager(_$AppDatabase db, $MeProfilesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MeProfilesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MeProfilesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MeProfilesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> email = const Value.absent(),
+                Value<String?> username = const Value.absent(),
+                Value<String?> displayName = const Value.absent(),
+                Value<String?> avatarMediaId = const Value.absent(),
+                Value<String?> bio = const Value.absent(),
+                Value<String?> website = const Value.absent(),
+                Value<String?> pronouns = const Value.absent(),
+                Value<bool> isPrivate = const Value.absent(),
+                Value<bool> isVerified = const Value.absent(),
+                Value<bool> profileCompleted = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> cachedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MeProfilesCompanion(
+                id: id,
+                email: email,
+                username: username,
+                displayName: displayName,
+                avatarMediaId: avatarMediaId,
+                bio: bio,
+                website: website,
+                pronouns: pronouns,
+                isPrivate: isPrivate,
+                isVerified: isVerified,
+                profileCompleted: profileCompleted,
+                createdAt: createdAt,
+                cachedAt: cachedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String email,
+                Value<String?> username = const Value.absent(),
+                Value<String?> displayName = const Value.absent(),
+                Value<String?> avatarMediaId = const Value.absent(),
+                Value<String?> bio = const Value.absent(),
+                Value<String?> website = const Value.absent(),
+                Value<String?> pronouns = const Value.absent(),
+                required bool isPrivate,
+                required bool isVerified,
+                required bool profileCompleted,
+                required DateTime createdAt,
+                required DateTime cachedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => MeProfilesCompanion.insert(
+                id: id,
+                email: email,
+                username: username,
+                displayName: displayName,
+                avatarMediaId: avatarMediaId,
+                bio: bio,
+                website: website,
+                pronouns: pronouns,
+                isPrivate: isPrivate,
+                isVerified: isVerified,
+                profileCompleted: profileCompleted,
+                createdAt: createdAt,
+                cachedAt: cachedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MeProfilesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MeProfilesTable,
+      CachedMeProfile,
+      $$MeProfilesTableFilterComposer,
+      $$MeProfilesTableOrderingComposer,
+      $$MeProfilesTableAnnotationComposer,
+      $$MeProfilesTableCreateCompanionBuilder,
+      $$MeProfilesTableUpdateCompanionBuilder,
+      (
+        CachedMeProfile,
+        BaseReferences<_$AppDatabase, $MeProfilesTable, CachedMeProfile>,
+      ),
+      CachedMeProfile,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
+  $$MeProfilesTableTableManager get meProfiles =>
+      $$MeProfilesTableTableManager(_db, _db.meProfiles);
 }

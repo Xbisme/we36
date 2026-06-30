@@ -1,0 +1,371 @@
+openapi: 3.1.0
+info:
+  title: we36-api
+  version: '1.0.0-B002'
+  description: >
+    B#002 Auth & Identity contract slice. Defines the auth surface (register, login, OAuth,
+    refresh, logout, forgot/reset, check-username) and the `me`/profile surface (get, edit,
+    setup). Reuses the B#001 ErrorEnvelope. Email-first; phone is stored only; OTP delivery is
+    a dev stub; avatar upload is deferred to B#003 (avatarMediaId is a reference field). This
+    human-reviewed slice is the companion to the OpenAPI generated from NestJS decorators and
+    is cross-checked against the client #003 Dart models.
+servers:
+  - url: /v1
+    description: Versioned API root
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Short-lived HS256 access token (~15 min). Refresh via POST /auth/refresh.
+
+  schemas:
+    ErrorEnvelope:
+      type: object
+      description: Standard error shape for every failure (B#001).
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              enum:
+                [
+                  UNAUTHENTICATED,
+                  INVALID_CREDENTIALS,
+                  SESSION_EXPIRED,
+                  OAUTH_FAILED,
+                  FORBIDDEN,
+                  NOT_FOUND,
+                  CONFLICT,
+                  VALIDATION,
+                  RATE_LIMITED,
+                  SERVER_ERROR,
+                ]
+            message: { type: string }
+            details:
+              type: object
+              additionalProperties: { type: string }
+              description: Field→message map (present for VALIDATION).
+
+    Session:
+      type: object
+      description: Issued on register / login / oauth / refresh.
+      required: [accessToken, refreshToken, expiresIn, tokenType]
+      properties:
+        accessToken: { type: string, description: HS256 JWT access token }
+        refreshToken: { type: string, description: Opaque rotating refresh token (store securely) }
+        expiresIn: { type: integer, description: Access token lifetime in seconds (e.g. 900) }
+        tokenType: { type: string, enum: [Bearer] }
+
+    MeProfile:
+      type: object
+      description: >
+        The authenticated user's profile (also returned by setup/edit). Matches client User
+        model. `username`/`displayName` are null until profile setup completes.
+      required:
+        [id, username, displayName, email, isPrivate, isVerified, profileCompleted, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        username: { type: [string, 'null'] }
+        displayName: { type: [string, 'null'] }
+        email: { type: string, format: email }
+        avatarMediaId: { type: [string, 'null'], format: uuid }
+        bio: { type: [string, 'null'] }
+        website: { type: [string, 'null'] }
+        pronouns: { type: [string, 'null'] }
+        isPrivate: { type: boolean }
+        isVerified: { type: boolean }
+        profileCompleted: { type: boolean }
+        createdAt: { type: string, format: date-time }
+
+    RegisterRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 8, maxLength: 128 }
+        phone: { type: string, maxLength: 20, description: Optional; stored only }
+        deviceId: { type: string, description: Optional client device label }
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string }
+        deviceId: { type: string }
+
+    OAuthRequest:
+      type: object
+      required: [idToken]
+      properties:
+        idToken: { type: string, description: Provider OIDC id_token verified server-side }
+        deviceId: { type: string }
+
+    RefreshRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken: { type: string }
+
+    LogoutRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken: { type: string }
+
+    ForgotRequest:
+      type: object
+      required: [email]
+      properties:
+        email: { type: string, format: email }
+
+    ResetRequest:
+      type: object
+      required: [email, code, newPassword]
+      properties:
+        email: { type: string, format: email }
+        code: { type: string, description: 6-digit OTP }
+        newPassword: { type: string, minLength: 8, maxLength: 128 }
+
+    CheckUsernameRequest:
+      type: object
+      required: [username]
+      properties:
+        username: { type: string }
+
+    CheckUsernameResponse:
+      type: object
+      required: [available]
+      properties:
+        available: { type: boolean }
+        reason:
+          type: [string, 'null']
+          enum: [taken, invalid, null]
+          description: null when available; 'taken' or 'invalid' otherwise.
+
+    SetupProfileRequest:
+      type: object
+      required: [username, displayName]
+      properties:
+        username: { type: string, description: '3–30 chars [a-z0-9._], no leading/trailing dot' }
+        displayName: { type: string, minLength: 1, maxLength: 50 }
+        bio: { type: string, maxLength: 150 }
+        avatarMediaId:
+          { type: string, format: uuid, description: Optional; upload deferred to B#003 }
+
+    UpdateMeRequest:
+      type: object
+      description: All fields optional; only provided fields change.
+      properties:
+        username: { type: string }
+        displayName: { type: string, minLength: 1, maxLength: 50 }
+        bio: { type: [string, 'null'], maxLength: 150 }
+        website: { type: [string, 'null'], maxLength: 200 }
+        pronouns: { type: [string, 'null'], maxLength: 30 }
+        avatarMediaId: { type: [string, 'null'], format: uuid }
+
+  responses:
+    Validation:
+      description: Input failed validation
+      content: { application/json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+    Unauthorized:
+      description: Missing/invalid access token (UNAUTHENTICATED) or expired session (SESSION_EXPIRED)
+      content: { application/json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+    Conflict:
+      description: Email or username already in use (CONFLICT)
+      content: { application/json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+    RateLimited:
+      description: Too many attempts / locked out (RATE_LIMITED) — see Retry-After
+      headers: { Retry-After: { schema: { type: integer }, description: Seconds until retry } }
+      content: { application/json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+
+paths:
+  /auth/register:
+    post:
+      tags: [auth]
+      summary: Register with email + password (email-first; phone stored only)
+      security: []
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RegisterRequest' } } }
+      responses:
+        '201':
+          description: Account created; session issued
+          content: { application/json: { schema: { $ref: '#/components/schemas/Session' } } }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/Validation' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /auth/login:
+    post:
+      tags: [auth]
+      summary: Log in with email + password
+      security: []
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/LoginRequest' } } }
+      responses:
+        '200':
+          description: Authenticated; session issued
+          content: { application/json: { schema: { $ref: '#/components/schemas/Session' } } }
+        '401':
+          description: INVALID_CREDENTIALS (does not reveal whether the email exists)
+          content: { application/json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+        '422': { $ref: '#/components/responses/Validation' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /auth/oauth/{provider}:
+    post:
+      tags: [auth]
+      summary: Sign in with Google/Apple (server verifies id_token; create-or-link)
+      security: []
+      parameters:
+        - in: path
+          name: provider
+          required: true
+          schema: { type: string, enum: [google, apple] }
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/OAuthRequest' } } }
+      responses:
+        '200':
+          description: Verified; existing or newly-linked account, session issued
+          content: { application/json: { schema: { $ref: '#/components/schemas/Session' } } }
+        '401':
+          description: OAUTH_FAILED (token unverifiable / wrong audience / expired)
+          content: { application/json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+        '422': { $ref: '#/components/responses/Validation' }
+
+  /auth/refresh:
+    post:
+      tags: [auth]
+      summary: Rotate the refresh token; issue a new session (reuse → family revoked)
+      security: []
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RefreshRequest' } } }
+      responses:
+        '200':
+          description: New session; presented refresh token invalidated
+          content: { application/json: { schema: { $ref: '#/components/schemas/Session' } } }
+        '401':
+          description: SESSION_EXPIRED (expired/unknown/already-rotated → family revoked)
+          content: { application/json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+
+  /auth/logout:
+    post:
+      tags: [auth]
+      summary: Revoke the presented refresh token (idempotent)
+      security: []
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/LogoutRequest' } } }
+      responses:
+        '204': { description: Logged out (idempotent — unknown token also 204) }
+
+  /auth/forgot:
+    post:
+      tags: [auth]
+      summary: Request a password-reset OTP (uniform response; delivery stubbed)
+      security: []
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/ForgotRequest' } } }
+      responses:
+        '202':
+          description: >
+            Always returned regardless of whether the email exists (no enumeration). In
+            non-production only, the body may include a `devCode` for testing.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  devCode:
+                    type: string
+                    description: Present ONLY when NODE_ENV != production. Never in prod.
+        '422': { $ref: '#/components/responses/Validation' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /auth/reset:
+    post:
+      tags: [auth]
+      summary: Reset password with a valid OTP (invalidates all sessions)
+      security: []
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/ResetRequest' } } }
+      responses:
+        '204': { description: Password changed; all existing sessions revoked }
+        '422':
+          description: >
+            Invalid / expired / consumed / over-attempt code → VALIDATION with a uniform
+            `details.code` message (so the client can attach the error to the OTP input without
+            revealing which specific failure occurred).
+          content: { application/json: { schema: { $ref: '#/components/schemas/ErrorEnvelope' } } }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /auth/check-username:
+    post:
+      tags: [auth]
+      summary: Check username availability (case-insensitive; validates format)
+      security: []
+      requestBody:
+        required: true
+        content:
+          { application/json: { schema: { $ref: '#/components/schemas/CheckUsernameRequest' } } }
+      responses:
+        '200':
+          description: Availability result
+          content:
+            { application/json: { schema: { $ref: '#/components/schemas/CheckUsernameResponse' } } }
+        '422': { $ref: '#/components/responses/Validation' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /me:
+    get:
+      tags: [users]
+      summary: Get my profile
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: Current user profile
+          content: { application/json: { schema: { $ref: '#/components/schemas/MeProfile' } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    patch:
+      tags: [users]
+      summary: Edit my profile
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/UpdateMeRequest' } } }
+      responses:
+        '200':
+          description: Updated profile
+          content: { application/json: { schema: { $ref: '#/components/schemas/MeProfile' } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/Validation' }
+
+  /me/setup:
+    post:
+      tags: [users]
+      summary: First-run profile setup (username + display name; avatar deferred)
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          { application/json: { schema: { $ref: '#/components/schemas/SetupProfileRequest' } } }
+      responses:
+        '200':
+          description: Profile saved
+          content: { application/json: { schema: { $ref: '#/components/schemas/MeProfile' } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/Validation' }

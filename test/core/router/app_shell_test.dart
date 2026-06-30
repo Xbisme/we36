@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/app/app.dart';
+import 'package:we36/core/data/auth/fake_auth_backend.dart';
 import 'package:we36/core/presentation/bottom_nav.dart';
 import 'package:we36/core/presentation/post_card.dart';
 import 'package:we36/core/presentation/sidebar_rail.dart';
 import 'package:we36/core/router/app_router.dart';
-import 'package:we36/core/router/auth_guard_stub.dart';
 import 'package:we36/features/explore/presentation/explore_page.dart';
 import 'package:we36/features/feed/presentation/home_page.dart';
+
+import '../../support/auth_test_doubles.dart';
 
 Future<void> _pumpAppAt(WidgetTester tester, Size size) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
-  final router = AppRouter(AuthGuardStub()).router;
+  // Signed-in, profile-complete session → the shell lands on Home.
+  final harness = SessionHarness(
+    seededEmail: FakeAuthBackend.demoEmail,
+    onboardingSeen: true,
+    cachedProfileCompleted: true,
+  );
+  addTearDown(harness.dispose);
+  await harness.controller.bootstrap();
+  final router = AppRouter(harness.controller).router;
   await tester.pumpWidget(We36App(router: router));
   await tester.pumpAndSettle();
 }

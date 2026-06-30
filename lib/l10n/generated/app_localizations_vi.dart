@@ -157,4 +157,49 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get errUnknown => 'Đã xảy ra lỗi.';
+
+  @override
+  String get authEmailLabel => 'Email';
+
+  @override
+  String get authPasswordLabel => 'Mật khẩu';
+
+  @override
+  String get authEmailHint => 'you@example.com';
+
+  @override
+  String get authSignInTitle => 'Chào mừng trở lại';
+
+  @override
+  String get authSignInSubtitle => 'Đăng nhập để tiếp tục';
+
+  @override
+  String get authSignInCta => 'Đăng nhập';
+
+  @override
+  String get authForgotPasswordLink => 'Quên mật khẩu?';
+
+  @override
+  String get authOrDivider => 'hoặc';
+
+  @override
+  String get authContinueWithGoogle => 'Tiếp tục với Google';
+
+  @override
+  String get authContinueWithApple => 'Tiếp tục với Apple';
+
+  @override
+  String get authNoAccountQuestion => 'Chưa có tài khoản?';
+
+  @override
+  String get authCreateAccountLink => 'Tạo tài khoản';
+
+  @override
+  String get authSignOut => 'Đăng xuất';
+
+  @override
+  String get authEmailInvalid => 'Nhập email hợp lệ.';
+
+  @override
+  String get authPasswordTooShort => 'Mật khẩu phải có ít nhất 8 ký tự.';
 }
