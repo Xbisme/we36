@@ -19,8 +19,10 @@
 
 ### Step 3: User Runs `/speckit.specify` in IDE (Claude Code)
 
-- Speckit creates `specs/NNN-feature-name/spec.md` + records the active feature in `.specify/feature.json` (this installed version does **not** auto-`git checkout`).
-- **Create the git branch yourself** first: `git checkout -b NNN-feature-name` (one branch per feature). The app and backend are **two separate repos** — work them in parallel from two IDE windows; each repo has its own branches.
+- Speckit creates `specs/NNN-feature-name/spec.md` + records the active feature in `.specify/feature.json`.
+- **The git branch is created automatically**: an `after_specify` hook (`.specify/extensions.yml` → `speckit-git-branch` skill → `.specify/scripts/bash/create-feature-branch.sh`) runs right after the spec is written and does `git checkout -b NNN-feature-name`, deriving the branch name from the spec directory so **branch name == spec dir name**. Idempotent (re-running just switches). It only branches — it never commits or pushes.
+- The app and backend are **two separate repos** — work them in parallel from two IDE windows; each repo has its own branches.
+- If you ever need to (re)create the branch manually: run `/speckit-git-branch`, or `git checkout -b NNN-feature-name`.
 - If there are `NEEDS CLARIFICATION` items in the generated spec → go to Step 4.
 
 ### Step 4: Clarify (if needed)

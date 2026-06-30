@@ -1,0 +1,72 @@
+name: we36
+description: "We36 — Instagram-style social app (foundation: design system + navigation)."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management
+  flutter_bloc: ^9.1.1
+
+  # Dependency injection
+  get_it: ^9.2.1
+  injectable: ^3.0.0
+
+  # Routing
+  go_router: ^17.3.0
+
+  # Codegen annotations
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.12.0
+
+  # Icons (single Lucide family)
+  lucide_icons_flutter: ^3.1.14
+
+  # Media display (used by PostCard; #001 feeds it fake/asset providers — no network)
+  cached_network_image: ^3.4.1
+
+  # i18n / formatting
+  intl: ^0.20.2 # pinned by flutter_localizations from the SDK
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Codegen
+  build_runner: ^2.15.0
+  freezed: ^3.2.5
+  json_serializable: ^6.14.0
+  injectable_generator: ^3.0.2 # 3.1.0 requires Dart >=3.12; pinned for the installed 3.11.5 toolchain
+
+  # Lint
+  very_good_analysis: ^10.2.0
+  bloc_lint: ^0.4.1
+
+  # Test
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.5
+
+flutter:
+  uses-material-design: true
+  generate: true # enable gen-l10n
+
+  assets:
+    - assets/brand/
+
+  # Bundled variable fonts (offline + golden-deterministic; fontWeight drives the wght axis).
+  fonts:
+    - family: PlusJakartaSans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter.ttf
