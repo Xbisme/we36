@@ -252,6 +252,15 @@ through centralized factories/widgets; inline configuration is FORBIDDEN.
   / Profile). **Create** (post/story/reel) is a contextual action, not a tab.
   Full-screen flows (story/reel viewer, create-post, chat, comments) push
   nav-less routes. Auth/onboarding screens have no bottom nav.
+- **Adaptive layout (phones + tablets/iPad)**: the SAME navigation model, routes,
+  tokens, and shared widgets MUST drive every form factor — only the chrome
+  adapts by **width** (`MediaQuery`/`LayoutBuilder`), never a forked screen set.
+  On tablets/iPad (`width ≥ ~700`) the bottom nav MUST be replaced by a **left
+  sidebar rail** (compact icon-only in portrait, labeled in landscape), and
+  master/detail surfaces (Messages, Post detail) MUST render **two-pane**
+  (list + detail side-by-side) instead of push navigation. The app MUST handle
+  iPad split-view/multitasking (reflow to the phone layout when the window
+  narrows) and rotation. UI detail lives in `ui-design-context.md` §Responsive.
 
 **Rationale**: The product ships a deliberate, fixed visual identity built around
 restraint — neutral chrome so user media pops. Centralized tokens and factories
@@ -266,9 +275,12 @@ platform's conventions while sharing core logic in Dart.
 - Platform-appropriate affordances MUST be used for alerts, action sheets, and
   pickers (Cupertino on iOS, Material on Android) without forking business logic.
 - All phone screen sizes MUST be supported, including notch / Dynamic Island and
-  Android display cutouts; tablets adapt responsively (the design ships a tablet
-  layout). The status bar / safe areas MUST be respected on media-immersive
-  screens (story/reel viewers go edge-to-edge with light status content).
+  Android display cutouts; **tablets and iPad MUST be first-class via the
+  adaptive layout** (Principle VI) — sidebar rail, two-pane master/detail for
+  Messages + Post detail, centered/constrained content, and responsive grids
+  (the design ships explicit iPad portrait + landscape layouts). The status bar /
+  safe areas MUST be respected on media-immersive screens (story/reel viewers go
+  edge-to-edge with light status content).
 - **Camera & media**: capture and library pick (photo + video, multi-select for
   carousels) MUST use the platform pickers; basic edit (crop, filter, brightness)
   runs client-side.
@@ -658,4 +670,9 @@ provides runtime development guidance subordinate to it.
 - Use `CLAUDE.md` for runtime development guidance and
   `.claude/claude-app/ui-design-context.md` for UI compliance.
 
-**Version**: 1.0.0 | **Ratified**: 2026-06-30 | **Last Amended**: 2026-06-30
+**Version**: 1.0.1 | **Ratified**: 2026-06-30 | **Last Amended**: 2026-06-30
+<!-- 1.0.1 (2026-06-30, PATCH): clarified Principles VI & VII with the adaptive
+tablet/iPad layout (sidebar rail + two-pane master/detail) after importing the
+We36 Responsive design; detail in ui-design-context.md §Responsive. No principle
+added/removed. -->
+

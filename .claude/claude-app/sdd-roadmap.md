@@ -31,6 +31,8 @@ We36 is a **client app over a custom backend**, organized in clean layers that e
 
 > **Navigation IA (per [`ui-design-context.md`](ui-design-context.md))**: an **auth-guarded** split — a pre-auth flow (no nav) and a **5-tab bottom nav** (Home / Explore / Reels / Messages / Profile). **Create** (post/story/reel) is a contextual action, not a tab. Full-screen flows (viewers, compose, chat, comments) hide the bottom nav. 31 designed screens across A–G groups.
 
+> **Adaptive (phones + tablets/iPad)**: same nav model/routes/tokens, chrome adapts by **width** — phones (`<700`) use the bottom nav; tablets/iPad (`≥700`) use a **left sidebar rail** + two-pane **master/detail** for Messages + Post detail + responsive grids (see [`ui-design-context.md`](ui-design-context.md) §Responsive). The adaptive shell is built in **#001**; the two-pane variants land with their features (**#012** Messages, **#006** Post detail).
+
 ---
 
 ## Dependency Graph
@@ -106,7 +108,7 @@ Create Story     Post Detail &    Create Post      Reels
 ### Spec #001: Project Foundation, Design System & Navigation  ⬜
 - **Depends on**: none (foundation).
 - **Design**: [`ui-design-context.md`](ui-design-context.md) — Navigation IA + Design Tokens + Shared Components are the build spec.
-- **Scope**: Clean Architecture folders (`core/` + `features/`); 2 flavors (dev/prod) + entry points; **auth-guarded router** skeleton (pre-auth flow vs 5-tab `StatefulShellRoute`) with placeholder tab pages; **fixed light & dark design-token layer** (semantic aliases, Plus Jakarta Sans + Inter, spacing/radius/shadow/motion, gradients) ported from claude_design; **shared widget library** built once (`Button`, `IconButton`, `Icon`[Lucide], `Avatar`+ring, `Badge`, `Tag`, `PostCard`, `SearchBar`, `Switch`, `BottomNav`, `StoriesRail`, `TopBar`, `Wordmark`, `Toast`, `ActionSheet`, `Dialog`); foundation primitives (`Result<T>`, `AppFailure`, `AppCubit<T>` 4-state, `AppLogger`, formatters [count/relative-time]); DI; l10n ARB **English primary + Vietnamese**.
+- **Scope**: Clean Architecture folders (`core/` + `features/`); 2 flavors (dev/prod) + entry points; **auth-guarded router** skeleton (pre-auth flow vs 5-tab `StatefulShellRoute`) with placeholder tab pages; **adaptive shell** (phone bottom-nav `<700` ↔ tablet/iPad **SidebarRail** `≥700`, compact/full by `≥980`) + a reusable **two-pane/master-detail** primitive (used by #006/#012); **fixed light & dark design-token layer** (semantic aliases, Plus Jakarta Sans + Inter, spacing/radius/shadow/motion, gradients) ported from claude_design; **shared widget library** built once (`Button`, `IconButton`, `Icon`[Lucide], `Avatar`+ring, `Badge`, `Tag`, `PostCard`, `SearchBar`, `Switch`, `BottomNav`, `SidebarRail`, `StoriesRail`, `TopBar`, `PaneHeader`, `Wordmark`, `Toast`, `ActionSheet`, `Dialog`); foundation primitives (`Result<T>`, `AppFailure`, `AppCubit<T>` 4-state, `AppLogger`, formatters [count/relative-time]); DI; l10n ARB **English primary + Vietnamese**.
 - **New packages**: `flutter_bloc`, `get_it`, `injectable`, `go_router`, `freezed`, `json_serializable`, `build_runner`, a Lucide icon pkg, `google_fonts`, `cached_network_image`, `intl`, a toast pkg, `flutter_svg`, `very_good_analysis`.
 - **Out of scope**: any networking, auth, real data.
 
@@ -137,8 +139,8 @@ Create Story     Post Detail &    Create Post      Reels
 
 ### Spec #006: Post Detail & Comments  ⬜
 - **Depends on**: #004.
-- **Design**: Screens 14 (Post detail), 15 (Comments).
-- **Scope**: post detail; comments list + **one-level replies** + mentions + quick-emoji + comment compose (optimistic add); like a comment; report/delete via action sheet.
+- **Design**: Screens 14 (Post detail), 15 (Comments); tablet = **two-pane** (media + comments sidebar).
+- **Scope**: post detail; comments list + **one-level replies** + mentions + quick-emoji + comment compose (optimistic add); like a comment; report/delete via action sheet. On tablet/iPad render the **master/detail two-pane** (media pane + info/comments pane) via the #001 primitive; phone keeps push.
 - **Out of scope**: nested reply threads beyond one level (deferred).
 
 ### Spec #007: Create Post (Compose & Upload)  ⬜
@@ -174,8 +176,8 @@ Create Story     Post Detail &    Create Post      Reels
 
 ### Spec #012: Direct Messages (Realtime)  ⬜
 - **Depends on**: #002 (realtime), #010.
-- **Design**: Screens 25–28 (DM list, Chat, New message, Sticker picker).
-- **Scope**: conversation list (unread, presence, typing preview); 1-1 chat over the **WebSocket** channel (text, photo, **shared post**, stickers); typing/presence; optimistic send + idempotency + delivery state; new-message compose.
+- **Design**: Screens 25–28 (DM list, Chat, New message, Sticker picker); tablet = **split view** (conversation list + chat pane).
+- **Scope**: conversation list (unread, presence, typing preview); 1-1 chat over the **WebSocket** channel (text, photo, **shared post**, stickers); typing/presence; optimistic send + idempotency + delivery state; new-message compose. On tablet/iPad render the **master/detail two-pane** (list + active chat side-by-side, selecting a chat swaps the pane — no push) via the #001 primitive; phone keeps push.
 - **Out of scope**: group chats, calls (deferred).
 
 ### Spec #013: Notifications & Push  ⬜
