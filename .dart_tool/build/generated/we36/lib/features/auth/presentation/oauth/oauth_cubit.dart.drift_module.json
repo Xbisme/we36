@@ -1,0 +1,10 @@
+{
+  "elements": {},
+  "imports": [
+    "package:injectable/injectable.dart",
+    "package:we36/core/data/me/me_profile.dart",
+    "package:we36/core/domain/app_cubit.dart",
+    "package:we36/features/auth/domain/usecases/sign_in_with_apple.dart",
+    "package:we36/features/auth/domain/usecases/sign_in_with_google.dart"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "elements": {},
+  "imports": [
+    "package:we36/core/data/auth/dto/check_username.dart",
+    "package:we36/core/data/auth/dto/session.dart",
+    "package:we36/core/domain/result.dart"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "elements": {},
+  "imports": [
+    "package:injectable/injectable.dart",
+    "package:we36/core/data/auth/fake_auth_backend.dart",
+    "package:we36/core/data/me/me_profile.dart",
+    "package:we36/core/data/me/me_repository.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/core/domain/result.dart",
+    "package:we36/core/services/session/token_store.dart"
+  ]
+}

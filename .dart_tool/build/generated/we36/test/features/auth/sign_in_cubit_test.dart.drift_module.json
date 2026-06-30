@@ -1,0 +1,14 @@
+{
+  "elements": {},
+  "imports": [
+    "package:bloc_test/bloc_test.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:mocktail/mocktail.dart",
+    "package:we36/core/data/me/me_profile.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/core/domain/app_state.dart",
+    "package:we36/core/domain/result.dart",
+    "package:we36/features/auth/domain/usecases/sign_in.dart",
+    "package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart"
+  ]
+}

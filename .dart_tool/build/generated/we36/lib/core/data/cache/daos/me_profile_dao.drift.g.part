@@ -1,0 +1,12 @@
+// ignore_for_file: type=lint
+mixin _$MeProfileDaoMixin on DatabaseAccessor<AppDatabase> {
+  $MeProfilesTable get meProfiles => attachedDatabase.meProfiles;
+  MeProfileDaoManager get managers => MeProfileDaoManager(this);
+}
+
+class MeProfileDaoManager {
+  final _$MeProfileDaoMixin _db;
+  MeProfileDaoManager(this._db);
+  $$MeProfilesTableTableManager get meProfiles =>
+      $$MeProfilesTableTableManager(_db.attachedDatabase, _db.meProfiles);
+}

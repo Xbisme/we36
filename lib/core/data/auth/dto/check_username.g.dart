@@ -1,0 +1,26 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'check_username.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_UsernameAvailability _$UsernameAvailabilityFromJson(
+  Map<String, dynamic> json,
+) => _UsernameAvailability(
+  available: json['available'] as bool,
+  reason: $enumDecodeNullable(_$UsernameReasonEnumMap, json['reason']),
+);
+
+Map<String, dynamic> _$UsernameAvailabilityToJson(
+  _UsernameAvailability instance,
+) => <String, dynamic>{
+  'available': instance.available,
+  'reason': _$UsernameReasonEnumMap[instance.reason],
+};
+
+const _$UsernameReasonEnumMap = {
+  UsernameReason.taken: 'taken',
+  UsernameReason.invalid: 'invalid',
+};

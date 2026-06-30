@@ -1,0 +1,1 @@
+{"valid_import":true,"imports":[{"uri":"package:bloc_test/bloc_test.dart","transitive":false},{"uri":"package:flutter_test/flutter_test.dart","transitive":false},{"uri":"package:we36/features/auth/presentation/onboarding/onboarding_cubit.dart","transitive":false},{"uri":"asset:we36/test/support/auth_test_doubles.dart","transitive":false}],"elements":[]}

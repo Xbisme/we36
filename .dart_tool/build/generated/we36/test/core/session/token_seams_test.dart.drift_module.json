@@ -1,0 +1,13 @@
+{
+  "elements": {},
+  "imports": [
+    "package:dio/dio.dart",
+    "package:flutter_secure_storage/flutter_secure_storage.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:mocktail/mocktail.dart",
+    "package:we36/core/config/app_config.dart",
+    "package:we36/core/services/session/real_token_refresher.dart",
+    "package:we36/core/services/session/real_token_store.dart",
+    "package:we36/core/services/session/token_store.dart"
+  ]
+}

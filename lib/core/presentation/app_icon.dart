@@ -25,6 +25,8 @@ abstract final class AppIcons {
   static const IconData sticker = LucideIcons.sticker;
   static const IconData location = LucideIcons.mapPin;
   static const IconData music = LucideIcons.music;
+  static const IconData eye = LucideIcons.eye;
+  static const IconData eyeOff = LucideIcons.eyeOff;
 }
 
 /// Single icon wrapper: 24px default, token-colored. `active` switches to the

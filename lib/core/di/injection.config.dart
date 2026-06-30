@@ -15,7 +15,16 @@ import 'package:we36/core/config/app_config.dart' as _i434;
 import 'package:we36/core/data/api/api_client.dart' as _i784;
 import 'package:we36/core/data/api/failure_mapper.dart' as _i56;
 import 'package:we36/core/data/api/idempotency.dart' as _i222;
+import 'package:we36/core/data/auth/auth_remote_data_source.dart' as _i1043;
+import 'package:we36/core/data/auth/auth_repository.dart' as _i163;
+import 'package:we36/core/data/auth/auth_repository_impl.dart' as _i235;
+import 'package:we36/core/data/auth/fake_auth_backend.dart' as _i489;
+import 'package:we36/core/data/auth/fake_auth_repository.dart' as _i548;
 import 'package:we36/core/data/cache/app_database.dart' as _i270;
+import 'package:we36/core/data/me/fake_me_repository.dart' as _i211;
+import 'package:we36/core/data/me/me_remote_data_source.dart' as _i46;
+import 'package:we36/core/data/me/me_repository.dart' as _i485;
+import 'package:we36/core/data/me/me_repository_impl.dart' as _i858;
 import 'package:we36/core/data/realtime/fake_realtime_client.dart' as _i261;
 import 'package:we36/core/data/realtime/realtime_client.dart' as _i500;
 import 'package:we36/core/data/user/fake_user_repository.dart' as _i156;
@@ -24,11 +33,42 @@ import 'package:we36/core/data/user/user_repository.dart' as _i247;
 import 'package:we36/core/data/user/user_repository_impl.dart' as _i514;
 import 'package:we36/core/presentation/toast.dart' as _i857;
 import 'package:we36/core/router/app_router.dart' as _i485;
-import 'package:we36/core/router/auth_guard_stub.dart' as _i53;
 import 'package:we36/core/services/session/auth_events.dart' as _i242;
+import 'package:we36/core/services/session/local_flags.dart' as _i299;
+import 'package:we36/core/services/session/real_token_refresher.dart' as _i266;
+import 'package:we36/core/services/session/real_token_store.dart' as _i897;
+import 'package:we36/core/services/session/session_controller.dart' as _i958;
 import 'package:we36/core/services/session/token_refresher.dart' as _i200;
 import 'package:we36/core/services/session/token_store.dart' as _i665;
 import 'package:we36/core/utils/app_logger.dart' as _i433;
+import 'package:we36/features/auth/data/oauth_token_source.dart' as _i873;
+import 'package:we36/features/auth/data/real_oauth_token_source.dart' as _i350;
+import 'package:we36/features/auth/domain/usecases/check_username.dart'
+    as _i985;
+import 'package:we36/features/auth/domain/usecases/request_password_reset.dart'
+    as _i95;
+import 'package:we36/features/auth/domain/usecases/reset_password.dart'
+    as _i894;
+import 'package:we36/features/auth/domain/usecases/setup_profile.dart' as _i800;
+import 'package:we36/features/auth/domain/usecases/sign_in.dart' as _i53;
+import 'package:we36/features/auth/domain/usecases/sign_in_with_apple.dart'
+    as _i915;
+import 'package:we36/features/auth/domain/usecases/sign_in_with_google.dart'
+    as _i594;
+import 'package:we36/features/auth/domain/usecases/sign_out.dart' as _i440;
+import 'package:we36/features/auth/domain/usecases/sign_up.dart' as _i601;
+import 'package:we36/features/auth/presentation/forgot/forgot_password_cubit.dart'
+    as _i764;
+import 'package:we36/features/auth/presentation/oauth/oauth_cubit.dart'
+    as _i206;
+import 'package:we36/features/auth/presentation/onboarding/onboarding_cubit.dart'
+    as _i902;
+import 'package:we36/features/auth/presentation/profile_setup/profile_setup_cubit.dart'
+    as _i16;
+import 'package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart'
+    as _i942;
+import 'package:we36/features/auth/presentation/sign_up/sign_up_cubit.dart'
+    as _i30;
 
 const String _real = 'real';
 const String _fake = 'fake';
@@ -44,7 +84,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i222.IdempotencyKeys>(() => _i222.IdempotencyKeys());
     gh.lazySingleton<_i270.AppDatabase>(() => _i270.AppDatabase());
     gh.lazySingleton<_i857.ToastService>(() => _i857.ToastService());
-    gh.lazySingleton<_i53.AuthGuardStub>(() => _i53.AuthGuardStub());
     gh.lazySingleton<_i433.AppLogger>(() => const _i433.AppLogger());
     gh.lazySingleton<_i500.RealtimeClient>(
       () => _i500.SocketIoRealtimeClient(
@@ -53,9 +92,51 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       registerFor: {_real},
     );
-    gh.lazySingleton<_i665.TokenStore>(() => _i665.FakeTokenStore());
+    gh.lazySingleton<_i665.TokenStore>(() => _i897.RealTokenStore());
+    gh.lazySingleton<_i299.LocalFlags>(() => _i299.LocalFlagsImpl());
     gh.lazySingleton<_i242.AuthEventsSink>(() => _i242.AuthEvents());
-    gh.lazySingleton<_i200.TokenRefresher>(() => _i200.FakeTokenRefresher());
+    gh.lazySingleton<_i873.OAuthTokenSource>(
+      () => _i350.RealOAuthTokenSource(gh<_i434.AppConfig>()),
+      registerFor: {_real},
+    );
+    gh.lazySingleton<_i489.FakeAuthBackend>(
+      () => _i489.FakeAuthBackend(),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i163.AuthRepository>(
+      () => _i548.FakeAuthRepository(gh<_i489.FakeAuthBackend>()),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i200.TokenRefresher>(
+      () => _i200.FakeTokenRefresher(),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i873.OAuthTokenSource>(
+      () => const _i873.FakeOAuthTokenSource(),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i247.UserRepository>(
+      () => _i156.FakeUserRepository(),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i500.RealtimeClient>(
+      () => _i261.FakeRealtimeClient(),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i200.TokenRefresher>(
+      () => _i266.RealTokenRefresher(
+        gh<_i434.AppConfig>(),
+        gh<_i665.TokenStore>(),
+      ),
+      registerFor: {_real},
+    );
+    gh.lazySingleton<_i485.MeRepository>(
+      () => _i211.FakeMeRepository(
+        gh<_i489.FakeAuthBackend>(),
+        gh<_i665.TokenStore>(),
+      ),
+      registerFor: {_fake},
+    );
     gh.lazySingleton<_i784.ApiClient>(
       () => _i784.ApiClient(
         gh<_i434.AppConfig>(),
@@ -67,19 +148,36 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i222.IdempotencyKeys>(),
       ),
     );
-    gh.lazySingleton<_i485.AppRouter>(
-      () => _i485.AppRouter(gh<_i53.AuthGuardStub>()),
+    gh.lazySingleton<_i1043.AuthRemoteDataSource>(
+      () => _i1043.AuthRemoteDataSource(gh<_i784.ApiClient>()),
     );
-    gh.lazySingleton<_i247.UserRepository>(
-      () => _i156.FakeUserRepository(),
-      registerFor: {_fake},
-    );
-    gh.lazySingleton<_i500.RealtimeClient>(
-      () => _i261.FakeRealtimeClient(),
-      registerFor: {_fake},
+    gh.lazySingleton<_i46.MeRemoteDataSource>(
+      () => _i46.MeRemoteDataSource(gh<_i784.ApiClient>()),
     );
     gh.lazySingleton<_i528.UserRemoteDataSource>(
       () => _i528.UserRemoteDataSource(gh<_i784.ApiClient>()),
+    );
+    gh.lazySingleton<_i485.MeRepository>(
+      () => _i858.MeRepositoryImpl(
+        gh<_i46.MeRemoteDataSource>(),
+        gh<_i270.AppDatabase>(),
+      ),
+      registerFor: {_real},
+    );
+    gh.lazySingleton<_i958.SessionController>(
+      () => _i958.SessionController(
+        gh<_i665.TokenStore>(),
+        gh<_i485.MeRepository>(),
+        gh<_i299.LocalFlags>(),
+        gh<_i270.AppDatabase>(),
+        gh<_i242.AuthEventsSink>(),
+      ),
+    );
+    gh.factory<_i902.OnboardingCubit>(
+      () => _i902.OnboardingCubit(gh<_i958.SessionController>()),
+    );
+    gh.lazySingleton<_i485.AppRouter>(
+      () => _i485.AppRouter(gh<_i958.SessionController>()),
     );
     gh.lazySingleton<_i247.UserRepository>(
       () => _i514.UserRepositoryImpl(
@@ -87,6 +185,78 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i270.AppDatabase>(),
       ),
       registerFor: {_real},
+    );
+    gh.lazySingleton<_i163.AuthRepository>(
+      () => _i235.AuthRepositoryImpl(gh<_i1043.AuthRemoteDataSource>()),
+      registerFor: {_real},
+    );
+    gh.factory<_i53.SignIn>(
+      () => _i53.SignIn(
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i601.SignUp>(
+      () => _i601.SignUp(
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
+    gh.factory<_i800.SetupProfile>(
+      () => _i800.SetupProfile(
+        gh<_i485.MeRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i440.SignOut>(
+      () => _i440.SignOut(
+        gh<_i163.AuthRepository>(),
+        gh<_i665.TokenStore>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i915.SignInWithApple>(
+      () => _i915.SignInWithApple(
+        gh<_i873.OAuthTokenSource>(),
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i594.SignInWithGoogle>(
+      () => _i594.SignInWithGoogle(
+        gh<_i873.OAuthTokenSource>(),
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i985.CheckUsername>(
+      () => _i985.CheckUsername(gh<_i163.AuthRepository>()),
+    );
+    gh.factory<_i95.RequestPasswordReset>(
+      () => _i95.RequestPasswordReset(gh<_i163.AuthRepository>()),
+    );
+    gh.factory<_i894.ResetPassword>(
+      () => _i894.ResetPassword(gh<_i163.AuthRepository>()),
+    );
+    gh.factory<_i30.SignUpCubit>(() => _i30.SignUpCubit(gh<_i601.SignUp>()));
+    gh.factory<_i206.OAuthCubit>(
+      () => _i206.OAuthCubit(
+        gh<_i594.SignInWithGoogle>(),
+        gh<_i915.SignInWithApple>(),
+      ),
+    );
+    gh.factory<_i16.ProfileSetupCubit>(
+      () => _i16.ProfileSetupCubit(
+        gh<_i985.CheckUsername>(),
+        gh<_i800.SetupProfile>(),
+      ),
+    );
+    gh.factory<_i764.ForgotPasswordCubit>(
+      () => _i764.ForgotPasswordCubit(
+        gh<_i95.RequestPasswordReset>(),
+        gh<_i894.ResetPassword>(),
+      ),
     );
     return this;
   }

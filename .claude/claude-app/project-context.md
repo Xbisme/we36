@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-06-30 (**Spec #001 Project Foundation, Design System & Navigation merged into `main`** — 85/85 tasks, 46 tests green incl. 12 goldens. **Next: #002 Networking, Cache & Realtime Core**.)
+> Last updated: 2026-06-30 (**Specs #001 + #002 merged into `main`** — #002 Networking/Cache/Realtime Core landed via PR #2, 50/50 tasks, 103 tests green, `dart analyze` clean. **Next: #003 Auth & Onboarding** — branch `003-auth-onboarding` created, in pre-spec discussion.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,19 +29,22 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #002 Networking, Cache & Realtime Core implemented** on branch `002-networking-core` (50/50 tasks; **103 tests green**, `dart analyze` clean, all offline/zero-network). Shipped: `ApiClient` (single `Dio`) + idempotency/auth/**single-flight refresh**/redacted-logging interceptors + central `FailureMapper`; `CursorPage<T>` + reusable 4-state `PaginatedListCubit`; **drift** cache base (`AppDatabase`/`UsersDao`, reactive `.watch()`) + migration harness; `RealtimeClient` Socket.IO scaffold + typed events + fake; repository pattern + fakes proven by the `User` reference slice. App runs DI `environment: 'fake'`. **Not committed/merged yet.** #001 merged earlier.
-- **Decision corrected**: realtime transport = **`socket_io_client`** (backend gateway is Socket.IO); constitution PATCHed to v1.0.2.
-- **Decisions to confirm at #002 planning**: local cache engine (**drift** vs **hive**); dev/prod API base URL + realtime endpoint; bundle ids (`app.we36` / `app.we36.dev` proposed); cursor-pagination envelope shape. (Lucide package + icon set resolved at #001 → `lucide_icons_flutter`.)
+- **Now**: **Spec #003 Auth & Onboarding COMPLETE** on branch `003-auth-onboarding` (**75/75 tasks**; **156 tests green**, `dart analyze` clean; native OAuth config + on-device smoke verified; **not committed/merged** — awaiting PR). The GATE every feature behind login sits on. SDD `specify→clarify→plan→tasks→analyze→implement` all run. Built: Splash/Onboarding/Sign in/Sign up/Forgot(6-OTP)/Profile-setup + OAuth Google/Apple, real `flutter_secure_storage` token store + single-flight refresh, `SessionController` (cold-start routing + forced-logout-once + cache wipe) replacing `AuthGuardStub`, drift v2 (`MeProfiles`). App still runs DI `environment: 'fake'` (real impls behind `env:['real']`).
+- **Toolchain bump**: Flutter **3.44.4** / Dart **3.12.2** (was 3.41/3.11 — the installed SDK was below the #001 `^3.11.5` floor; upgraded with user consent). Goldens regenerated.
+- **Remaining #003 (8 tasks)**: native iOS/Android config (T002/T003) + OAuth provisioning + dev-backend/on-device smoke (T072/T074) — none CI-gateable. Then commit + PR.
+- **Done — #002 merged**: `ApiClient` + idempotency/auth/**single-flight refresh**/redacted-logging interceptors + `FailureMapper`; `CursorPage<T>` + 4-state `PaginatedListCubit`; **drift** cache base + reactive `.watch()`; `RealtimeClient` Socket.IO scaffold + fake; repository pattern + fakes (`User` slice). App runs DI `environment: 'fake'`; real impls annotated `env: ['real']` (auth real impls start landing in #003). 103 tests green.
+- **Resolved at #002**: cache engine = **drift**; realtime = **`socket_io_client`** (constitution v1.0.2); cursor envelope shipped as `CursorPage<T>`.
+- **To confirm at #003**: OAuth client ids/redirect schemes; OTP channel (email vs SMS) for forgot-password; avatar pick/crop package; token-refresh seam wiring (#002 `TokenStore`/`TokenRefresher`/`AuthEventsSink` fakes → real `flutter_secure_storage` impls); dev/prod API base URL + bundle ids (`app.we36` / `app.we36.dev` proposed).
 - **Carried from #001**: bounded `cacheWidth`/`cached_network_image` for feed thumbnails (lands with media in #004); on-device VoiceOver/TalkBack + rotation recording (release gate at #015).
-- **Active blockers**: none. (Backend contract is defined per-spec as features need it; #002 stands up the client + fakes against the agreed envelope.)
+- **Active blockers**: none.
 
 ## Spec Status
 
 | # | Name | Status | Branch / merge |
 |---|---|---|---|
 | 001 | Project Foundation, Design System & Navigation | ✅ **Merged** | `001-project-foundation` (PR #1) |
-| 002 | Networking, Cache & Realtime Core | 🟡 **Next** | `002-networking-core` |
-| 003 | Auth & Onboarding | ⬜ Not started | `003-auth-onboarding` |
+| 002 | Networking, Cache & Realtime Core | ✅ **Merged** | `002-networking-core` (PR #2) |
+| 003 | Auth & Onboarding | 🔵 **Implemented** (not merged) | `003-auth-onboarding` |
 | 004 | Home Feed & Stories ⭐ | ⬜ Not started | `004-home-feed-stories` |
 | 005 | Create Story & Tools | ⬜ Not started | `005-create-story` |
 | 006 | Post Detail & Comments | ⬜ Not started | `006-post-comments` |

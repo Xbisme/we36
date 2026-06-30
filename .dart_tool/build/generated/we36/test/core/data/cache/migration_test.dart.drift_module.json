@@ -4,6 +4,7 @@
     "package:drift/native.dart",
     "package:flutter_test/flutter_test.dart",
     "package:we36/core/data/cache/app_database.dart",
+    "package:we36/core/data/me/me_profile.dart",
     "package:we36/core/data/user/user.dart"
   ]
 }

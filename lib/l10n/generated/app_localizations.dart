@@ -391,6 +391,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong.'**
   String get errUnknown;
+
+  /// Email field label (auth)
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authEmailLabel;
+
+  /// Password field label (auth)
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authPasswordLabel;
+
+  /// Email field hint (auth)
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com'**
+  String get authEmailHint;
+
+  /// Sign in screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get authSignInTitle;
+
+  /// Sign in screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue'**
+  String get authSignInSubtitle;
+
+  /// Sign in primary button
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get authSignInCta;
+
+  /// Link to the forgot-password flow
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get authForgotPasswordLink;
+
+  /// Divider label between password and OAuth
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get authOrDivider;
+
+  /// Google OAuth button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get authContinueWithGoogle;
+
+  /// Apple OAuth button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get authContinueWithApple;
+
+  /// Sign in footer prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get authNoAccountQuestion;
+
+  /// Link from sign in to sign up
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get authCreateAccountLink;
+
+  /// Sign out action
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get authSignOut;
+
+  /// Client-side email validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email.'**
+  String get authEmailInvalid;
+
+  /// Client-side password length validation
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters.'**
+  String get authPasswordTooShort;
+
+  /// Sign up screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account'**
+  String get authSignUpTitle;
+
+  /// Sign up primary button
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get authSignUpCta;
+
+  /// Sign up terms note
+  ///
+  /// In en, this message translates to:
+  /// **'By signing up you agree to our Terms and Privacy Policy.'**
+  String get authSignUpTerms;
+
+  /// Sign up footer prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get authHaveAccountQuestion;
+
+  /// Link from sign up to sign in
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get authLogInLink;
+
+  /// Profile setup screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Set up your profile'**
+  String get authProfileSetupTitle;
+
+  /// Profile setup subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a username and how your name appears.'**
+  String get authProfileSetupSubtitle;
+
+  /// Username field label
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get authUsernameLabel;
+
+  /// Username field hint
+  ///
+  /// In en, this message translates to:
+  /// **'username'**
+  String get authUsernameHint;
+
+  /// Display name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Display name'**
+  String get authDisplayNameLabel;
+
+  /// Display name field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get authDisplayNameHint;
+
+  /// Bio field label (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Bio (optional)'**
+  String get authBioLabel;
+
+  /// Bio field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Tell people about yourself'**
+  String get authBioHint;
+
+  /// Profile setup primary button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get authContinueCta;
+
+  /// Username availability: checking
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get authUsernameChecking;
+
+  /// Username availability: available
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get authUsernameAvailable;
+
+  /// Username availability: taken
+  ///
+  /// In en, this message translates to:
+  /// **'That username is taken.'**
+  String get authUsernameTaken;
+
+  /// Username format rule / invalid
+  ///
+  /// In en, this message translates to:
+  /// **'3–30 chars: lowercase letters, numbers, . or _'**
+  String get authUsernameInvalid;
+
+  /// Forgot password screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get authForgotTitle;
+
+  /// Forgot password subtitle (email step)
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email and we\'ll send you a code.'**
+  String get authForgotSubtitle;
+
+  /// Send reset code button
+  ///
+  /// In en, this message translates to:
+  /// **'Send code'**
+  String get authSendCodeCta;
+
+  /// OTP step title
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code'**
+  String get authCodeTitle;
+
+  /// OTP step subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code we sent to {email}.'**
+  String authCodeSubtitle(String email);
+
+  /// New password field label
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get authNewPasswordLabel;
+
+  /// Reset password button
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get authResetCta;
+
+  /// Resend code action (enabled)
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get authResendCode;
+
+  /// Resend cooldown countdown
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code in {seconds}s'**
+  String authResendIn(int seconds);
+
+  /// Toast after a successful reset
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset. Please sign in.'**
+  String get authResetDone;
+
+  /// Dev-only OTP hint
+  ///
+  /// In en, this message translates to:
+  /// **'Dev code: {code}'**
+  String authDevCode(String code);
+
+  /// Onboarding skip action
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardSkip;
+
+  /// Onboarding primary action → Sign up
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onboardGetStarted;
+
+  /// Onboarding slide 1 title
+  ///
+  /// In en, this message translates to:
+  /// **'Capture every moment'**
+  String get onboardTitle1;
+
+  /// Onboarding slide 1 body
+  ///
+  /// In en, this message translates to:
+  /// **'Share photos and videos with the people who matter.'**
+  String get onboardBody1;
+
+  /// Onboarding slide 2 title
+  ///
+  /// In en, this message translates to:
+  /// **'Reels, stories & feed'**
+  String get onboardTitle2;
+
+  /// Onboarding slide 2 body
+  ///
+  /// In en, this message translates to:
+  /// **'Discover and create in one playful place.'**
+  String get onboardBody2;
+
+  /// Onboarding slide 3 title
+  ///
+  /// In en, this message translates to:
+  /// **'Keep up with friends'**
+  String get onboardTitle3;
+
+  /// Onboarding slide 3 body
+  ///
+  /// In en, this message translates to:
+  /// **'Message, react, and stay close.'**
+  String get onboardBody3;
 }
 
 class _AppLocalizationsDelegate

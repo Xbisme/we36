@@ -1,0 +1,17 @@
+{
+  "assets": [
+    {
+      "encoding": {
+        "file": "/Users/xbism3/Documents/we36/.dart_tool/hooks_runner/shared/sqlite3/build/download-1fc962c0/libsqlite3.dylib",
+        "id": "package:sqlite3/src/ffi/libsqlite3.g.dart",
+        "link_mode": {
+          "type": "dynamic_loading_bundle"
+        }
+      },
+      "type": "code_assets/code"
+    }
+  ],
+  "assets_for_linking": {},
+  "status": "success",
+  "timestamp": "2026-06-30 23:03:32.000"
+}

@@ -49,6 +49,11 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
+  # Auth & onboarding (#003)
+  google_sign_in: ^7.2.0 # v7 singleton API: GoogleSignIn.instance + authenticate()
+  sign_in_with_apple: ^8.1.0
+  shared_preferences: ^2.5.5 # non-secret local flags (onboardingSeen, profileCompleted)
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
