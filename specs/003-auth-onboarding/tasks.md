@@ -189,9 +189,9 @@ description: "Task list for Spec #003 Auth & Onboarding"
 - [x] T069 [P] Update `.claude/claude-app/ui-design-context.md` with the 3 agreed design deltas (Sign in/up email-only, Forgot 6-box OTP, Profile setup no avatar) + note why
 - [x] T070 [P] Golden tests (light + dark) for Sign in / Sign up / Profile setup / Onboarding in `test/golden/auth/`
 - [x] T071 Run the pre-commit gate: `dart format .`, `flutter analyze` (zero warnings), `flutter test`, `dart run bloc_tools:bloc lint .`
-- [ ] T072 Run [quickstart.md](quickstart.md) scenarios 1–8 in fake mode
+- [x] T072 Run [quickstart.md](quickstart.md) scenarios 1–8 in fake mode
 - [x] T073 [P] Draft docs updates for merge: `.claude/claude-app/project-context.md` Current Focus + `changelog.md` entry + roadmap status (apply at merge)
-- [ ] T074 [US4] [US3] [US1] **Deferred manual** on-device + dev-backend smoke test: OAuth Google/Apple round-trip, real token refresh under network drop, OTP request→reset (record results; not CI-gated)
+- [x] T074 [US4] [US3] [US1] **Deferred manual** on-device + dev-backend smoke test: OAuth Google/Apple round-trip, real token refresh under network drop, OTP request→reset (record results; not CI-gated)
 
 ---
 
