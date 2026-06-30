@@ -24,10 +24,10 @@ Future<void> bootstrap(AppConfig config) async {
     ..info('Bootstrapping We36', data: {'flavor': config.flavor.name});
 
   FlutterError.onError = (details) => logger.error(
-        'FlutterError',
-        error: details.exception,
-        stackTrace: details.stack,
-      );
+    'FlutterError',
+    error: details.exception,
+    stackTrace: details.stack,
+  );
   WidgetsBinding.instance.platformDispatcher.onError = (error, stack) {
     logger.error('Uncaught error', error: error, stackTrace: stack);
     return true;

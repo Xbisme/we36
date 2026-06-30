@@ -320,11 +320,13 @@ channel rather than talking to HTTP/sockets directly.
   and versioned; endpoint paths, query keys, and socket event names MUST be
   defined in **one** constants location — NEVER duplicated as string literals at
   call sites. The base URL MUST be per-flavor and centralized.
-- **Realtime channel**: a single **WebSocket** connection (`web_socket_channel`)
-  carries DM messages, typing/presence, and live notifications. It MUST own one
-  connection with reconnect + exponential backoff + heartbeat, expose typed
-  inbound/outbound events from one place, and degrade gracefully (the app stays
-  usable read-only when realtime is down; `realtimeDisconnected` is surfaced
+- **Realtime channel**: a single realtime connection over a **Socket.IO-compatible
+  client** (`socket_io_client`) — the backend gateway is Socket.IO
+  (`@nestjs/platform-socket.io` + Redis adapter), which a raw WebSocket client
+  cannot speak — carries DM messages, typing/presence, and live notifications. It
+  MUST own one connection with reconnect + exponential backoff + heartbeat, expose
+  typed inbound/outbound events from one place, and degrade gracefully (the app
+  stays usable read-only when realtime is down; `realtimeDisconnected` is surfaced
   quietly).
 - **Pagination** MUST be cursor-based and standardized across feeds (one shared
   page-envelope type), so list Cubits and the shared paginated-list widget reuse
@@ -555,7 +557,8 @@ surfaces only at build/`pod install` time, after the Dart is written. A
 - **Architecture**: Clean Architecture + MVVM, feature-first.
 - **State Management**: Cubit (preferred) / BLoC via `flutter_bloc`.
 - **Networking**: `dio` REST/JSON client + interceptors (auth/refresh/logging);
-  `web_socket_channel` realtime channel. Backend = custom versioned API
+  `socket_io_client` realtime channel (Socket.IO-compatible — matches the backend
+  Socket.IO gateway). Backend = custom versioned API
   (server tech out of scope).
 - **Auth**: email/phone + password and OAuth (Google/Apple); access + refresh
   tokens in `flutter_secure_storage`; single-flight refresh.
@@ -670,7 +673,14 @@ provides runtime development guidance subordinate to it.
 - Use `CLAUDE.md` for runtime development guidance and
   `.claude/claude-app/ui-design-context.md` for UI compliance.
 
-**Version**: 1.0.1 | **Ratified**: 2026-06-30 | **Last Amended**: 2026-06-30
+**Version**: 1.0.2 | **Ratified**: 2026-06-30 | **Last Amended**: 2026-06-30
+<!-- 1.0.2 (2026-06-30, PATCH): corrected Principle VIII + Technical Standards
+realtime transport from `web_socket_channel` to `socket_io_client` (a
+Socket.IO-compatible client) to match the shipped backend Socket.IO gateway
+(@nestjs/platform-socket.io + @socket.io/redis-adapter); a raw WebSocket client
+cannot speak Socket.IO. Architecture intent unchanged (one connection, typed
+events, reconnect/backoff/heartbeat, graceful degradation). No principle
+added/removed. -->
 <!-- 1.0.1 (2026-06-30, PATCH): clarified Principles VI & VII with the adaptive
 tablet/iPad layout (sidebar rail + two-pane master/detail) after importing the
 We36 Responsive design; detail in ui-design-context.md §Responsive. No principle

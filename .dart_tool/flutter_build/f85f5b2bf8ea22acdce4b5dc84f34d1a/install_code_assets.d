@@ -1,1 +1,1 @@
- /Users/ase/Documents/flutter_we36/.dart_tool/flutter_build/f85f5b2bf8ea22acdce4b5dc84f34d1a/native_assets.json:  /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/objective_c.dylib
+ /Users/ase/Documents/flutter_we36/.dart_tool/flutter_build/f85f5b2bf8ea22acdce4b5dc84f34d1a/native_assets.json:  /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/objective_c.dylib /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/sqlite3/build/download-58ce6b6/libsqlite3.dylib

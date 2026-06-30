@@ -1,0 +1,1 @@
+{"valid_import":true,"imports":[{"uri":"package:injectable/injectable.dart","transitive":false},{"uri":"package:uuid/uuid.dart","transitive":false},{"uri":"package:we36/core/data/user/user.dart","transitive":false},{"uri":"package:we36/core/data/user/user_repository.dart","transitive":false},{"uri":"package:we36/core/domain/result.dart","transitive":false}],"elements":[]}

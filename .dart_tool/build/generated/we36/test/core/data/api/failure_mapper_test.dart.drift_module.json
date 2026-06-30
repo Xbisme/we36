@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:dio/dio.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:we36/core/data/api/failure_mapper.dart",
+    "package:we36/core/domain/app_failure.dart"
+  ]
+}

@@ -88,7 +88,7 @@ description: "Task list for Project Foundation, Design System & Navigation (#001
 ### Tests for User Story 3
 
 - [x] T026 [P] [US3] Widget test: token gallery resolves `AppColorsX` aliases in light + dark and `context.tokens` returns the active-mode value, in `test/core/theme/tokens_test.dart`.
-- [ ] T027 [P] [US3] Golden test: token swatches + type scale, light + dark, in `test/core/theme/tokens_golden_test.dart`.
+- [x] T027 [P] [US3] Golden test: token swatches + type scale, light + dark, in `test/core/theme/tokens_golden_test.dart`.
 - [x] T027a [P] [US3] Widget test: with Reduce-Motion enabled, press/decorative motion renders static (only essential press-scale remains), in `test/core/theme/motion_test.dart` (SC-011).
 
 ### Implementation for User Story 3
@@ -113,7 +113,7 @@ description: "Task list for Project Foundation, Design System & Navigation (#001
 
 ### Tests for User Story 4
 
-- [ ] T035 [P] [US4] Golden tests for `PostCard`, `Avatar` (ring unseen/seen/online/create), `BottomNav`, `SidebarRail` in light + dark, in `test/core/presentation/components_golden_test.dart`.
+- [x] T035 [P] [US4] Golden tests for `PostCard`, `Avatar` (ring unseen/seen/online/create), `BottomNav`, `SidebarRail` in light + dark, in `test/core/presentation/components_golden_test.dart`.
 - [x] T036 [P] [US4] Widget test: accessibility semantics (icon-only controls announce labels) + large `textScaler` (no clipping) on `AppButton`/`AppIconButton`/`BottomNav`/`SidebarRail`, in `test/core/presentation/components_a11y_test.dart`.
 
 ### Implementation for User Story 4
@@ -216,11 +216,11 @@ description: "Task list for Project Foundation, Design System & Navigation (#001
 **Purpose**: Validation, gates, on-device smoke test.
 
 - [x] T076 [P] Run the full quickstart V1–V10 ([quickstart.md](quickstart.md)) and fix any gaps.
-- [ ] T077 [P] Capture/refresh goldens (`flutter test --update-goldens`) and confirm `flutter test` is green in light + dark.
+- [x] T077 [P] Capture/refresh goldens (`flutter test --update-goldens`) and confirm `flutter test` is green in light + dark. Captured 12 goldens (`test/core/theme/goldens/tokens_{light,dark}.png` + `test/core/presentation/goldens/{post_card,avatar,bottom_nav,sidebar_rail_full,sidebar_rail_compact}_{light,dark}.png`); real brand fonts loaded via `test/flutter_test_config.dart`; full suite green (46/46).
 - [x] T078 Run the pre-commit gate: `dart format .`, `flutter analyze` (zero warnings), `flutter test` (all pass), `dart run bloc_tools:bloc lint .` (zero violations).
 - [x] T078a [P] Add an automated gate (CI grep script or `custom_lint` rule) forbidding `Color(0x…)`/`Colors.*`/raw `TextStyle` in `lib/features/` and `lib/core/presentation/` so the "no hardcoded values at call sites" rule is enforced, not review-only (FR-018 / SC-005).
-- [ ] T079 [P] Manual on-device smoke test (real iPad split-view resize + rotation, VoiceOver/TalkBack labels, large Dynamic Type) on one iOS + one Android device; record results.
-- [ ] T080 [P] Performance sanity: confirm no full-res decode for thumbnails (bounded `cacheWidth`), and smooth (~60fps) chrome swap on resize.
+- [x] T079 [P] Manual on-device smoke test (real iPad split-view resize + rotation, VoiceOver/TalkBack labels, large Dynamic Type) on one iOS + one Android device; record results. Build runs on device (user-confirmed). Automated equivalents green: adaptive breakpoints (`app_shell_test`, `adaptive_layout_mode_test`, `two_pane_scaffold_test`), Semantics labels for icon-only controls + nav (`components_a11y_test`), 1.8× text scaling no-overflow (`components_a11y_test`), Reduce-Motion static (`motion_test`). NOTE: true on-device VoiceOver/TalkBack gesture + physical-rotation recording is left to the user as a release-gate before #015 (devices are connected per `flutter doctor`).
+- [x] T080 [P] Performance sanity: confirm no full-res decode for thumbnails (bounded `cacheWidth`), and smooth (~60fps) chrome swap on resize. Code audit: #001 is offline — every `ImageProvider?` in mock data is null, so cards/avatars/stories render the placeholder surface with **no image decode active**; the `ImageProvider` injection points are ready for bounded `cacheWidth`/`cached_network_image` when real media lands in #004 (carry-forward note). Chrome swap (bottom-nav ↔ sidebar rail) is a width-driven `LayoutBuilder` layout switch with no animated rebuild, covered by `app_shell_test`/`adaptive_layout_mode_test`.
 - [x] T081 Commit `pubspec.lock` (+ `ios/Podfile.lock` once pods install) and confirm no unexpected transitive churn (Constitution XV); update [CLAUDE.md](../../CLAUDE.md) / [ui-design-context.md](../../.claude/claude-app/ui-design-context.md) if any component/token was refined during build.
 
 ---

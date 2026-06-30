@@ -1,0 +1,12 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:we36/core/mock/mock_data.dart",
+    "package:we36/core/presentation/app_search_bar.dart",
+    "package:we36/core/presentation/app_tag.dart",
+    "package:we36/core/theme/app_colors_x.dart",
+    "package:we36/core/theme/app_dimens.dart",
+    "package:we36/core/utils/l10n_extension.dart"
+  ]
+}

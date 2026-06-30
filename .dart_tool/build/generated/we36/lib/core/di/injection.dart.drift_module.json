@@ -1,0 +1,8 @@
+{
+  "elements": {},
+  "imports": [
+    "package:get_it/get_it.dart",
+    "package:injectable/injectable.dart",
+    "package:we36/core/di/injection.config.dart"
+  ]
+}

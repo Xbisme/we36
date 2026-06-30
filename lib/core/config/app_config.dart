@@ -3,8 +3,9 @@ enum Flavor { dev, prod }
 
 /// App-wide, per-flavor configuration.
 ///
-/// The API/realtime endpoints are intentionally empty in this spec (#001):
-/// networking lands in #002. They exist here only as reserved slots.
+/// API/realtime endpoints carry **placeholder** hosts (#002): the app runs on
+/// fakes until the backend deploys, at which point the real hosts are wired here.
+/// `apiBaseUrl` is rooted at the versioned `/v1` path (Constitution VIII).
 class AppConfig {
   const AppConfig({
     required this.flavor,
@@ -19,16 +20,16 @@ class AppConfig {
     : flavor = Flavor.dev,
       appName = 'We36 Dev',
       bundleId = 'app.we36.dev',
-      apiBaseUrl = '',
-      realtimeUrl = '';
+      apiBaseUrl = 'https://api.we36.dev/v1',
+      realtimeUrl = 'wss://rt.we36.dev';
 
   /// Production flavor (app.we36).
   const AppConfig.prod()
     : flavor = Flavor.prod,
       appName = 'We36',
       bundleId = 'app.we36',
-      apiBaseUrl = '',
-      realtimeUrl = '';
+      apiBaseUrl = 'https://api.we36.app/v1',
+      realtimeUrl = 'wss://rt.we36.app';
 
   final Flavor flavor;
   final String appName;

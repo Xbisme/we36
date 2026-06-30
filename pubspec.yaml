@@ -12,6 +12,18 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # Networking (#002)
+  dio: ^5.10.0
+  socket_io_client: ^3.1.6 # Socket.IO-compatible — matches the backend Socket.IO gateway
+
+  # Local cache / persistence (#002)
+  drift: ^2.34.0
+  drift_flutter: ^0.3.0
+  flutter_secure_storage: ^10.3.1 # token store seam (impl in #003)
+
+  # Ids (UUIDv7 — matches backend id scheme)
+  uuid: ^4.5.3
+
   # State management
   flutter_bloc: ^9.1.1
 
@@ -45,6 +57,7 @@ dev_dependencies:
   build_runner: ^2.15.0
   freezed: ^3.2.5
   json_serializable: ^6.14.0
+  drift_dev: ^2.34.0
   injectable_generator: ^3.0.2 # 3.1.0 requires Dart >=3.12; pinned for the installed 3.11.5 toolchain
 
   # Lint

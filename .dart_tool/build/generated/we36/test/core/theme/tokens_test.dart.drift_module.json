@@ -1,0 +1,10 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:we36/core/theme/app_colors.dart",
+    "package:we36/core/theme/app_colors_x.dart",
+    "asset:we36/test/helpers/pump_app.dart"
+  ]
+}

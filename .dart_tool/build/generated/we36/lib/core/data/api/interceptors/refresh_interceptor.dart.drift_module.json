@@ -1,0 +1,8 @@
+{
+  "elements": {},
+  "imports": [
+    "package:dio/dio.dart",
+    "package:we36/core/services/session/auth_events.dart",
+    "package:we36/core/services/session/token_refresher.dart"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:we36/core/theme/app_gradients.dart",
+    "package:we36/core/theme/app_typography.dart"
+  ]
+}

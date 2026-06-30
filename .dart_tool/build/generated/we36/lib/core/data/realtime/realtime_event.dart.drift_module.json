@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:we36/core/constants/socket_events.dart",
+    "package:we36/core/domain/app_failure.dart"
+  ]
+}

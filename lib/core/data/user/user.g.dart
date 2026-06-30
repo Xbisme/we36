@@ -1,0 +1,33 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'user.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_User _$UserFromJson(Map<String, dynamic> json) => _User(
+  id: json['id'] as String,
+  username: json['username'] as String,
+  displayName: json['displayName'] as String,
+  isPrivate: json['isPrivate'] as bool,
+  isVerified: json['isVerified'] as bool,
+  followersCount: (json['followersCount'] as num).toInt(),
+  followingCount: (json['followingCount'] as num).toInt(),
+  postsCount: (json['postsCount'] as num).toInt(),
+  avatarUrl: json['avatarUrl'] as String?,
+  bio: json['bio'] as String?,
+);
+
+Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
+  'id': instance.id,
+  'username': instance.username,
+  'displayName': instance.displayName,
+  'isPrivate': instance.isPrivate,
+  'isVerified': instance.isVerified,
+  'followersCount': instance.followersCount,
+  'followingCount': instance.followingCount,
+  'postsCount': instance.postsCount,
+  'avatarUrl': instance.avatarUrl,
+  'bio': instance.bio,
+};

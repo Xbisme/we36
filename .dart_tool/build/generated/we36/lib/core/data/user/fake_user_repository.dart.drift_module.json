@@ -1,0 +1,10 @@
+{
+  "elements": {},
+  "imports": [
+    "package:injectable/injectable.dart",
+    "package:uuid/uuid.dart",
+    "package:we36/core/data/user/user.dart",
+    "package:we36/core/data/user/user_repository.dart",
+    "package:we36/core/domain/result.dart"
+  ]
+}

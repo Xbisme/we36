@@ -1,0 +1,1 @@
+{"valid_import":true,"imports":[{"uri":"package:flutter_test/flutter_test.dart","transitive":false},{"uri":"package:we36/core/constants/socket_events.dart","transitive":false},{"uri":"package:we36/core/data/realtime/realtime_event.dart","transitive":false}],"elements":[]}

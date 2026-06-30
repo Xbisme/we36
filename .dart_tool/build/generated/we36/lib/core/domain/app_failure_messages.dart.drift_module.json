@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/l10n/generated/app_localizations.dart"
+  ]
+}

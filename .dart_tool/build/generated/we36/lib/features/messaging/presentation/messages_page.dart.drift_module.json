@@ -1,0 +1,13 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:we36/core/mock/mock_data.dart",
+    "package:we36/core/presentation/avatar.dart",
+    "package:we36/core/presentation/pane_header.dart",
+    "package:we36/core/router/two_pane_scaffold.dart",
+    "package:we36/core/theme/app_colors_x.dart",
+    "package:we36/core/theme/app_typography.dart",
+    "package:we36/core/utils/l10n_extension.dart"
+  ]
+}

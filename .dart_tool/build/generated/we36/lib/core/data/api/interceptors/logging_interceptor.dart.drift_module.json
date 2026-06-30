@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:dio/dio.dart",
+    "package:we36/core/utils/app_logger.dart"
+  ]
+}

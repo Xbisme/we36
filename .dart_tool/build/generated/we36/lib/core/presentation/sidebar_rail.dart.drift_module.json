@@ -1,0 +1,15 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:we36/core/presentation/app_badge.dart",
+    "package:we36/core/presentation/app_icon.dart",
+    "package:we36/core/presentation/avatar.dart",
+    "package:we36/core/presentation/nav_item.dart",
+    "package:we36/core/presentation/pressable.dart",
+    "package:we36/core/presentation/wordmark.dart",
+    "package:we36/core/theme/app_colors_x.dart",
+    "package:we36/core/theme/app_dimens.dart",
+    "package:we36/core/theme/app_typography.dart"
+  ]
+}
