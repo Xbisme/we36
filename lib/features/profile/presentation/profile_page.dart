@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_button.dart';
 import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/presentation/max_width_box.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
+import 'package:we36/core/utils/l10n_extension.dart';
+import 'package:we36/features/auth/domain/usecases/sign_out.dart';
 
 /// My-profile placeholder: header (avatar + stats), name/bio, actions, grid.
 class ProfilePage extends StatelessWidget {
@@ -77,6 +82,14 @@ class ProfilePage extends StatelessWidget {
               itemBuilder: (context, i) => ColoredBox(
                 color: i.isEven ? tokens.surface2 : tokens.surfaceSunken,
               ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            // Temporary logout affordance (#003 US1) — relocates to Settings (#014).
+            AppButton(
+              label: context.l10n.authSignOut,
+              kind: AppButtonKind.ghost,
+              fullWidth: true,
+              onPressed: () => unawaited(getIt<SignOut>().call()),
             ),
           ],
         ),

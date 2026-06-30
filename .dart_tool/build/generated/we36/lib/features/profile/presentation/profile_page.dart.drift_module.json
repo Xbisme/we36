@@ -2,11 +2,14 @@
   "elements": {},
   "imports": [
     "package:flutter/material.dart",
+    "package:we36/core/di/injection.dart",
     "package:we36/core/presentation/app_button.dart",
     "package:we36/core/presentation/avatar.dart",
     "package:we36/core/presentation/max_width_box.dart",
     "package:we36/core/theme/app_colors_x.dart",
     "package:we36/core/theme/app_dimens.dart",
-    "package:we36/core/theme/app_typography.dart"
+    "package:we36/core/theme/app_typography.dart",
+    "package:we36/core/utils/l10n_extension.dart",
+    "package:we36/features/auth/domain/usecases/sign_out.dart"
   ]
 }

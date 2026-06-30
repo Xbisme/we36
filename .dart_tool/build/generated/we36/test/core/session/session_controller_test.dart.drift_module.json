@@ -1,0 +1,10 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_test/flutter_test.dart",
+    "package:we36/core/data/auth/fake_auth_backend.dart",
+    "package:we36/core/data/me/me_profile.dart",
+    "package:we36/core/services/session/session_controller.dart",
+    "asset:we36/test/support/auth_test_doubles.dart"
+  ]
+}

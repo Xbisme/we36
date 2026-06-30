@@ -41,6 +41,10 @@ import 'package:we36/core/services/session/session_controller.dart' as _i958;
 import 'package:we36/core/services/session/token_refresher.dart' as _i200;
 import 'package:we36/core/services/session/token_store.dart' as _i665;
 import 'package:we36/core/utils/app_logger.dart' as _i433;
+import 'package:we36/features/auth/domain/usecases/sign_in.dart' as _i53;
+import 'package:we36/features/auth/domain/usecases/sign_out.dart' as _i440;
+import 'package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart'
+    as _i942;
 
 const String _real = 'real';
 const String _fake = 'fake';
@@ -150,6 +154,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i163.AuthRepository>(
       () => _i235.AuthRepositoryImpl(gh<_i1043.AuthRemoteDataSource>()),
       registerFor: {_real},
+    );
+    gh.factory<_i53.SignIn>(
+      () => _i53.SignIn(
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
+    gh.factory<_i440.SignOut>(
+      () => _i440.SignOut(
+        gh<_i163.AuthRepository>(),
+        gh<_i665.TokenStore>(),
+        gh<_i958.SessionController>(),
+      ),
     );
     return this;
   }

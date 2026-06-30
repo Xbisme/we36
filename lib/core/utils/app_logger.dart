@@ -59,7 +59,7 @@ class AppLogger {
   }) {
     if (level.index < minLevel.index) return;
     final safeMessage = redact(message);
-    final safeData = data == null ? null : _redactMap(data);
+    final safeData = data == null ? null : redactMap(data);
     final suffix = safeData == null || safeData.isEmpty ? '' : ' $safeData';
     developer.log(
       '$safeMessage$suffix',
@@ -90,7 +90,9 @@ class AppLogger {
         );
   }
 
-  static Map<String, Object?> _redactMap(Map<String, Object?> data) {
+  /// Redact values whose key looks like a secret (token/password/email/…).
+  /// Exposed for redaction tests (Constitution I; spec FR-014/SC-008).
+  static Map<String, Object?> redactMap(Map<String, Object?> data) {
     return data.map((key, value) {
       final lower = key.toLowerCase();
       final isSecret = _secretKeys.any(lower.contains);

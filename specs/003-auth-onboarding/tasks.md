@@ -68,22 +68,22 @@ description: "Task list for Spec #003 Auth & Onboarding"
 
 ### Tests for User Story 1
 
-- [ ] T026 [P] [US1] `bloc_test` `SignInCubit` (loading → loadedSubmitting → loaded; error `invalidCredentials`, `rateLimited`) in `test/features/auth/sign_in_cubit_test.dart`
-- [ ] T027 [P] [US1] Unit test `RealTokenStore` round-trip + `RealTokenRefresher` single-flight against a mock secure storage / stubbed dio in `test/core/session/token_seams_test.dart`
-- [ ] T028 [P] [US1] `SessionController` test: bootstrap routing (no tokens / cached completed / cached incomplete), forced-unauthenticated wipe-once, logout clears cache (in-memory `AppDatabase.forTesting`) in `test/core/session/session_controller_test.dart`
-- [ ] T029 [P] [US1] Widget test `SignInPage` happy + wrong-password error, **plus tablet-width adaptive layout + text-scaling (e.g. 2.0) + semantics labels + light/dark** (FR-030, Constitution VI/VII/XII; partial fix for analyze finding **C2**) in `test/features/auth/sign_in_page_test.dart`
+- [x] T026 [P] [US1] `bloc_test` `SignInCubit` (loading → loadedSubmitting → loaded; error `invalidCredentials`, `rateLimited`) in `test/features/auth/sign_in_cubit_test.dart`
+- [x] T027 [P] [US1] Unit test `RealTokenStore` round-trip + `RealTokenRefresher` single-flight against a mock secure storage / stubbed dio in `test/core/session/token_seams_test.dart`
+- [x] T028 [P] [US1] `SessionController` test: bootstrap routing (no tokens / cached completed / cached incomplete), forced-unauthenticated wipe-once, logout clears cache (in-memory `AppDatabase.forTesting`) in `test/core/session/session_controller_test.dart`
+- [x] T029 [P] [US1] Widget test `SignInPage` happy + wrong-password error, **plus tablet-width adaptive layout + text-scaling (e.g. 2.0) + semantics labels + light/dark** (FR-030, Constitution VI/VII/XII; partial fix for analyze finding **C2**) in `test/features/auth/sign_in_page_test.dart`
 - [x] T030 [P] [US1] drift migration test v1→v2 in `test/core/cache/migration_v1_v2_test.dart`
-- [ ] T030a [P] [US1] **Privacy** (Constitution I, FR-014 / SC-008): assert a sign-in + refresh flow emits **no token/password/refresh-token** to `AppLogger` (capture log sink; verify redaction) in `test/core/session/log_redaction_test.dart` — resolves analyze finding **C1**
+- [x] T030a [P] [US1] **Privacy** (Constitution I, FR-014 / SC-008): assert a sign-in + refresh flow emits **no token/password/refresh-token** to `AppLogger` (capture log sink; verify redaction) in `test/core/session/log_redaction_test.dart` — resolves analyze finding **C1**
 
 ### Implementation for User Story 1
 
-- [ ] T031 [P] [US1] `SignIn` use case in `lib/features/auth/domain/usecases/sign_in.dart`
-- [ ] T032 [P] [US1] `SignOut` use case (best-effort `POST /auth/logout` → `SessionController.signOut()`) in `lib/features/auth/domain/usecases/sign_out.dart`
-- [ ] T033 [US1] `SignInCubit` (`@injectable`, extends `AppCubit`) in `lib/features/auth/presentation/sign_in/sign_in_cubit.dart`
-- [ ] T034 [US1] `SignInPage` UI (email + password fields, "Forgot password?" link, OAuth row slot, footer "Create account") from #001 shared widgets/tokens in `lib/features/auth/presentation/sign_in/sign_in_page.dart`
-- [ ] T035 [US1] `SplashPage` wired to `SessionController.bootstrap()` (session-restore surface; replaces placeholder) in `lib/features/auth/presentation/splash/splash_page.dart`
-- [ ] T036 [US1] Temporary logout entry point (e.g. on the Profile tab placeholder) to exercise wipe end-to-end in `lib/features/.../` (note for removal/relocation in #010/#014)
-- [ ] T037 [US1] l10n keys for sign-in + session messages (EN + VI)
+- [x] T031 [P] [US1] `SignIn` use case in `lib/features/auth/domain/usecases/sign_in.dart`
+- [x] T032 [P] [US1] `SignOut` use case (best-effort `POST /auth/logout` → `SessionController.signOut()`) in `lib/features/auth/domain/usecases/sign_out.dart`
+- [x] T033 [US1] `SignInCubit` (`@injectable`, extends `AppCubit`) in `lib/features/auth/presentation/sign_in/sign_in_cubit.dart`
+- [x] T034 [US1] `SignInPage` UI (email + password fields, "Forgot password?" link, OAuth row slot, footer "Create account") from #001 shared widgets/tokens in `lib/features/auth/presentation/sign_in/sign_in_page.dart`
+- [x] T035 [US1] `SplashPage` wired to `SessionController.bootstrap()` (session-restore surface; replaces placeholder) in `lib/features/auth/presentation/splash/splash_page.dart`
+- [x] T036 [US1] Temporary logout entry point (e.g. on the Profile tab placeholder) to exercise wipe end-to-end in `lib/features/.../` (note for removal/relocation in #010/#014)
+- [x] T037 [US1] l10n keys for sign-in + session messages (EN + VI)
 
 **Checkpoint**: US1 fully functional — sign in, persist, refresh, logout, guard. This is the demoable MVP.
 
