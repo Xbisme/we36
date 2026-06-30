@@ -24,8 +24,8 @@ description: "Task list for Spec #003 Auth & Onboarding"
 ## Phase 1: Setup (Shared Infrastructure)
 
 - [x] T001 Add deps to `pubspec.yaml` (`google_sign_in: ^7.2.0`, `sign_in_with_apple: ^8.1.0`, `shared_preferences: ^2.5.5`) and run `flutter pub get`; commit `pubspec.lock`
-- [ ] T002 [P] iOS native config in `ios/`: raise deployment target to 13.0, add the **Sign in with Apple** capability + entitlement, add the Google reversed-client-id URL scheme + `CFBundleURLTypes` in `ios/Runner/Info.plist`
-- [ ] T003 [P] Android native config in `android/`: `minSdk 24`, set `sign_in_with_apple` launch mode (`singleTask`/`singleTop`) in `AndroidManifest.xml`, add Google config
+- [x] T002 [P] iOS native config in `ios/`: raise deployment target to 13.0, add the **Sign in with Apple** capability + entitlement, add the Google reversed-client-id URL scheme + `CFBundleURLTypes` in `ios/Runner/Info.plist`
+- [x] T003 [P] Android native config in `android/`: `minSdk 24`, set `sign_in_with_apple` launch mode (`singleTask`/`singleTop`) in `AndroidManifest.xml`, add Google config
 - [x] T004 [P] Add auth + me endpoint constants to `lib/core/constants/api_endpoints.dart` (`/auth/register|login|oauth/{provider}|logout|forgot|reset|check-username`, `/me/setup`; `/auth/refresh` + `/me` already present)
 
 ---

@@ -1,3 +1,5 @@
 APP_BUNDLE_ID=app.we36
 APP_DISPLAY_NAME=We36
 ENVIRONMENT=prod
+GOOGLE_IOS_CLIENT_ID=606535223915-9d8n9eafjk6eaps225apn65djvikqlgu.apps.googleusercontent.com
+GOOGLE_REVERSED_CLIENT_ID=com.googleusercontent.apps.606535223915-9d8n9eafjk6eaps225apn65djvikqlgu

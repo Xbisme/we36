@@ -1,6 +1,7 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:we36/core/config/app_config.dart';
 import 'package:we36/features/auth/data/oauth_token_source.dart';
 
 /// Real [OAuthTokenSource] (`real` env): obtains the provider id_token via the
@@ -8,14 +9,20 @@ import 'package:we36/features/auth/data/oauth_token_source.dart';
 /// FR-021); other provider failures rethrow → mapped to `oauthFailed`.
 @LazySingleton(as: OAuthTokenSource, env: ['real'])
 class RealOAuthTokenSource implements OAuthTokenSource {
-  RealOAuthTokenSource();
+  RealOAuthTokenSource(this._config);
 
+  final AppConfig _config;
   bool _googleReady = false;
 
   Future<void> _ensureGoogle() async {
     if (_googleReady) return;
-    // Client IDs come from native config (Info.plist / strings); see T063.
-    await GoogleSignIn.instance.initialize();
+    // The iOS client ID comes from Info.plist (GIDClientID / URL scheme); the
+    // Web client ID (serverClientId) sets the id_token audience the backend
+    // accepts. Both are provisioned in Google Cloud — see the setup guide.
+    final serverClientId = _config.googleServerClientId;
+    await GoogleSignIn.instance.initialize(
+      serverClientId: serverClientId.isEmpty ? null : serverClientId,
+    );
     _googleReady = true;
   }
 

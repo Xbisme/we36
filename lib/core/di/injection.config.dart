@@ -96,7 +96,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i299.LocalFlags>(() => _i299.LocalFlagsImpl());
     gh.lazySingleton<_i242.AuthEventsSink>(() => _i242.AuthEvents());
     gh.lazySingleton<_i873.OAuthTokenSource>(
-      () => _i350.RealOAuthTokenSource(),
+      () => _i350.RealOAuthTokenSource(gh<_i434.AppConfig>()),
       registerFor: {_real},
     );
     gh.lazySingleton<_i489.FakeAuthBackend>(
