@@ -1,0 +1,19 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/foundation.dart",
+    "package:flutter/material.dart",
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:we36/core/di/injection.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/core/domain/app_failure_messages.dart",
+    "package:we36/core/domain/app_state.dart",
+    "package:we36/core/presentation/app_button.dart",
+    "package:we36/core/presentation/toast.dart",
+    "package:we36/core/theme/app_colors_x.dart",
+    "package:we36/core/theme/app_dimens.dart",
+    "package:we36/core/theme/app_typography.dart",
+    "package:we36/core/utils/l10n_extension.dart",
+    "package:we36/features/auth/presentation/oauth/oauth_cubit.dart"
+  ]
+}

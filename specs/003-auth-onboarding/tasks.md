@@ -97,21 +97,21 @@ description: "Task list for Spec #003 Auth & Onboarding"
 
 ### Tests for User Story 2
 
-- [ ] T038 [P] [US2] `bloc_test` `SignUpCubit` (conflict email → `conflict`; weak/invalid → `validation`) in `test/features/auth/sign_up_cubit_test.dart`
-- [ ] T039 [P] [US2] `bloc_test` `ProfileSetupCubit` (debounced availability: available/taken/invalid; submit → loaded) in `test/features/auth/profile_setup_cubit_test.dart`
-- [ ] T040 [P] [US2] Widget test `SignUpPage` + `ProfileSetupPage` happy + error, **plus adaptive (tablet width) + text-scaling + semantics + light/dark** (FR-030; analyze finding **C2**) in `test/features/auth/signup_setup_page_test.dart`
+- [x] T038 [P] [US2] `bloc_test` `SignUpCubit` (conflict email → `conflict`; weak/invalid → `validation`) in `test/features/auth/sign_up_cubit_test.dart`
+- [x] T039 [P] [US2] `bloc_test` `ProfileSetupCubit` (debounced availability: available/taken/invalid; submit → loaded) in `test/features/auth/profile_setup_cubit_test.dart`
+- [x] T040 [P] [US2] Widget test `SignUpPage` + `ProfileSetupPage` happy + error, **plus adaptive (tablet width) + text-scaling + semantics + light/dark** (FR-030; analyze finding **C2**) in `test/features/auth/signup_setup_page_test.dart`
 
 ### Implementation for User Story 2
 
-- [ ] T041 [P] [US2] `SignUp` use case in `lib/features/auth/domain/usecases/sign_up.dart`
-- [ ] T042 [P] [US2] `CheckUsername` use case in `lib/features/auth/domain/usecases/check_username.dart`
-- [ ] T043 [P] [US2] `SetupProfile` use case in `lib/features/auth/domain/usecases/setup_profile.dart`
-- [ ] T044 [US2] `SignUpCubit` in `lib/features/auth/presentation/sign_up/sign_up_cubit.dart`
-- [ ] T045 [US2] `SignUpPage` UI (email + password, terms note, OAuth row slot, footer "Log in") in `lib/features/auth/presentation/sign_up/sign_up_page.dart`
-- [ ] T046 [US2] `ProfileSetupCubit` (client-side username format pre-validation + ~400 ms debounced `check-username`) in `lib/features/auth/presentation/profile_setup/profile_setup_cubit.dart`
-- [ ] T047 [US2] `ProfileSetupPage` UI (username + availability state, display name, optional bio; **no avatar control**) in `lib/features/auth/presentation/profile_setup/profile_setup_page.dart`
-- [ ] T048 [US2] Post-auth routing: `profileCompleted == false` → Profile setup via `SessionController` (verify resume-on-relaunch)
-- [ ] T049 [US2] l10n keys sign-up + profile-setup (EN + VI)
+- [x] T041 [P] [US2] `SignUp` use case in `lib/features/auth/domain/usecases/sign_up.dart`
+- [x] T042 [P] [US2] `CheckUsername` use case in `lib/features/auth/domain/usecases/check_username.dart`
+- [x] T043 [P] [US2] `SetupProfile` use case in `lib/features/auth/domain/usecases/setup_profile.dart`
+- [x] T044 [US2] `SignUpCubit` in `lib/features/auth/presentation/sign_up/sign_up_cubit.dart`
+- [x] T045 [US2] `SignUpPage` UI (email + password, terms note, OAuth row slot, footer "Log in") in `lib/features/auth/presentation/sign_up/sign_up_page.dart`
+- [x] T046 [US2] `ProfileSetupCubit` (client-side username format pre-validation + ~400 ms debounced `check-username`) in `lib/features/auth/presentation/profile_setup/profile_setup_cubit.dart`
+- [x] T047 [US2] `ProfileSetupPage` UI (username + availability state, display name, optional bio; **no avatar control**) in `lib/features/auth/presentation/profile_setup/profile_setup_page.dart`
+- [x] T048 [US2] Post-auth routing: `profileCompleted == false` → Profile setup via `SessionController` (verify resume-on-relaunch)
+- [x] T049 [US2] l10n keys sign-up + profile-setup (EN + VI)
 
 **Checkpoint**: a brand-new user can reach Home; US1 + US2 both work independently.
 
@@ -125,17 +125,17 @@ description: "Task list for Spec #003 Auth & Onboarding"
 
 ### Tests for User Story 3
 
-- [ ] T050 [P] [US3] `bloc_test` `ForgotPasswordCubit` (request step; code step; wrong/expired `validation`; resend cooldown gating) in `test/features/auth/forgot_password_cubit_test.dart`
-- [ ] T051 [P] [US3] Widget test `ForgotPasswordPage` (email → OTP → reset happy + bad code), **plus OTP-input adaptive + text-scaling + semantics + light/dark** (FR-030; analyze finding **C2**) in `test/features/auth/forgot_password_page_test.dart`
+- [x] T050 [P] [US3] `bloc_test` `ForgotPasswordCubit` (request step; code step; wrong/expired `validation`; resend cooldown gating) in `test/features/auth/forgot_password_cubit_test.dart`
+- [x] T051 [P] [US3] Widget test `ForgotPasswordPage` (email → OTP → reset happy + bad code), **plus OTP-input adaptive + text-scaling + semantics + light/dark** (FR-030; analyze finding **C2**) in `test/features/auth/forgot_password_page_test.dart`
 
 ### Implementation for User Story 3
 
-- [ ] T052 [P] [US3] `RequestPasswordReset` use case in `lib/features/auth/domain/usecases/request_password_reset.dart`
-- [ ] T053 [P] [US3] `ResetPassword` use case in `lib/features/auth/domain/usecases/reset_password.dart`
-- [ ] T054 [P] [US3] `OtpInput` 6-box numeric widget in `lib/features/auth/presentation/widgets/otp_input.dart`
-- [ ] T055 [US3] `ForgotPasswordCubit` (request → code steps; cooldown timer; dev `devCode` surfacing in dev flavor only) in `lib/features/auth/presentation/forgot/forgot_password_cubit.dart`
-- [ ] T056 [US3] `ForgotPasswordPage` UI in `lib/features/auth/presentation/forgot/forgot_password_page.dart`
-- [ ] T057 [US3] l10n keys forgot/reset (EN + VI)
+- [x] T052 [P] [US3] `RequestPasswordReset` use case in `lib/features/auth/domain/usecases/request_password_reset.dart`
+- [x] T053 [P] [US3] `ResetPassword` use case in `lib/features/auth/domain/usecases/reset_password.dart`
+- [x] T054 [P] [US3] `OtpInput` 6-box numeric widget in `lib/features/auth/presentation/widgets/otp_input.dart`
+- [x] T055 [US3] `ForgotPasswordCubit` (request → code steps; cooldown timer; dev `devCode` surfacing in dev flavor only) in `lib/features/auth/presentation/forgot/forgot_password_cubit.dart`
+- [x] T056 [US3] `ForgotPasswordPage` UI in `lib/features/auth/presentation/forgot/forgot_password_page.dart`
+- [x] T057 [US3] l10n keys forgot/reset (EN + VI)
 
 **Checkpoint**: account recovery works end-to-end on fakes.
 
@@ -149,15 +149,15 @@ description: "Task list for Spec #003 Auth & Onboarding"
 
 ### Tests for User Story 4
 
-- [ ] T058 [P] [US4] `bloc_test` OAuth path (cancel → `oauthCancelled` no error toast; fail → `oauthFailed`) in `test/features/auth/oauth_test.dart`
+- [x] T058 [P] [US4] `bloc_test` OAuth path (cancel → `oauthCancelled` no error toast; fail → `oauthFailed`) in `test/features/auth/oauth_test.dart`
 
 ### Implementation for User Story 4
 
-- [ ] T059 [P] [US4] Google init at bootstrap (`GoogleSignIn.instance.initialize(...)`) + `SignInWithGoogle` use case (`authenticate()` → idToken → `AuthRepository.oauth(google,...)`) in `lib/features/auth/domain/usecases/sign_in_with_google.dart` (+ `lib/bootstrap.dart` edit)
-- [ ] T060 [P] [US4] `SignInWithApple` use case (`getAppleIDCredential` → identityToken → `AuthRepository.oauth(apple,...)`) in `lib/features/auth/domain/usecases/sign_in_with_apple.dart`
-- [ ] T061 [US4] `OAuthButtons` widget (Google always; Apple iOS-only) in `lib/features/auth/presentation/widgets/oauth_buttons.dart`
-- [ ] T062 [US4] Wire `OAuthButtons` into Sign in + Sign up; route post-auth via `SessionController`
-- [ ] T063 [US4] Verify per-flavor Google client IDs + Apple Service ID/capability config; l10n keys (EN + VI)
+- [x] T059 [P] [US4] Google init at bootstrap (`GoogleSignIn.instance.initialize(...)`) + `SignInWithGoogle` use case (`authenticate()` → idToken → `AuthRepository.oauth(google,...)`) in `lib/features/auth/domain/usecases/sign_in_with_google.dart` (+ `lib/bootstrap.dart` edit)
+- [x] T060 [P] [US4] `SignInWithApple` use case (`getAppleIDCredential` → identityToken → `AuthRepository.oauth(apple,...)`) in `lib/features/auth/domain/usecases/sign_in_with_apple.dart`
+- [x] T061 [US4] `OAuthButtons` widget (Google always; Apple iOS-only) in `lib/features/auth/presentation/widgets/oauth_buttons.dart`
+- [x] T062 [US4] Wire `OAuthButtons` into Sign in + Sign up; route post-auth via `SessionController`
+- [x] T063 [US4] Verify per-flavor Google client IDs + Apple Service ID/capability config; l10n keys (EN + VI)
 
 **Checkpoint**: OAuth works on device; cancel/fail handled gracefully.
 
@@ -171,14 +171,14 @@ description: "Task list for Spec #003 Auth & Onboarding"
 
 ### Tests for User Story 5
 
-- [ ] T064 [P] [US5] `bloc_test` `OnboardingCubit` + first-launch routing (seen flag persisted; Get started→signUp, Skip→signIn) in `test/features/auth/onboarding_test.dart`
+- [x] T064 [P] [US5] `bloc_test` `OnboardingCubit` + first-launch routing (seen flag persisted; Get started→signUp, Skip→signIn) in `test/features/auth/onboarding_test.dart`
 
 ### Implementation for User Story 5
 
-- [ ] T065 [P] [US5] `OnboardingCubit` (slide index; persist `onboardingSeen` on finish/skip) in `lib/features/auth/presentation/onboarding/onboarding_cubit.dart`
-- [ ] T066 [US5] `OnboardingPage` UI (image card slides, dot indicator, Skip + Get started) in `lib/features/auth/presentation/onboarding/onboarding_page.dart`
-- [ ] T067 [US5] First-launch routing in `SessionController`/`SplashPage` (`onboardingSeen` gate; unauthenticated → onboarding vs sign-in)
-- [ ] T068 [US5] l10n keys onboarding (EN + VI)
+- [x] T065 [P] [US5] `OnboardingCubit` (slide index; persist `onboardingSeen` on finish/skip) in `lib/features/auth/presentation/onboarding/onboarding_cubit.dart`
+- [x] T066 [US5] `OnboardingPage` UI (image card slides, dot indicator, Skip + Get started) in `lib/features/auth/presentation/onboarding/onboarding_page.dart`
+- [x] T067 [US5] First-launch routing in `SessionController`/`SplashPage` (`onboardingSeen` gate; unauthenticated → onboarding vs sign-in)
+- [x] T068 [US5] l10n keys onboarding (EN + VI)
 
 **Checkpoint**: all five stories independently functional.
 
@@ -186,11 +186,11 @@ description: "Task list for Spec #003 Auth & Onboarding"
 
 ## Phase 8: Polish & Cross-Cutting Concerns
 
-- [ ] T069 [P] Update `.claude/claude-app/ui-design-context.md` with the 3 agreed design deltas (Sign in/up email-only, Forgot 6-box OTP, Profile setup no avatar) + note why
-- [ ] T070 [P] Golden tests (light + dark) for Sign in / Sign up / Profile setup / Onboarding in `test/golden/auth/`
-- [ ] T071 Run the pre-commit gate: `dart format .`, `flutter analyze` (zero warnings), `flutter test`, `dart run bloc_tools:bloc lint .`
+- [x] T069 [P] Update `.claude/claude-app/ui-design-context.md` with the 3 agreed design deltas (Sign in/up email-only, Forgot 6-box OTP, Profile setup no avatar) + note why
+- [x] T070 [P] Golden tests (light + dark) for Sign in / Sign up / Profile setup / Onboarding in `test/golden/auth/`
+- [x] T071 Run the pre-commit gate: `dart format .`, `flutter analyze` (zero warnings), `flutter test`, `dart run bloc_tools:bloc lint .`
 - [ ] T072 Run [quickstart.md](quickstart.md) scenarios 1–8 in fake mode
-- [ ] T073 [P] Draft docs updates for merge: `.claude/claude-app/project-context.md` Current Focus + `changelog.md` entry + roadmap status (apply at merge)
+- [x] T073 [P] Draft docs updates for merge: `.claude/claude-app/project-context.md` Current Focus + `changelog.md` entry + roadmap status (apply at merge)
 - [ ] T074 [US4] [US3] [US1] **Deferred manual** on-device + dev-backend smoke test: OAuth Google/Apple round-trip, real token refresh under network drop, OTP request→reset (record results; not CI-gated)
 
 ---

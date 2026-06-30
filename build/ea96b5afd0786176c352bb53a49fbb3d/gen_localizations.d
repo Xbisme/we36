@@ -1,0 +1,1 @@
+ /Users/xbism3/Documents/we36/lib/l10n/generated/app_localizations_en.dart /Users/xbism3/Documents/we36/lib/l10n/generated/app_localizations_vi.dart /Users/xbism3/Documents/we36/lib/l10n/generated/app_localizations.dart:  /Users/xbism3/Documents/we36/l10n.yaml /Users/xbism3/Documents/we36/lib/l10n/arb/app_en.arb /Users/xbism3/Documents/we36/lib/l10n/arb/app_vi.arb

@@ -29,7 +29,9 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #003 Auth & Onboarding** — branch `003-auth-onboarding` created (== `main`, no commits yet), in **pre-spec discussion** (Step 1). The GATE every feature behind login sits on. Backend B#002 Auth already implemented. Next SDD step: Claude drafts the `/speckit.specify` prompt, user runs it in IDE. Scope = Group A (Splash, Onboarding, Sign in, Sign up, Forgot+OTP, Profile setup) + session service (access+refresh in `flutter_secure_storage`, single-flight refresh wired to #002 `TokenStore`/`TokenRefresher` seams, logout) + auth-guard redirect + OAuth Google/Apple.
+- **Now**: **Spec #003 Auth & Onboarding IMPLEMENTED** on branch `003-auth-onboarding` (67/75 tasks; **154 tests green**, `dart analyze` clean; **not committed/merged**). The GATE every feature behind login sits on. SDD `specify→clarify→plan→tasks→analyze→implement` all run. Built: Splash/Onboarding/Sign in/Sign up/Forgot(6-OTP)/Profile-setup + OAuth Google/Apple, real `flutter_secure_storage` token store + single-flight refresh, `SessionController` (cold-start routing + forced-logout-once + cache wipe) replacing `AuthGuardStub`, drift v2 (`MeProfiles`). App still runs DI `environment: 'fake'` (real impls behind `env:['real']`).
+- **Toolchain bump**: Flutter **3.44.4** / Dart **3.12.2** (was 3.41/3.11 — the installed SDK was below the #001 `^3.11.5` floor; upgraded with user consent). Goldens regenerated.
+- **Remaining #003 (8 tasks)**: native iOS/Android config (T002/T003) + OAuth provisioning + dev-backend/on-device smoke (T072/T074) — none CI-gateable. Then commit + PR.
 - **Done — #002 merged**: `ApiClient` + idempotency/auth/**single-flight refresh**/redacted-logging interceptors + `FailureMapper`; `CursorPage<T>` + 4-state `PaginatedListCubit`; **drift** cache base + reactive `.watch()`; `RealtimeClient` Socket.IO scaffold + fake; repository pattern + fakes (`User` slice). App runs DI `environment: 'fake'`; real impls annotated `env: ['real']` (auth real impls start landing in #003). 103 tests green.
 - **Resolved at #002**: cache engine = **drift**; realtime = **`socket_io_client`** (constitution v1.0.2); cursor envelope shipped as `CursorPage<T>`.
 - **To confirm at #003**: OAuth client ids/redirect schemes; OTP channel (email vs SMS) for forgot-password; avatar pick/crop package; token-refresh seam wiring (#002 `TokenStore`/`TokenRefresher`/`AuthEventsSink` fakes → real `flutter_secure_storage` impls); dev/prod API base URL + bundle ids (`app.we36` / `app.we36.dev` proposed).
@@ -42,7 +44,7 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 |---|---|---|---|
 | 001 | Project Foundation, Design System & Navigation | ✅ **Merged** | `001-project-foundation` (PR #1) |
 | 002 | Networking, Cache & Realtime Core | ✅ **Merged** | `002-networking-core` (PR #2) |
-| 003 | Auth & Onboarding | 🟡 **Next** | `003-auth-onboarding` |
+| 003 | Auth & Onboarding | 🔵 **Implemented** (not merged) | `003-auth-onboarding` |
 | 004 | Home Feed & Stories ⭐ | ⬜ Not started | `004-home-feed-stories` |
 | 005 | Create Story & Tools | ⬜ Not started | `005-create-story` |
 | 006 | Post Detail & Comments | ⬜ Not started | `006-post-comments` |

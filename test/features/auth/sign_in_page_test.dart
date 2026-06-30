@@ -7,12 +7,19 @@ import 'package:we36/core/domain/app_failure.dart';
 import 'package:we36/core/domain/result.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/features/auth/domain/usecases/sign_in.dart';
+import 'package:we36/features/auth/domain/usecases/sign_in_with_apple.dart';
+import 'package:we36/features/auth/domain/usecases/sign_in_with_google.dart';
+import 'package:we36/features/auth/presentation/oauth/oauth_cubit.dart';
 import 'package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart';
 import 'package:we36/features/auth/presentation/sign_in/sign_in_page.dart';
 
 import '../../helpers/pump_app.dart';
 
 class _MockSignIn extends Mock implements SignIn {}
+
+class _MockGoogle extends Mock implements SignInWithGoogle {}
+
+class _MockApple extends Mock implements SignInWithApple {}
 
 final _profile = MeProfile(
   id: 'me-1',
@@ -57,6 +64,9 @@ void main() {
     signIn = _MockSignIn();
     getIt
       ..registerFactory<SignInCubit>(() => SignInCubit(signIn))
+      ..registerFactory<OAuthCubit>(
+        () => OAuthCubit(_MockGoogle(), _MockApple()),
+      )
       ..registerLazySingleton<ToastService>(ToastService.new);
   });
 

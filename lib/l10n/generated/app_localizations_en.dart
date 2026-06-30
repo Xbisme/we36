@@ -201,4 +201,126 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authPasswordTooShort => 'Password must be at least 8 characters.';
+
+  @override
+  String get authSignUpTitle => 'Create your account';
+
+  @override
+  String get authSignUpCta => 'Sign up';
+
+  @override
+  String get authSignUpTerms =>
+      'By signing up you agree to our Terms and Privacy Policy.';
+
+  @override
+  String get authHaveAccountQuestion => 'Already have an account?';
+
+  @override
+  String get authLogInLink => 'Log in';
+
+  @override
+  String get authProfileSetupTitle => 'Set up your profile';
+
+  @override
+  String get authProfileSetupSubtitle =>
+      'Choose a username and how your name appears.';
+
+  @override
+  String get authUsernameLabel => 'Username';
+
+  @override
+  String get authUsernameHint => 'username';
+
+  @override
+  String get authDisplayNameLabel => 'Display name';
+
+  @override
+  String get authDisplayNameHint => 'Your name';
+
+  @override
+  String get authBioLabel => 'Bio (optional)';
+
+  @override
+  String get authBioHint => 'Tell people about yourself';
+
+  @override
+  String get authContinueCta => 'Continue';
+
+  @override
+  String get authUsernameChecking => 'Checking…';
+
+  @override
+  String get authUsernameAvailable => 'Available';
+
+  @override
+  String get authUsernameTaken => 'That username is taken.';
+
+  @override
+  String get authUsernameInvalid =>
+      '3–30 chars: lowercase letters, numbers, . or _';
+
+  @override
+  String get authForgotTitle => 'Reset password';
+
+  @override
+  String get authForgotSubtitle =>
+      'Enter your email and we\'ll send you a code.';
+
+  @override
+  String get authSendCodeCta => 'Send code';
+
+  @override
+  String get authCodeTitle => 'Enter the code';
+
+  @override
+  String authCodeSubtitle(String email) {
+    return 'Enter the 6-digit code we sent to $email.';
+  }
+
+  @override
+  String get authNewPasswordLabel => 'New password';
+
+  @override
+  String get authResetCta => 'Reset password';
+
+  @override
+  String get authResendCode => 'Resend code';
+
+  @override
+  String authResendIn(int seconds) {
+    return 'Resend code in ${seconds}s';
+  }
+
+  @override
+  String get authResetDone => 'Password reset. Please sign in.';
+
+  @override
+  String authDevCode(String code) {
+    return 'Dev code: $code';
+  }
+
+  @override
+  String get onboardSkip => 'Skip';
+
+  @override
+  String get onboardGetStarted => 'Get started';
+
+  @override
+  String get onboardTitle1 => 'Capture every moment';
+
+  @override
+  String get onboardBody1 =>
+      'Share photos and videos with the people who matter.';
+
+  @override
+  String get onboardTitle2 => 'Reels, stories & feed';
+
+  @override
+  String get onboardBody2 => 'Discover and create in one playful place.';
+
+  @override
+  String get onboardTitle3 => 'Keep up with friends';
+
+  @override
+  String get onboardBody3 => 'Message, react, and stay close.';
 }

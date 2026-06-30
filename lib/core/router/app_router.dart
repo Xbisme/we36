@@ -5,7 +5,11 @@ import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/router/adaptive_shell.dart';
 import 'package:we36/core/router/centered_mobile.dart';
 import 'package:we36/core/services/session/session_controller.dart';
+import 'package:we36/features/auth/presentation/forgot/forgot_password_page.dart';
+import 'package:we36/features/auth/presentation/onboarding/onboarding_page.dart';
+import 'package:we36/features/auth/presentation/profile_setup/profile_setup_page.dart';
 import 'package:we36/features/auth/presentation/sign_in/sign_in_page.dart';
+import 'package:we36/features/auth/presentation/sign_up/sign_up_page.dart';
 import 'package:we36/features/auth/presentation/splash/splash_page.dart';
 import 'package:we36/features/dev/presentation/gallery_page.dart';
 import 'package:we36/features/dev/presentation/states_demo_page.dart';
@@ -46,20 +50,11 @@ class AppRouter {
           path: AppRoutes.splash,
           builder: (_, _) => const SplashPage(),
         ),
-        _flow(
-          AppRoutes.onboarding,
-          const PlaceholderPage(title: 'Onboarding', showBack: false),
-        ),
+        _flow(AppRoutes.onboarding, const OnboardingPage()),
         _flow(AppRoutes.signIn, const SignInPage()),
-        _flow(AppRoutes.signUp, const PlaceholderPage(title: 'Sign up')),
-        _flow(
-          AppRoutes.forgotPassword,
-          const PlaceholderPage(title: 'Forgot password'),
-        ),
-        _flow(
-          AppRoutes.profileSetup,
-          const PlaceholderPage(title: 'Profile setup'),
-        ),
+        _flow(AppRoutes.signUp, const SignUpPage()),
+        _flow(AppRoutes.forgotPassword, const ForgotPasswordPage()),
+        _flow(AppRoutes.profileSetup, const ProfileSetupPage()),
         // Flow routes (nav-less)
         _flow(
           AppRoutes.notifications,

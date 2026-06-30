@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:google_sign_in/google_sign_in.dart",
+    "package:injectable/injectable.dart",
+    "package:sign_in_with_apple/sign_in_with_apple.dart",
+    "package:we36/features/auth/data/oauth_token_source.dart"
+  ]
+}

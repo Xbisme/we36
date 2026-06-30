@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/domain/app_failure.dart';
 import 'package:we36/core/domain/app_failure_messages.dart';
@@ -14,6 +16,7 @@ import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
+import 'package:we36/features/auth/presentation/oauth/oauth_buttons.dart';
 import 'package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart';
 
 /// Sign in (Group A · Screen 3): email + password, forgot-password link, footer
@@ -115,7 +118,7 @@ class _SignInPageState extends State<SignInPage> {
                       alignment: Alignment.centerRight,
                       child: _LinkText(
                         label: l10n.authForgotPasswordLink,
-                        onTap: () {}, // wired to forgot flow in US3
+                        onTap: () => context.push(AppRoutes.forgotPassword),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.lg),
@@ -124,6 +127,8 @@ class _SignInPageState extends State<SignInPage> {
                       fullWidth: true,
                       onPressed: submitting ? null : () => _submit(context),
                     ),
+                    const SizedBox(height: AppSpacing.xl),
+                    const OAuthButtons(),
                     const SizedBox(height: AppSpacing.xl),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +142,7 @@ class _SignInPageState extends State<SignInPage> {
                         const SizedBox(width: AppSpacing.xs),
                         _LinkText(
                           label: l10n.authCreateAccountLink,
-                          onTap: () {}, // wired to sign up in US2
+                          onTap: () => context.push(AppRoutes.signUp),
                         ),
                       ],
                     ),

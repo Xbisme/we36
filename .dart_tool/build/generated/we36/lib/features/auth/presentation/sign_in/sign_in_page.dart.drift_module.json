@@ -3,6 +3,8 @@
   "imports": [
     "package:flutter/material.dart",
     "package:flutter_bloc/flutter_bloc.dart",
+    "package:go_router/go_router.dart",
+    "package:we36/core/constants/app_routes.dart",
     "package:we36/core/di/injection.dart",
     "package:we36/core/domain/app_failure.dart",
     "package:we36/core/domain/app_failure_messages.dart",
@@ -15,6 +17,7 @@
     "package:we36/core/theme/app_dimens.dart",
     "package:we36/core/theme/app_typography.dart",
     "package:we36/core/utils/l10n_extension.dart",
+    "package:we36/features/auth/presentation/oauth/oauth_buttons.dart",
     "package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart"
   ]
 }

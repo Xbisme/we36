@@ -6,6 +6,14 @@
 
 ---
 
+### 2026-06-30 — Spec #003 Auth & Onboarding ✅ IMPLEMENTED (branch `003-auth-onboarding`, not merged)
+
+- **Shipped (US1–US5, 67/75 tasks)**: the auth **gate** — Splash (session restore) · first-launch Onboarding (Get started→Sign up / Skip→Sign in) · **Sign in** + **Sign up** (email-only, ≥8 pwd) · **Forgot password** (email **6-digit OTP** + resend cooldown) · **OAuth** Google (always) / Apple (iOS-only, FR-022) · **Profile setup** (live username availability, no avatar). Real `TokenStore`/`TokenRefresher` over `flutter_secure_storage`, `AuthRepository`/`MeRepository` (+ in-memory fakes), `SessionController` (cold-start routing, single-flight refresh reuse, **forced-logout-once + cache wipe**) replacing the #001 `AuthGuardStub`. drift schema v1→v2 (`MeProfiles` + `clearUserScoped`).
+- **Tech notes**: **154 tests green**, `dart analyze` clean (2 pre-existing pubspec-sort infos), app still runs DI `environment: 'fake'` (real impls behind `env:['real']`; **`RealTokenStore` env-agnostic** so a fake-issued session persists across restart — analyze finding I1). New deps `google_sign_in ^7.2.0` (v7 singleton API) · `sign_in_with_apple ^8.1.0` · `shared_preferences ^2.5.5`. Added shared `AppTextField` + `OtpInput`. Log-redaction test locks FR-014/SC-008. Goldens regenerated after the **Flutter 3.41→3.44 / Dart 3.12** toolchain bump.
+- **Follow-ups carried (8 tasks)**: native config **T002/T003** (iOS deployment target 13 + Sign in with Apple capability/entitlement + Google URL scheme; Android minSdk 24 + launch mode) and OAuth client-id/Service-ID provisioning — needed before a real-backend run; **T072** quickstart on a dev backend; **T074** on-device smoke (OAuth round-trip, real refresh, OTP) — none CI-gateable.
+
+---
+
 ### 2026-06-30 — Spec #002 Networking, Cache & Realtime Core ✅ MERGED INTO MAIN
 
 - **Shipped**: `ApiClient` (single `Dio`) behind idempotency → auth-token → **single-flight refresh** → redacted-logging interceptors; centralized HTTP→`AppFailure` mapping (`FailureMapper`, envelope `{error:{code,message,details}}`, contract-stable `code`s); cursor pagination (`CursorPage<T>`) + reusable 4-state `PaginatedListCubit<T>`; **drift** cache base (`AppDatabase` + `UsersDao`, reactive `.watch()` reads) + migration harness; `RealtimeClient` **Socket.IO** scaffold + typed events + fake (wired in #012/#013); repository pattern + in-memory fakes proven by the `User` reference slice. App runs DI `environment: 'fake'` — fully offline/zero-network. **No auth UI/session persistence** (that's #003).

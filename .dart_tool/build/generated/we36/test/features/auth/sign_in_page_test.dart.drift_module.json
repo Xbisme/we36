@@ -10,6 +10,9 @@
     "package:we36/core/domain/result.dart",
     "package:we36/core/presentation/toast.dart",
     "package:we36/features/auth/domain/usecases/sign_in.dart",
+    "package:we36/features/auth/domain/usecases/sign_in_with_apple.dart",
+    "package:we36/features/auth/domain/usecases/sign_in_with_google.dart",
+    "package:we36/features/auth/presentation/oauth/oauth_cubit.dart",
     "package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart",
     "package:we36/features/auth/presentation/sign_in/sign_in_page.dart",
     "asset:we36/test/helpers/pump_app.dart"

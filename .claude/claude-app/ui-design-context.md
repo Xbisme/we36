@@ -142,12 +142,15 @@ BottomNav (5 tabs)
 > Mã spec dưới gắn với roadmap sẽ build nó (xem `sdd-roadmap.md`). Nguồn chi tiết: `screens/*.jsx`.
 
 ### A · Onboarding & Auth — *Spec #003 (nền tảng #001/#002)*
-1. **Splash** — nền `gradient-brand`, ô logo blur + icon camera, Wordmark mono 48, "share your world", spinner.
-2. **Onboarding** — slide ảnh card lớn (radius-24, shadow-lg) + badge "reels · stories · feed", H2 "Capture every moment" + phụ đề, 3 dot (active = pill gradient), "Skip" + CTA "Get started".
-3. **Sign in** — Wordmark + phụ đề; field Email/phone + Password (radius-12, viền), "Forgot password?", CTA "Log in", OrDivider, OAuth row (Google/Apple pill), footer "Create account".
-4. **Sign up** — H1 "Create your account"; Email / Phone(optional) / Password (≥8), terms note, CTA "Sign up", OAuth, footer "Log in".
-5. **Forgot password** — icon badge `rose-50`, "Reset password", Email field, "Send code"; 4 ô OTP (ô đã nhập viền rose), "Resend code in 0:42".
-6. **Profile setup** — avatar 104 + badge camera gradient, "Add a profile photo", Username / Display name / Bio, CTA "Continue".
+
+> **Design deltas đã áp ở #003** (khớp contract backend B#002 + clarifications — xem [decisions/spec-003-auth-onboarding.md](decisions/spec-003-auth-onboarding.md)): **(1)** định danh **email-only** — bỏ field phone ở Sign in/Sign up (backend không hỗ trợ phone login). **(2)** Forgot password dùng **6 ô OTP** (không phải 4) — backend phát mã 6 chữ số. **(3)** Profile setup **bỏ avatar** ở #003 (upload ảnh phụ thuộc B#003 Media) — chỉ username + display name + bio. **(4)** "Get started" → **Sign up**, "Skip" → **Sign in**. Splash dùng nền tĩnh (không spinner vòng lặp) để deterministic + Reduce-Motion.
+
+1. **Splash** — nền `gradient-brand`, Wordmark mono 48, "share your world" (tĩnh, không spinner — delta).
+2. **Onboarding** — slide ảnh card lớn (radius-24) + H1 + phụ đề, 3 dot (active = pill gradient), "Skip" (→ Sign in) + CTA "Get started" (→ Sign up).
+3. **Sign in** — Wordmark + phụ đề; field **Email** + Password (radius-12, viền), "Forgot password?", CTA "Log in", OrDivider, OAuth row (Google luôn / Apple iOS-only), footer "Create account".
+4. **Sign up** — H1 "Create your account"; **Email** / Password (≥8) — *bỏ phone*, terms note, CTA "Sign up", OAuth, footer "Log in".
+5. **Forgot password** — "Reset password", Email field, "Send code"; **6 ô OTP** (ô đã nhập viền rose), New password, "Resend code in 0:Ns" (cooldown).
+6. **Profile setup** — *bỏ avatar*, Username (kiểm tra khả dụng live) / Display name / Bio (optional), CTA "Continue".
 
 ### B · Feed & Content — *Spec #004 (feed/stories) · #007 (compose) · #006 (post/comments) · #008 (reels)*
 7. **Home feed** — header (Wordmark + Activity chuông[dot] + Messages); **StoriesRail**; **PostCard** (xem component). Tab `home`.
