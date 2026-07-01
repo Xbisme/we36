@@ -1,0 +1,11 @@
+{
+  "elements": {},
+  "imports": [
+    "package:injectable/injectable.dart",
+    "package:we36/core/constants/api_endpoints.dart",
+    "package:we36/core/data/api/api_client.dart",
+    "package:we36/core/data/feed/post.dart",
+    "package:we36/core/data/pagination/cursor_page.dart",
+    "package:we36/core/domain/result.dart"
+  ]
+}

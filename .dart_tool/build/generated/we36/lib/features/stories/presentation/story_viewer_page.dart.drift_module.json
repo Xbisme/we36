@@ -1,0 +1,20 @@
+{
+  "elements": {},
+  "imports": [
+    "package:cached_network_image/cached_network_image.dart",
+    "package:flutter/material.dart",
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:go_router/go_router.dart",
+    "package:we36/core/data/stories/story.dart",
+    "package:we36/core/di/injection.dart",
+    "package:we36/core/presentation/app_icon.dart",
+    "package:we36/core/presentation/avatar.dart",
+    "package:we36/core/presentation/toast.dart",
+    "package:we36/core/theme/app_dimens.dart",
+    "package:we36/core/theme/app_typography.dart",
+    "package:we36/core/utils/l10n_extension.dart",
+    "package:we36/core/utils/relative_time_formatter.dart",
+    "package:we36/features/stories/presentation/story_viewer_cubit.dart",
+    "package:we36/features/stories/presentation/story_viewer_state.dart"
+  ]
+}

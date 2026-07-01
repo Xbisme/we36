@@ -18,6 +18,7 @@ abstract final class AppRoutes {
   static const String profile = '/profile';
 
   // Flow / full-screen routes (nav-less, placeholders this spec)
+  static const String storyViewer = '/story';
   static const String notifications = '/notifications';
   static const String settings = '/settings';
   static const String create = '/create';

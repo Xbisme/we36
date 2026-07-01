@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:we36/core/data/stories/story.dart",
+    "package:we36/core/domain/result.dart"
+  ]
+}

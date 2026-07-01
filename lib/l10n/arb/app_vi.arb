@@ -110,5 +110,22 @@
   "onboardTitle2": "Reels, tin & bảng tin",
   "onboardBody2": "Khám phá và sáng tạo ở một nơi vui nhộn.",
   "onboardTitle3": "Kết nối với bạn bè",
-  "onboardBody3": "Nhắn tin, thả cảm xúc và luôn gần nhau."
+  "onboardBody3": "Nhắn tin, thả cảm xúc và luôn gần nhau.",
+
+  "feedEmptyTitle": "Chưa có bài viết",
+  "feedEmptyBody": "Theo dõi mọi người để thấy bài viết của họ ở đây.",
+  "feedErrorTitle": "Không tải được bảng tin",
+  "feedRetry": "Thử lại",
+  "feedLikesCount": "{count} lượt thích",
+  "feedLikeFailed": "Không cập nhật được lượt thích. Thử lại nhé.",
+  "feedSaveFailed": "Không lưu được bài viết. Thử lại nhé.",
+  "feedActivity": "Hoạt động",
+  "feedMessages": "Tin nhắn",
+  "feedViewAllComments": "Xem tất cả {count} bình luận",
+
+  "storySendMessage": "Gửi tin nhắn",
+  "storyLikeFailed": "Không thích được tin này.",
+  "storyUnavailable": "Tin này không còn khả dụng.",
+  "storyClose": "Đóng",
+  "storyComingSoon": "Sắp ra mắt"
 }

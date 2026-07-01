@@ -320,4 +320,54 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get onboardBody3 => 'Nhắn tin, thả cảm xúc và luôn gần nhau.';
+
+  @override
+  String get feedEmptyTitle => 'Chưa có bài viết';
+
+  @override
+  String get feedEmptyBody =>
+      'Theo dõi mọi người để thấy bài viết của họ ở đây.';
+
+  @override
+  String get feedErrorTitle => 'Không tải được bảng tin';
+
+  @override
+  String get feedRetry => 'Thử lại';
+
+  @override
+  String feedLikesCount(String count) {
+    return '$count lượt thích';
+  }
+
+  @override
+  String get feedLikeFailed => 'Không cập nhật được lượt thích. Thử lại nhé.';
+
+  @override
+  String get feedSaveFailed => 'Không lưu được bài viết. Thử lại nhé.';
+
+  @override
+  String get feedActivity => 'Hoạt động';
+
+  @override
+  String get feedMessages => 'Tin nhắn';
+
+  @override
+  String feedViewAllComments(String count) {
+    return 'Xem tất cả $count bình luận';
+  }
+
+  @override
+  String get storySendMessage => 'Gửi tin nhắn';
+
+  @override
+  String get storyLikeFailed => 'Không thích được tin này.';
+
+  @override
+  String get storyUnavailable => 'Tin này không còn khả dụng.';
+
+  @override
+  String get storyClose => 'Đóng';
+
+  @override
+  String get storyComingSoon => 'Sắp ra mắt';
 }

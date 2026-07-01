@@ -1,0 +1,561 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     '/Users/ase/Documents/flutter_we36/build/ios/Debug-dev-iphonesimulator/AppCheckCore/AppCheckCore.framework/AppCheckCore'
+relocations:
+  - { offset: 0x897B2, size: 0x8, addend: 0x0, symName: _AppCheckCoreVersionString, symObjAddr: 0x0, symBinAddr: 0x17780, symSize: 0x0 }
+  - { offset: 0x897E7, size: 0x8, addend: 0x0, symName: _AppCheckCoreVersionNumber, symObjAddr: 0x30, symBinAddr: 0x177B0, symSize: 0x0 }
+  - { offset: 0x89824, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService initWithAPIService:resourceName:]', symObjAddr: 0x0, symBinAddr: 0x1660, symSize: 0xAB }
+  - { offset: 0x898A5, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService initWithAPIService:resourceName:]', symObjAddr: 0x0, symBinAddr: 0x1660, symSize: 0xAB }
+  - { offset: 0x8996D, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService getAppCheckTokenWithArtifact:challenge:assertion:limitedUse:]', symObjAddr: 0xAB, symBinAddr: 0x170B, symSize: 0x1D1 }
+  - { offset: 0x89B3F, size: 0x8, addend: 0x0, symName: '___86-[GACAppAttestAPIService getAppCheckTokenWithArtifact:challenge:assertion:limitedUse:]_block_invoke', symObjAddr: 0x27C, symBinAddr: 0x18DC, symSize: 0x102 }
+  - { offset: 0x89C17, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s40s, symObjAddr: 0x37E, symBinAddr: 0x19DE, symSize: 0x25 }
+  - { offset: 0x89C58, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s40s, symObjAddr: 0x3A3, symBinAddr: 0x1A03, symSize: 0x25 }
+  - { offset: 0x89C8F, size: 0x8, addend: 0x0, symName: '___86-[GACAppAttestAPIService getAppCheckTokenWithArtifact:challenge:assertion:limitedUse:]_block_invoke.38', symObjAddr: 0x3C8, symBinAddr: 0x1A28, symSize: 0x7B }
+  - { offset: 0x89D37, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s, symObjAddr: 0x443, symBinAddr: 0x1AA3, symSize: 0xF }
+  - { offset: 0x89D6A, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s, symObjAddr: 0x452, symBinAddr: 0x1AB2, symSize: 0xF }
+  - { offset: 0x89D95, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService getRandomChallenge]', symObjAddr: 0x461, symBinAddr: 0x1AC1, symSize: 0x157 }
+  - { offset: 0x89E8C, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestAPIService getRandomChallenge]_block_invoke', symObjAddr: 0x5B8, symBinAddr: 0x1C18, symSize: 0x71 }
+  - { offset: 0x89F0B, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestAPIService getRandomChallenge]_block_invoke.48', symObjAddr: 0x629, symBinAddr: 0x1C89, symSize: 0x19 }
+  - { offset: 0x89F73, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService randomChallengeWithAPIResponse:]', symObjAddr: 0x642, symBinAddr: 0x1CA2, symSize: 0xDE }
+  - { offset: 0x8A02F, size: 0x8, addend: 0x0, symName: '___57-[GACAppAttestAPIService randomChallengeWithAPIResponse:]_block_invoke', symObjAddr: 0x720, symBinAddr: 0x1D80, symSize: 0xA3 }
+  - { offset: 0x8A111, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService randomChallengeFromResponseBody:error:]', symObjAddr: 0x7C3, symBinAddr: 0x1E23, symSize: 0x205 }
+  - { offset: 0x8A352, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService attestKeyWithAttestation:keyID:challenge:limitedUse:]', symObjAddr: 0x9C8, symBinAddr: 0x2028, symSize: 0x1CF }
+  - { offset: 0x8A53C, size: 0x8, addend: 0x0, symName: '___78-[GACAppAttestAPIService attestKeyWithAttestation:keyID:challenge:limitedUse:]_block_invoke', symObjAddr: 0xB97, symBinAddr: 0x21F7, symSize: 0x102 }
+  - { offset: 0x8A614, size: 0x8, addend: 0x0, symName: '___78-[GACAppAttestAPIService attestKeyWithAttestation:keyID:challenge:limitedUse:]_block_invoke_2', symObjAddr: 0xC99, symBinAddr: 0x22F9, symSize: 0xE7 }
+  - { offset: 0x8A73D, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService HTTPBodyWithArtifact:challenge:assertion:limitedUse:]', symObjAddr: 0xD80, symBinAddr: 0x23E0, symSize: 0x1FA }
+  - { offset: 0x8A96E, size: 0x8, addend: 0x0, symName: '___78-[GACAppAttestAPIService HTTPBodyWithArtifact:challenge:assertion:limitedUse:]_block_invoke', symObjAddr: 0xF7A, symBinAddr: 0x25DA, symSize: 0x185 }
+  - { offset: 0x8AAC2, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s40s48s56s, symObjAddr: 0x10FF, symBinAddr: 0x275F, symSize: 0x33 }
+  - { offset: 0x8AB1B, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s40s48s56s, symObjAddr: 0x1132, symBinAddr: 0x2792, symSize: 0x33 }
+  - { offset: 0x8AB6A, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService HTTPBodyWithAttestation:keyID:challenge:limitedUse:]', symObjAddr: 0x1165, symBinAddr: 0x27C5, symSize: 0x1F4 }
+  - { offset: 0x8AD9B, size: 0x8, addend: 0x0, symName: '___77-[GACAppAttestAPIService HTTPBodyWithAttestation:keyID:challenge:limitedUse:]_block_invoke', symObjAddr: 0x1359, symBinAddr: 0x29B9, symSize: 0x168 }
+  - { offset: 0x8AECC, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService HTTPBodyWithJSONObject:]', symObjAddr: 0x14C1, symBinAddr: 0x2B21, symSize: 0xE4 }
+  - { offset: 0x8AFDA, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService base64StringWithData:]', symObjAddr: 0x15A5, symBinAddr: 0x2C05, symSize: 0x17 }
+  - { offset: 0x8B038, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService URLForEndpoint:]', symObjAddr: 0x15BC, symBinAddr: 0x2C1C, symSize: 0x13C }
+  - { offset: 0x8B17F, size: 0x8, addend: 0x0, symName: '+[GACAppAttestAPIService URLWithBaseURL:resourceName:]', symObjAddr: 0x16F8, symBinAddr: 0x2D58, symSize: 0x28 }
+  - { offset: 0x8B1F2, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService backgroundQueue]', symObjAddr: 0x1720, symBinAddr: 0x2D80, symSize: 0x11 }
+  - { offset: 0x8B267, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService APIService]', symObjAddr: 0x1731, symBinAddr: 0x2D91, symSize: 0xA }
+  - { offset: 0x8B29C, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService resourceName]', symObjAddr: 0x173B, symBinAddr: 0x2D9B, symSize: 0xA }
+  - { offset: 0x8B2D1, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAPIService .cxx_destruct]', symObjAddr: 0x1745, symBinAddr: 0x2DA5, symSize: 0x28 }
+  - { offset: 0x8B85A, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage initWithKeySuffix:keychainStorage:accessGroup:]', symObjAddr: 0x0, symBinAddr: 0x2DCD, symSize: 0xDB }
+  - { offset: 0x8B8D1, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage initWithKeySuffix:keychainStorage:accessGroup:]', symObjAddr: 0x0, symBinAddr: 0x2DCD, symSize: 0xDB }
+  - { offset: 0x8B9F3, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage initWithKeySuffix:accessGroup:]', symObjAddr: 0xDB, symBinAddr: 0x2EA8, symSize: 0x9E }
+  - { offset: 0x8BAED, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage getArtifactForKey:]', symObjAddr: 0x179, symBinAddr: 0x2F46, symSize: 0x158 }
+  - { offset: 0x8BC0D, size: 0x8, addend: 0x0, symName: '___49-[GACAppAttestArtifactStorage getArtifactForKey:]_block_invoke', symObjAddr: 0x2D1, symBinAddr: 0x309E, symSize: 0xD8 }
+  - { offset: 0x8BD0B, size: 0x8, addend: 0x0, symName: '___49-[GACAppAttestArtifactStorage getArtifactForKey:]_block_invoke.24', symObjAddr: 0x3C7, symBinAddr: 0x3176, symSize: 0xCB }
+  - { offset: 0x8BE16, size: 0x8, addend: 0x0, symName: '___49-[GACAppAttestArtifactStorage getArtifactForKey:]_block_invoke.36', symObjAddr: 0x492, symBinAddr: 0x3241, symSize: 0x1C }
+  - { offset: 0x8BE66, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage setArtifact:forKey:]', symObjAddr: 0x4AE, symBinAddr: 0x325D, symSize: 0x16D }
+  - { offset: 0x8BF97, size: 0x8, addend: 0x0, symName: '___50-[GACAppAttestArtifactStorage setArtifact:forKey:]_block_invoke', symObjAddr: 0x61B, symBinAddr: 0x33CA, symSize: 0x1C }
+  - { offset: 0x8BFE7, size: 0x8, addend: 0x0, symName: '___50-[GACAppAttestArtifactStorage setArtifact:forKey:]_block_invoke_2', symObjAddr: 0x637, symBinAddr: 0x33E6, symSize: 0xBA }
+  - { offset: 0x8C0D9, size: 0x8, addend: 0x0, symName: '___50-[GACAppAttestArtifactStorage setArtifact:forKey:]_block_invoke.49', symObjAddr: 0x6F1, symBinAddr: 0x34A0, symSize: 0x8 }
+  - { offset: 0x8C110, size: 0x8, addend: 0x0, symName: '___50-[GACAppAttestArtifactStorage setArtifact:forKey:]_block_invoke_2.52', symObjAddr: 0x6F9, symBinAddr: 0x34A8, symSize: 0x1C }
+  - { offset: 0x8C160, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage storeArtifact:forKey:]', symObjAddr: 0x715, symBinAddr: 0x34C4, symSize: 0x181 }
+  - { offset: 0x8C2CF, size: 0x8, addend: 0x0, symName: '___52-[GACAppAttestArtifactStorage storeArtifact:forKey:]_block_invoke', symObjAddr: 0x896, symBinAddr: 0x3645, symSize: 0xC9 }
+  - { offset: 0x8C3DA, size: 0x8, addend: 0x0, symName: '___52-[GACAppAttestArtifactStorage storeArtifact:forKey:]_block_invoke.58', symObjAddr: 0x9A9, symBinAddr: 0x370E, symSize: 0xE }
+  - { offset: 0x8C425, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage artifactKey]', symObjAddr: 0x9B7, symBinAddr: 0x371C, symSize: 0x6C }
+  - { offset: 0x8C488, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage keySuffix]', symObjAddr: 0xA23, symBinAddr: 0x3788, symSize: 0xA }
+  - { offset: 0x8C4BD, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage keychainStorage]', symObjAddr: 0xA2D, symBinAddr: 0x3792, symSize: 0xA }
+  - { offset: 0x8C4F2, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage accessGroup]', symObjAddr: 0xA37, symBinAddr: 0x379C, symSize: 0xA }
+  - { offset: 0x8C527, size: 0x8, addend: 0x0, symName: '-[GACAppAttestArtifactStorage .cxx_destruct]', symObjAddr: 0xA41, symBinAddr: 0x37A6, symSize: 0x33 }
+  - { offset: 0x8CA0A, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAttestationResponse initWithArtifact:token:]', symObjAddr: 0x0, symBinAddr: 0x37D9, symSize: 0x99 }
+  - { offset: 0x8CAA5, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAttestationResponse initWithArtifact:token:]', symObjAddr: 0x0, symBinAddr: 0x37D9, symSize: 0x99 }
+  - { offset: 0x8CB4D, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAttestationResponse initWithResponseData:requestDate:error:]', symObjAddr: 0x99, symBinAddr: 0x3872, symSize: 0x3BC }
+  - { offset: 0x8CF03, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAttestationResponse artifact]', symObjAddr: 0x455, symBinAddr: 0x3C2E, symSize: 0xA }
+  - { offset: 0x8CF38, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAttestationResponse token]', symObjAddr: 0x45F, symBinAddr: 0x3C38, symSize: 0xA }
+  - { offset: 0x8CF6D, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAttestationResponse .cxx_destruct]', symObjAddr: 0x469, symBinAddr: 0x3C42, symSize: 0x28 }
+  - { offset: 0x8D022, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage initWithKeySuffix:]', symObjAddr: 0x0, symBinAddr: 0x3C6A, symSize: 0xAE }
+  - { offset: 0x8D07F, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage initWithKeySuffix:]', symObjAddr: 0x0, symBinAddr: 0x3C6A, symSize: 0xAE }
+  - { offset: 0x8D127, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage setAppAttestKeyID:]', symObjAddr: 0xAE, symBinAddr: 0x3D18, symSize: 0x6C }
+  - { offset: 0x8D1BE, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage getAppAttestKeyID]', symObjAddr: 0x11A, symBinAddr: 0x3D84, symSize: 0xBD }
+  - { offset: 0x8D2A0, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage storeAppAttestKeyID:]', symObjAddr: 0x1D7, symBinAddr: 0x3E41, symSize: 0xA4 }
+  - { offset: 0x8D381, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage appAttestKeyIDFromStorage]', symObjAddr: 0x27B, symBinAddr: 0x3EE5, symSize: 0x80 }
+  - { offset: 0x8D414, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage keyIDStorageKey]', symObjAddr: 0x2FB, symBinAddr: 0x3F65, symSize: 0x6C }
+  - { offset: 0x8D477, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage keySuffix]', symObjAddr: 0x367, symBinAddr: 0x3FD1, symSize: 0xA }
+  - { offset: 0x8D4AC, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage userDefaults]', symObjAddr: 0x371, symBinAddr: 0x3FDB, symSize: 0xA }
+  - { offset: 0x8D4E1, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyIDStorage .cxx_destruct]', symObjAddr: 0x37B, symBinAddr: 0x3FE5, symSize: 0x28 }
+  - { offset: 0x8D5A9, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyAttestationResult initWithKeyID:challenge:attestation:]', symObjAddr: 0x0, symBinAddr: 0x400D, symSize: 0xB8 }
+  - { offset: 0x8D85D, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyAttestationResult initWithKeyID:challenge:attestation:]', symObjAddr: 0x0, symBinAddr: 0x400D, symSize: 0xB8 }
+  - { offset: 0x8D941, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyAttestationResult keyID]', symObjAddr: 0xB8, symBinAddr: 0x40C5, symSize: 0xA }
+  - { offset: 0x8D976, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyAttestationResult challenge]', symObjAddr: 0xC2, symBinAddr: 0x40CF, symSize: 0xA }
+  - { offset: 0x8D9AB, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyAttestationResult attestation]', symObjAddr: 0xCC, symBinAddr: 0x40D9, symSize: 0xA }
+  - { offset: 0x8D9E0, size: 0x8, addend: 0x0, symName: '-[GACAppAttestKeyAttestationResult .cxx_destruct]', symObjAddr: 0xD6, symBinAddr: 0x40E3, symSize: 0x33 }
+  - { offset: 0x8DA13, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAssertionData initWithChallenge:artifact:assertion:]', symObjAddr: 0x109, symBinAddr: 0x4116, symSize: 0xB8 }
+  - { offset: 0x8DAF7, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAssertionData challenge]', symObjAddr: 0x1C1, symBinAddr: 0x41CE, symSize: 0xA }
+  - { offset: 0x8DB2C, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAssertionData artifact]', symObjAddr: 0x1CB, symBinAddr: 0x41D8, symSize: 0xA }
+  - { offset: 0x8DB61, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAssertionData assertion]', symObjAddr: 0x1D5, symBinAddr: 0x41E2, symSize: 0xA }
+  - { offset: 0x8DB96, size: 0x8, addend: 0x0, symName: '-[GACAppAttestAssertionData .cxx_destruct]', symObjAddr: 0x1DF, symBinAddr: 0x41EC, symSize: 0x33 }
+  - { offset: 0x8DBC9, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider initWithAppAttestService:APIService:keyIDStorage:artifactStorage:backoffWrapper:]', symObjAddr: 0x212, symBinAddr: 0x421F, symSize: 0x11D }
+  - { offset: 0x8DD5F, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider initWithServiceName:resourceName:baseURL:APIKey:keychainAccessGroup:requestHooks:]', symObjAddr: 0x32F, symBinAddr: 0x433C, symSize: 0x281 }
+  - { offset: 0x8E0D5, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider getTokenWithCompletion:]', symObjAddr: 0x5B0, symBinAddr: 0x45BD, symSize: 0x17 }
+  - { offset: 0x8E139, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider getLimitedUseTokenWithCompletion:]', symObjAddr: 0x5C7, symBinAddr: 0x45D4, symSize: 0x1A }
+  - { offset: 0x8E19D, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider getTokenWithLimitedUse:completion:]', symObjAddr: 0x5E1, symBinAddr: 0x45EE, symSize: 0x176 }
+  - { offset: 0x8E2E9, size: 0x8, addend: 0x0, symName: '___58-[GACAppAttestProvider getTokenWithLimitedUse:completion:]_block_invoke', symObjAddr: 0x757, symBinAddr: 0x4764, symSize: 0x11 }
+  - { offset: 0x8E353, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32b, symObjAddr: 0x768, symBinAddr: 0x4775, symSize: 0x17 }
+  - { offset: 0x8E37C, size: 0x8, addend: 0x0, symName: '___58-[GACAppAttestProvider getTokenWithLimitedUse:completion:]_block_invoke.67', symObjAddr: 0x78E, symBinAddr: 0x478C, symSize: 0x14 }
+  - { offset: 0x8E3E2, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider getTokenWithLimitedUse:]', symObjAddr: 0x7A2, symBinAddr: 0x47A0, symSize: 0xA7 }
+  - { offset: 0x8E455, size: 0x8, addend: 0x0, symName: '___47-[GACAppAttestProvider getTokenWithLimitedUse:]_block_invoke', symObjAddr: 0x849, symBinAddr: 0x4847, symSize: 0x2F2 }
+  - { offset: 0x8E651, size: 0x8, addend: 0x0, symName: '___47-[GACAppAttestProvider getTokenWithLimitedUse:]_block_invoke_2', symObjAddr: 0xB3B, symBinAddr: 0x4B39, symSize: 0x1D }
+  - { offset: 0x8E6BC, size: 0x8, addend: 0x0, symName: '___47-[GACAppAttestProvider getTokenWithLimitedUse:]_block_invoke.83', symObjAddr: 0xB67, symBinAddr: 0x4B56, symSize: 0x35 }
+  - { offset: 0x8E737, size: 0x8, addend: 0x0, symName: '___47-[GACAppAttestProvider getTokenWithLimitedUse:]_block_invoke.89', symObjAddr: 0xB9C, symBinAddr: 0x4B8B, symSize: 0x35 }
+  - { offset: 0x8E7B2, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider createGetTokenSequenceWithBackoffPromiseWithLimitedUse:]', symObjAddr: 0xBD1, symBinAddr: 0x4BC0, symSize: 0xE6 }
+  - { offset: 0x8E865, size: 0x8, addend: 0x0, symName: '___79-[GACAppAttestProvider createGetTokenSequenceWithBackoffPromiseWithLimitedUse:]_block_invoke', symObjAddr: 0xCB7, symBinAddr: 0x4CA6, symSize: 0x1D }
+  - { offset: 0x8E8C4, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider createGetTokenSequencePromiseWithLimitedUse:]', symObjAddr: 0xCD4, symBinAddr: 0x4CC3, symSize: 0x119 }
+  - { offset: 0x8E999, size: 0x8, addend: 0x0, symName: '___68-[GACAppAttestProvider createGetTokenSequencePromiseWithLimitedUse:]_block_invoke', symObjAddr: 0xDED, symBinAddr: 0x4DDC, symSize: 0x5B }
+  - { offset: 0x8EA3C, size: 0x8, addend: 0x0, symName: '___68-[GACAppAttestProvider createGetTokenSequencePromiseWithLimitedUse:]_block_invoke_2', symObjAddr: 0xE48, symBinAddr: 0x4E37, symSize: 0xE7 }
+  - { offset: 0x8EAFE, size: 0x8, addend: 0x0, symName: '___68-[GACAppAttestProvider createGetTokenSequencePromiseWithLimitedUse:]_block_invoke_3', symObjAddr: 0xF2F, symBinAddr: 0x4F1E, symSize: 0x161 }
+  - { offset: 0x8EC69, size: 0x8, addend: 0x0, symName: '___68-[GACAppAttestProvider createGetTokenSequencePromiseWithLimitedUse:]_block_invoke.127', symObjAddr: 0x1090, symBinAddr: 0x507F, symSize: 0x7A }
+  - { offset: 0x8ED10, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider initialHandshakeWithKeyID:limitedUse:]', symObjAddr: 0x110A, symBinAddr: 0x50F9, symSize: 0xD7 }
+  - { offset: 0x8EDD6, size: 0x8, addend: 0x0, symName: '___61-[GACAppAttestProvider initialHandshakeWithKeyID:limitedUse:]_block_invoke', symObjAddr: 0x11E1, symBinAddr: 0x51D0, symSize: 0xD2 }
+  - { offset: 0x8EEF3, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider saveArtifactAndGetAppCheckTokenFromResponse:keyID:]', symObjAddr: 0x12B3, symBinAddr: 0x52A2, symSize: 0x16D }
+  - { offset: 0x8F070, size: 0x8, addend: 0x0, symName: '___74-[GACAppAttestProvider saveArtifactAndGetAppCheckTokenFromResponse:keyID:]_block_invoke', symObjAddr: 0x1420, symBinAddr: 0x540F, symSize: 0x16 }
+  - { offset: 0x8F0CB, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider attestKey:challenge:]', symObjAddr: 0x1436, symBinAddr: 0x5425, symSize: 0x294 }
+  - { offset: 0x8F2F9, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestProvider attestKey:challenge:]_block_invoke', symObjAddr: 0x16CA, symBinAddr: 0x56B9, symSize: 0x20 }
+  - { offset: 0x8F347, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestProvider attestKey:challenge:]_block_invoke.154', symObjAddr: 0x16EA, symBinAddr: 0x56D9, symSize: 0x1C3 }
+  - { offset: 0x8F4DA, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestProvider attestKey:challenge:]_block_invoke_2', symObjAddr: 0x18AD, symBinAddr: 0x589C, symSize: 0x7D }
+  - { offset: 0x8F5A4, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s40s48s, symObjAddr: 0x192A, symBinAddr: 0x5919, symSize: 0x2C }
+  - { offset: 0x8F5F1, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s40s48s, symObjAddr: 0x1956, symBinAddr: 0x5945, symSize: 0x2C }
+  - { offset: 0x8F634, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestProvider attestKey:challenge:]_block_invoke.162', symObjAddr: 0x1982, symBinAddr: 0x5971, symSize: 0x27 }
+  - { offset: 0x8F6AD, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestProvider attestKey:challenge:]_block_invoke.167', symObjAddr: 0x19F3, symBinAddr: 0x5998, symSize: 0x8D }
+  - { offset: 0x8F78E, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider attestKeyGenerateIfNeededWithID:limitedUse:]', symObjAddr: 0x1A80, symBinAddr: 0x5A25, symSize: 0x3B0 }
+  - { offset: 0x8FA5C, size: 0x8, addend: 0x0, symName: '___67-[GACAppAttestProvider attestKeyGenerateIfNeededWithID:limitedUse:]_block_invoke', symObjAddr: 0x1E30, symBinAddr: 0x5DD5, symSize: 0xA7 }
+  - { offset: 0x8FB59, size: 0x8, addend: 0x0, symName: '___67-[GACAppAttestProvider attestKeyGenerateIfNeededWithID:limitedUse:]_block_invoke_2', symObjAddr: 0x1ED7, symBinAddr: 0x5E7C, symSize: 0x27E }
+  - { offset: 0x8FE00, size: 0x8, addend: 0x0, symName: '___67-[GACAppAttestProvider attestKeyGenerateIfNeededWithID:limitedUse:]_block_invoke_3', symObjAddr: 0x2155, symBinAddr: 0x60FA, symSize: 0x37 }
+  - { offset: 0x8FE5B, size: 0x8, addend: 0x0, symName: '___67-[GACAppAttestProvider attestKeyGenerateIfNeededWithID:limitedUse:]_block_invoke.208', symObjAddr: 0x218C, symBinAddr: 0x6131, symSize: 0x1DC }
+  - { offset: 0x90021, size: 0x8, addend: 0x0, symName: '___67-[GACAppAttestProvider attestKeyGenerateIfNeededWithID:limitedUse:]_block_invoke.214', symObjAddr: 0x2368, symBinAddr: 0x630D, symSize: 0x1A4 }
+  - { offset: 0x901E8, size: 0x8, addend: 0x0, symName: '___67-[GACAppAttestProvider attestKeyGenerateIfNeededWithID:limitedUse:]_block_invoke_2.222', symObjAddr: 0x250C, symBinAddr: 0x64B1, symSize: 0x37 }
+  - { offset: 0x90243, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider resetAttestation]', symObjAddr: 0x2543, symBinAddr: 0x64E8, symSize: 0xF6 }
+  - { offset: 0x90309, size: 0x8, addend: 0x0, symName: '___40-[GACAppAttestProvider resetAttestation]_block_invoke', symObjAddr: 0x2639, symBinAddr: 0x65DE, symSize: 0x5D }
+  - { offset: 0x90388, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider refreshTokenWithKeyID:artifact:limitedUse:]', symObjAddr: 0x2696, symBinAddr: 0x663B, symSize: 0x217 }
+  - { offset: 0x90582, size: 0x8, addend: 0x0, symName: '___66-[GACAppAttestProvider refreshTokenWithKeyID:artifact:limitedUse:]_block_invoke', symObjAddr: 0x28AD, symBinAddr: 0x6852, symSize: 0x24 }
+  - { offset: 0x90610, size: 0x8, addend: 0x0, symName: '___66-[GACAppAttestProvider refreshTokenWithKeyID:artifact:limitedUse:]_block_invoke.232', symObjAddr: 0x28D1, symBinAddr: 0x6876, symSize: 0x103 }
+  - { offset: 0x9072D, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider generateAssertionWithKeyID:artifact:challenge:]', symObjAddr: 0x29D4, symBinAddr: 0x6979, symSize: 0x2BF }
+  - { offset: 0x909AC, size: 0x8, addend: 0x0, symName: '___70-[GACAppAttestProvider generateAssertionWithKeyID:artifact:challenge:]_block_invoke', symObjAddr: 0x2C93, symBinAddr: 0x6C38, symSize: 0x8C }
+  - { offset: 0x90A7F, size: 0x8, addend: 0x0, symName: '___70-[GACAppAttestProvider generateAssertionWithKeyID:artifact:challenge:]_block_invoke.243', symObjAddr: 0x2D1F, symBinAddr: 0x6CC4, symSize: 0x1CB }
+  - { offset: 0x90C12, size: 0x8, addend: 0x0, symName: '___70-[GACAppAttestProvider generateAssertionWithKeyID:artifact:challenge:]_block_invoke_2', symObjAddr: 0x2EEA, symBinAddr: 0x6E8F, symSize: 0x7D }
+  - { offset: 0x90CDC, size: 0x8, addend: 0x0, symName: '___70-[GACAppAttestProvider generateAssertionWithKeyID:artifact:challenge:]_block_invoke_3', symObjAddr: 0x2F67, symBinAddr: 0x6F0C, symSize: 0x27E }
+  - { offset: 0x90FAB, size: 0x8, addend: 0x0, symName: '___70-[GACAppAttestProvider generateAssertionWithKeyID:artifact:challenge:]_block_invoke_4', symObjAddr: 0x31E5, symBinAddr: 0x718A, symSize: 0x37 }
+  - { offset: 0x91006, size: 0x8, addend: 0x0, symName: '___70-[GACAppAttestProvider generateAssertionWithKeyID:artifact:challenge:]_block_invoke.248', symObjAddr: 0x321C, symBinAddr: 0x71C1, symSize: 0x61 }
+  - { offset: 0x910A7, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider attestationState]', symObjAddr: 0x327D, symBinAddr: 0x7222, symSize: 0x8B }
+  - { offset: 0x91125, size: 0x8, addend: 0x0, symName: '___40-[GACAppAttestProvider attestationState]_block_invoke', symObjAddr: 0x3308, symBinAddr: 0x72AD, symSize: 0x25A }
+  - { offset: 0x9137F, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider isAppAttestSupported]', symObjAddr: 0x3562, symBinAddr: 0x7507, symSize: 0xEE }
+  - { offset: 0x9146C, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider generateAppAttestKeyIDIfNeeded:]', symObjAddr: 0x3650, symBinAddr: 0x75F5, symSize: 0x45 }
+  - { offset: 0x914CD, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider generateAppAttestKey]', symObjAddr: 0x3695, symBinAddr: 0x763A, symSize: 0x19B }
+  - { offset: 0x915F8, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestProvider generateAppAttestKey]_block_invoke', symObjAddr: 0x3830, symBinAddr: 0x77D5, symSize: 0x6A }
+  - { offset: 0x916A0, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestProvider generateAppAttestKey]_block_invoke.285', symObjAddr: 0x389A, symBinAddr: 0x783F, symSize: 0x1C }
+  - { offset: 0x916F3, size: 0x8, addend: 0x0, symName: '___44-[GACAppAttestProvider generateAppAttestKey]_block_invoke_2', symObjAddr: 0x38B6, symBinAddr: 0x785B, symSize: 0x7B }
+  - { offset: 0x9179F, size: 0x8, addend: 0x0, symName: '+[GACAppAttestProvider storageKeySuffixWithServiceName:resourceName:]', symObjAddr: 0x3931, symBinAddr: 0x78D6, symSize: 0x28 }
+  - { offset: 0x91812, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider APIService]', symObjAddr: 0x3959, symBinAddr: 0x78FE, symSize: 0xA }
+  - { offset: 0x91847, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider appAttestService]', symObjAddr: 0x3963, symBinAddr: 0x7908, symSize: 0xA }
+  - { offset: 0x9187C, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider keyIDStorage]', symObjAddr: 0x396D, symBinAddr: 0x7912, symSize: 0xA }
+  - { offset: 0x918B1, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider artifactStorage]', symObjAddr: 0x3977, symBinAddr: 0x791C, symSize: 0xA }
+  - { offset: 0x918E6, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider backoffWrapper]', symObjAddr: 0x3981, symBinAddr: 0x7926, symSize: 0xA }
+  - { offset: 0x9191B, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider ongoingGetTokenOperation]', symObjAddr: 0x398B, symBinAddr: 0x7930, symSize: 0xA }
+  - { offset: 0x91950, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider setOngoingGetTokenOperation:]', symObjAddr: 0x3995, symBinAddr: 0x793A, symSize: 0x11 }
+  - { offset: 0x91991, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider ongoingGetTokenOperationLimitedUse]', symObjAddr: 0x39A6, symBinAddr: 0x794B, symSize: 0x9 }
+  - { offset: 0x919C6, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider setOngoingGetTokenOperationLimitedUse:]', symObjAddr: 0x39AF, symBinAddr: 0x7954, symSize: 0x9 }
+  - { offset: 0x91A03, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider queue]', symObjAddr: 0x39B8, symBinAddr: 0x795D, symSize: 0xA }
+  - { offset: 0x91A38, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProvider .cxx_destruct]', symObjAddr: 0x39C2, symBinAddr: 0x7967, symSize: 0x5F }
+  - { offset: 0x92DA4, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState initUnsupportedWithError:]', symObjAddr: 0x0, symBinAddr: 0x79C6, symSize: 0x73 }
+  - { offset: 0x92E71, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState initUnsupportedWithError:]', symObjAddr: 0x0, symBinAddr: 0x79C6, symSize: 0x73 }
+  - { offset: 0x92EE1, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState initWithSupportedInitialState]', symObjAddr: 0x73, symBinAddr: 0x7A39, symSize: 0x3C }
+  - { offset: 0x92F18, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState initWithGeneratedKeyID:]', symObjAddr: 0xAF, symBinAddr: 0x7A75, symSize: 0x73 }
+  - { offset: 0x92F88, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState initWithRegisteredKeyID:artifact:]', symObjAddr: 0x122, symBinAddr: 0x7AE8, symSize: 0xA1 }
+  - { offset: 0x93030, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState state]', symObjAddr: 0x1C3, symBinAddr: 0x7B89, symSize: 0xA }
+  - { offset: 0x93065, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState appAttestUnsupportedError]', symObjAddr: 0x1CD, symBinAddr: 0x7B93, symSize: 0xA }
+  - { offset: 0x9309A, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState appAttestKeyID]', symObjAddr: 0x1D7, symBinAddr: 0x7B9D, symSize: 0xA }
+  - { offset: 0x930CF, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState attestationArtifact]', symObjAddr: 0x1E1, symBinAddr: 0x7BA7, symSize: 0xA }
+  - { offset: 0x93104, size: 0x8, addend: 0x0, symName: '-[GACAppAttestProviderState .cxx_destruct]', symObjAddr: 0x1EB, symBinAddr: 0x7BB1, symSize: 0x33 }
+  - { offset: 0x931B4, size: 0x8, addend: 0x0, symName: '-[GACAppAttestRejectionError underlyingError]', symObjAddr: 0x0, symBinAddr: 0x7BE4, symSize: 0x5A }
+  - { offset: 0x931EB, size: 0x8, addend: 0x0, symName: '-[GACAppAttestRejectionError underlyingError]', symObjAddr: 0x0, symBinAddr: 0x7BE4, symSize: 0x5A }
+  - { offset: 0x9324E, size: 0x8, addend: 0x0, symName: '-[GACAppAttestRejectionError initWithUnderlyingError:]', symObjAddr: 0x5A, symBinAddr: 0x7C3E, symSize: 0xD6 }
+  - { offset: 0x9337F, size: 0x8, addend: 0x0, symName: '-[GACAppAttestStoredArtifact initWithKeyID:artifact:]', symObjAddr: 0x0, symBinAddr: 0x7D14, symSize: 0x99 }
+  - { offset: 0x93401, size: 0x8, addend: 0x0, symName: '-[GACAppAttestStoredArtifact initWithKeyID:artifact:]', symObjAddr: 0x0, symBinAddr: 0x7D14, symSize: 0x99 }
+  - { offset: 0x934A9, size: 0x8, addend: 0x0, symName: '-[GACAppAttestStoredArtifact storageVersion]', symObjAddr: 0x99, symBinAddr: 0x7DAD, symSize: 0xB }
+  - { offset: 0x934DC, size: 0x8, addend: 0x0, symName: '+[GACAppAttestStoredArtifact supportsSecureCoding]', symObjAddr: 0xA4, symBinAddr: 0x7DB8, symSize: 0x8 }
+  - { offset: 0x9350F, size: 0x8, addend: 0x0, symName: '-[GACAppAttestStoredArtifact encodeWithCoder:]', symObjAddr: 0xAC, symBinAddr: 0x7DC0, symSize: 0xD2 }
+  - { offset: 0x93603, size: 0x8, addend: 0x0, symName: '-[GACAppAttestStoredArtifact initWithCoder:]', symObjAddr: 0x17E, symBinAddr: 0x7E92, symSize: 0x126 }
+  - { offset: 0x93775, size: 0x8, addend: 0x0, symName: '-[GACAppAttestStoredArtifact keyID]', symObjAddr: 0x2A4, symBinAddr: 0x7FB8, symSize: 0xA }
+  - { offset: 0x937AA, size: 0x8, addend: 0x0, symName: '-[GACAppAttestStoredArtifact artifact]', symObjAddr: 0x2AE, symBinAddr: 0x7FC2, symSize: 0xA }
+  - { offset: 0x937DF, size: 0x8, addend: 0x0, symName: '-[GACAppAttestStoredArtifact .cxx_destruct]', symObjAddr: 0x2B8, symBinAddr: 0x7FCC, symSize: 0x28 }
+  - { offset: 0x938A9, size: 0x8, addend: 0x0, symName: '-[GACAppCheck initWithServiceName:appCheckProvider:storage:tokenRefresher:settings:tokenDelegate:]', symObjAddr: 0x0, symBinAddr: 0x7FF4, symSize: 0x1CB }
+  - { offset: 0x939FA, size: 0x8, addend: 0x0, symName: '-[GACAppCheck initWithServiceName:appCheckProvider:storage:tokenRefresher:settings:tokenDelegate:]', symObjAddr: 0x0, symBinAddr: 0x7FF4, symSize: 0x1CB }
+  - { offset: 0x93BB3, size: 0x8, addend: 0x0, symName: '___98-[GACAppCheck initWithServiceName:appCheckProvider:storage:tokenRefresher:settings:tokenDelegate:]_block_invoke', symObjAddr: 0x1CB, symBinAddr: 0x81BF, symSize: 0x5A }
+  - { offset: 0x93C66, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32w, symObjAddr: 0x225, symBinAddr: 0x8219, symSize: 0x12 }
+  - { offset: 0x93C8F, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32w, symObjAddr: 0x237, symBinAddr: 0x822B, symSize: 0xE }
+  - { offset: 0x93CAE, size: 0x8, addend: 0x0, symName: '-[GACAppCheck initWithServiceName:resourceName:appCheckProvider:settings:tokenDelegate:keychainAccessGroup:]', symObjAddr: 0x245, symBinAddr: 0x8239, symSize: 0x1AD }
+  - { offset: 0x93F28, size: 0x8, addend: 0x0, symName: '-[GACAppCheck tokenForcingRefresh:completion:]', symObjAddr: 0x3F2, symBinAddr: 0x83E6, symSize: 0x176 }
+  - { offset: 0x94074, size: 0x8, addend: 0x0, symName: '___46-[GACAppCheck tokenForcingRefresh:completion:]_block_invoke', symObjAddr: 0x568, symBinAddr: 0x855C, symSize: 0x63 }
+  - { offset: 0x94114, size: 0x8, addend: 0x0, symName: '___46-[GACAppCheck tokenForcingRefresh:completion:]_block_invoke.29', symObjAddr: 0x5F1, symBinAddr: 0x85BF, symSize: 0x66 }
+  - { offset: 0x941C3, size: 0x8, addend: 0x0, symName: '-[GACAppCheck limitedUseTokenWithCompletion:]', symObjAddr: 0x657, symBinAddr: 0x8625, symSize: 0x16F }
+  - { offset: 0x942FF, size: 0x8, addend: 0x0, symName: '___45-[GACAppCheck limitedUseTokenWithCompletion:]_block_invoke', symObjAddr: 0x7C6, symBinAddr: 0x8794, symSize: 0x63 }
+  - { offset: 0x9439F, size: 0x8, addend: 0x0, symName: '___45-[GACAppCheck limitedUseTokenWithCompletion:]_block_invoke_2', symObjAddr: 0x829, symBinAddr: 0x87F7, symSize: 0x66 }
+  - { offset: 0x9444E, size: 0x8, addend: 0x0, symName: '-[GACAppCheck retrieveOrRefreshTokenForcingRefresh:]', symObjAddr: 0x88F, symBinAddr: 0x885D, symSize: 0x6B }
+  - { offset: 0x944A1, size: 0x8, addend: 0x0, symName: '___52-[GACAppCheck retrieveOrRefreshTokenForcingRefresh:]_block_invoke', symObjAddr: 0x8FA, symBinAddr: 0x88C8, symSize: 0x197 }
+  - { offset: 0x945C0, size: 0x8, addend: 0x0, symName: '___52-[GACAppCheck retrieveOrRefreshTokenForcingRefresh:]_block_invoke_2', symObjAddr: 0xA91, symBinAddr: 0x8A5F, symSize: 0x35 }
+  - { offset: 0x9463B, size: 0x8, addend: 0x0, symName: '___52-[GACAppCheck retrieveOrRefreshTokenForcingRefresh:]_block_invoke.45', symObjAddr: 0xAD5, symBinAddr: 0x8A94, symSize: 0x35 }
+  - { offset: 0x946B6, size: 0x8, addend: 0x0, symName: '-[GACAppCheck createRetrieveOrRefreshTokenPromiseForcingRefresh:]', symObjAddr: 0xB0A, symBinAddr: 0x8AC9, symSize: 0xB2 }
+  - { offset: 0x94749, size: 0x8, addend: 0x0, symName: '___65-[GACAppCheck createRetrieveOrRefreshTokenPromiseForcingRefresh:]_block_invoke', symObjAddr: 0xBBC, symBinAddr: 0x8B7B, symSize: 0x16 }
+  - { offset: 0x947A4, size: 0x8, addend: 0x0, symName: '-[GACAppCheck getCachedValidTokenForcingRefresh:]', symObjAddr: 0xBD2, symBinAddr: 0x8B91, symSize: 0xFC }
+  - { offset: 0x948A2, size: 0x8, addend: 0x0, symName: '___49-[GACAppCheck getCachedValidTokenForcingRefresh:]_block_invoke', symObjAddr: 0xCCE, symBinAddr: 0x8C8D, symSize: 0xB9 }
+  - { offset: 0x9496D, size: 0x8, addend: 0x0, symName: '-[GACAppCheck refreshToken]', symObjAddr: 0xD87, symBinAddr: 0x8D46, symSize: 0x152 }
+  - { offset: 0x94A32, size: 0x8, addend: 0x0, symName: '___27-[GACAppCheck refreshToken]_block_invoke', symObjAddr: 0xED9, symBinAddr: 0x8E98, symSize: 0x6A }
+  - { offset: 0x94AD6, size: 0x8, addend: 0x0, symName: '___27-[GACAppCheck refreshToken]_block_invoke.79', symObjAddr: 0xF43, symBinAddr: 0x8F02, symSize: 0x7B }
+  - { offset: 0x94B7E, size: 0x8, addend: 0x0, symName: '___27-[GACAppCheck refreshToken]_block_invoke.82', symObjAddr: 0xFBE, symBinAddr: 0x8F7D, symSize: 0x172 }
+  - { offset: 0x94D15, size: 0x8, addend: 0x0, symName: '-[GACAppCheck limitedUseToken]', symObjAddr: 0x1130, symBinAddr: 0x90EF, symSize: 0xC0 }
+  - { offset: 0x94D98, size: 0x8, addend: 0x0, symName: '___30-[GACAppCheck limitedUseToken]_block_invoke', symObjAddr: 0x11F0, symBinAddr: 0x91AF, symSize: 0x6A }
+  - { offset: 0x94E3C, size: 0x8, addend: 0x0, symName: '___30-[GACAppCheck limitedUseToken]_block_invoke_2', symObjAddr: 0x125A, symBinAddr: 0x9219, symSize: 0xD }
+  - { offset: 0x94E5A, size: 0x8, addend: 0x0, symName: '-[GACAppCheck periodicTokenRefreshWithCompletion:]', symObjAddr: 0x1267, symBinAddr: 0x9226, symSize: 0x171 }
+  - { offset: 0x94F96, size: 0x8, addend: 0x0, symName: '___50-[GACAppCheck periodicTokenRefreshWithCompletion:]_block_invoke', symObjAddr: 0x13D8, symBinAddr: 0x9397, symSize: 0xB8 }
+  - { offset: 0x950B7, size: 0x8, addend: 0x0, symName: '___50-[GACAppCheck periodicTokenRefreshWithCompletion:]_block_invoke_2', symObjAddr: 0x1490, symBinAddr: 0x944F, symSize: 0x40 }
+  - { offset: 0x95141, size: 0x8, addend: 0x0, symName: '-[GACAppCheck serviceName]', symObjAddr: 0x14D0, symBinAddr: 0x948F, symSize: 0xA }
+  - { offset: 0x95176, size: 0x8, addend: 0x0, symName: '-[GACAppCheck appCheckProvider]', symObjAddr: 0x14DA, symBinAddr: 0x9499, symSize: 0xA }
+  - { offset: 0x951AB, size: 0x8, addend: 0x0, symName: '-[GACAppCheck storage]', symObjAddr: 0x14E4, symBinAddr: 0x94A3, symSize: 0xA }
+  - { offset: 0x951E0, size: 0x8, addend: 0x0, symName: '-[GACAppCheck settings]', symObjAddr: 0x14EE, symBinAddr: 0x94AD, symSize: 0xA }
+  - { offset: 0x95215, size: 0x8, addend: 0x0, symName: '-[GACAppCheck tokenDelegate]', symObjAddr: 0x14F8, symBinAddr: 0x94B7, symSize: 0x16 }
+  - { offset: 0x9524C, size: 0x8, addend: 0x0, symName: '-[GACAppCheck tokenRefresher]', symObjAddr: 0x150E, symBinAddr: 0x94CD, symSize: 0xA }
+  - { offset: 0x95281, size: 0x8, addend: 0x0, symName: '-[GACAppCheck ongoingRetrieveOrRefreshTokenPromise]', symObjAddr: 0x1518, symBinAddr: 0x94D7, symSize: 0xA }
+  - { offset: 0x952B6, size: 0x8, addend: 0x0, symName: '-[GACAppCheck setOngoingRetrieveOrRefreshTokenPromise:]', symObjAddr: 0x1522, symBinAddr: 0x94E1, symSize: 0x11 }
+  - { offset: 0x952F7, size: 0x8, addend: 0x0, symName: '-[GACAppCheck .cxx_destruct]', symObjAddr: 0x1533, symBinAddr: 0x94F2, symSize: 0x5D }
+  - { offset: 0x95BD7, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService initWithURLSession:baseURL:APIKey:requestHooks:]', symObjAddr: 0x0, symBinAddr: 0x954F, symSize: 0x20F }
+  - { offset: 0x95CEF, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService initWithURLSession:baseURL:APIKey:requestHooks:]', symObjAddr: 0x0, symBinAddr: 0x954F, symSize: 0x20F }
+  - { offset: 0x95F93, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService sendRequestWithURL:HTTPMethod:body:additionalHeaders:]', symObjAddr: 0x20F, symBinAddr: 0x975E, symSize: 0x11D }
+  - { offset: 0x96098, size: 0x8, addend: 0x0, symName: '___79-[_GACAppCheckAPIService sendRequestWithURL:HTTPMethod:body:additionalHeaders:]_block_invoke', symObjAddr: 0x32C, symBinAddr: 0x987B, symSize: 0x19 }
+  - { offset: 0x96100, size: 0x8, addend: 0x0, symName: '___79-[_GACAppCheckAPIService sendRequestWithURL:HTTPMethod:body:additionalHeaders:]_block_invoke.31', symObjAddr: 0x363, symBinAddr: 0x9894, symSize: 0x19 }
+  - { offset: 0x96168, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService requestWithURL:HTTPMethod:body:additionalHeaders:]', symObjAddr: 0x37C, symBinAddr: 0x98AD, symSize: 0x17B }
+  - { offset: 0x9632B, size: 0x8, addend: 0x0, symName: '___75-[_GACAppCheckAPIService requestWithURL:HTTPMethod:body:additionalHeaders:]_block_invoke', symObjAddr: 0x4F7, symBinAddr: 0x9A28, symSize: 0x375 }
+  - { offset: 0x96548, size: 0x8, addend: 0x0, symName: ___Block_byref_object_copy_, symObjAddr: 0x86C, symBinAddr: 0x9D9D, symSize: 0x16 }
+  - { offset: 0x9656D, size: 0x8, addend: 0x0, symName: ___Block_byref_object_dispose_, symObjAddr: 0x882, symBinAddr: 0x9DB3, symSize: 0xF }
+  - { offset: 0x96598, size: 0x8, addend: 0x0, symName: '___75-[_GACAppCheckAPIService requestWithURL:HTTPMethod:body:additionalHeaders:]_block_invoke.56', symObjAddr: 0x891, symBinAddr: 0x9DC2, symSize: 0x21 }
+  - { offset: 0x9661A, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32r, symObjAddr: 0x8B2, symBinAddr: 0x9DE3, symSize: 0x17 }
+  - { offset: 0x96643, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32r, symObjAddr: 0x8C9, symBinAddr: 0x9DFA, symSize: 0x13 }
+  - { offset: 0x96662, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s40s48s56s64s, symObjAddr: 0x8DC, symBinAddr: 0x9E0D, symSize: 0x3A }
+  - { offset: 0x966C7, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s40s48s56s64s, symObjAddr: 0x916, symBinAddr: 0x9E47, symSize: 0x3A }
+  - { offset: 0x96722, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService sendURLRequest:]', symObjAddr: 0x950, symBinAddr: 0x9E81, symSize: 0x131 }
+  - { offset: 0x96842, size: 0x8, addend: 0x0, symName: '___41-[_GACAppCheckAPIService sendURLRequest:]_block_invoke', symObjAddr: 0xA81, symBinAddr: 0x9FB2, symSize: 0x1C }
+  - { offset: 0x96892, size: 0x8, addend: 0x0, symName: '___41-[_GACAppCheckAPIService sendURLRequest:]_block_invoke_2', symObjAddr: 0xA9D, symBinAddr: 0x9FCE, symSize: 0x19 }
+  - { offset: 0x968FA, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService validateHTTPResponseStatusCode:]', symObjAddr: 0xAB6, symBinAddr: 0x9FE7, symSize: 0xEF }
+  - { offset: 0x969CE, size: 0x8, addend: 0x0, symName: '___57-[_GACAppCheckAPIService validateHTTPResponseStatusCode:]_block_invoke', symObjAddr: 0xBA5, symBinAddr: 0xA0D6, symSize: 0x189 }
+  - { offset: 0x96B4A, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService appCheckTokenWithAPIResponse:]', symObjAddr: 0xD2E, symBinAddr: 0xA25F, symSize: 0xDF }
+  - { offset: 0x96C06, size: 0x8, addend: 0x0, symName: '___55-[_GACAppCheckAPIService appCheckTokenWithAPIResponse:]_block_invoke', symObjAddr: 0xE0D, symBinAddr: 0xA33E, symSize: 0xD1 }
+  - { offset: 0x96D0A, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService defaultQueue]', symObjAddr: 0xEDE, symBinAddr: 0xA40F, symSize: 0x11 }
+  - { offset: 0x96D77, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService baseURL]', symObjAddr: 0xEEF, symBinAddr: 0xA420, symSize: 0xA }
+  - { offset: 0x96DAC, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService URLSession]', symObjAddr: 0xEF9, symBinAddr: 0xA42A, symSize: 0xA }
+  - { offset: 0x96DE1, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService APIKey]', symObjAddr: 0xF03, symBinAddr: 0xA434, symSize: 0xA }
+  - { offset: 0x96E16, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService requestHooks]', symObjAddr: 0xF0D, symBinAddr: 0xA43E, symSize: 0xA }
+  - { offset: 0x96E4B, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckAPIService .cxx_destruct]', symObjAddr: 0xF17, symBinAddr: 0xA448, symSize: 0x3E }
+  - { offset: 0x9743D, size: 0x8, addend: 0x0, symName: '-[GACAppCheckBackoffOperationFailure initWithFinishDate:error:backoffType:retryCount:]', symObjAddr: 0x0, symBinAddr: 0xA486, symSize: 0xAF }
+  - { offset: 0x9764F, size: 0x8, addend: 0x0, symName: '-[GACAppCheckBackoffOperationFailure initWithFinishDate:error:backoffType:retryCount:]', symObjAddr: 0x0, symBinAddr: 0xA486, symSize: 0xAF }
+  - { offset: 0x97717, size: 0x8, addend: 0x0, symName: '+[GACAppCheckBackoffOperationFailure nextRetryFailureWithFailure:finishDate:error:backoffType:]', symObjAddr: 0xAF, symBinAddr: 0xA535, symSize: 0xA5 }
+  - { offset: 0x9782E, size: 0x8, addend: 0x0, symName: '-[GACAppCheckBackoffOperationFailure finishDate]', symObjAddr: 0x154, symBinAddr: 0xA5DA, symSize: 0xA }
+  - { offset: 0x97863, size: 0x8, addend: 0x0, symName: '-[GACAppCheckBackoffOperationFailure error]', symObjAddr: 0x15E, symBinAddr: 0xA5E4, symSize: 0xA }
+  - { offset: 0x97898, size: 0x8, addend: 0x0, symName: '-[GACAppCheckBackoffOperationFailure backoffType]', symObjAddr: 0x168, symBinAddr: 0xA5EE, symSize: 0xA }
+  - { offset: 0x978CD, size: 0x8, addend: 0x0, symName: '-[GACAppCheckBackoffOperationFailure retryCount]', symObjAddr: 0x172, symBinAddr: 0xA5F8, symSize: 0xA }
+  - { offset: 0x97902, size: 0x8, addend: 0x0, symName: '-[GACAppCheckBackoffOperationFailure .cxx_destruct]', symObjAddr: 0x17C, symBinAddr: 0xA602, symSize: 0x28 }
+  - { offset: 0x97935, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper init]', symObjAddr: 0x1A4, symBinAddr: 0xA62A, symSize: 0x5A }
+  - { offset: 0x979A0, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper initWithDateProvider:]', symObjAddr: 0x1FE, symBinAddr: 0xA684, symSize: 0x73 }
+  - { offset: 0x97A30, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckBackoffWrapper currentDateProvider]', symObjAddr: 0x271, symBinAddr: 0xA6F7, symSize: 0xD }
+  - { offset: 0x97A63, size: 0x8, addend: 0x0, symName: '___49+[_GACAppCheckBackoffWrapper currentDateProvider]_block_invoke', symObjAddr: 0x27E, symBinAddr: 0xA704, symSize: 0x19 }
+  - { offset: 0x97A9A, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper applyBackoffToOperation:errorHandler:]', symObjAddr: 0x297, symBinAddr: 0xA71D, symSize: 0x23E }
+  - { offset: 0x97CA9, size: 0x8, addend: 0x0, symName: '___67-[_GACAppCheckBackoffWrapper applyBackoffToOperation:errorHandler:]_block_invoke', symObjAddr: 0x4D5, symBinAddr: 0xA95B, symSize: 0x78 }
+  - { offset: 0x97D44, size: 0x8, addend: 0x0, symName: '___67-[_GACAppCheckBackoffWrapper applyBackoffToOperation:errorHandler:]_block_invoke.57', symObjAddr: 0x56B, symBinAddr: 0xA9D3, symSize: 0x129 }
+  - { offset: 0x97E80, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32s40b, symObjAddr: 0x694, symBinAddr: 0xAAFC, symSize: 0x30 }
+  - { offset: 0x97EB5, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper isNextOperationAllowed]', symObjAddr: 0x6E9, symBinAddr: 0xAB2C, symSize: 0x12A }
+  - { offset: 0x97FB5, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper hasTimeIntervalPassedSinceLastFailure:]', symObjAddr: 0x813, symBinAddr: 0xAC56, symSize: 0xD9 }
+  - { offset: 0x980B0, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper promiseWithRetryDisallowedError:]', symObjAddr: 0x8EC, symBinAddr: 0xAD2F, symSize: 0x11D }
+  - { offset: 0x981EE, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper queue]', symObjAddr: 0xA09, symBinAddr: 0xAE4C, symSize: 0x11 }
+  - { offset: 0x98254, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper exponentialBackoffIntervalForFailure:]', symObjAddr: 0xA1A, symBinAddr: 0xAE5D, symSize: 0x66 }
+  - { offset: 0x9832D, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper defaultAppCheckProviderErrorHandler]', symObjAddr: 0xA80, symBinAddr: 0xAEC3, symSize: 0xD }
+  - { offset: 0x98360, size: 0x8, addend: 0x0, symName: '___65-[_GACAppCheckBackoffWrapper defaultAppCheckProviderErrorHandler]_block_invoke', symObjAddr: 0xA8D, symBinAddr: 0xAED0, symSize: 0xD6 }
+  - { offset: 0x9845F, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper dateProvider]', symObjAddr: 0xB63, symBinAddr: 0xAFA6, symSize: 0xA }
+  - { offset: 0x98494, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper lastFailure]', symObjAddr: 0xB6D, symBinAddr: 0xAFB0, symSize: 0xA }
+  - { offset: 0x984C9, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper setLastFailure:]', symObjAddr: 0xB77, symBinAddr: 0xAFBA, symSize: 0x11 }
+  - { offset: 0x9850A, size: 0x8, addend: 0x0, symName: '-[_GACAppCheckBackoffWrapper .cxx_destruct]', symObjAddr: 0xB88, symBinAddr: 0xAFCB, symSize: 0x28 }
+  - { offset: 0x98878, size: 0x8, addend: 0x0, symName: '+[GACAppCheckCryptoUtils sha256HashFromData:]', symObjAddr: 0x0, symBinAddr: 0xAFF3, symSize: 0xD6 }
+  - { offset: 0x9888D, size: 0x8, addend: 0x0, symName: '+[GACAppCheckCryptoUtils sha256HashFromData:]', symObjAddr: 0x0, symBinAddr: 0xAFF3, symSize: 0xD6 }
+  - { offset: 0x98A26, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider initWithAPIService:serviceName:resourceName:]', symObjAddr: 0x0, symBinAddr: 0xB0C9, symSize: 0x3B5 }
+  - { offset: 0x98BA7, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider initWithAPIService:serviceName:resourceName:]', symObjAddr: 0x0, symBinAddr: 0xB0C9, symSize: 0x3B5 }
+  - { offset: 0x98F4D, size: 0x8, addend: 0x0, symName: _LocalDebugToken, symObjAddr: 0x5A8, symBinAddr: 0xB671, symSize: 0x108 }
+  - { offset: 0x99051, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider initWithServiceName:resourceName:baseURL:APIKey:requestHooks:]', symObjAddr: 0x3B5, symBinAddr: 0xB47E, symSize: 0x186 }
+  - { offset: 0x99295, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider currentDebugToken]', symObjAddr: 0x53B, symBinAddr: 0xB604, symSize: 0x63 }
+  - { offset: 0x992F0, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider localDebugToken]', symObjAddr: 0x59E, symBinAddr: 0xB667, symSize: 0xA }
+  - { offset: 0x99358, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider getTokenWithCompletion:]', symObjAddr: 0x6B0, symBinAddr: 0xB779, symSize: 0x17 }
+  - { offset: 0x993BC, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider getLimitedUseTokenWithCompletion:]', symObjAddr: 0x6C7, symBinAddr: 0xB790, symSize: 0x1A }
+  - { offset: 0x99420, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider getTokenWithLimitedUse:completion:]', symObjAddr: 0x6E1, symBinAddr: 0xB7AA, symSize: 0x221 }
+  - { offset: 0x995B6, size: 0x8, addend: 0x0, symName: '___62-[GACAppCheckDebugProvider getTokenWithLimitedUse:completion:]_block_invoke', symObjAddr: 0x902, symBinAddr: 0xB9CB, symSize: 0x16 }
+  - { offset: 0x99605, size: 0x8, addend: 0x0, symName: '___62-[GACAppCheckDebugProvider getTokenWithLimitedUse:completion:]_block_invoke.40', symObjAddr: 0x936, symBinAddr: 0xB9E1, symSize: 0x8B }
+  - { offset: 0x996BD, size: 0x8, addend: 0x0, symName: '___62-[GACAppCheckDebugProvider getTokenWithLimitedUse:completion:]_block_invoke.46', symObjAddr: 0x9C1, symBinAddr: 0xBA6C, symSize: 0xAA }
+  - { offset: 0x997BD, size: 0x8, addend: 0x0, symName: '___62-[GACAppCheckDebugProvider getTokenWithLimitedUse:completion:]_block_invoke.57', symObjAddr: 0xAC0, symBinAddr: 0xBB16, symSize: 0x100 }
+  - { offset: 0x99913, size: 0x8, addend: 0x0, symName: '+[GACAppCheckDebugProvider registeredUserDefaultsKeyForServiceName:resourceName:]', symObjAddr: 0xBC0, symBinAddr: 0xBC16, symSize: 0x10E }
+  - { offset: 0x99A66, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider APIService]', symObjAddr: 0xCCE, symBinAddr: 0xBD24, symSize: 0xA }
+  - { offset: 0x99A9B, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider debugTokenEnvValue]', symObjAddr: 0xCD8, symBinAddr: 0xBD2E, symSize: 0xA }
+  - { offset: 0x99AD0, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider registeredUserDefaultsKey]', symObjAddr: 0xCE2, symBinAddr: 0xBD38, symSize: 0xA }
+  - { offset: 0x99B05, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProvider .cxx_destruct]', symObjAddr: 0xCEC, symBinAddr: 0xBD42, symSize: 0x33 }
+  - { offset: 0x99EB2, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProviderAPIService initWithAPIService:resourceName:]', symObjAddr: 0x0, symBinAddr: 0xBD75, symSize: 0x99 }
+  - { offset: 0x99F34, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProviderAPIService initWithAPIService:resourceName:]', symObjAddr: 0x0, symBinAddr: 0xBD75, symSize: 0x99 }
+  - { offset: 0x99FDC, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProviderAPIService appCheckTokenWithDebugToken:limitedUse:]', symObjAddr: 0x99, symBinAddr: 0xBE0E, symSize: 0x23D }
+  - { offset: 0x9A1CF, size: 0x8, addend: 0x0, symName: '___77-[GACAppCheckDebugProviderAPIService appCheckTokenWithDebugToken:limitedUse:]_block_invoke', symObjAddr: 0x2D6, symBinAddr: 0xC04B, symSize: 0x102 }
+  - { offset: 0x9A2A7, size: 0x8, addend: 0x0, symName: '___77-[GACAppCheckDebugProviderAPIService appCheckTokenWithDebugToken:limitedUse:]_block_invoke.32', symObjAddr: 0x422, symBinAddr: 0xC14D, symSize: 0x7B }
+  - { offset: 0x9A34F, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProviderAPIService HTTPBodyWithDebugToken:limitedUse:]', symObjAddr: 0x4BB, symBinAddr: 0xC1C8, symSize: 0x158 }
+  - { offset: 0x9A486, size: 0x8, addend: 0x0, symName: '___72-[GACAppCheckDebugProviderAPIService HTTPBodyWithDebugToken:limitedUse:]_block_invoke', symObjAddr: 0x613, symBinAddr: 0xC320, symSize: 0x155 }
+  - { offset: 0x9A5A4, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProviderAPIService backgroundQueue]', symObjAddr: 0x768, symBinAddr: 0xC475, symSize: 0x11 }
+  - { offset: 0x9A618, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProviderAPIService APIService]', symObjAddr: 0x779, symBinAddr: 0xC486, symSize: 0xA }
+  - { offset: 0x9A64D, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProviderAPIService resourceName]', symObjAddr: 0x783, symBinAddr: 0xC490, symSize: 0xA }
+  - { offset: 0x9A682, size: 0x8, addend: 0x0, symName: '-[GACAppCheckDebugProviderAPIService .cxx_destruct]', symObjAddr: 0x78D, symBinAddr: 0xC49A, symSize: 0x28 }
+  - { offset: 0x9A8E9, size: 0x8, addend: 0x0, symName: _GACAppCheckErrorDomain, symObjAddr: 0x40, symBinAddr: 0x20028, symSize: 0x0 }
+  - { offset: 0x9A926, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil publicDomainErrorWithError:]', symObjAddr: 0x0, symBinAddr: 0xC4C2, symSize: 0xA3 }
+  - { offset: 0x9A940, size: 0x8, addend: 0x0, symName: _kGACAppCheckMissingRecaptchaSDKMessage, symObjAddr: 0x14F8, symBinAddr: 0x20030, symSize: 0x0 }
+  - { offset: 0x9A98D, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil publicDomainErrorWithError:]', symObjAddr: 0x0, symBinAddr: 0xC4C2, symSize: 0xA3 }
+  - { offset: 0x9AA51, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil cachedTokenNotFound]', symObjAddr: 0xA3, symBinAddr: 0xC565, symSize: 0x74 }
+  - { offset: 0x9AAC4, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil cachedTokenExpired]', symObjAddr: 0x117, symBinAddr: 0xC5D9, symSize: 0x74 }
+  - { offset: 0x9AB37, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil keychainErrorWithError:]', symObjAddr: 0x18B, symBinAddr: 0xC64D, symSize: 0xF4 }
+  - { offset: 0x9AC32, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil APIErrorWithHTTPResponse:data:]', symObjAddr: 0x27F, symBinAddr: 0xC741, symSize: 0x72 }
+  - { offset: 0x9ACF1, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil APIErrorWithNetworkError:]', symObjAddr: 0x2F1, symBinAddr: 0xC7B3, symSize: 0x9B }
+  - { offset: 0x9AD9D, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil appCheckTokenResponseErrorWithMissingField:]', symObjAddr: 0x38C, symBinAddr: 0xC84E, symSize: 0x77 }
+  - { offset: 0x9AE20, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil appAttestAttestationResponseErrorWithMissingField:]', symObjAddr: 0x403, symBinAddr: 0xC8C5, symSize: 0x77 }
+  - { offset: 0x9AEA3, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil JSONSerializationError:]', symObjAddr: 0x47A, symBinAddr: 0xC93C, symSize: 0x98 }
+  - { offset: 0x9AF4F, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil unsupportedAttestationProvider:]', symObjAddr: 0x512, symBinAddr: 0xC9D4, symSize: 0x7A }
+  - { offset: 0x9AFD2, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil missingRecaptchaSDKError]', symObjAddr: 0x58C, symBinAddr: 0xCA4E, symSize: 0x21 }
+  - { offset: 0x9B028, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil errorWithFailureReason:]', symObjAddr: 0x5AD, symBinAddr: 0xCA6F, symSize: 0x1A }
+  - { offset: 0x9B096, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil appAttestKeyIDNotFound]', symObjAddr: 0x5C7, symBinAddr: 0xCA89, symSize: 0x74 }
+  - { offset: 0x9B109, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil appAttestGenerateKeyFailedWithError:]', symObjAddr: 0x63B, symBinAddr: 0xCAFD, symSize: 0xC2 }
+  - { offset: 0x9B1D5, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil appAttestAttestKeyFailedWithError:keyId:clientDataHash:]', symObjAddr: 0x6FD, symBinAddr: 0xCBBF, symSize: 0x156 }
+  - { offset: 0x9B33C, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil appAttestGenerateAssertionFailedWithError:keyId:clientDataHash:]', symObjAddr: 0x853, symBinAddr: 0xCD15, symSize: 0x156 }
+  - { offset: 0x9B4A3, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil unknownErrorWithError:]', symObjAddr: 0x9A9, symBinAddr: 0xCE6B, symSize: 0xB2 }
+  - { offset: 0x9B56F, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil appCheckErrorWithCode:failureReason:underlyingError:]', symObjAddr: 0xA5B, symBinAddr: 0xCF1D, symSize: 0xE4 }
+  - { offset: 0x9B695, size: 0x8, addend: 0x0, symName: '+[_GACAppCheckErrorUtil errorDescriptionWithDeviceCheckError:]', symObjAddr: 0xB3F, symBinAddr: 0xD001, symSize: 0x184 }
+  - { offset: 0x9B7EC, size: 0x8, addend: 0x0, symName: _GACAppCheckSetErrorToPointer, symObjAddr: 0xCC3, symBinAddr: 0xD185, symSize: 0x1D }
+  - { offset: 0x9B90C, size: 0x8, addend: 0x0, symName: '-[GACAppCheckHTTPError initWithHTTPResponse:data:]', symObjAddr: 0x0, symBinAddr: 0xD1A2, symSize: 0xEE }
+  - { offset: 0x9B970, size: 0x8, addend: 0x0, symName: '-[GACAppCheckHTTPError initWithHTTPResponse:data:]', symObjAddr: 0x0, symBinAddr: 0xD1A2, symSize: 0xEE }
+  - { offset: 0x9BA5C, size: 0x8, addend: 0x0, symName: '+[GACAppCheckHTTPError userInfoWithHTTPResponse:data:]', symObjAddr: 0xEE, symBinAddr: 0xD290, symSize: 0x157 }
+  - { offset: 0x9BBA6, size: 0x8, addend: 0x0, symName: '-[GACAppCheckHTTPError copyWithZone:]', symObjAddr: 0x245, symBinAddr: 0xD3E7, symSize: 0x8F }
+  - { offset: 0x9BC59, size: 0x8, addend: 0x0, symName: '-[GACAppCheckHTTPError initWithCoder:]', symObjAddr: 0x2D4, symBinAddr: 0xD476, symSize: 0xE8 }
+  - { offset: 0x9BD70, size: 0x8, addend: 0x0, symName: '-[GACAppCheckHTTPError encodeWithCoder:]', symObjAddr: 0x3BC, symBinAddr: 0xD55E, symSize: 0xAE }
+  - { offset: 0x9BE3C, size: 0x8, addend: 0x0, symName: '+[GACAppCheckHTTPError supportsSecureCoding]', symObjAddr: 0x46A, symBinAddr: 0xD60C, symSize: 0x8 }
+  - { offset: 0x9BE6F, size: 0x8, addend: 0x0, symName: '-[GACAppCheckHTTPError HTTPResponse]', symObjAddr: 0x472, symBinAddr: 0xD614, symSize: 0x11 }
+  - { offset: 0x9BEA4, size: 0x8, addend: 0x0, symName: '-[GACAppCheckHTTPError data]', symObjAddr: 0x483, symBinAddr: 0xD625, symSize: 0x11 }
+  - { offset: 0x9BED9, size: 0x8, addend: 0x0, symName: '-[GACAppCheckHTTPError .cxx_destruct]', symObjAddr: 0x494, symBinAddr: 0xD636, symSize: 0x31 }
+  - { offset: 0x9BFB2, size: 0x8, addend: 0x0, symName: '+[GACAppCheckLogger load]', symObjAddr: 0x0, symBinAddr: 0xD667, symSize: 0x11 }
+  - { offset: 0x9BFCC, size: 0x8, addend: 0x0, symName: __logLevel, symObjAddr: 0x18B8, symBinAddr: 0x29C98, symSize: 0x0 }
+  - { offset: 0x9C075, size: 0x8, addend: 0x0, symName: '+[GACAppCheckLogger load]', symObjAddr: 0x0, symBinAddr: 0xD667, symSize: 0x11 }
+  - { offset: 0x9C0A4, size: 0x8, addend: 0x0, symName: '+[GACAppCheckLogger logLevel]', symObjAddr: 0x11, symBinAddr: 0xD678, symSize: 0xD }
+  - { offset: 0x9C0D7, size: 0x8, addend: 0x0, symName: '+[GACAppCheckLogger setLogLevel:]', symObjAddr: 0x1E, symBinAddr: 0xD685, symSize: 0xD }
+  - { offset: 0x9C158, size: 0x8, addend: 0x0, symName: _GACAppCheckLog, symObjAddr: 0x2B, symBinAddr: 0xD692, symSize: 0xB2 }
+  - { offset: 0x9C2B9, size: 0x8, addend: 0x0, symName: '-[GACAppCheckSettings isTokenAutoRefreshEnabled]', symObjAddr: 0x0, symBinAddr: 0xD744, symSize: 0x9 }
+  - { offset: 0x9C2EC, size: 0x8, addend: 0x0, symName: '-[GACAppCheckSettings isTokenAutoRefreshEnabled]', symObjAddr: 0x0, symBinAddr: 0xD744, symSize: 0x9 }
+  - { offset: 0x9C321, size: 0x8, addend: 0x0, symName: '-[GACAppCheckSettings setIsTokenAutoRefreshEnabled:]', symObjAddr: 0x9, symBinAddr: 0xD74D, symSize: 0x9 }
+  - { offset: 0x9C3A9, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage initWithTokenKey:keychainStorage:accessGroup:]', symObjAddr: 0x0, symBinAddr: 0xD756, symSize: 0xDB }
+  - { offset: 0x9C474, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage initWithTokenKey:keychainStorage:accessGroup:]', symObjAddr: 0x0, symBinAddr: 0xD756, symSize: 0xDB }
+  - { offset: 0x9C596, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage initWithTokenKey:accessGroup:]', symObjAddr: 0xDB, symBinAddr: 0xD831, symSize: 0x9E }
+  - { offset: 0x9C690, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage getToken]', symObjAddr: 0x179, symBinAddr: 0xD8CF, symSize: 0x101 }
+  - { offset: 0x9C755, size: 0x8, addend: 0x0, symName: '___30-[GACAppCheckStorage getToken]_block_invoke', symObjAddr: 0x27A, symBinAddr: 0xD9D0, symSize: 0xD8 }
+  - { offset: 0x9C853, size: 0x8, addend: 0x0, symName: '___30-[GACAppCheckStorage getToken]_block_invoke.24', symObjAddr: 0x370, symBinAddr: 0xDAA8, symSize: 0x74 }
+  - { offset: 0x9C8E3, size: 0x8, addend: 0x0, symName: '___30-[GACAppCheckStorage getToken]_block_invoke_2', symObjAddr: 0x3E4, symBinAddr: 0xDB1C, symSize: 0x1C }
+  - { offset: 0x9C933, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage setToken:]', symObjAddr: 0x400, symBinAddr: 0xDB38, symSize: 0x1A0 }
+  - { offset: 0x9CA62, size: 0x8, addend: 0x0, symName: '___31-[GACAppCheckStorage setToken:]_block_invoke', symObjAddr: 0x5A0, symBinAddr: 0xDCD8, symSize: 0x1C }
+  - { offset: 0x9CAB2, size: 0x8, addend: 0x0, symName: '___31-[GACAppCheckStorage setToken:]_block_invoke_2', symObjAddr: 0x5BC, symBinAddr: 0xDCF4, symSize: 0xBA }
+  - { offset: 0x9CBA4, size: 0x8, addend: 0x0, symName: '___31-[GACAppCheckStorage setToken:]_block_invoke.45', symObjAddr: 0x676, symBinAddr: 0xDDAE, symSize: 0xE }
+  - { offset: 0x9CBEF, size: 0x8, addend: 0x0, symName: '___31-[GACAppCheckStorage setToken:]_block_invoke.47', symObjAddr: 0x684, symBinAddr: 0xDDBC, symSize: 0x1C }
+  - { offset: 0x9CC3F, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage storeToken:]', symObjAddr: 0x6A0, symBinAddr: 0xDDD8, symSize: 0x16E }
+  - { offset: 0x9CD7B, size: 0x8, addend: 0x0, symName: '___33-[GACAppCheckStorage storeToken:]_block_invoke', symObjAddr: 0x80E, symBinAddr: 0xDF46, symSize: 0xC9 }
+  - { offset: 0x9CE86, size: 0x8, addend: 0x0, symName: '___33-[GACAppCheckStorage storeToken:]_block_invoke.53', symObjAddr: 0x921, symBinAddr: 0xE00F, symSize: 0xE }
+  - { offset: 0x9CED1, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage tokenKey]', symObjAddr: 0x92F, symBinAddr: 0xE01D, symSize: 0xA }
+  - { offset: 0x9CF06, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage keychainStorage]', symObjAddr: 0x939, symBinAddr: 0xE027, symSize: 0xA }
+  - { offset: 0x9CF3B, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage accessGroup]', symObjAddr: 0x943, symBinAddr: 0xE031, symSize: 0xA }
+  - { offset: 0x9CF70, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStorage .cxx_destruct]', symObjAddr: 0x94D, symBinAddr: 0xE03B, symSize: 0x33 }
+  - { offset: 0x9D419, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken storageVersion]', symObjAddr: 0x0, symBinAddr: 0xE06E, symSize: 0xB }
+  - { offset: 0x9D4B5, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken storageVersion]', symObjAddr: 0x0, symBinAddr: 0xE06E, symSize: 0xB }
+  - { offset: 0x9D4E8, size: 0x8, addend: 0x0, symName: '+[GACAppCheckStoredToken supportsSecureCoding]', symObjAddr: 0xB, symBinAddr: 0xE079, symSize: 0x8 }
+  - { offset: 0x9D51B, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken encodeWithCoder:]', symObjAddr: 0x13, symBinAddr: 0xE081, symSize: 0x108 }
+  - { offset: 0x9D658, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken initWithCoder:]', symObjAddr: 0x11B, symBinAddr: 0xE189, symSize: 0x133 }
+  - { offset: 0x9D763, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken token]', symObjAddr: 0x24E, symBinAddr: 0xE2BC, symSize: 0xA }
+  - { offset: 0x9D798, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken setToken:]', symObjAddr: 0x258, symBinAddr: 0xE2C6, symSize: 0xF }
+  - { offset: 0x9D7D7, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken expirationDate]', symObjAddr: 0x267, symBinAddr: 0xE2D5, symSize: 0xA }
+  - { offset: 0x9D80C, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken setExpirationDate:]', symObjAddr: 0x271, symBinAddr: 0xE2DF, symSize: 0x11 }
+  - { offset: 0x9D84D, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken receivedAtDate]', symObjAddr: 0x282, symBinAddr: 0xE2F0, symSize: 0xA }
+  - { offset: 0x9D882, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken setReceivedAtDate:]', symObjAddr: 0x28C, symBinAddr: 0xE2FA, symSize: 0x11 }
+  - { offset: 0x9D8C3, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken .cxx_destruct]', symObjAddr: 0x29D, symBinAddr: 0xE30B, symSize: 0x33 }
+  - { offset: 0x9D98D, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken(GACAppCheckToken) updateWithToken:]', symObjAddr: 0x0, symBinAddr: 0xE33E, symSize: 0xCE }
+  - { offset: 0x9D99B, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken(GACAppCheckToken) updateWithToken:]', symObjAddr: 0x0, symBinAddr: 0xE33E, symSize: 0xCE }
+  - { offset: 0x9DAA2, size: 0x8, addend: 0x0, symName: '-[GACAppCheckStoredToken(GACAppCheckToken) appCheckToken]', symObjAddr: 0xCE, symBinAddr: 0xE40C, symSize: 0xB7 }
+  - { offset: 0x9DC33, size: 0x8, addend: 0x0, symName: '+[GACAppCheckTimer timerProvider]', symObjAddr: 0x0, symBinAddr: 0xE4C3, symSize: 0xD }
+  - { offset: 0x9DC87, size: 0x8, addend: 0x0, symName: '+[GACAppCheckTimer timerProvider]', symObjAddr: 0x0, symBinAddr: 0xE4C3, symSize: 0xD }
+  - { offset: 0x9DCBA, size: 0x8, addend: 0x0, symName: '___33+[GACAppCheckTimer timerProvider]_block_invoke', symObjAddr: 0xD, symBinAddr: 0xE4D0, symSize: 0x90 }
+  - { offset: 0x9DDB0, size: 0x8, addend: 0x0, symName: '+[GACAppCheckTimer timerFireDate:dispatchQueue:block:]', symObjAddr: 0x9D, symBinAddr: 0xE560, symSize: 0x90 }
+  - { offset: 0x9DEAE, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTimer initWithFireDate:dispatchQueue:block:]', symObjAddr: 0x12D, symBinAddr: 0xE5F0, symSize: 0x1C6 }
+  - { offset: 0x9E162, size: 0x8, addend: 0x0, symName: '___57-[GACAppCheckTimer initWithFireDate:dispatchQueue:block:]_block_invoke', symObjAddr: 0x2F3, symBinAddr: 0xE7B6, symSize: 0x3A }
+  - { offset: 0x9E1F0, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32b40w, symObjAddr: 0x32D, symBinAddr: 0xE7F0, symSize: 0x36 }
+  - { offset: 0x9E219, size: 0x8, addend: 0x0, symName: ___destroy_helper_block_e8_32s40w, symObjAddr: 0x363, symBinAddr: 0xE826, symSize: 0x22 }
+  - { offset: 0x9E244, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTimer dealloc]', symObjAddr: 0x385, symBinAddr: 0xE848, symSize: 0x3E }
+  - { offset: 0x9E28C, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTimer invalidate]', symObjAddr: 0x3C3, symBinAddr: 0xE886, symSize: 0x73 }
+  - { offset: 0x9E30C, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTimer dispatchQueue]', symObjAddr: 0x436, symBinAddr: 0xE8F9, symSize: 0xA }
+  - { offset: 0x9E341, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTimer timer]', symObjAddr: 0x440, symBinAddr: 0xE903, symSize: 0x14 }
+  - { offset: 0x9E378, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTimer .cxx_destruct]', symObjAddr: 0x454, symBinAddr: 0xE917, symSize: 0x28 }
+  - { offset: 0x9E5BF, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken initWithToken:expirationDate:receivedAtDate:]', symObjAddr: 0x0, symBinAddr: 0xE93F, symSize: 0xC8 }
+  - { offset: 0x9E636, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken initWithToken:expirationDate:receivedAtDate:]', symObjAddr: 0x0, symBinAddr: 0xE93F, symSize: 0xC8 }
+  - { offset: 0x9E738, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken initWithToken:expirationDate:]', symObjAddr: 0xC8, symBinAddr: 0xEA07, symSize: 0x97 }
+  - { offset: 0x9E822, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken token]', symObjAddr: 0x15F, symBinAddr: 0xEA9E, symSize: 0xA }
+  - { offset: 0x9E857, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken expirationDate]', symObjAddr: 0x169, symBinAddr: 0xEAA8, symSize: 0xA }
+  - { offset: 0x9E88C, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken receivedAtDate]', symObjAddr: 0x173, symBinAddr: 0xEAB2, symSize: 0xA }
+  - { offset: 0x9E8C1, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken .cxx_destruct]', symObjAddr: 0x17D, symBinAddr: 0xEABC, symSize: 0x33 }
+  - { offset: 0x9E971, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken(APIResponse) initWithTokenExchangeResponse:requestDate:error:]', symObjAddr: 0x0, symBinAddr: 0xEAEF, symSize: 0x1BB }
+  - { offset: 0x9E984, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken(APIResponse) initWithTokenExchangeResponse:requestDate:error:]', symObjAddr: 0x0, symBinAddr: 0xEAEF, symSize: 0x1BB }
+  - { offset: 0x9EBCD, size: 0x8, addend: 0x0, symName: '-[GACAppCheckToken(APIResponse) initWithResponseDict:requestDate:error:]', symObjAddr: 0x1BB, symBinAddr: 0xECAA, symSize: 0x292 }
+  - { offset: 0x9EF32, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher initWithRefreshResult:timerProvider:settings:]', symObjAddr: 0x0, symBinAddr: 0xEF3C, symSize: 0xE8 }
+  - { offset: 0x9F241, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher initWithRefreshResult:timerProvider:settings:]', symObjAddr: 0x0, symBinAddr: 0xEF3C, symSize: 0xE8 }
+  - { offset: 0x9F372, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher initWithRefreshResult:settings:]', symObjAddr: 0xE8, symBinAddr: 0xF024, symSize: 0x97 }
+  - { offset: 0x9F45C, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher dealloc]', symObjAddr: 0x17F, symBinAddr: 0xF0BB, symSize: 0x3E }
+  - { offset: 0x9F4A4, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher setTokenRefreshHandler:]', symObjAddr: 0x1BD, symBinAddr: 0xF0F9, symSize: 0xF5 }
+  - { offset: 0x9F5C8, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher tokenRefreshHandler]', symObjAddr: 0x2B2, symBinAddr: 0xF1EE, symSize: 0x41 }
+  - { offset: 0x9F628, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher updateWithRefreshResult:]', symObjAddr: 0x2F3, symBinAddr: 0xF22F, symSize: 0x78 }
+  - { offset: 0x9F6DB, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher refresh]', symObjAddr: 0x36B, symBinAddr: 0xF2A7, symSize: 0x130 }
+  - { offset: 0x9F79E, size: 0x8, addend: 0x0, symName: '___36-[GACAppCheckTokenRefresher refresh]_block_invoke', symObjAddr: 0x49B, symBinAddr: 0xF3D7, symSize: 0x5A }
+  - { offset: 0x9F851, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher scheduleWithTokenRefreshResult:]', symObjAddr: 0x515, symBinAddr: 0xF431, symSize: 0xA5 }
+  - { offset: 0x9F934, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher scheduleRefreshAtDate:]', symObjAddr: 0x5BA, symBinAddr: 0xF4D6, symSize: 0x1A9 }
+  - { offset: 0x9FACB, size: 0x8, addend: 0x0, symName: '___51-[GACAppCheckTokenRefresher scheduleRefreshAtDate:]_block_invoke', symObjAddr: 0x763, symBinAddr: 0xF67F, symSize: 0x31 }
+  - { offset: 0x9FB3D, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher cancelTimer]', symObjAddr: 0x794, symBinAddr: 0xF6B0, symSize: 0x3D }
+  - { offset: 0x9FB94, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher nextRefreshDateWithTokenRefreshResult:]', symObjAddr: 0x7D1, symBinAddr: 0xF6ED, symSize: 0x228 }
+  - { offset: 0x9FDC6, size: 0x8, addend: 0x0, symName: '+[GACAppCheckTokenRefresher backoffTimeForRetryCount:]', symObjAddr: 0x9F9, symBinAddr: 0xF915, symSize: 0x58 }
+  - { offset: 0x9FE31, size: 0x8, addend: 0x0, symName: '+[GACAppCheckTokenRefresher randomMilliseconds]', symObjAddr: 0xA51, symBinAddr: 0xF96D, symSize: 0x31 }
+  - { offset: 0x9FEA4, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher refreshQueue]', symObjAddr: 0xA82, symBinAddr: 0xF99E, symSize: 0xA }
+  - { offset: 0x9FED9, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher settings]', symObjAddr: 0xA8C, symBinAddr: 0xF9A8, symSize: 0xA }
+  - { offset: 0x9FF0E, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher timerProvider]', symObjAddr: 0xA96, symBinAddr: 0xF9B2, symSize: 0xA }
+  - { offset: 0x9FF43, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher timer]', symObjAddr: 0xAA0, symBinAddr: 0xF9BC, symSize: 0x14 }
+  - { offset: 0x9FF7A, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher setTimer:]', symObjAddr: 0xAB4, symBinAddr: 0xF9D0, symSize: 0xF }
+  - { offset: 0x9FFB9, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher retryCount]', symObjAddr: 0xAC3, symBinAddr: 0xF9DF, symSize: 0xA }
+  - { offset: 0x9FFEE, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher setRetryCount:]', symObjAddr: 0xACD, symBinAddr: 0xF9E9, symSize: 0xA }
+  - { offset: 0xA002B, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher initialRefreshResult]', symObjAddr: 0xAD7, symBinAddr: 0xF9F3, symSize: 0xA }
+  - { offset: 0xA0060, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher setInitialRefreshResult:]', symObjAddr: 0xAE1, symBinAddr: 0xF9FD, symSize: 0x11 }
+  - { offset: 0xA00A1, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefresher .cxx_destruct]', symObjAddr: 0xAF2, symBinAddr: 0xFA0E, symSize: 0x54 }
+  - { offset: 0xA022F, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult initWithStatus:expirationDate:receivedAtDate:]', symObjAddr: 0x0, symBinAddr: 0xFA62, symSize: 0xA2 }
+  - { offset: 0xA02D2, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult initWithStatus:expirationDate:receivedAtDate:]', symObjAddr: 0x0, symBinAddr: 0xFA62, symSize: 0xA2 }
+  - { offset: 0xA038C, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult initWithStatusNever]', symObjAddr: 0xA2, symBinAddr: 0xFB04, symSize: 0x19 }
+  - { offset: 0xA03EA, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult initWithStatusFailure]', symObjAddr: 0xBB, symBinAddr: 0xFB1D, symSize: 0x1C }
+  - { offset: 0xA0448, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult initWithStatusSuccessAndExpirationDate:receivedAtDate:]', symObjAddr: 0xD7, symBinAddr: 0xFB39, symSize: 0x1D }
+  - { offset: 0xA04CA, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult status]', symObjAddr: 0xF4, symBinAddr: 0xFB56, symSize: 0xA }
+  - { offset: 0xA04FF, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult tokenExpirationDate]', symObjAddr: 0xFE, symBinAddr: 0xFB60, symSize: 0xA }
+  - { offset: 0xA0534, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult tokenReceivedAtDate]', symObjAddr: 0x108, symBinAddr: 0xFB6A, symSize: 0xA }
+  - { offset: 0xA0569, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenRefreshResult .cxx_destruct]', symObjAddr: 0x112, symBinAddr: 0xFB74, symSize: 0x28 }
+  - { offset: 0xA0619, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenResult initWithToken:error:]', symObjAddr: 0x0, symBinAddr: 0xFB9C, symSize: 0x99 }
+  - { offset: 0xA06B4, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenResult initWithToken:error:]', symObjAddr: 0x0, symBinAddr: 0xFB9C, symSize: 0x99 }
+  - { offset: 0xA075C, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenResult initWithToken:]', symObjAddr: 0x99, symBinAddr: 0xFC35, symSize: 0x14 }
+  - { offset: 0xA07C4, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenResult initWithError:]', symObjAddr: 0xAD, symBinAddr: 0xFC49, symSize: 0x81 }
+  - { offset: 0xA086F, size: 0x8, addend: 0x0, symName: '+[GACAppCheckTokenResult placeholderToken]', symObjAddr: 0x12E, symBinAddr: 0xFCCA, symSize: 0x71 }
+  - { offset: 0xA08D6, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenResult token]', symObjAddr: 0x19F, symBinAddr: 0xFD3B, symSize: 0xA }
+  - { offset: 0xA090B, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenResult error]', symObjAddr: 0x1A9, symBinAddr: 0xFD45, symSize: 0xA }
+  - { offset: 0xA0940, size: 0x8, addend: 0x0, symName: '-[GACAppCheckTokenResult .cxx_destruct]', symObjAddr: 0x1B3, symBinAddr: 0xFD4F, symSize: 0x28 }
+  - { offset: 0xA09FE, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckAPIService initWithAPIService:resourceName:]', symObjAddr: 0x0, symBinAddr: 0xFD77, symSize: 0x99 }
+  - { offset: 0xA0A80, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckAPIService initWithAPIService:resourceName:]', symObjAddr: 0x0, symBinAddr: 0xFD77, symSize: 0x99 }
+  - { offset: 0xA0B28, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckAPIService appCheckTokenWithDeviceToken:limitedUse:]', symObjAddr: 0x99, symBinAddr: 0xFE10, symSize: 0x23D }
+  - { offset: 0xA0D1B, size: 0x8, addend: 0x0, symName: '___68-[GACDeviceCheckAPIService appCheckTokenWithDeviceToken:limitedUse:]_block_invoke', symObjAddr: 0x2D6, symBinAddr: 0x1004D, symSize: 0x102 }
+  - { offset: 0xA0DF3, size: 0x8, addend: 0x0, symName: '___68-[GACDeviceCheckAPIService appCheckTokenWithDeviceToken:limitedUse:]_block_invoke.32', symObjAddr: 0x422, symBinAddr: 0x1014F, symSize: 0x7B }
+  - { offset: 0xA0E9B, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckAPIService HTTPBodyWithDeviceToken:limitedUse:]', symObjAddr: 0x4BB, symBinAddr: 0x101CA, symSize: 0x158 }
+  - { offset: 0xA0FD2, size: 0x8, addend: 0x0, symName: '___63-[GACDeviceCheckAPIService HTTPBodyWithDeviceToken:limitedUse:]_block_invoke', symObjAddr: 0x613, symBinAddr: 0x10322, symSize: 0x16F }
+  - { offset: 0xA1123, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckAPIService backgroundQueue]', symObjAddr: 0x782, symBinAddr: 0x10491, symSize: 0x11 }
+  - { offset: 0xA1197, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckAPIService APIService]', symObjAddr: 0x793, symBinAddr: 0x104A2, symSize: 0xA }
+  - { offset: 0xA11CC, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckAPIService resourceName]', symObjAddr: 0x79D, symBinAddr: 0x104AC, symSize: 0xA }
+  - { offset: 0xA1201, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckAPIService .cxx_destruct]', symObjAddr: 0x7A7, symBinAddr: 0x104B6, symSize: 0x28 }
+  - { offset: 0xA145A, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider initWithAPIService:deviceTokenGenerator:backoffWrapper:]', symObjAddr: 0x0, symBinAddr: 0x104DE, symSize: 0xB8 }
+  - { offset: 0xA14F0, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider initWithAPIService:deviceTokenGenerator:backoffWrapper:]', symObjAddr: 0x0, symBinAddr: 0x104DE, symSize: 0xB8 }
+  - { offset: 0xA15D4, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider initWithAPIService:]', symObjAddr: 0xB8, symBinAddr: 0x10596, symSize: 0xA3 }
+  - { offset: 0xA16B6, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider initWithServiceName:resourceName:APIKey:requestHooks:]', symObjAddr: 0x15B, symBinAddr: 0x10639, symSize: 0x13C }
+  - { offset: 0xA1896, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider getTokenWithCompletion:]', symObjAddr: 0x297, symBinAddr: 0x10775, symSize: 0x17 }
+  - { offset: 0xA18FA, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider getLimitedUseTokenWithCompletion:]', symObjAddr: 0x2AE, symBinAddr: 0x1078C, symSize: 0x1A }
+  - { offset: 0xA195E, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider getTokenWithLimitedUse:completion:]', symObjAddr: 0x2C8, symBinAddr: 0x107A6, symSize: 0x21F }
+  - { offset: 0xA1B17, size: 0x8, addend: 0x0, symName: '___60-[GACDeviceCheckProvider getTokenWithLimitedUse:completion:]_block_invoke', symObjAddr: 0x4E7, symBinAddr: 0x109C5, symSize: 0x1D }
+  - { offset: 0xA1B76, size: 0x8, addend: 0x0, symName: '___60-[GACDeviceCheckProvider getTokenWithLimitedUse:completion:]_block_invoke.32', symObjAddr: 0x522, symBinAddr: 0x109E2, symSize: 0x11 }
+  - { offset: 0xA1BE0, size: 0x8, addend: 0x0, symName: '___60-[GACDeviceCheckProvider getTokenWithLimitedUse:completion:]_block_invoke.36', symObjAddr: 0x54A, symBinAddr: 0x109F3, symSize: 0x14 }
+  - { offset: 0xA1C46, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider getTokenPromiseWithLimitedUse:]', symObjAddr: 0x55E, symBinAddr: 0x10A07, symSize: 0xBA }
+  - { offset: 0xA1CD9, size: 0x8, addend: 0x0, symName: '___56-[GACDeviceCheckProvider getTokenPromiseWithLimitedUse:]_block_invoke', symObjAddr: 0x618, symBinAddr: 0x10AC1, symSize: 0x8B }
+  - { offset: 0xA1D91, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider deviceToken]', symObjAddr: 0x6A3, symBinAddr: 0x10B4C, symSize: 0xB2 }
+  - { offset: 0xA1E14, size: 0x8, addend: 0x0, symName: '___37-[GACDeviceCheckProvider deviceToken]_block_invoke', symObjAddr: 0x755, symBinAddr: 0x10BFE, symSize: 0x69 }
+  - { offset: 0xA1E6F, size: 0x8, addend: 0x0, symName: '___37-[GACDeviceCheckProvider deviceToken]_block_invoke_2', symObjAddr: 0x7BE, symBinAddr: 0x10C67, symSize: 0x6A }
+  - { offset: 0xA1F13, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider isDeviceCheckSupported]', symObjAddr: 0x828, symBinAddr: 0x10CD1, symSize: 0xEE }
+  - { offset: 0xA1FFD, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider APIService]', symObjAddr: 0x916, symBinAddr: 0x10DBF, symSize: 0xA }
+  - { offset: 0xA2032, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider deviceTokenGenerator]', symObjAddr: 0x920, symBinAddr: 0x10DC9, symSize: 0xA }
+  - { offset: 0xA2067, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider backoffWrapper]', symObjAddr: 0x92A, symBinAddr: 0x10DD3, symSize: 0xA }
+  - { offset: 0xA209C, size: 0x8, addend: 0x0, symName: '-[GACDeviceCheckProvider .cxx_destruct]', symObjAddr: 0x934, symBinAddr: 0x10DDD, symSize: 0x33 }
+  - { offset: 0xA2534, size: 0x8, addend: 0x0, symName: '-[_GACURLSessionDataResponse initWithResponse:HTTPBody:]', symObjAddr: 0x0, symBinAddr: 0x10E10, symSize: 0x99 }
+  - { offset: 0xA2591, size: 0x8, addend: 0x0, symName: '-[_GACURLSessionDataResponse initWithResponse:HTTPBody:]', symObjAddr: 0x0, symBinAddr: 0x10E10, symSize: 0x99 }
+  - { offset: 0xA2639, size: 0x8, addend: 0x0, symName: '-[_GACURLSessionDataResponse HTTPResponse]', symObjAddr: 0x99, symBinAddr: 0x10EA9, symSize: 0xA }
+  - { offset: 0xA266E, size: 0x8, addend: 0x0, symName: '-[_GACURLSessionDataResponse HTTPBody]', symObjAddr: 0xA3, symBinAddr: 0x10EB3, symSize: 0xA }
+  - { offset: 0xA26A3, size: 0x8, addend: 0x0, symName: '-[_GACURLSessionDataResponse .cxx_destruct]', symObjAddr: 0xAD, symBinAddr: 0x10EBD, symSize: 0x28 }
+  - { offset: 0xA2753, size: 0x8, addend: 0x0, symName: '-[NSURLSession(GACPromises) gac_dataTaskPromiseWithRequest:]', symObjAddr: 0x0, symBinAddr: 0x10EE5, symSize: 0xAD }
+  - { offset: 0xA2761, size: 0x8, addend: 0x0, symName: '-[NSURLSession(GACPromises) gac_dataTaskPromiseWithRequest:]', symObjAddr: 0x0, symBinAddr: 0x10EE5, symSize: 0xAD }
+  - { offset: 0xA27F5, size: 0x8, addend: 0x0, symName: '___60-[NSURLSession(GACPromises) gac_dataTaskPromiseWithRequest:]_block_invoke', symObjAddr: 0xAD, symBinAddr: 0x10F92, symSize: 0xEE }
+  - { offset: 0xA2923, size: 0x8, addend: 0x0, symName: '___60-[NSURLSession(GACPromises) gac_dataTaskPromiseWithRequest:]_block_invoke_2', symObjAddr: 0x19B, symBinAddr: 0x11080, symSize: 0xA2 }
+  - { offset: 0xA2A3E, size: 0x8, addend: 0x0, symName: ___copy_helper_block_e8_32b40b, symObjAddr: 0x23D, symBinAddr: 0x11122, symSize: 0x38 }
+  - { offset: 0xA2C48, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore28RecaptchaEnterpriseSDKLoader33_2805F652790814CD00A3D5F25380B75ELLV11actionClassSo17RCAActionProtocol_pXpSgvpZ', symObjAddr: 0x1C70, symBinAddr: 0x296C8, symSize: 0x0 }
+  - { offset: 0xA2C62, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore28RecaptchaEnterpriseSDKLoader33_2805F652790814CD00A3D5F25380B75ELLV14recaptchaClassSo20RCARecaptchaProtocol_pXpSgvpZ', symObjAddr: 0x1C80, symBinAddr: 0x296D8, symSize: 0x0 }
+  - { offset: 0xA3036, size: 0x8, addend: 0x0, symName: '_$sSo16GACAppCheckTokenCSgSo7NSErrorCSgIeyByy_ACs5Error_pSgIeggg_TR', symObjAddr: 0x11A0, symBinAddr: 0x12300, symSize: 0x50 }
+  - { offset: 0xA3064, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderCfETo', symObjAddr: 0x1550, symBinAddr: 0x126B0, symSize: 0x30 }
+  - { offset: 0xA3093, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore28RecaptchaEnterpriseSDKLoader33_2805F652790814CD00A3D5F25380B75ELLV11actionClass_WZ', symObjAddr: 0x1580, symBinAddr: 0x126E0, symSize: 0x90 }
+  - { offset: 0xA30C3, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore28RecaptchaEnterpriseSDKLoader33_2805F652790814CD00A3D5F25380B75ELLV14recaptchaClass_WZ', symObjAddr: 0x1610, symBinAddr: 0x12770, symSize: 0x90 }
+  - { offset: 0xA30F3, size: 0x8, addend: 0x0, symName: ___swift_instantiateConcreteTypeFromMangledNameV2, symObjAddr: 0x16A0, symBinAddr: 0x12800, symSize: 0x40 }
+  - { offset: 0xA3107, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC7siteKey15recaptchaAction0I5Class14backoffWrapperACSS_So17RCAActionProtocol_pSo012RCARecaptchaO0_pXpSo07_GACAppb7BackoffmO0_ptcfcyySo0p6ClientO0_pc_ys5Error_pctcfU_TA', symObjAddr: 0x1700, symBinAddr: 0x12860, symSize: 0x30 }
+  - { offset: 0xA311B, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC18getLimitedUseToken10completionyySo06GACAppbI0CSg_s5Error_pSgtc_tFyAGcfU_TA', symObjAddr: 0x1750, symBinAddr: 0x128B0, symSize: 0x30 }
+  - { offset: 0xA3159, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC18getLimitedUseToken10completionyySo06GACAppbI0CSg_s5Error_pSgtc_tFysAI_pcfU0_TA', symObjAddr: 0x1780, symBinAddr: 0x128E0, symSize: 0x20 }
+  - { offset: 0xA3195, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderCMa', symObjAddr: 0x17A0, symBinAddr: 0x12900, symSize: 0x20 }
+  - { offset: 0xA31A9, size: 0x8, addend: 0x0, symName: '_$sSo16GACAppCheckTokenCSgSo7NSErrorCSgIeyByy_ACs5Error_pSgIeggg_TRTA', symObjAddr: 0x17E0, symBinAddr: 0x12940, symSize: 0x10 }
+  - { offset: 0xA31BD, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_TA', symObjAddr: 0x17F0, symBinAddr: 0x12950, symSize: 0x10 }
+  - { offset: 0xA31D1, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC8getToken33_2805F652790814CD00A3D5F25380B75ELL10limitedUse8Promises7PromiseCySo06GACAppbG0CGSb_tFALSScfU_TA', symObjAddr: 0x1830, symBinAddr: 0x12990, symSize: 0x40 }
+  - { offset: 0xA332E, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC11isSupportedSbyFZ', symObjAddr: 0x0, symBinAddr: 0x11160, symSize: 0x70 }
+  - { offset: 0xA33A4, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC11isSupportedSbyFZTo', symObjAddr: 0x70, symBinAddr: 0x111D0, symSize: 0x70 }
+  - { offset: 0xA3442, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC7siteKey12resourceName6APIKey12requestHooksACSgSS_S2SSayySo19NSMutableURLRequestCXBGSgtcfC', symObjAddr: 0xE0, symBinAddr: 0x11240, symSize: 0x140 }
+  - { offset: 0xA3497, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC7siteKey12resourceName6APIKey12requestHooksACSgSS_S2SSayySo19NSMutableURLRequestCXBGSgtcfc', symObjAddr: 0x220, symBinAddr: 0x11380, symSize: 0x120 }
+  - { offset: 0xA352D, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC7siteKey12resourceName6APIKey12requestHooksACSgSS_S2SSayySo19NSMutableURLRequestCXBGSgtcfcTo', symObjAddr: 0x340, symBinAddr: 0x114A0, symSize: 0xB0 }
+  - { offset: 0xA3954, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC7siteKey12resourceName6APIKey12requestHooks06actionI0ACSgSS_S2SSayySo19NSMutableURLRequestCXBGSgSStcfC', symObjAddr: 0x3F0, symBinAddr: 0x11550, symSize: 0x450 }
+  - { offset: 0xA3B73, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC7siteKey12resourceName6APIKey12requestHooks06actionI0ACSgSS_S2SSayySo19NSMutableURLRequestCXBGSgSStcfc', symObjAddr: 0x840, symBinAddr: 0x119A0, symSize: 0x470 }
+  - { offset: 0xA3DBC, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC7siteKey12resourceName6APIKey12requestHooks06actionI0ACSgSS_S2SSayySo19NSMutableURLRequestCXBGSgSStcfcTo', symObjAddr: 0xCB0, symBinAddr: 0x11E10, symSize: 0xC0 }
+  - { offset: 0xA3DE2, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC8getToken10completionyySo06GACAppbG0CSg_s5Error_pSgtc_tF', symObjAddr: 0xD70, symBinAddr: 0x11ED0, symSize: 0x130 }
+  - { offset: 0xA3E41, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC8getToken33_2805F652790814CD00A3D5F25380B75ELL10limitedUse8Promises7PromiseCySo06GACAppbG0CGSb_tF', symObjAddr: 0xEA0, symBinAddr: 0x12000, symSize: 0x180 }
+  - { offset: 0xA3F28, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC8getToken10completionyySo06GACAppbG0CSg_s5Error_pSgtc_tFTo', symObjAddr: 0x1020, symBinAddr: 0x12180, symSize: 0x180 }
+  - { offset: 0xA3F81, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC18getLimitedUseToken10completionyySo06GACAppbI0CSg_s5Error_pSgtc_tF', symObjAddr: 0x11F0, symBinAddr: 0x12350, symSize: 0x130 }
+  - { offset: 0xA403E, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderC18getLimitedUseToken10completionyySo06GACAppbI0CSg_s5Error_pSgtc_tFTo', symObjAddr: 0x1320, symBinAddr: 0x12480, symSize: 0x180 }
+  - { offset: 0xA4097, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderCACycfC', symObjAddr: 0x14A0, symBinAddr: 0x12600, symSize: 0x20 }
+  - { offset: 0xA40AB, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderCACycfc', symObjAddr: 0x14C0, symBinAddr: 0x12620, symSize: 0x30 }
+  - { offset: 0xA4104, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderCACycfcTo', symObjAddr: 0x14F0, symBinAddr: 0x12650, symSize: 0x30 }
+  - { offset: 0xA4163, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore0aB17RecaptchaProviderCfD', symObjAddr: 0x1520, symBinAddr: 0x12680, symSize: 0x30 }
+  - { offset: 0xA4317, size: 0x8, addend: 0x0, symName: '_$sSD17dictionaryLiteralSDyxq_Gx_q_td_tcfCSS_ypTt0g5Tf4g_n', symObjAddr: 0x7F0, symBinAddr: 0x13290, symSize: 0x100 }
+  - { offset: 0xA4455, size: 0x8, addend: 0x0, symName: '_$sSD17dictionaryLiteralSDyxq_Gx_q_td_tcfCSS_SSTt0g5Tf4g_n', symObjAddr: 0xBE0, symBinAddr: 0x13680, symSize: 0x110 }
+  - { offset: 0xA46CA, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore19RecaptchaAPIServiceCfETo', symObjAddr: 0x5E0, symBinAddr: 0x130C0, symSize: 0x30 }
+  - { offset: 0xA46F9, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore19RecaptchaAPIServiceCMa', symObjAddr: 0x610, symBinAddr: 0x130F0, symSize: 0x20 }
+  - { offset: 0xA4718, size: 0x8, addend: 0x0, symName: '_$ss22__RawDictionaryStorageC4findys10_HashTableV6BucketV6bucket_Sb5foundtxSHRzlFSS_Tg5', symObjAddr: 0x670, symBinAddr: 0x13110, symSize: 0x60 }
+  - { offset: 0xA4766, size: 0x8, addend: 0x0, symName: '_$ss17_NativeDictionaryV7_insert2at3key5valueys10_HashTableV6BucketV_xnq_ntFSS_ypTg5', symObjAddr: 0x6D0, symBinAddr: 0x13170, symSize: 0x60 }
+  - { offset: 0xA47E1, size: 0x8, addend: 0x0, symName: '_$ss22__RawDictionaryStorageC4find_9hashValues10_HashTableV6BucketV6bucket_Sb5foundtx_SitSHRzlFSS_Tg5', symObjAddr: 0x730, symBinAddr: 0x131D0, symSize: 0xC0 }
+  - { offset: 0xA4935, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore19RecaptchaAPIServiceC03appB5Token4with10limitedUse8Promises7PromiseCySo06GACAppbG0CGSS_SbtFALSo26_GACURLSessionDataResponseCcfU_TA', symObjAddr: 0xD50, symBinAddr: 0x137F0, symSize: 0x10 }
+  - { offset: 0xA4949, size: 0x8, addend: 0x0, symName: '_$s10Foundation4DataV15_RepresentationOWOe', symObjAddr: 0xD90, symBinAddr: 0x13800, symSize: 0x40 }
+  - { offset: 0xA495D, size: 0x8, addend: 0x0, symName: '_$sSS_yptWOc', symObjAddr: 0xDD0, symBinAddr: 0x13840, symSize: 0x40 }
+  - { offset: 0xA4971, size: 0x8, addend: 0x0, symName: '_$sypWOb', symObjAddr: 0xE10, symBinAddr: 0x13880, symSize: 0x17 }
+  - { offset: 0xA4A67, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore19RecaptchaAPIServiceC03appB5Token4with10limitedUse8Promises7PromiseCySo06GACAppbG0CGSS_SbtF', symObjAddr: 0x0, symBinAddr: 0x12AE0, symSize: 0x4F0 }
+  - { offset: 0xA4D48, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore19RecaptchaAPIServiceC03appB5Token4with10limitedUse8Promises7PromiseCySo06GACAppbG0CGSS_SbtFALSo26_GACURLSessionDataResponseCcfU_', symObjAddr: 0x4F0, symBinAddr: 0x12FD0, symSize: 0x90 }
+  - { offset: 0xA4DBF, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore19RecaptchaAPIServiceCACycfcTo', symObjAddr: 0x580, symBinAddr: 0x13060, symSize: 0x30 }
+  - { offset: 0xA4E1E, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore19RecaptchaAPIServiceCfD', symObjAddr: 0x5B0, symBinAddr: 0x13090, symSize: 0x30 }
+  - { offset: 0xA4E61, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore19RecaptchaAPIServiceC8httpBody33_EA467652BE05E6B8194CE67B47B7DE94LL4with10limitedUse10Foundation4DataVSS_SbtKFTf4nnd_n', symObjAddr: 0x8F0, symBinAddr: 0x13390, symSize: 0x2F0 }
+  - { offset: 0xA52EE, size: 0x8, addend: 0x0, symName: '_$sSo26RCARecaptchaClientProtocol_pSgs5Error_pSgIeghgg_ABSo7NSErrorCSgIeyBhyy_TR', symObjAddr: 0x220, symBinAddr: 0x13AC0, symSize: 0x70 }
+  - { offset: 0xA5306, size: 0x8, addend: 0x0, symName: '_$sSSSgs5Error_pSgIeghgg_So8NSStringCSgSo7NSErrorCSgIeyBhyy_TR', symObjAddr: 0x6C0, symBinAddr: 0x13F60, symSize: 0x80 }
+  - { offset: 0xA5329, size: 0x8, addend: 0x0, symName: '_$sSo10FBLPromiseCyyXlGIego_ACIeyBa_TR', symObjAddr: 0x830, symBinAddr: 0x140D0, symSize: 0x30 }
+  - { offset: 0xA5341, size: 0x8, addend: 0x0, symName: '_$ss5Error_pSo22GACAppCheckBackoffTypeVIeggd_So7NSErrorCACIeyByd_TR', symObjAddr: 0x860, symBinAddr: 0x14100, symSize: 0x60 }
+  - { offset: 0xA5364, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorCMa', symObjAddr: 0xA60, symBinAddr: 0x14300, symSize: 0x20 }
+  - { offset: 0xA5378, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_So10FBLPromiseCyyXlGycfU_TA', symObjAddr: 0xA90, symBinAddr: 0x14330, symSize: 0x20 }
+  - { offset: 0xA538C, size: 0x8, addend: 0x0, symName: _block_copy_helper, symObjAddr: 0xAB0, symBinAddr: 0x14350, symSize: 0x20 }
+  - { offset: 0xA53A0, size: 0x8, addend: 0x0, symName: _block_destroy_helper, symObjAddr: 0xAD0, symBinAddr: 0x14370, symSize: 0x10 }
+  - { offset: 0xA53B4, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_yXlyKXEfu_TA', symObjAddr: 0xB20, symBinAddr: 0x14380, symSize: 0x20 }
+  - { offset: 0xA53DD, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_So10FBLPromiseCyyXlGycfU_yyyXlc_ys5Error_pctcfU_TA', symObjAddr: 0xB70, symBinAddr: 0x143D0, symSize: 0x20 }
+  - { offset: 0xA53F1, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_So10FBLPromiseCyyXlGycfU_yyyXlc_ys5Error_pctcfU_ySSSg_sAM_pSgtYbcfU_TA', symObjAddr: 0xBD0, symBinAddr: 0x14430, symSize: 0x30 }
+  - { offset: 0xA541B, size: 0x8, addend: 0x0, symName: '_$ss17_NativeDictionaryV8setValue_6forKey8isUniqueyq_n_xSbtFSS_ypTg5', symObjAddr: 0xC00, symBinAddr: 0x14460, symSize: 0x110 }
+  - { offset: 0xA548D, size: 0x8, addend: 0x0, symName: '_$ss17_NativeDictionaryV4copyyyFSS_ypTg5', symObjAddr: 0xD10, symBinAddr: 0x14570, symSize: 0x1F0 }
+  - { offset: 0xA5555, size: 0x8, addend: 0x0, symName: '_$ss17_NativeDictionaryV20_copyOrMoveAndResize8capacity12moveElementsySi_SbtFSS_ypTg5', symObjAddr: 0xF00, symBinAddr: 0x14760, symSize: 0x320 }
+  - { offset: 0xA56AA, size: 0x8, addend: 0x0, symName: '_$sypWOc', symObjAddr: 0x1650, symBinAddr: 0x14E30, symSize: 0x30 }
+  - { offset: 0xA56BE, size: 0x8, addend: 0x0, symName: ___swift_destroy_boxed_opaque_existential_0, symObjAddr: 0x1680, symBinAddr: 0x14E60, symSize: 0x30 }
+  - { offset: 0xA56DD, size: 0x8, addend: 0x0, symName: '_$sSo26RCARecaptchaClientProtocol_pIegn_SoAA_pIegg_TRTA', symObjAddr: 0x16D0, symBinAddr: 0x14EB0, symSize: 0x30 }
+  - { offset: 0xA5706, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC7siteKey15recaptchaAction0I5Class14backoffWrapperACSS_So17RCAActionProtocol_pSo012RCARecaptchaO0_pXpSo07_GACAppb7BackoffmO0_ptcfcyySo0p6ClientO0_pc_ys5Error_pctcfU_ySoAK_pSg_sAL_pSgtYbcfU_TA', symObjAddr: 0x1730, symBinAddr: 0x14F10, symSize: 0x20 }
+  - { offset: 0xA58AF, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC7siteKey15recaptchaAction0I5Class14backoffWrapperACSS_So17RCAActionProtocol_pSo012RCARecaptchaO0_pXpSo07_GACAppb7BackoffmO0_ptcfcyySo0p6ClientO0_pc_ys5Error_pctcfU_', symObjAddr: 0x0, symBinAddr: 0x138A0, symSize: 0x140 }
+  - { offset: 0xA5910, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC7siteKey15recaptchaAction0I5Class14backoffWrapperACSS_So17RCAActionProtocol_pSo012RCARecaptchaO0_pXpSo07_GACAppb7BackoffmO0_ptcfcyySo0p6ClientO0_pc_ys5Error_pctcfU_ySoAK_pSg_sAL_pSgtYbcfU_', symObjAddr: 0x140, symBinAddr: 0x139E0, symSize: 0xE0 }
+  - { offset: 0xA59C7, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_', symObjAddr: 0x290, symBinAddr: 0x13B30, symSize: 0x1E0 }
+  - { offset: 0xA5A5C, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_So10FBLPromiseCyyXlGycfU_', symObjAddr: 0x470, symBinAddr: 0x13D10, symSize: 0xC0 }
+  - { offset: 0xA5ABB, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_So10FBLPromiseCyyXlGycfU_yyyXlc_ys5Error_pctcfU_', symObjAddr: 0x530, symBinAddr: 0x13DD0, symSize: 0x130 }
+  - { offset: 0xA5B23, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_So10FBLPromiseCyyXlGycfU_yyyXlc_ys5Error_pctcfU_ySSSg_sAM_pSgtYbcfU_', symObjAddr: 0x660, symBinAddr: 0x13F00, symSize: 0x60 }
+  - { offset: 0xA5BD5, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_So06GACAppB11BackoffTypeVs5Error_pcfU0_', symObjAddr: 0x740, symBinAddr: 0x13FE0, symSize: 0xF0 }
+  - { offset: 0xA5C4C, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03getdE08Promises7PromiseCySSGyFAHSo26RCARecaptchaClientProtocol_pcfU_SSyXlKcfU1_', symObjAddr: 0x8C0, symBinAddr: 0x14160, symSize: 0x160 }
+  - { offset: 0xA5D40, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorCfD', symObjAddr: 0xA20, symBinAddr: 0x142C0, symSize: 0x40 }
+  - { offset: 0xA5E29, size: 0x8, addend: 0x0, symName: '_$s12AppCheckCore23RecaptchaTokenGeneratorC03mapD5Error33_3B2E0957FFB037C38C9D2F486E9465D3LLys0H0_psAF_pSgFTf4nd_n', symObjAddr: 0x1220, symBinAddr: 0x14A80, symSize: 0x3B0 }
+...

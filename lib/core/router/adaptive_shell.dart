@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/presentation/app_icon.dart';
+import 'package:we36/core/presentation/app_search_bar.dart';
 import 'package:we36/core/presentation/bottom_nav.dart';
 import 'package:we36/core/presentation/nav_item.dart';
 import 'package:we36/core/presentation/sidebar_rail.dart';
@@ -110,13 +111,17 @@ class _RightRail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Static search entry — real search navigation lands in #009.
+          AppSearchBar(hint: l10n.navExplore, readOnly: true),
+          const Spacer(),
+          // Footer links (static in #004). Suggestions arrive with #010.
           Text(
-            l10n.suggestionsTitle,
-            style: AppTypography.label.copyWith(color: tokens.textPrimary),
+            'About · Help · Privacy · Terms',
+            style: AppTypography.caption.copyWith(color: tokens.textTertiary),
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.xs),
           Text(
-            '· · ·',
+            '© We36',
             style: AppTypography.caption.copyWith(color: tokens.textTertiary),
           ),
         ],

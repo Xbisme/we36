@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:we36/core/constants/app_routes.dart';
+import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/router/adaptive_shell.dart';
 import 'package:we36/core/router/centered_mobile.dart';
 import 'package:we36/core/services/session/session_controller.dart';
@@ -15,11 +19,14 @@ import 'package:we36/features/dev/presentation/gallery_page.dart';
 import 'package:we36/features/dev/presentation/states_demo_page.dart';
 import 'package:we36/features/dev/presentation/two_pane_demo_page.dart';
 import 'package:we36/features/explore/presentation/explore_page.dart';
+import 'package:we36/features/feed/presentation/feed_cubit.dart';
 import 'package:we36/features/feed/presentation/home_page.dart';
 import 'package:we36/features/messaging/presentation/messages_page.dart';
 import 'package:we36/features/placeholder_page.dart';
 import 'package:we36/features/profile/presentation/profile_page.dart';
 import 'package:we36/features/reels/presentation/reels_page.dart';
+import 'package:we36/features/stories/presentation/stories_rail_cubit.dart';
+import 'package:we36/features/stories/presentation/story_viewer_page.dart';
 
 /// The single app router (Constitution X): auth-guarded split, 5-tab
 /// StatefulShellRoute, nav-less flow + pre-auth routes (wrapped centered-mobile
@@ -38,7 +45,28 @@ class AppRouter {
           builder: (context, state, navigationShell) =>
               AdaptiveShell(navigationShell: navigationShell),
           branches: [
-            _branch(AppRoutes.home, const HomePage()),
+            _branch(
+              AppRoutes.home,
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (_) {
+                      final cubit = getIt<FeedCubit>();
+                      unawaited(cubit.loadInitial());
+                      return cubit;
+                    },
+                  ),
+                  BlocProvider(
+                    create: (_) {
+                      final cubit = getIt<StoriesRailCubit>();
+                      unawaited(cubit.load());
+                      return cubit;
+                    },
+                  ),
+                ],
+                child: const HomePage(),
+              ),
+            ),
             _branch(AppRoutes.explore, const ExplorePage()),
             _branch(AppRoutes.reels, const ReelsPage()),
             _branch(AppRoutes.messages, const MessagesPage()),
@@ -56,6 +84,17 @@ class AppRouter {
         _flow(AppRoutes.forgotPassword, const ForgotPasswordPage()),
         _flow(AppRoutes.profileSetup, const ProfileSetupPage()),
         // Flow routes (nav-less)
+        // Story viewer — full-screen, edge-to-edge (no CenteredMobile wrap).
+        GoRoute(
+          path: AppRoutes.storyViewer,
+          builder: (_, state) {
+            final args = state.extra! as StoryViewerArgs;
+            return StoryViewerPage(
+              reels: args.reels,
+              startIndex: args.startIndex,
+            );
+          },
+        ),
         _flow(
           AppRoutes.notifications,
           const PlaceholderPage(title: 'Activity'),

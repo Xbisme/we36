@@ -1,0 +1,53 @@
+{
+  "elements": {
+    "PostsDao": {
+      "id": {
+        "library_uri": "package:we36/core/data/cache/daos/posts_dao.dart",
+        "name": "PostsDao"
+      },
+      "declaration": {
+        "source_uri": "package:we36/core/data/cache/daos/posts_dao.dart",
+        "offset": 551,
+        "name": "PostsDao"
+      },
+      "references": [
+        {
+          "library_uri": "package:we36/core/data/cache/tables/posts_table.dart",
+          "name": "posts"
+        }
+      ],
+      "type": "dao",
+      "tables": [
+        {
+          "library_uri": "package:we36/core/data/cache/tables/posts_table.dart",
+          "name": "posts"
+        }
+      ],
+      "views": [],
+      "includes": [],
+      "queries": [],
+      "dart_type": {
+        "elements": [
+          {
+            "lexeme": "PostsDao",
+            "import_uri": "package:we36/core/data/cache/daos/posts_dao.dart"
+          }
+        ]
+      },
+      "database": {
+        "elements": [
+          {
+            "lexeme": "AppDatabase",
+            "import_uri": "package:we36/core/data/cache/app_database.dart"
+          }
+        ]
+      }
+    }
+  },
+  "imports": [
+    "package:drift/drift.dart",
+    "package:we36/core/data/cache/app_database.dart",
+    "package:we36/core/data/cache/tables/posts_table.dart",
+    "package:we36/core/data/feed/post.dart"
+  ]
+}

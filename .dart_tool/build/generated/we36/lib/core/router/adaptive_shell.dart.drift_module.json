@@ -5,6 +5,7 @@
     "package:go_router/go_router.dart",
     "package:we36/core/constants/app_routes.dart",
     "package:we36/core/presentation/app_icon.dart",
+    "package:we36/core/presentation/app_search_bar.dart",
     "package:we36/core/presentation/bottom_nav.dart",
     "package:we36/core/presentation/nav_item.dart",
     "package:we36/core/presentation/sidebar_rail.dart",
