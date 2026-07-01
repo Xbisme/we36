@@ -1,0 +1,10 @@
+# Codegen options. `explicit_to_json` makes nested freezed models serialize
+# deeply (author/media/location on `Post`) instead of embedding the object —
+# required for correct `toJson` round-trips (#004 introduced the first nested
+# JSON models).
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true

@@ -28,4 +28,16 @@ abstract final class ApiEndpoints {
 
   /// Reverse-chronological feed (cursor) — consumed from #004.
   static const String feed = '/feed';
+
+  /// Post engagement (#004) — idempotent like/save toggles returning
+  /// `EngagementState`. `POST` adds, `DELETE` removes (both no-ops if already in
+  /// the target state, per the B#004 contract).
+  static String postLike(String id) => '/posts/$id/like';
+  static String postSave(String id) => '/posts/$id/save';
+
+  /// Stories (#004) — **provisional**: no backend stories contract exists yet
+  /// (backend has auth/posts/media/comments only). The `StoriesRepository` real
+  /// seam targets this path but is never exercised while the app runs `fake`;
+  /// finalize when a backend stories spec lands.
+  static const String stories = '/stories';
 }

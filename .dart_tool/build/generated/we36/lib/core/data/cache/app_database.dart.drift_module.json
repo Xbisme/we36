@@ -7,7 +7,7 @@
       },
       "declaration": {
         "source_uri": "package:we36/core/data/cache/app_database.dart",
-        "offset": 834,
+        "offset": 1226,
         "name": "AppDatabase"
       },
       "references": [
@@ -18,6 +18,14 @@
         {
           "library_uri": "package:we36/core/data/cache/tables/me_profile_table.dart",
           "name": "me_profiles"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/tables/posts_table.dart",
+          "name": "posts"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/tables/story_seen_table.dart",
+          "name": "story_seen_segments"
         }
       ],
       "type": "database",
@@ -29,12 +37,20 @@
         {
           "library_uri": "package:we36/core/data/cache/tables/me_profile_table.dart",
           "name": "me_profiles"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/tables/posts_table.dart",
+          "name": "posts"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/tables/story_seen_table.dart",
+          "name": "story_seen_segments"
         }
       ],
       "views": [],
       "includes": [],
       "queries": [],
-      "schema_version": 2,
+      "schema_version": 3,
       "daos": [
         {
           "library_uri": "package:we36/core/data/cache/daos/users_dao.dart",
@@ -43,6 +59,14 @@
         {
           "library_uri": "package:we36/core/data/cache/daos/me_profile_dao.dart",
           "name": "MeProfileDao"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/daos/posts_dao.dart",
+          "name": "PostsDao"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/daos/story_seen_dao.dart",
+          "name": "StorySeenDao"
         }
       ],
       "has_constructor_arg": false
@@ -54,8 +78,12 @@
     "package:flutter/foundation.dart",
     "package:injectable/injectable.dart",
     "package:we36/core/data/cache/daos/me_profile_dao.dart",
+    "package:we36/core/data/cache/daos/posts_dao.dart",
+    "package:we36/core/data/cache/daos/story_seen_dao.dart",
     "package:we36/core/data/cache/daos/users_dao.dart",
     "package:we36/core/data/cache/tables/me_profile_table.dart",
+    "package:we36/core/data/cache/tables/posts_table.dart",
+    "package:we36/core/data/cache/tables/story_seen_table.dart",
     "package:we36/core/data/cache/tables/users_table.dart"
   ]
 }

@@ -6,11 +6,11 @@
 
 ---
 
-### 2026-06-30 — Spec #003 Auth & Onboarding ✅ COMPLETE (branch `003-auth-onboarding`, awaiting merge)
+### 2026-07-01 — Spec #003 Auth & Onboarding ✅ MERGED INTO MAIN (PR #3)
 
 - **Shipped (US1–US5, 75/75 tasks; on-device + dev-backend smoke verified)**: the auth **gate** — Splash (session restore) · first-launch Onboarding (Get started→Sign up / Skip→Sign in) · **Sign in** + **Sign up** (email-only, ≥8 pwd) · **Forgot password** (email **6-digit OTP** + resend cooldown) · **OAuth** Google (always) / Apple (iOS-only, FR-022) · **Profile setup** (live username availability, no avatar). Real `TokenStore`/`TokenRefresher` over `flutter_secure_storage`, `AuthRepository`/`MeRepository` (+ in-memory fakes), `SessionController` (cold-start routing, single-flight refresh reuse, **forced-logout-once + cache wipe**) replacing the #001 `AuthGuardStub`. drift schema v1→v2 (`MeProfiles` + `clearUserScoped`).
 - **Tech notes**: **154 tests green**, `dart analyze` clean (2 pre-existing pubspec-sort infos), app still runs DI `environment: 'fake'` (real impls behind `env:['real']`; **`RealTokenStore` env-agnostic** so a fake-issued session persists across restart — analyze finding I1). New deps `google_sign_in ^7.2.0` (v7 singleton API) · `sign_in_with_apple ^8.1.0` · `shared_preferences ^2.5.5`. Added shared `AppTextField` + `OtpInput`. Log-redaction test locks FR-014/SC-008. Goldens regenerated after the **Flutter 3.41→3.44 / Dart 3.12** toolchain bump.
-- **Follow-ups carried (8 tasks)**: native config **T002/T003** (iOS deployment target 13 + Sign in with Apple capability/entitlement + Google URL scheme; Android minSdk 24 + launch mode) and OAuth client-id/Service-ID provisioning — needed before a real-backend run; **T072** quickstart on a dev backend; **T074** on-device smoke (OAuth round-trip, real refresh, OTP) — none CI-gateable.
+- **Native config done**: **T002** iOS (deployment target 13 + Sign in with Apple capability/entitlement in `Runner.entitlements` + Google reversed-client-id URL scheme in `Info.plist`) · **T003** Android (`minSdk 24` + `launchMode="singleTop"`). **T072** quickstart scenarios 1–8 (fake mode) + **T074** on-device/dev-backend smoke — all marked complete (75/75). OAuth client-id/Service-ID provisioning is per-environment credential config, supplied at real-backend cutover (#004+ dogfood).
 
 ---
 

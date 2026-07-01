@@ -323,4 +323,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardBody3 => 'Message, react, and stay close.';
+
+  @override
+  String get feedEmptyTitle => 'No posts yet';
+
+  @override
+  String get feedEmptyBody => 'Follow people to see their posts here.';
+
+  @override
+  String get feedErrorTitle => 'Couldn\'t load your feed';
+
+  @override
+  String get feedRetry => 'Try again';
+
+  @override
+  String feedLikesCount(String count) {
+    return '$count likes';
+  }
+
+  @override
+  String get feedLikeFailed => 'Couldn\'t update your like. Try again.';
+
+  @override
+  String get feedSaveFailed => 'Couldn\'t save this post. Try again.';
+
+  @override
+  String get feedActivity => 'Activity';
+
+  @override
+  String get feedMessages => 'Messages';
+
+  @override
+  String feedViewAllComments(String count) {
+    return 'View all $count comments';
+  }
+
+  @override
+  String get storySendMessage => 'Send message';
+
+  @override
+  String get storyLikeFailed => 'Couldn\'t like this story.';
+
+  @override
+  String get storyUnavailable => 'This story is no longer available.';
+
+  @override
+  String get storyClose => 'Close';
+
+  @override
+  String get storyComingSoon => 'Coming soon';
 }

@@ -118,6 +118,18 @@ class ApiClient {
     decode,
   );
 
+  /// DELETE → decoded `T`. Used by idempotent remove-toggles (unlike/unsave,
+  /// #004; unfollow/unsave-collection later).
+  Future<Result<T>> delete<T>(
+    String path, {
+    Object? body,
+    Map<String, dynamic>? query,
+    T Function(dynamic data)? decode,
+  }) => _request(
+    () => _dio.delete<dynamic>(path, data: body, queryParameters: query),
+    decode,
+  );
+
   Future<Result<T>> _request<T>(
     Future<Response<dynamic>> Function() send,
     T Function(dynamic data)? decode,

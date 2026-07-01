@@ -1,42 +1,52 @@
 Running `(cd /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/; ANDROID_HOME=/Users/ase/Library/Android/sdk TMPDIR=/var/folders/39/bl1zsw592f33sm6vcjd11gw80000gn/T/ PATH=/Applications/Xcode.app/Contents/SharedFrameworks/SwiftBuild.framework/Versions/A/PlugIns/SWBBuildService.bundle/Contents/PlugIns/SWBUniversalPlatformPlugin.bundle/Contents/Frameworks/SWBUniversalPlatform.framework/Resources:/Users/ase/Library/Developer/DVTDownloads/MetalToolchain/mounts/0bc538ab0cfa107625f77ad7bcfa566abe43e917/Metal.xctoolchain/usr/bin:/Users/ase/Library/Developer/DVTDownloads/MetalToolchain/mounts/0bc538ab0cfa107625f77ad7bcfa566abe43e917/Metal.xctoolchain/usr/local/bin:/Users/ase/Library/Developer/DVTDownloads/MetalToolchain/mounts/0bc538ab0cfa107625f77ad7bcfa566abe43e917/Metal.xctoolchain/usr/libexec:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/local/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/local/bin:/Users/ase/Downloads/grib2json/target/grib2json-0.8.0-SNAPSHOT/bin:/Users/ase/.gem/bin:/usr/local/bin:/usr/local/opt/node@22/bin:/opt/homebrew/opt/node@22/bin:/Users/ase/.jenv/shims:/Users/ase/.jenv/bin:/usr/bin:/Users/ase/.bin:/usr/local/sbin:/Library/Frameworks/Python.framework/Versions/3.12/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/System/Cryptexes/App/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Users/ase/.local/bin:/Users/ase/Development/flutter/bin:/Users/ase/Library/Android/sdk/platform-tools:/Users/ase/.pub-cache/bin:/Applications/Android Studio.app/Contents/MacOS:/Users/ase/golang/bin:/usr/local/opt/go/libexec/bin:/Users/ase/Library/Android/sdk/ndk/28.2.13676358 HOME=/Users/ase /Users/ase/Development/flutter/bin/cache/dart-sdk/bin/dart --packages=/Users/ase/Documents/flutter_we36/.dart_tool/package_config.json /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/objective_c/6491424e80/hook.dill --config=/Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/objective_c/6491424e80/input.json )`.
-INFO: 2026-06-30 16:19:56.170185: Using compiler /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang from BuildInput.cCompiler.cc.
+INFO: 2026-07-01 13:41:55.826838: Using compiler /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang from BuildInput.cCompiler.cc.
 
-INFO: 2026-06-30 16:19:56.184257: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c_bindings_generated.m -fpic -gline-tables-only -I src -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c_bindings_generated.m.o
+INFO: 2026-07-01 13:41:55.835643: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 -c /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/include/dart_api_dl.c -fpic -gline-tables-only -I src -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/include/dart_api_dl.c.o
 
-INFO: 2026-06-30 16:19:56.609358: 
-INFO: 2026-06-30 16:19:56.609687: 
-INFO: 2026-06-30 16:19:56.609801: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.c.o
-INFO: 2026-06-30 16:19:56.610762: 
-INFO: 2026-06-30 16:19:56.610835: 
-INFO: 2026-06-30 16:19:56.610877: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/include/dart_api_dl.c.o
-INFO: 2026-06-30 16:19:56.625387: 
-INFO: 2026-06-30 16:19:56.625459: 
-INFO: 2026-06-30 16:19:56.625519: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/observer.m.o
+INFO: 2026-07-01 13:41:55.838002: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 -c /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c.c -fpic -gline-tables-only -I src -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.c.o
 
-INFO: 2026-06-30 16:19:56.640043: 
-INFO: 2026-06-30 16:19:56.640143: 
-INFO: 2026-06-30 16:19:56.640184: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/protocol.m.o
+INFO: 2026-07-01 13:41:55.838393: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/input_stream_adapter.m -fpic -gline-tables-only -I src -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/input_stream_adapter.m.o
 
-INFO: 2026-06-30 16:19:57.003319: 
-INFO: 2026-06-30 16:19:57.003392: 
-INFO: 2026-06-30 16:19:57.003435: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/ns_number.m.o
+INFO: 2026-07-01 13:41:55.838634: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c.m -fpic -gline-tables-only -I src -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.m.o
 
-INFO: 2026-06-30 16:19:57.029133: 
-INFO: 2026-06-30 16:19:57.029192: 
-INFO: 2026-06-30 16:19:57.029216: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.m.o
+INFO: 2026-07-01 13:41:55.838852: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/observer.m -fpic -gline-tables-only -I src -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/observer.m.o
 
-INFO: 2026-06-30 16:19:57.050814: 
-INFO: 2026-06-30 16:19:57.050872: 
-INFO: 2026-06-30 16:19:57.050912: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/input_stream_adapter.m.o
+INFO: 2026-07-01 13:41:55.839283: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/protocol.m -fpic -gline-tables-only -I src -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/protocol.m.o
 
-INFO: 2026-06-30 16:19:57.088381: 
-INFO: 2026-06-30 16:19:57.088438: 
-INFO: 2026-06-30 16:19:57.088459: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c_bindings_generated.m.o
 
-INFO: 2026-06-30 16:19:57.089218: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -shared -Wl,-encryptable -undefined dynamic_lookup -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/include/dart_api_dl.c.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.c.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/input_stream_adapter.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/observer.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/ns_number.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/protocol.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c_bindings_generated.m.o -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/objective_c.dylib
 
-INFO: 2026-06-30 16:19:57.283428: 
-INFO: 2026-06-30 16:19:57.283590: ld: warning: -undefined dynamic_lookup is deprecated on iOS-simulator
+INFO: 2026-07-01 13:41:55.839597: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/ase/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c_bindings_generated.m -fpic -gline-tables-only -I src -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c_bindings_generated.m.o
 
-INFO: 2026-06-30 16:19:57.283635: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/objective_c.dylib
+INFO: 2026-07-01 13:41:56.084311: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-07-01 13:41:56.086625: 
+INFO: 2026-07-01 13:41:56.086670: 
+INFO: 2026-07-01 13:41:56.086692: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.c.o
+
+INFO: 2026-07-01 13:41:56.124768: 
+INFO: 2026-07-01 13:41:56.124826: 
+INFO: 2026-07-01 13:41:56.124867: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/observer.m.o
+
+INFO: 2026-07-01 13:41:56.135405: 
+INFO: 2026-07-01 13:41:56.135479: 
+INFO: 2026-07-01 13:41:56.135506: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/protocol.m.o
+
+INFO: 2026-07-01 13:41:56.364246: 
+INFO: 2026-07-01 13:41:56.364293: 
+INFO: 2026-07-01 13:41:56.364329: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.m.o
+
+INFO: 2026-07-01 13:41:56.368862: 
+INFO: 2026-07-01 13:41:56.368912: 
+INFO: 2026-07-01 13:41:56.368936: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/input_stream_adapter.m.o
+
+INFO: 2026-07-01 13:41:56.424297: 
+INFO: 2026-07-01 13:41:56.424346: 
+INFO: 2026-07-01 13:41:56.424366: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-07-01 13:41:56.424858: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -shared -Wl,-encryptable -undefined dynamic_lookup -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk -target x86_64-apple-ios-simulator -mios-version-min=13 /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/include/dart_api_dl.c.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.c.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/input_stream_adapter.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/observer.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/ns_number.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/protocol.m.o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/obj/src/objective_c_bindings_generated.m.o -o /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/objective_c.dylib
+
+INFO: 2026-07-01 13:41:56.590845: 
+INFO: 2026-07-01 13:41:56.591069: ld: warning: -undefined dynamic_lookup is deprecated on iOS-simulator
+
+INFO: 2026-07-01 13:41:56.591114: Generated /Users/ase/Documents/flutter_we36/.dart_tool/hooks_runner/shared/objective_c/build/6491424e80/objective_c.dylib
 

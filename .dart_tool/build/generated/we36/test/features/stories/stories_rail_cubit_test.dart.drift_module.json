@@ -1,0 +1,11 @@
+{
+  "elements": {},
+  "imports": [
+    "package:drift/native.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:we36/core/data/cache/app_database.dart",
+    "package:we36/core/data/stories/fake_stories_repository.dart",
+    "package:we36/features/stories/domain/usecases/story_usecases.dart",
+    "package:we36/features/stories/presentation/stories_rail_cubit.dart"
+  ]
+}

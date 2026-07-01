@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-06-30 (#001 + #002 merged into `main`. Next: #003 Auth & Onboarding — branch `003-auth-onboarding` created.)
+> Last updated: 2026-07-01 (#001 + #002 + #003 merged into `main`. Next: #004 Home Feed & Stories ⭐ — first usable surface.)
 
 ---
 
@@ -118,14 +118,14 @@ Create Story     Post Detail &    Create Post      Reels
 - **New packages**: `dio`, `web_socket_channel`, `flutter_secure_storage`, `drift`(+`drift_flutter`/`drift_dev`) **or** `hive` (decide at plan), `uuid`.
 - **Out of scope**: any screen, auth UI, real endpoints (contract + fakes only).
 
-### Spec #003: Auth & Onboarding  🟡
+### Spec #003: Auth & Onboarding  ✅
 - **Depends on**: #001 ✅, #002 ✅. **Blocking**: everything behind the gate.
 - **Design**: Group A (Splash, Onboarding, Sign in, Sign up, Forgot password, Profile setup).
 - **Scope**: email/phone + password sign in/up; **OAuth Google/Apple**; forgot-password + OTP; first-run profile setup (username/display name/bio/avatar); **session service** (access+refresh tokens in secure storage, single-flight refresh, logout); **auth-guard redirect**; onboarding slides (first-launch only).
 - **New packages**: `google_sign_in`, `sign_in_with_apple`, image pick/crop for avatar.
 - **Out of scope**: feed, profile content.
 
-### Spec #004: Home Feed & Stories  ⭐  ⬜
+### Spec #004: Home Feed & Stories  ⭐  🟡
 - **Depends on**: #002, #003.
 - **Design**: Screens 7 (Home feed + StoriesRail), 8 (Story viewer).
 - **Scope**: paginated reverse-chronological feed; `PostCard` wired; **optimistic** like/save (+ rollback); stories rail + full-screen story viewer (progress segments, reply/like/share); pull-to-refresh; empty/offline-from-cache states. First usable surface.

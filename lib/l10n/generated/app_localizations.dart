@@ -703,6 +703,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message, react, and stay close.'**
   String get onboardBody3;
+
+  /// Home feed empty state title (no posts from followed accounts)
+  ///
+  /// In en, this message translates to:
+  /// **'No posts yet'**
+  String get feedEmptyTitle;
+
+  /// Home feed empty state body
+  ///
+  /// In en, this message translates to:
+  /// **'Follow people to see their posts here.'**
+  String get feedEmptyBody;
+
+  /// Home feed error state title (first load failed, no cache)
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your feed'**
+  String get feedErrorTitle;
+
+  /// Retry action on the feed error state
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get feedRetry;
+
+  /// Post like count label (count is pre-abbreviated, e.g. 38.4k)
+  ///
+  /// In en, this message translates to:
+  /// **'{count} likes'**
+  String feedLikesCount(String count);
+
+  /// Toast when an optimistic like is rolled back
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update your like. Try again.'**
+  String get feedLikeFailed;
+
+  /// Toast when an optimistic save is rolled back
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save this post. Try again.'**
+  String get feedSaveFailed;
+
+  /// Home header Activity (notifications) button label
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get feedActivity;
+
+  /// Home header Messages button label
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get feedMessages;
+
+  /// Post comments entry text
+  ///
+  /// In en, this message translates to:
+  /// **'View all {count} comments'**
+  String feedViewAllComments(String count);
+
+  /// Story viewer reply field placeholder (inert in #004)
+  ///
+  /// In en, this message translates to:
+  /// **'Send message'**
+  String get storySendMessage;
+
+  /// Toast when an optimistic story like is rolled back
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t like this story.'**
+  String get storyLikeFailed;
+
+  /// Soft message when an opened story expired/was removed
+  ///
+  /// In en, this message translates to:
+  /// **'This story is no longer available.'**
+  String get storyUnavailable;
+
+  /// Story viewer close button label
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get storyClose;
+
+  /// Toast for inert story controls (reply/share) not yet available
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get storyComingSoon;
 }
 
 class _AppLocalizationsDelegate

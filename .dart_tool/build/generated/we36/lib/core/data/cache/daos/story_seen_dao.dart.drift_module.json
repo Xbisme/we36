@@ -1,0 +1,52 @@
+{
+  "elements": {
+    "StorySeenDao": {
+      "id": {
+        "library_uri": "package:we36/core/data/cache/daos/story_seen_dao.dart",
+        "name": "StorySeenDao"
+      },
+      "declaration": {
+        "source_uri": "package:we36/core/data/cache/daos/story_seen_dao.dart",
+        "offset": 465,
+        "name": "StorySeenDao"
+      },
+      "references": [
+        {
+          "library_uri": "package:we36/core/data/cache/tables/story_seen_table.dart",
+          "name": "story_seen_segments"
+        }
+      ],
+      "type": "dao",
+      "tables": [
+        {
+          "library_uri": "package:we36/core/data/cache/tables/story_seen_table.dart",
+          "name": "story_seen_segments"
+        }
+      ],
+      "views": [],
+      "includes": [],
+      "queries": [],
+      "dart_type": {
+        "elements": [
+          {
+            "lexeme": "StorySeenDao",
+            "import_uri": "package:we36/core/data/cache/daos/story_seen_dao.dart"
+          }
+        ]
+      },
+      "database": {
+        "elements": [
+          {
+            "lexeme": "AppDatabase",
+            "import_uri": "package:we36/core/data/cache/app_database.dart"
+          }
+        ]
+      }
+    }
+  },
+  "imports": [
+    "package:drift/drift.dart",
+    "package:we36/core/data/cache/app_database.dart",
+    "package:we36/core/data/cache/tables/story_seen_table.dart"
+  ]
+}

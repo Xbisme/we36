@@ -223,5 +223,43 @@
   "onboardTitle3": "Keep up with friends",
   "@onboardTitle3": { "description": "Onboarding slide 3 title" },
   "onboardBody3": "Message, react, and stay close.",
-  "@onboardBody3": { "description": "Onboarding slide 3 body" }
+  "@onboardBody3": { "description": "Onboarding slide 3 body" },
+
+  "feedEmptyTitle": "No posts yet",
+  "@feedEmptyTitle": { "description": "Home feed empty state title (no posts from followed accounts)" },
+  "feedEmptyBody": "Follow people to see their posts here.",
+  "@feedEmptyBody": { "description": "Home feed empty state body" },
+  "feedErrorTitle": "Couldn't load your feed",
+  "@feedErrorTitle": { "description": "Home feed error state title (first load failed, no cache)" },
+  "feedRetry": "Try again",
+  "@feedRetry": { "description": "Retry action on the feed error state" },
+  "feedLikesCount": "{count} likes",
+  "@feedLikesCount": {
+    "description": "Post like count label (count is pre-abbreviated, e.g. 38.4k)",
+    "placeholders": { "count": { "type": "String", "example": "38.4k" } }
+  },
+  "feedLikeFailed": "Couldn't update your like. Try again.",
+  "@feedLikeFailed": { "description": "Toast when an optimistic like is rolled back" },
+  "feedSaveFailed": "Couldn't save this post. Try again.",
+  "@feedSaveFailed": { "description": "Toast when an optimistic save is rolled back" },
+  "feedActivity": "Activity",
+  "@feedActivity": { "description": "Home header Activity (notifications) button label" },
+  "feedMessages": "Messages",
+  "@feedMessages": { "description": "Home header Messages button label" },
+  "feedViewAllComments": "View all {count} comments",
+  "@feedViewAllComments": {
+    "description": "Post comments entry text",
+    "placeholders": { "count": { "type": "String", "example": "24" } }
+  },
+
+  "storySendMessage": "Send message",
+  "@storySendMessage": { "description": "Story viewer reply field placeholder (inert in #004)" },
+  "storyLikeFailed": "Couldn't like this story.",
+  "@storyLikeFailed": { "description": "Toast when an optimistic story like is rolled back" },
+  "storyUnavailable": "This story is no longer available.",
+  "@storyUnavailable": { "description": "Soft message when an opened story expired/was removed" },
+  "storyClose": "Close",
+  "@storyClose": { "description": "Story viewer close button label" },
+  "storyComingSoon": "Coming soon",
+  "@storyComingSoon": { "description": "Toast for inert story controls (reply/share) not yet available" }
 }

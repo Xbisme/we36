@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-06-30 (**Specs #001 + #002 merged into `main`** — #002 Networking/Cache/Realtime Core landed via PR #2, 50/50 tasks, 103 tests green, `dart analyze` clean. **Next: #003 Auth & Onboarding** — branch `003-auth-onboarding` created, in pre-spec discussion.)
+> Last updated: 2026-07-01 (**Specs #001 + #002 + #003 merged into `main`** — #003 Auth & Onboarding landed via PR #3, 75/75 tasks (incl. native iOS/Android config + on-device smoke), 156 tests green, `dart analyze` clean. **Next: #004 Home Feed & Stories ⭐** — first usable surface.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,9 +29,9 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #003 Auth & Onboarding COMPLETE** on branch `003-auth-onboarding` (**75/75 tasks**; **156 tests green**, `dart analyze` clean; native OAuth config + on-device smoke verified; **not committed/merged** — awaiting PR). The GATE every feature behind login sits on. SDD `specify→clarify→plan→tasks→analyze→implement` all run. Built: Splash/Onboarding/Sign in/Sign up/Forgot(6-OTP)/Profile-setup + OAuth Google/Apple, real `flutter_secure_storage` token store + single-flight refresh, `SessionController` (cold-start routing + forced-logout-once + cache wipe) replacing `AuthGuardStub`, drift v2 (`MeProfiles`). App still runs DI `environment: 'fake'` (real impls behind `env:['real']`).
+- **Now**: **Spec #003 Auth & Onboarding ✅ MERGED into `main`** via PR #3 (**75/75 tasks**; **156 tests green**, `dart analyze` clean; native iOS/Android config + OAuth + on-device smoke all done). The GATE every feature behind login sits on. Built: Splash/Onboarding/Sign in/Sign up/Forgot(6-OTP)/Profile-setup + OAuth Google/Apple, real `flutter_secure_storage` token store + single-flight refresh, `SessionController` (cold-start routing + forced-logout-once + cache wipe) replacing `AuthGuardStub`, drift v2 (`MeProfiles`). App still runs DI `environment: 'fake'` (real impls behind `env:['real']`).
 - **Toolchain bump**: Flutter **3.44.4** / Dart **3.12.2** (was 3.41/3.11 — the installed SDK was below the #001 `^3.11.5` floor; upgraded with user consent). Goldens regenerated.
-- **Remaining #003 (8 tasks)**: native iOS/Android config (T002/T003) + OAuth provisioning + dev-backend/on-device smoke (T072/T074) — none CI-gateable. Then commit + PR.
+- **Next**: **Spec #004 Home Feed & Stories ⭐** — first usable surface (paginated feed, PostCard wired, optimistic like/save, stories rail + viewer). Depends on #002 + #003 (both merged). Pre-spec discussion.
 - **Done — #002 merged**: `ApiClient` + idempotency/auth/**single-flight refresh**/redacted-logging interceptors + `FailureMapper`; `CursorPage<T>` + 4-state `PaginatedListCubit`; **drift** cache base + reactive `.watch()`; `RealtimeClient` Socket.IO scaffold + fake; repository pattern + fakes (`User` slice). App runs DI `environment: 'fake'`; real impls annotated `env: ['real']` (auth real impls start landing in #003). 103 tests green.
 - **Resolved at #002**: cache engine = **drift**; realtime = **`socket_io_client`** (constitution v1.0.2); cursor envelope shipped as `CursorPage<T>`.
 - **To confirm at #003**: OAuth client ids/redirect schemes; OTP channel (email vs SMS) for forgot-password; avatar pick/crop package; token-refresh seam wiring (#002 `TokenStore`/`TokenRefresher`/`AuthEventsSink` fakes → real `flutter_secure_storage` impls); dev/prod API base URL + bundle ids (`app.we36` / `app.we36.dev` proposed).
@@ -44,8 +44,8 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 |---|---|---|---|
 | 001 | Project Foundation, Design System & Navigation | ✅ **Merged** | `001-project-foundation` (PR #1) |
 | 002 | Networking, Cache & Realtime Core | ✅ **Merged** | `002-networking-core` (PR #2) |
-| 003 | Auth & Onboarding | 🔵 **Implemented** (not merged) | `003-auth-onboarding` |
-| 004 | Home Feed & Stories ⭐ | ⬜ Not started | `004-home-feed-stories` |
+| 003 | Auth & Onboarding | ✅ **Merged** | `003-auth-onboarding` (PR #3) |
+| 004 | Home Feed & Stories ⭐ | 🟡 **Next** | `004-home-feed-stories` |
 | 005 | Create Story & Tools | ⬜ Not started | `005-create-story` |
 | 006 | Post Detail & Comments | ⬜ Not started | `006-post-comments` |
 | 007 | Create Post (Compose & Upload) | ⬜ Not started | `007-create-post` |
