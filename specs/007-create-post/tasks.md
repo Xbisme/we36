@@ -43,13 +43,13 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 - [X] T009 Extend `test/core/data/cache/migration_test.dart` to cover **v3 → v4** (and confirm v1→v2→v3 still passes).
 - [X] T010 Implement `ImageProcessingService` in `lib/core/services/image_processing_service.dart` — bake the 4×5 matrix + crop + `copyResize` + `encodeJpg(quality)` on a background isolate (`image` `Command().executeThread()`); `@lazySingleton`, env-agnostic.
 - [X] T011 [P] Unit test bake fidelity + resize/encode in `test/core/services/image_processing_service_test.dart` (baked matrix matches preset; output within size bound).
-- [ ] T012 Implement `PhotoLibraryService` (interface + real over `photo_manager`/`photo_manager_image_provider`, env-agnostic per contract) in `lib/core/services/photo_library_service.dart` + register DI; contextual permission via `requestPermissionExtend()`, paged Recents, bounded-size thumbnails.
-- [ ] T013 [P] Add `FakePhotoLibraryService` (deterministic bundled-asset stubs) in `lib/core/services/photo_library_service_fake.dart` for tests; unit test in `test/core/services/photo_library_service_fake_test.dart`.
+- [X] T012 Implement `PhotoLibraryService` (interface + real over `photo_manager`/`photo_manager_image_provider`, env-agnostic per contract) in `lib/core/services/photo_library_service.dart` + register DI; contextual permission via `requestPermissionExtend()`, paged Recents, bounded-size thumbnails.
+- [X] T013 [P] Add `FakePhotoLibraryService` (deterministic bundled-asset stubs) in `lib/core/services/photo_library_service_fake.dart` for tests; unit test in `test/core/services/photo_library_service_fake_test.dart`.
 - [X] T014 Implement `MediaUploadService` (interface + real seam `env:['real']` over `ApiClient` multipart + `onSendProgress` + `CancelToken`, idempotency key forwarded) in `lib/core/services/media_upload_service.dart` + DI; log by index/size only (FR-024).
 - [X] T015 [P] Add `FakeMediaUploadService` (`env:['fake']`, deterministic progress + `failAfterFraction`/`cancelable` hooks) in `lib/core/services/media_upload_service_fake.dart`; unit test progress/cancel/fail in `test/core/services/media_upload_service_fake_test.dart`.
-- [ ] T016 Define `CreatePostRepository` interface + `PublishEvent` in `lib/features/compose/domain/create_post_repository.dart`; add create-post request/response DTOs in `lib/features/compose/data/dtos/`.
-- [ ] T017 Implement `ComposeDraftStore` (drift-backed, single row, JSON payload, `read/save/clear/watch`) in `lib/features/compose/data/compose_draft_store.dart` + DI.
-- [ ] T018 [P] Add EN+VI ARB keys for compose (titles, actions, filter names, toggles, errors, keep/discard prompt) in `lib/l10n/arb/app_en.arb` + `app_vi.arb`; run `gen-l10n`.
+- [X] T016 Define `CreatePostRepository` interface + `PublishEvent` in `lib/features/compose/domain/create_post_repository.dart`; add create-post request/response DTOs in `lib/features/compose/data/dtos/`.
+- [X] T017 Implement `ComposeDraftStore` (drift-backed, single row, JSON payload, `read/save/clear/watch`) in `lib/features/compose/data/compose_draft_store.dart` + DI.
+- [X] T018 [P] Add EN+VI ARB keys for compose (titles, actions, filter names, toggles, errors, keep/discard prompt) in `lib/l10n/arb/app_en.arb` + `app_vi.arb`; run `gen-l10n`.
 - [ ] T019 Wire the compose routes into `lib/core/router/app_router.dart` as nav-less full-screen pushed routes (bottom nav hidden) and add the contextual **Create** entry action (phone affordance + tablet sidebar-rail Create), all page-scoped `BlocProvider`s.
 
 **Checkpoint**: Pipeline services + models + drift v4 + routes exist with fakes and pass; no story UI yet.

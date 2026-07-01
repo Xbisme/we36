@@ -793,6 +793,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming soon'**
   String get storyComingSoon;
+
+  /// Create Post flow top-bar title (Screens 11–13)
+  ///
+  /// In en, this message translates to:
+  /// **'New post'**
+  String get composeTitle;
+
+  /// Advance to the next compose step
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get composeNext;
+
+  /// Publish the post (caption step)
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get composeShare;
+
+  /// Gallery source label on the pick step
+  ///
+  /// In en, this message translates to:
+  /// **'Recents'**
+  String get composeRecents;
+
+  /// Badge shown when multiple photos are selected
+  ///
+  /// In en, this message translates to:
+  /// **'Carousel'**
+  String get composeCarousel;
+
+  /// Caption field placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Write a caption…'**
+  String get composeCaptionHint;
+
+  /// Caption-step row: tag people
+  ///
+  /// In en, this message translates to:
+  /// **'Tag people'**
+  String get composeTagPeople;
+
+  /// Caption-step row: add location
+  ///
+  /// In en, this message translates to:
+  /// **'Add location'**
+  String get composeAddLocation;
+
+  /// Caption-step toggle to disable comments
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off commenting'**
+  String get composeTurnOffComments;
+
+  /// Edit-step filter name
+  ///
+  /// In en, this message translates to:
+  /// **'Original'**
+  String get composeFilterOriginal;
+
+  /// Edit-step filter name
+  ///
+  /// In en, this message translates to:
+  /// **'Warm'**
+  String get composeFilterWarm;
+
+  /// Edit-step filter name
+  ///
+  /// In en, this message translates to:
+  /// **'Lux'**
+  String get composeFilterLux;
+
+  /// Edit-step filter name
+  ///
+  /// In en, this message translates to:
+  /// **'Mono'**
+  String get composeFilterMono;
+
+  /// Edit-step filter name
+  ///
+  /// In en, this message translates to:
+  /// **'Fade'**
+  String get composeFilterFade;
+
+  /// Edit-step adjustment slider
+  ///
+  /// In en, this message translates to:
+  /// **'Brightness'**
+  String get composeAdjustBrightness;
+
+  /// Edit-step adjustment slider
+  ///
+  /// In en, this message translates to:
+  /// **'Contrast'**
+  String get composeAdjustContrast;
+
+  /// Edit-step adjustment slider
+  ///
+  /// In en, this message translates to:
+  /// **'Warmth'**
+  String get composeAdjustWarmth;
+
+  /// Publish-in-progress status
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing…'**
+  String get composeUploading;
+
+  /// Cancel the in-flight upload
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get composeCancel;
+
+  /// Retry a failed publish
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get composeRetry;
+
+  /// Toast after a successful publish
+  ///
+  /// In en, this message translates to:
+  /// **'Posted!'**
+  String get composePublished;
+
+  /// Toast when publish fails
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t share your post.'**
+  String get composeUploadFailed;
+
+  /// Empty state title when library permission is denied
+  ///
+  /// In en, this message translates to:
+  /// **'Allow photo access'**
+  String get composePermissionTitle;
+
+  /// Empty state body when library permission is denied
+  ///
+  /// In en, this message translates to:
+  /// **'We36 needs access to your photos to create a post.'**
+  String get composePermissionBody;
+
+  /// Button opening system settings for permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get composeOpenSettings;
+
+  /// Empty state when the device has no photos
+  ///
+  /// In en, this message translates to:
+  /// **'No photos yet'**
+  String get composeEmptyLibrary;
+
+  /// Message when the carousel photo cap is reached
+  ///
+  /// In en, this message translates to:
+  /// **'You can add up to {max} photos.'**
+  String composeMaxReached(int max);
+
+  /// Keep/discard dialog title on back-out
+  ///
+  /// In en, this message translates to:
+  /// **'Discard post?'**
+  String get composeDiscardTitle;
+
+  /// Keep the in-progress draft
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get composeDiscardKeep;
+
+  /// Discard the in-progress draft
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get composeDiscardDiscard;
 }
 
 class _AppLocalizationsDelegate

@@ -43,6 +43,7 @@ import 'package:we36/core/router/app_router.dart' as _i485;
 import 'package:we36/core/services/image_processing_service.dart' as _i12;
 import 'package:we36/core/services/media_upload_service.dart' as _i547;
 import 'package:we36/core/services/media_upload_service_fake.dart' as _i727;
+import 'package:we36/core/services/photo_library_service.dart' as _i613;
 import 'package:we36/core/services/session/auth_events.dart' as _i242;
 import 'package:we36/core/services/session/local_flags.dart' as _i299;
 import 'package:we36/core/services/session/real_token_refresher.dart' as _i266;
@@ -79,6 +80,7 @@ import 'package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart'
     as _i942;
 import 'package:we36/features/auth/presentation/sign_up/sign_up_cubit.dart'
     as _i30;
+import 'package:we36/features/compose/data/compose_draft_store.dart' as _i988;
 import 'package:we36/features/feed/domain/usecases/feed_usecases.dart' as _i321;
 import 'package:we36/features/feed/presentation/feed_cubit.dart' as _i992;
 import 'package:we36/features/stories/domain/usecases/story_usecases.dart'
@@ -113,7 +115,13 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       registerFor: {_real},
     );
+    gh.lazySingleton<_i613.PhotoLibraryService>(
+      () => _i613.RealPhotoLibraryService(),
+    );
     gh.lazySingleton<_i665.TokenStore>(() => _i897.RealTokenStore());
+    gh.lazySingleton<_i988.ComposeDraftStore>(
+      () => _i988.ComposeDraftStore(gh<_i270.AppDatabase>()),
+    );
     gh.lazySingleton<_i299.LocalFlags>(() => _i299.LocalFlagsImpl());
     gh.lazySingleton<_i242.AuthEventsSink>(() => _i242.AuthEvents());
     gh.lazySingleton<_i112.StoriesRepository>(
