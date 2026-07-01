@@ -83,7 +83,7 @@ class AdaptiveShell extends StatelessWidget {
               } else if (i == NavDestination.values.length) {
                 unawaited(context.push(AppRoutes.notifications));
               } else {
-                unawaited(context.push(AppRoutes.create));
+                unawaited(context.push(AppRoutes.composePick));
               }
             },
           ),

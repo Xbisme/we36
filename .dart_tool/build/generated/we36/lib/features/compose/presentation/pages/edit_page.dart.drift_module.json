@@ -1,0 +1,17 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:go_router/go_router.dart",
+    "package:we36/core/constants/app_routes.dart",
+    "package:we36/core/presentation/app_button.dart",
+    "package:we36/core/presentation/top_bar.dart",
+    "package:we36/core/services/photo_library_service.dart",
+    "package:we36/core/theme/app_colors_x.dart",
+    "package:we36/core/utils/l10n_extension.dart",
+    "package:we36/features/compose/presentation/cubit/compose_cubit.dart",
+    "package:we36/features/compose/presentation/cubit/compose_state.dart",
+    "package:we36/features/compose/presentation/cubit/gallery_cubit.dart"
+  ]
+}

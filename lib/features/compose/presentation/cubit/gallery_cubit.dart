@@ -13,6 +13,10 @@ class GalleryCubit extends Cubit<GalleryState> {
 
   final PhotoLibraryService _library;
 
+  /// The backing library — the pick grid uses it for thumbnails (same instance
+  /// so resolved asset ids match).
+  PhotoLibraryService get library => _library;
+
   static const int _pageSize = 60;
   int _page = 0;
   bool _busy = false;
