@@ -6,6 +6,14 @@
 
 ---
 
+### 2026-07-01 — Spec #004 Home Feed & Stories ✅ MERGED INTO MAIN (PR #4)
+
+- **Shipped (US1–US5, 64/64 tasks)**: the **first usable surface** — paginated reverse-chronological **Home feed** (`FeedCubit` over `PaginatedListCubit`, `PostCard` wired to real data), **optimistic like/save** with rollback (one canonical cached `Post` in drift, every screen repaints via `watchHomeFeed()`), **StoriesRail** + full-screen **Story viewer** (progress segments, seen-tracking, skip expired/removed segments), pull-to-refresh (clear + repopulate so removed posts drop from cache), empty/offline-from-cache states, adaptive home (bottom-nav `<700` ↔ rail `≥700` + right-rail). drift schema v2→v3 (`StorySeenSegments` + `clearUserScoped`).
+- **Tech notes**: **206 tests green** (feed cubit/like/save/no-network/a11y/adaptive/scroll-perf + story viewer/rail/fake-repo). App still runs DI `environment: 'fake'`; `FeedRepository` real seam follows B#004, `StoriesRepository` real seam provisional (backend stories contract TBD — follow-up). Goldens regenerated (sub-pixel toolchain diffs).
+- **Follow-ups carried**: on-device long-scroll memory-ceiling profiling → #015 release gate (CI scroll-perf guard T063 is green); deeper moderation/blocked-state handling → #006/#014; `StoriesRepository` real contract → when backend stories land.
+
+---
+
 ### 2026-07-01 — Spec #003 Auth & Onboarding ✅ MERGED INTO MAIN (PR #3)
 
 - **Shipped (US1–US5, 75/75 tasks; on-device + dev-backend smoke verified)**: the auth **gate** — Splash (session restore) · first-launch Onboarding (Get started→Sign up / Skip→Sign in) · **Sign in** + **Sign up** (email-only, ≥8 pwd) · **Forgot password** (email **6-digit OTP** + resend cooldown) · **OAuth** Google (always) / Apple (iOS-only, FR-022) · **Profile setup** (live username availability, no avatar). Real `TokenStore`/`TokenRefresher` over `flutter_secure_storage`, `AuthRepository`/`MeRepository` (+ in-memory fakes), `SessionController` (cold-start routing, single-flight refresh reuse, **forced-logout-once + cache wipe**) replacing the #001 `AuthGuardStub`. drift schema v1→v2 (`MeProfiles` + `clearUserScoped`).
