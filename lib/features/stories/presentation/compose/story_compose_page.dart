@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_button.dart';
+import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/services/photo_library_service.dart';
@@ -14,9 +15,15 @@ import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
+import 'package:we36/features/stories/domain/models/story_compose_draft.dart';
 import 'package:we36/features/stories/presentation/cubit/story_compose_cubit.dart';
 import 'package:we36/features/stories/presentation/cubit/story_compose_state.dart';
 import 'package:we36/features/stories/presentation/cubit/story_gallery_cubit.dart';
+import 'package:we36/features/stories/presentation/widgets/audience_toggle.dart';
+import 'package:we36/features/stories/presentation/widgets/sticker_tray.dart';
+import 'package:we36/features/stories/presentation/widgets/story_overlay_layer.dart';
+import 'package:we36/features/stories/presentation/widgets/story_upload_progress.dart';
+import 'package:we36/features/stories/presentation/widgets/text_overlay_editor.dart';
 
 /// Step 2 of the create-story flow (Screen 9): the 9:16 compose canvas + Share.
 /// The canvas is wrapped in a [RepaintBoundary] so [StoryComposeCubit] can
@@ -32,6 +39,37 @@ class StoryComposePage extends StatefulWidget {
 
 class _StoryComposePageState extends State<StoryComposePage> {
   final GlobalKey _boundaryKey = GlobalKey();
+
+  /// Back-out — confirm before discarding a story with a photo/overlays (FR-015).
+  Future<void> _onClose(StoryComposeDraft? draft) async {
+    if (draft == null) {
+      context.pop();
+      return;
+    }
+    final keep = await showAppDialog(
+      context,
+      title: context.l10n.storyDiscardTitle,
+      body: '',
+      primaryLabel: context.l10n.storyDiscardKeep,
+      secondaryLabel: context.l10n.storyDiscardDiscard,
+      destructive: true,
+    );
+    if (!keep && mounted) context.pop();
+  }
+
+  Future<void> _addText() async {
+    final text = await promptStoryText(context);
+    if (text != null && mounted) {
+      context.read<StoryComposeCubit>().addText(text);
+    }
+  }
+
+  Future<void> _addSticker() async {
+    final sticker = await showStickerTray(context);
+    if (sticker != null && mounted) {
+      context.read<StoryComposeCubit>().addSticker(sticker);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +120,9 @@ class _StoryComposePageState extends State<StoryComposePage> {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: uploading ? null : () => context.pop(),
+                        onPressed: uploading ? null : () => unawaited(
+                          _onClose(draft),
+                        ),
                         icon: const AppIcon(AppIcons.close, color: Colors.white),
                       ),
                       const Spacer(),
@@ -103,9 +143,9 @@ class _StoryComposePageState extends State<StoryComposePage> {
                   ),
                 ),
                 if (uploading)
-                  LinearProgressIndicator(
-                    value: progress == 0 ? null : progress,
-                    minHeight: 2,
+                  StoryUploadProgress(
+                    progress: progress,
+                    onCancel: cubit.cancel,
                   ),
                 // 9:16 canvas — flattened WYSIWYG at publish (FR-005).
                 Expanded(
@@ -118,23 +158,59 @@ class _StoryComposePageState extends State<StoryComposePage> {
                           color: Colors.black,
                           child: draft == null
                               ? const SizedBox.shrink()
-                              : Image(
-                                  image: library.thumbnail(
-                                    AssetRef(
-                                      id: draft.assetId,
-                                      width: 0,
-                                      height: 0,
+                              : Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    Image(
+                                      image: library.thumbnail(
+                                        AssetRef(
+                                          id: draft.assetId,
+                                          width: 0,
+                                          height: 0,
+                                        ),
+                                        pixelSize: 1080,
+                                      ),
+                                      fit: BoxFit.cover,
+                                      gaplessPlayback: true,
                                     ),
-                                    pixelSize: 1080,
-                                  ),
-                                  fit: BoxFit.cover,
-                                  gaplessPlayback: true,
+                                    // Baked into the export by the RepaintBoundary.
+                                    StoryOverlayLayer(
+                                      draft: draft,
+                                      onMoveText: cubit.moveText,
+                                      onMoveSticker: cubit.moveSticker,
+                                      onRemoveText: cubit.removeText,
+                                      onRemoveSticker: cubit.removeSticker,
+                                    ),
+                                  ],
                                 ),
                         ),
                       ),
                     ),
                   ),
                 ),
+                // Overlay tools (US2) — hidden while uploading.
+                if (draft != null && !uploading)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.sm,
+                    ),
+                    child: Row(
+                      children: [
+                        _ToolButton(
+                          icon: AppIcons.sticker,
+                          label: context.l10n.storyAddText,
+                          onTap: () => unawaited(_addText()),
+                        ),
+                        const SizedBox(width: AppSpacing.lg),
+                        _ToolButton(
+                          icon: AppIcons.plus,
+                          label: context.l10n.storyStickers,
+                          onTap: () => unawaited(_addSticker()),
+                        ),
+                      ],
+                    ),
+                  ),
                 // Footer: audience (default "Your story"; toggle arrives US3).
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -143,20 +219,19 @@ class _StoryComposePageState extends State<StoryComposePage> {
                   ),
                   child: Row(
                     children: [
-                      const AppIcon(AppIcons.profile, color: Colors.white),
-                      const SizedBox(width: AppSpacing.sm),
-                      Text(
-                        context.l10n.yourStory,
-                        style: AppTypography.body16.copyWith(
-                          color: Colors.white,
+                      if (draft != null && !uploading)
+                        AudienceToggle(
+                          value: draft.audience,
+                          onChanged: cubit.setAudience,
+                        )
+                      else
+                        Text(
+                          context.l10n.yourStory,
+                          style: AppTypography.body16.copyWith(
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
                       const Spacer(),
-                      if (uploading)
-                        TextButton(
-                          onPressed: cubit.cancel,
-                          child: Text(context.l10n.composeCancel),
-                        ),
                     ],
                   ),
                 ),
@@ -165,6 +240,31 @@ class _StoryComposePageState extends State<StoryComposePage> {
           ),
         );
       },
+    );
+  }
+}
+
+/// A compact icon+label story tool (Add text / Stickers) on the dark canvas.
+class _ToolButton extends StatelessWidget {
+  const _ToolButton({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(
+      onPressed: onTap,
+      icon: AppIcon(icon, size: 18, color: Colors.white),
+      label: Text(
+        label,
+        style: AppTypography.label.copyWith(color: Colors.white),
+      ),
     );
   }
 }

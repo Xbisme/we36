@@ -129,4 +129,21 @@ void main() {
       child,
     );
   });
+
+  testWidgets('story compose canvas with overlays golden', (tester) async {
+    const child = StoryComposePage();
+    await goldenBoth(
+      tester,
+      'story_compose_overlays',
+      () async {
+        await gallery.loadInitial();
+        // startFromAsset resets the draft → deterministic across light/dark.
+        compose
+          ..startFromAsset('fake-asset-0')
+          ..addText('hi there')
+          ..addSticker('❤️');
+      },
+      child,
+    );
+  });
 }

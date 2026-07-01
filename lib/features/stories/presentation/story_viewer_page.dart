@@ -277,6 +277,23 @@ class _ViewerHeader extends StatelessWidget {
           time.format(segment.createdAt, now: DateTime.now()),
           style: AppTypography.caption.copyWith(color: Colors.white70),
         ),
+        // Close-friends marker, shown to the creator (#005 US3, AS-3.2).
+        if (segment.audience == StoryAudience.closeFriends) ...[
+          const SizedBox(width: AppSpacing.sm),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.white24,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              child: Text(
+                l10n.storyCloseFriends,
+                style: AppTypography.caption.copyWith(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
         const Spacer(),
         Semantics(
           button: true,

@@ -9,6 +9,8 @@ import 'package:we36/core/domain/app_failure.dart';
 import 'package:we36/core/services/media_upload_service.dart';
 import 'package:we36/core/services/story_image_composer.dart';
 import 'package:we36/features/stories/domain/models/story_compose_draft.dart';
+import 'package:we36/features/stories/domain/models/story_sticker_overlay.dart';
+import 'package:we36/features/stories/domain/models/story_text_overlay.dart';
 import 'package:we36/features/stories/domain/usecases/publish_story.dart';
 import 'package:we36/features/stories/presentation/cubit/story_compose_state.dart';
 
@@ -43,10 +45,96 @@ class StoryComposeCubit extends Cubit<StoryComposeState> {
   }
 
   /// Choose the audience (Your story / Close friends) — US3.
-  void setAudience(StoryAudience audience) {
+  void setAudience(StoryAudience audience) =>
+      _mutate((d) => d.copyWith(audience: audience));
+
+  // --- Overlays (US2) — baked at publish; positions normalized 0..1. ---
+
+  /// Add a text overlay (id generated) centred on the canvas.
+  void addText(String text, {String styleId = 'default'}) => _mutate(
+    (d) => d.copyWith(
+      textOverlays: [
+        ...d.textOverlays,
+        StoryTextOverlay(id: _keys.generate(), text: text, styleId: styleId),
+      ],
+    ),
+  );
+
+  void updateTextContent(String id, String text) => _mutate(
+    (d) => d.copyWith(
+      textOverlays: [
+        for (final o in d.textOverlays)
+          if (o.id == id) o.copyWith(text: text) else o,
+      ],
+    ),
+  );
+
+  void setTextStyle(String id, String styleId) => _mutate(
+    (d) => d.copyWith(
+      textOverlays: [
+        for (final o in d.textOverlays)
+          if (o.id == id) o.copyWith(styleId: styleId) else o,
+      ],
+    ),
+  );
+
+  void moveText(String id, double dx, double dy) => _mutate(
+    (d) => d.copyWith(
+      textOverlays: [
+        for (final o in d.textOverlays)
+          if (o.id == id)
+            o.copyWith(dx: dx.clamp(0, 1), dy: dy.clamp(0, 1))
+          else
+            o,
+      ],
+    ),
+  );
+
+  void removeText(String id) => _mutate(
+    (d) => d.copyWith(
+      textOverlays: [
+        for (final o in d.textOverlays)
+          if (o.id != id) o,
+      ],
+    ),
+  );
+
+  /// Add a sticker from the fixed set (id generated) centred on the canvas.
+  void addSticker(String assetKey) => _mutate(
+    (d) => d.copyWith(
+      stickerOverlays: [
+        ...d.stickerOverlays,
+        StoryStickerOverlay(id: _keys.generate(), assetKey: assetKey),
+      ],
+    ),
+  );
+
+  void moveSticker(String id, double dx, double dy) => _mutate(
+    (d) => d.copyWith(
+      stickerOverlays: [
+        for (final o in d.stickerOverlays)
+          if (o.id == id)
+            o.copyWith(dx: dx.clamp(0, 1), dy: dy.clamp(0, 1))
+          else
+            o,
+      ],
+    ),
+  );
+
+  void removeSticker(String id) => _mutate(
+    (d) => d.copyWith(
+      stickerOverlays: [
+        for (final o in d.stickerOverlays)
+          if (o.id != id) o,
+      ],
+    ),
+  );
+
+  /// Apply [transform] to the current draft (only while editing — not uploading).
+  void _mutate(StoryComposeDraft Function(StoryComposeDraft) transform) {
     final draft = state.draftOrNull;
-    if (draft == null) return;
-    emit(StoryComposeState.loaded(draft: draft.copyWith(audience: audience)));
+    if (draft == null || state is StoryComposeLoadedUploading) return;
+    emit(StoryComposeState.loaded(draft: transform(draft)));
   }
 
   /// Flatten the canvas identified by [boundaryKey] and publish the story.

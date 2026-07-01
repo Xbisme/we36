@@ -23,7 +23,7 @@ description: "Task list for Create Story & Story Tools (#005)"
 
 **Purpose**: Assets, constants, and copy the whole feature depends on.
 
-- [X] T001 Confirm **no new pub dependency** is required (reuse `image` from #007 for isolate JPEG re-encode; overlays use Flutter built-ins) per research R8; add a small **bundled sticker set** under `assets/stickers/` and declare it in `pubspec.yaml` `flutter/assets`.
+- [X] T001 Confirm **no new pub dependency** is required (reuse `image` from #007 for isolate JPEG re-encode; overlays use Flutter built-ins) per research R8. **Deviation:** the fixed sticker set is **emoji-based** (`kStoryStickers` in `story_stickers.dart`) — asset-free, so no `assets/stickers/` entry is needed. A bundled/PNG set is a post-v1.0 enhancement.
 - [X] T002 [P] Add EN + VI ARB keys for the story composer copy (share, "Your story", "Close friends", add text, discard-story dialog, upload-failed, retry, cancel, empty-gallery, permission-denied/open-settings) in `lib/l10n/arb/app_en.arb` + `app_vi.arb`; run `gen-l10n`.
 - [X] T003 [P] Add `AppRoutes.storyCompose` (nav-less full-screen) in `lib/core/constants/` routes + a story-create endpoint constant (inert) in `lib/core/constants/api_endpoints.dart`.
 
@@ -83,17 +83,17 @@ description: "Task list for Create Story & Story Tools (#005)"
 
 ### Tests for User Story 2
 
-- [ ] T024 [P] [US2] Widget test add / move / remove text + sticker overlays and the **~100-char text limit** (AS-2.6) in `test/features/stories/story_overlay_test.dart`.
-- [ ] T025 [P] [US2] Test that the flattened output includes overlays — assert the `RepaintBoundary` subtree contains the placed overlays handed to `StoryImageComposer` (preview == export, FR-005) in `test/features/stories/story_overlay_bake_test.dart`.
+- [X] T024 [P] [US2] Widget test add / move / remove text + sticker overlays and the **~100-char text limit** (AS-2.6) in `test/features/stories/story_overlay_test.dart`.
+- [X] T025 [P] [US2] Test that the flattened output includes overlays — assert the `RepaintBoundary` subtree contains the placed overlays handed to `StoryImageComposer` (preview == export, FR-005) in `test/features/stories/story_overlay_bake_test.dart`.
 
 ### Implementation for User Story 2
 
-- [ ] T026 [US2] Build `text_overlay_editor` widget (single line ≤ ~100 chars via input formatter, token-driven style/color swatches, draggable) in `lib/features/stories/presentation/widgets/text_overlay_editor.dart`.
-- [ ] T027 [US2] Build `sticker_tray` widget (fixed bundled set, tap-to-add) + draggable `Positioned` sticker in `lib/features/stories/presentation/widgets/sticker_tray.dart`.
-- [ ] T028 [US2] Extend `StoryComposeCubit` + `StoryComposeDraft` with add / update-position / remove for text + sticker overlays in `lib/features/stories/presentation/cubit/story_compose_cubit.dart`.
-- [ ] T029 [US2] Render overlays as normalized-position `Positioned` children inside the `RepaintBoundary` 9:16 canvas on `story_compose_page` (baked at publish by the existing flatten — no new bake code).
-- [ ] T030 [US2] Add discard-confirm `AppDialog` on back-out when the draft has a photo or placed overlays (FR-015) — wired via `BlocListener`/router pop guard.
-- [ ] T031 [P] [US2] Golden test the compose canvas with text + sticker overlays (light + dark) in `test/features/stories/story_compose_goldens_test.dart`.
+- [X] T026 [US2] Build `text_overlay_editor` widget (single line ≤ ~100 chars via input formatter, token-driven style/color swatches, draggable) in `lib/features/stories/presentation/widgets/text_overlay_editor.dart`.
+- [X] T027 [US2] Build `sticker_tray` widget (fixed bundled set, tap-to-add) + draggable `Positioned` sticker in `lib/features/stories/presentation/widgets/sticker_tray.dart`.
+- [X] T028 [US2] Extend `StoryComposeCubit` + `StoryComposeDraft` with add / update-position / remove for text + sticker overlays in `lib/features/stories/presentation/cubit/story_compose_cubit.dart`.
+- [X] T029 [US2] Render overlays as normalized-position `Positioned` children inside the `RepaintBoundary` 9:16 canvas on `story_compose_page` (baked at publish by the existing flatten — no new bake code).
+- [X] T030 [US2] Add discard-confirm `AppDialog` on back-out when the draft has a photo or placed overlays (FR-015) — wired via `BlocListener`/router pop guard.
+- [X] T031 [P] [US2] Golden test the compose canvas with text + sticker overlays (light + dark) in `test/features/stories/story_compose_goldens_test.dart`.
 
 **Checkpoint**: US1 + US2 both work independently.
 
@@ -107,12 +107,12 @@ description: "Task list for Create Story & Story Tools (#005)"
 
 ### Tests for User Story 3
 
-- [ ] T032 [P] [US3] `bloc_test` audience toggle + publish records the chosen `audience`; `closeFriends` allowed with no list (FR-007) in `test/features/stories/story_audience_test.dart`.
+- [X] T032 [P] [US3] `bloc_test` audience toggle + publish records the chosen `audience`; `closeFriends` allowed with no list (FR-007) in `test/features/stories/story_audience_test.dart`.
 
 ### Implementation for User Story 3
 
-- [ ] T033 [US3] Build `audience_toggle` widget (Your story / Close friends, default Your story) with the brand **gradient share CTA** in `lib/features/stories/presentation/widgets/audience_toggle.dart`.
-- [ ] T034 [US3] Wire audience into `StoryComposeDraft` → `PublishStory` → `StorySegment.audience`; mark close-friends where shown to the creator (own-reel / viewer marker) — `lib/features/stories/...`.
+- [X] T033 [US3] Build `audience_toggle` widget (Your story / Close friends, default Your story) with the brand **gradient share CTA** in `lib/features/stories/presentation/widgets/audience_toggle.dart`.
+- [X] T034 [US3] Wire audience into `StoryComposeDraft` → `PublishStory` → `StorySegment.audience`; mark close-friends where shown to the creator (own-reel / viewer marker) — `lib/features/stories/...`.
 
 **Checkpoint**: US1–US3 work independently.
 
@@ -126,13 +126,13 @@ description: "Task list for Create Story & Story Tools (#005)"
 
 ### Tests for User Story 4
 
-- [ ] T035 [P] [US4] Test cancel writes nothing to `OwnStoryStore` + a failed-then-retried publish (same idempotency key) yields **exactly one** story (FR-009/010, SC-004/005) in `test/features/stories/story_upload_cancel_retry_test.dart`.
+- [X] T035 [P] [US4] Test cancel writes nothing to `OwnStoryStore` + a failed-then-retried publish (same idempotency key) yields **exactly one** story (FR-009/010, SC-004/005) in `test/features/stories/story_upload_cancel_retry_test.dart`.
 
 ### Implementation for User Story 4
 
-- [ ] T036 [US4] Build `story_upload_progress` widget (progress bar + cancel) in `lib/features/stories/presentation/widgets/story_upload_progress.dart`.
-- [ ] T037 [US4] Extend `StoryComposeCubit` `loadedUploading(progress)` + `cancel()` (via `UploadCancelToken`) + retry that **reuses the session idempotency key**; ensure no partial `OwnStoryStore` write on cancel/fail.
-- [ ] T038 [US4] Wire progress / cancel / failure-retry UI on `story_compose_page` (progress overlay + failure Toast + retry affordance) via `BlocListener`/`BlocBuilder`.
+- [X] T036 [US4] Build `story_upload_progress` widget (progress bar + cancel) in `lib/features/stories/presentation/widgets/story_upload_progress.dart`.
+- [X] T037 [US4] Extend `StoryComposeCubit` `loadedUploading(progress)` + `cancel()` (via `UploadCancelToken`) + retry that **reuses the session idempotency key**; ensure no partial `OwnStoryStore` write on cancel/fail.
+- [X] T038 [US4] Wire progress / cancel / failure-retry UI on `story_compose_page` (progress overlay + failure Toast + retry affordance) via `BlocListener`/`BlocBuilder`.
 
 **Checkpoint**: US1–US4 work independently.
 
@@ -146,11 +146,11 @@ description: "Task list for Create Story & Story Tools (#005)"
 
 ### Tests for User Story 5
 
-- [ ] T039 [P] [US5] Unit test the 24h expiry via **injected clock**: a 25h-old segment is excluded, a < 24h one included, all-expired ⇒ "Your story" `hasUnseen == false` in `test/core/data/stories/own_story_store_expiry_test.dart`.
+- [X] T039 [P] [US5] Unit test the 24h expiry via **injected clock**: a 25h-old segment is excluded, a < 24h one included, all-expired ⇒ "Your story" `hasUnseen == false` in `test/core/data/stories/own_story_store_expiry_test.dart`.
 
 ### Implementation for User Story 5
 
-- [ ] T040 [US5] Ensure `OwnStoryStore.activeSegments()` 24h filter drives the `FakeStoriesRepository` own-reel merge and the "Your story" `hasUnseen` recompute (expired excluded); expose the clock seam for tests — `lib/core/data/stories/`.
+- [X] T040 [US5] Ensure `OwnStoryStore.activeSegments()` 24h filter drives the `FakeStoriesRepository` own-reel merge and the "Your story" `hasUnseen` recompute (expired excluded); expose the clock seam for tests — `lib/core/data/stories/`.
 
 **Checkpoint**: All user stories independently functional.
 
@@ -158,9 +158,9 @@ description: "Task list for Create Story & Story Tools (#005)"
 
 ## Phase 8: Polish & Cross-Cutting Concerns
 
-- [ ] T041 [P] Log-redaction test — no media bytes/paths/PII in logs during pick/flatten/upload (FR-019) in `test/features/stories/story_compose_redaction_test.dart`.
-- [ ] T042 [P] a11y + text-scaling + adaptive test (Semantics, large text, tablet **centered-mobile fallback** for Screen 9) in `test/features/stories/story_compose_a11y_test.dart`.
-- [ ] T043 [P] [US1] Wire + test empty-gallery and permission-denied (with open-settings) states on `story_pick_page`, reusing #007 patterns, in `test/features/stories/story_pick_states_test.dart`.
+- [X] T041 [P] Log-redaction test — no media bytes/paths/PII in logs during pick/flatten/upload (FR-019) in `test/features/stories/story_compose_redaction_test.dart`.
+- [X] T042 [P] a11y + text-scaling + adaptive test (Semantics, large text, tablet **centered-mobile fallback** for Screen 9) in `test/features/stories/story_compose_a11y_test.dart`.
+- [X] T043 [P] [US1] Wire + test empty-gallery and permission-denied (with open-settings) states on `story_pick_page`, reusing #007 patterns, in `test/features/stories/story_pick_states_test.dart`.
 - [ ] T044 Run the pre-commit gate: `dart format .` · `flutter analyze` (zero warnings) · `flutter test` (all green) · `dart run bloc_tools:bloc lint .` (if runnable).
 - [ ] T045 Execute [quickstart.md](quickstart.md) manual scenarios 1–7 in fake mode and record the sign-off.
 - [ ] T046 At merge: add the #005 changelog entry + update `project-context.md` / `sdd-roadmap.md` spec status (🟡 → ✅) + the `decisions/spec-005-create-story.md` cross-links.

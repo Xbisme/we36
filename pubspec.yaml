@@ -85,7 +85,6 @@ flutter:
 
   assets:
     - assets/brand/
-    - assets/stickers/
 
   # Bundled variable fonts (offline + golden-deterministic; fontWeight drives the wght axis).
   fonts:
