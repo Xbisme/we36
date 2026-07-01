@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-07-01 (**Specs #001 + #002 + #003 + #004 merged into `main`** — #004 Home Feed & Stories landed via PR #4, 64/64 tasks, 206 tests green. ⭐ **First usable surface reached** — login → paginated feed + stories → like/save → story viewer. **Next: content-creation/engagement trio #005 Create Story / #006 Post Detail & Comments / #007 Create Post** — roadmap sequences #007 early to build the shared media-upload pipeline.)
+> Last updated: 2026-07-01 (#001–#004 merged into `main`. **#007 Create Post 🔵 IN PROGRESS** on branch `007-create-post` — 31/62 tasks, ⭐ **US1 MVP reached** (pick → caption → Share → post atop feed, fake-mode), 24 compose tests green, 4 commits. **▶ Resume at US2 (edit)** — see Current Focus + `specs/007-create-post/tasks.md`.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,9 +29,12 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #004 Home Feed & Stories ✅ MERGED into `main`** via PR #4 (**64/64 tasks**; **206 tests green**). ⭐ **First usable surface reached.** Built: paginated reverse-chronological feed (`FeedCubit` over `PaginatedListCubit`, `PostCard` wired to real data), **optimistic like/save** + rollback (one canonical cached `Post` in drift, all screens repaint via `watchHomeFeed()`), StoriesRail + full-screen Story viewer (progress segments, seen-tracking, skip expired/removed), pull-to-refresh, empty/offline-from-cache, adaptive home. drift v2→v3 (`StorySeenSegments`). App still runs DI `environment: 'fake'`; `FeedRepository` real seam follows B#004, `StoriesRepository` real seam provisional.
+- **Now**: **Spec #007 Create Post (Compose & Upload) 🔵 IN PROGRESS** on branch `007-create-post` — **31/62 tasks done, ⭐ US1 MVP reached** (open Create → pick photo from a custom gallery grid → caption → Share → post appears atop the Home feed; fake-mode, zero-network, verified). **24 compose tests green, `dart analyze` clean, 4 commits pushed to the branch.** Full SDD cycle done (specify→clarify→plan→tasks→analyze); implement is mid-flight.
+  - **Built + verified**: media pipeline in `core/services/` (`ImageProcessingService` bake-on-isolate, `MediaUploadService` +fake, `PhotoLibraryService` +fake), `CreatePostRepository` +fake (writes canonical #004 `Post`, idempotent), drift **v3→v4** (`ComposeDrafts` + migration test), `GalleryCubit`/`ComposeCubit` (draft/edit/publish/cancel/retry), `PublishPost` use case, pick/edit(pass-through)/caption pages + `GalleryGrid`/`SelectionBadge`, nav-less compose **ShellRoute** + Create entry, EN+VI ARB. New deps: `photo_manager`/`photo_manager_image_provider`/`crop_your_image`/`image` (verified pub.dev). Native perms wired (iOS `NSPhotoLibraryUsageDescription`, Android `READ_MEDIA_IMAGES`).
+  - **▶ RESUME HERE** (see `specs/007-create-post/tasks.md` — 31 `[X]` marks are the exact map): **US2** T033–T039 (real edit: filter live-preview via `ColorMatrix`, crop 4:5 via `crop_your_image`, sliders, bake wiring) → **US3** carousel (T040–T045) → **US4** upload progress/cancel/retry UI (T046–T050; service+idempotency already done) → **US5** options + draft-restore prompt (T051–T055) → **Polish** T056–T062 + **T032 US1 goldens (deferred)**.
+  - **⚠ Test gotcha (learned)**: widget tests with real `MemoryImage` thumbnails + go_router navigation **hang `pumpAndSettle`/time out**. Use fixed `pump(Duration)` (not settle), test logic-first via cubits, and inject a **synchronous `ImageProcessingService` stub** (no `compute` isolate) in widget tests. See `test/features/compose/publish_flow_test.dart`.
 - **Toolchain**: Flutter **3.44.4** / Dart **3.12.2** (bumped at #003 with user consent — was below the #001 `^3.11.5` floor). Goldens regenerated (sub-pixel toolchain diffs).
-- **Next**: **content-creation/engagement trio — #005 Create Story · #006 Post Detail & Comments · #007 Create Post** (all hang off #004, parallelizable). Roadmap sequences **#007 first** to build the client-side media-upload pipeline that #005/#006 reuse. Pre-spec discussion.
+- **#004 ✅ MERGED into `main`** via PR #4 (64/64 tasks; 206 tests). ⭐ First usable surface. Paginated feed + optimistic like/save + StoriesRail/viewer + drift v2→v3. Remaining trio siblings **#005 Create Story · #006 Post Detail** reuse #007's media pipeline (do after #007).
 - **Done — #002 merged**: `ApiClient` + idempotency/auth/**single-flight refresh**/redacted-logging interceptors + `FailureMapper`; `CursorPage<T>` + 4-state `PaginatedListCubit`; **drift** cache base + reactive `.watch()`; `RealtimeClient` Socket.IO scaffold + fake; repository pattern + fakes (`User` slice). App runs DI `environment: 'fake'`; real impls annotated `env: ['real']` (auth real impls start landing in #003). 103 tests green.
 - **Resolved at #002**: cache engine = **drift**; realtime = **`socket_io_client`** (constitution v1.0.2); cursor envelope shipped as `CursorPage<T>`.
 - **To confirm at #003**: OAuth client ids/redirect schemes; OTP channel (email vs SMS) for forgot-password; avatar pick/crop package; token-refresh seam wiring (#002 `TokenStore`/`TokenRefresher`/`AuthEventsSink` fakes → real `flutter_secure_storage` impls); dev/prod API base URL + bundle ids (`app.we36` / `app.we36.dev` proposed).
@@ -48,7 +51,7 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 | 004 | Home Feed & Stories ⭐ | ✅ **Merged** | `004-home-feed-stories` (PR #4) |
 | 005 | Create Story & Tools | 🟡 **Next** (trio) | `005-create-story` |
 | 006 | Post Detail & Comments | 🟡 **Next** (trio) | `006-post-comments` |
-| 007 | Create Post (Compose & Upload) | 🟡 **Next** (trio, do first) | `007-create-post` |
+| 007 | Create Post (Compose & Upload) | 🔵 **In progress** (31/62, US1 MVP done) | `007-create-post` |
 | 008 | Reels | ⬜ Not started | `008-reels` |
 | 009 | Explore & Search | ⬜ Not started | `009-explore-search` |
 | 010 | Profile & Follow | ⬜ Not started | `010-profile-follow` |

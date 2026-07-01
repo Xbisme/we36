@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-07-01 (#001 + #002 + #003 + #004 merged into `main`. ⭐ First usable surface reached. Next: content-creation/engagement trio #005/#006/#007 — sequence #007 first for the shared media-upload pipeline.)
+> Last updated: 2026-07-01 (#001–#004 merged into `main`. **#007 Create Post 🔵 in progress** on branch `007-create-post` — 31/62 tasks, US1 MVP done. Resume at US2; see `specs/007-create-post/tasks.md`. #005/#006 follow #007 — they reuse its media pipeline.)
 
 ---
 
@@ -143,7 +143,7 @@ Create Story     Post Detail &    Create Post      Reels
 - **Scope**: post detail; comments list + **one-level replies** + mentions + quick-emoji + comment compose (optimistic add); like a comment; report/delete via action sheet. On tablet/iPad render the **master/detail two-pane** (media pane + info/comments pane) via the #001 primitive; phone keeps push.
 - **Out of scope**: nested reply threads beyond one level (deferred).
 
-### Spec #007: Create Post (Compose & Upload)  🟡 (do first in trio)
+### Spec #007: Create Post (Compose & Upload)  🔵 (in progress — 31/62, US1 MVP done)
 - **Depends on**: #004 ✅, #002 ✅ (upload).
 - **Design**: Screens 11–13 (pick → edit/filter → caption).
 - **Scope**: multi-select media pick (carousel), crop + filter + brightness/contrast/warmth, caption/hashtag/tag-people/location/music + "also share to Stories"/"turn off comments"; **client-side compress + resumable/chunked upload** with progress/cancel; idempotent create.
