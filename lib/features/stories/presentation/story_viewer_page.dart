@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +12,7 @@ import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 import 'package:we36/core/utils/relative_time_formatter.dart';
+import 'package:we36/features/stories/presentation/story_image_provider.dart';
 import 'package:we36/features/stories/presentation/story_viewer_cubit.dart';
 import 'package:we36/features/stories/presentation/story_viewer_state.dart';
 
@@ -174,13 +174,9 @@ class _StoryImage extends StatelessWidget {
   const _StoryImage({required this.url});
   final String url;
 
+  // Resolves `memory://` own-story refs (#005 U1) + network urls (#004).
   @override
-  Widget build(BuildContext context) => CachedNetworkImage(
-    imageUrl: url,
-    fit: BoxFit.cover,
-    placeholder: (_, _) => const ColoredBox(color: Colors.black),
-    errorWidget: (_, _, _) => const ColoredBox(color: Colors.black),
-  );
+  Widget build(BuildContext context) => storyImage(url);
 }
 
 class _ProtectionGradient extends StatelessWidget {

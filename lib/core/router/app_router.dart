@@ -30,6 +30,10 @@ import 'package:we36/features/messaging/presentation/messages_page.dart';
 import 'package:we36/features/placeholder_page.dart';
 import 'package:we36/features/profile/presentation/profile_page.dart';
 import 'package:we36/features/reels/presentation/reels_page.dart';
+import 'package:we36/features/stories/presentation/compose/story_compose_page.dart';
+import 'package:we36/features/stories/presentation/compose/story_pick_page.dart';
+import 'package:we36/features/stories/presentation/cubit/story_compose_cubit.dart';
+import 'package:we36/features/stories/presentation/cubit/story_gallery_cubit.dart';
 import 'package:we36/features/stories/presentation/stories_rail_cubit.dart';
 import 'package:we36/features/stories/presentation/story_viewer_page.dart';
 
@@ -134,6 +138,34 @@ class AppRouter {
             GoRoute(
               path: AppRoutes.composeCaption,
               builder: (_, _) => const CaptionPage(),
+            ),
+          ],
+        ),
+        // Create Story — compose flow (#005). One ShellRoute so pick→compose
+        // share the StoryGalleryCubit + StoryComposeCubit; nav-less, centered
+        // on tablet (FR-001/016).
+        ShellRoute(
+          builder: (context, state, child) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) {
+                  final cubit = getIt<StoryGalleryCubit>();
+                  unawaited(cubit.loadInitial());
+                  return cubit;
+                },
+              ),
+              BlocProvider(create: (_) => getIt<StoryComposeCubit>()),
+            ],
+            child: CenteredMobile(child: child),
+          ),
+          routes: [
+            GoRoute(
+              path: AppRoutes.storyComposePick,
+              builder: (_, _) => const StoryPickPage(),
+            ),
+            GoRoute(
+              path: AppRoutes.storyCompose,
+              builder: (_, _) => const StoryComposePage(),
             ),
           ],
         ),
