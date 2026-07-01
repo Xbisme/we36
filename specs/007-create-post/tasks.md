@@ -50,7 +50,7 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 - [X] T016 Define `CreatePostRepository` interface + `PublishEvent` in `lib/features/compose/domain/create_post_repository.dart`; add create-post request/response DTOs in `lib/features/compose/data/dtos/`.
 - [X] T017 Implement `ComposeDraftStore` (drift-backed, single row, JSON payload, `read/save/clear/watch`) in `lib/features/compose/data/compose_draft_store.dart` + DI.
 - [X] T018 [P] Add EN+VI ARB keys for compose (titles, actions, filter names, toggles, errors, keep/discard prompt) in `lib/l10n/arb/app_en.arb` + `app_vi.arb`; run `gen-l10n`.
-- [ ] T019 Wire the compose routes into `lib/core/router/app_router.dart` as nav-less full-screen pushed routes (bottom nav hidden) and add the contextual **Create** entry action (phone affordance + tablet sidebar-rail Create), all page-scoped `BlocProvider`s.
+- [X] T019 Wire the compose routes into `lib/core/router/app_router.dart` as nav-less full-screen pushed routes (bottom nav hidden) and add the contextual **Create** entry action (phone affordance + tablet sidebar-rail Create), all page-scoped `BlocProvider`s.
 
 **Checkpoint**: Pipeline services + models + drift v4 + routes exist with fakes and pass; no story UI yet.
 
@@ -66,7 +66,7 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 
 - [X] T020 [P] [US1] `bloc_test` `GalleryCubit` (permission → loaded → single select) in `test/features/compose/gallery_cubit_test.dart`.
 - [X] T021 [P] [US1] `bloc_test` `ComposeCubit` publish-success path (loaded → loadedUploading → success writes to Posts cache) in `test/features/compose/compose_cubit_publish_test.dart`.
-- [ ] T022 [P] [US1] Widget test the pick→caption→Share happy path + feed insertion in `test/features/compose/publish_flow_test.dart`.
+- [X] T022 [P] [US1] Widget test the pick→caption→Share happy path + feed insertion in `test/features/compose/publish_flow_test.dart`.
 
 ### Implementation for User Story 1
 
@@ -75,10 +75,10 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 - [X] T025 [US1] Implement `PublishPost` use case in `lib/features/compose/domain/usecases/publish_post.dart` (orchestrates upload-all → create-post → cache write; idempotency key from draft — no repo→repo, Constitution XI).
 - [X] T026 [US1] Implement `CreatePostRepository` real seam (`env:['real']`) in `lib/features/compose/data/create_post_repository_real.dart` + write created `Post` into #004 `PostsDao` at feed top (FR-020).
 - [X] T027 [US1] Implement `FakeCreatePostRepository` (`env:['fake']`, runs) in `lib/features/compose/data/create_post_repository_fake.dart` — synthesize `Post` from draft (author = fake `Me`) and write to `PostsDao`.
-- [ ] T028 [P] [US1] Build the `pick_page` (custom 4-col grid, square preview, "Recents", Next disabled until ≥1 selected) in `lib/features/compose/presentation/pages/pick_page.dart` + `gallery_grid`/`selection_badge` widgets — tokens + `AppIcon` + Semantics.
-- [ ] T029 [P] [US1] Build the `caption_page` (thumbnail + `AppTextField` caption with violet hashtags, 2,200 cap, Share) in `lib/features/compose/presentation/pages/caption_page.dart`.
-- [ ] T030 [US1] Build a minimal pass-through `edit_page` shell (Next only; crops to default 4:5) in `lib/features/compose/presentation/pages/edit_page.dart` — enriched in US2.
-- [ ] T031 [US1] Wire side effects via `BlocListener` (success Toast + haptic + pop flow + clear draft; failure Toast) — never in `BlocBuilder` (Constitution III/VI).
+- [X] T028 [P] [US1] Build the `pick_page` (custom 4-col grid, square preview, "Recents", Next disabled until ≥1 selected) in `lib/features/compose/presentation/pages/pick_page.dart` + `gallery_grid`/`selection_badge` widgets — tokens + `AppIcon` + Semantics.
+- [X] T029 [P] [US1] Build the `caption_page` (thumbnail + `AppTextField` caption with violet hashtags, 2,200 cap, Share) in `lib/features/compose/presentation/pages/caption_page.dart`.
+- [X] T030 [US1] Build a minimal pass-through `edit_page` shell (Next only; crops to default 4:5) in `lib/features/compose/presentation/pages/edit_page.dart` — enriched in US2.
+- [X] T031 [US1] Wire side effects via `BlocListener` (success Toast + haptic + pop flow + clear draft; failure Toast) — never in `BlocBuilder` (Constitution III/VI).
 - [ ] T032 [P] [US1] Golden tests for pick + caption pages (light + dark) in `test/features/compose/compose_goldens_test.dart`.
 
 **Checkpoint**: MVP — a single photo can be published and appears in the feed, fully in fake mode. STOP & validate (S1).
