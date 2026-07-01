@@ -1,0 +1,1 @@
+{"valid_import":true,"imports":[{"uri":"package:freezed_annotation/freezed_annotation.dart","transitive":false},{"uri":"package:we36/core/data/feed/post.dart","transitive":false},{"uri":"package:we36/core/domain/app_failure.dart","transitive":false},{"uri":"package:we36/features/compose/domain/models/compose_draft.dart","transitive":false}],"elements":[]}

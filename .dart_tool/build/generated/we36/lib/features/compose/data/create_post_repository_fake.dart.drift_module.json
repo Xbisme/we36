@@ -1,0 +1,12 @@
+{
+  "elements": {},
+  "imports": [
+    "package:injectable/injectable.dart",
+    "package:we36/core/data/cache/app_database.dart",
+    "package:we36/core/data/feed/post.dart",
+    "package:we36/core/domain/result.dart",
+    "package:we36/features/compose/domain/create_post_repository.dart",
+    "package:we36/features/compose/domain/models/media_ref.dart",
+    "package:we36/features/compose/domain/models/post_metadata.dart"
+  ]
+}

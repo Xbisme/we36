@@ -1,0 +1,11 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:injectable/injectable.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/core/services/photo_library_service.dart",
+    "package:we36/features/compose/domain/models/compose_draft.dart",
+    "package:we36/features/compose/presentation/cubit/gallery_state.dart"
+  ]
+}

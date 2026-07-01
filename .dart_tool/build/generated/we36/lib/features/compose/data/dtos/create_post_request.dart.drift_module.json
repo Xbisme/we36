@@ -1,0 +1,6 @@
+{
+  "elements": {},
+  "imports": [
+    "package:we36/features/compose/domain/models/post_metadata.dart"
+  ]
+}

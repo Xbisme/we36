@@ -1,0 +1,11 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/widgets.dart",
+    "package:injectable/injectable.dart",
+    "package:photo_manager/photo_manager.dart",
+    "package:photo_manager_image_provider/photo_manager_image_provider.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/core/domain/result.dart"
+  ]
+}

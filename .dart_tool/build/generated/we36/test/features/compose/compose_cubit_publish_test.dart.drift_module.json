@@ -1,0 +1,17 @@
+{
+  "elements": {},
+  "imports": [
+    "package:drift/native.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:we36/core/data/api/idempotency.dart",
+    "package:we36/core/data/cache/app_database.dart",
+    "package:we36/core/services/image_processing_service.dart",
+    "package:we36/core/services/media_upload_service_fake.dart",
+    "package:we36/core/services/photo_library_service_fake.dart",
+    "package:we36/features/compose/data/compose_draft_store.dart",
+    "package:we36/features/compose/data/create_post_repository_fake.dart",
+    "package:we36/features/compose/domain/usecases/publish_post.dart",
+    "package:we36/features/compose/presentation/cubit/compose_cubit.dart",
+    "package:we36/features/compose/presentation/cubit/compose_state.dart"
+  ]
+}

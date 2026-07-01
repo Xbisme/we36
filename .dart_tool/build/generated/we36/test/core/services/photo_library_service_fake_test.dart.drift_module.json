@@ -1,0 +1,9 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/widgets.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:we36/core/services/photo_library_service.dart",
+    "package:we36/core/services/photo_library_service_fake.dart"
+  ]
+}
