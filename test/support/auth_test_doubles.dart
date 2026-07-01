@@ -4,6 +4,7 @@ import 'package:drift/native.dart';
 import 'package:we36/core/data/auth/fake_auth_backend.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/me/fake_me_repository.dart';
+import 'package:we36/core/data/stories/own_story_store.dart';
 import 'package:we36/core/services/session/auth_events.dart';
 import 'package:we36/core/services/session/local_flags.dart';
 import 'package:we36/core/services/session/session_controller.dart';
@@ -60,7 +61,14 @@ class SessionHarness {
       );
     }
     me = FakeMeRepository(backend, tokenStore);
-    controller = SessionController(tokenStore, me, flags, db, authEvents);
+    controller = SessionController(
+      tokenStore,
+      me,
+      flags,
+      db,
+      OwnStoryStore(),
+      authEvents,
+    );
   }
 
   final FakeTokenStore tokenStore;

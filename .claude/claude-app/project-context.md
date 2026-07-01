@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-07-01 (#001–#004 merged into `main`. **#007 Create Post 🔵 IMPLEMENTED** on branch `007-create-post` — **61/62 tasks** (all US1–US5 + Polish; only T061 docs / merge remain), **269 tests pass** (~44 new compose tests + 6 compose goldens), `flutter analyze` clean for #007 code. Pending merge.)
+> Last updated: 2026-07-01 (#001–#004 + **#007 Create Post ✅ MERGED** into `main` (PR #5) — **62/62 tasks** (all US1–US5 + Polish), **269 tests pass** (~44 new compose tests + 6 compose goldens), `flutter analyze` clean for #007 code. Next: trio siblings **#005 Create Story · #006 Post Detail**.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,9 +29,9 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #007 Create Post (Compose & Upload) 🔵 IMPLEMENTED** on branch `007-create-post` — **61/62 tasks done** (all of US1–US5 + Polish; only **T061** docs + merge remain). Full SDD cycle done (specify→clarify→plan→tasks→analyze→implement). **269 tests pass** (~44 new compose tests + 6 compose goldens); `flutter analyze` clean for all #007 code. **Not merged yet.**
+- **Now**: **Spec #007 Create Post (Compose & Upload) ✅ MERGED** into `main` (PR #5) — **62/62 tasks done** (all of US1–US5 + Polish). Full SDD cycle done (specify→clarify→plan→tasks→analyze→implement). **269 tests pass** (~44 new compose tests + 6 compose goldens); `flutter analyze` clean for all #007 code.
   - **Built + verified**: media pipeline in `core/services/` (`ImageProcessingService` bake-on-isolate, `MediaUploadService` +fake, `PhotoLibraryService` +fake + `openSettings`), `CreatePostRepository` +fake (writes canonical #004 `Post`, idempotent), drift **v3→v4** (`ComposeDrafts` + migration test), `GalleryCubit`/`ComposeCubit`, `PublishPost` use case; **US2** edit (live `ColorFilter.matrix` preview + `FilterRow` + `AdjustSlider` + 4:5 crop via `crop_your_image`, baked to match preview); **US3** carousel (ordered multi-select cap-10 + per-item thumbnail strip + swipeable `PostCard` carousel); **US4** `UploadProgress` + cancel/retry (idempotent, no partial cache); **US5** caption options (tag/location/turn-off-comments; Stories+music hidden) + draft restore/keep-discard/drop-missing/logout-wipe. New deps `photo_manager`/`photo_manager_image_provider`/`crop_your_image`/`image`. Native perms wired.
-  - **▶ Remaining**: **T061** (add #007 changelog entry at merge) + open PR; then the trio siblings **#005 Create Story · #006 Post Detail** reuse this media pipeline.
+  - **▶ Next**: start the trio siblings **#005 Create Story** or **#006 Post Detail** — both reuse this media pipeline (create the branch + run `/speckit.specify`).
   - **⚠ Test gotcha (learned)**: widget tests with real `MemoryImage` thumbnails + go_router navigation **hang `pumpAndSettle`/time out**. Use fixed `pump(Duration)` (not settle), test logic-first via cubits, and inject a **synchronous `ImageProcessingService` stub** (no `compute` isolate) in widget tests. See `test/features/compose/publish_flow_test.dart`.
 - **Toolchain**: Flutter **3.44.4** / Dart **3.12.2** (bumped at #003 with user consent — was below the #001 `^3.11.5` floor). Goldens regenerated (sub-pixel toolchain diffs).
 - **#004 ✅ MERGED into `main`** via PR #4 (64/64 tasks; 206 tests). ⭐ First usable surface. Paginated feed + optimistic like/save + StoriesRail/viewer + drift v2→v3. Remaining trio siblings **#005 Create Story · #006 Post Detail** reuse #007's media pipeline (do after #007).
@@ -51,7 +51,7 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 | 004 | Home Feed & Stories ⭐ | ✅ **Merged** | `004-home-feed-stories` (PR #4) |
 | 005 | Create Story & Tools | 🟡 **Next** (trio) | `005-create-story` |
 | 006 | Post Detail & Comments | 🟡 **Next** (trio) | `006-post-comments` |
-| 007 | Create Post (Compose & Upload) | 🔵 **Implemented** (61/62; pending merge) | `007-create-post` |
+| 007 | Create Post (Compose & Upload) | ✅ **Merged** (62/62) | `007-create-post` (PR #5) |
 | 008 | Reels | ⬜ Not started | `008-reels` |
 | 009 | Explore & Search | ⬜ Not started | `009-explore-search` |
 | 010 | Profile & Follow | ⬜ Not started | `010-profile-follow` |

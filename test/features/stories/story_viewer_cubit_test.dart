@@ -2,6 +2,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/stories/fake_stories_repository.dart';
+import 'package:we36/core/data/stories/own_story_store.dart';
 import 'package:we36/core/data/stories/story.dart';
 import 'package:we36/features/stories/domain/usecases/story_usecases.dart';
 import 'package:we36/features/stories/presentation/story_viewer_cubit.dart';
@@ -47,7 +48,7 @@ void main() {
 
   setUp(() {
     db = AppDatabase.forTesting(NativeDatabase.memory());
-    repo = FakeStoriesRepository(db);
+    repo = FakeStoriesRepository(db, OwnStoryStore());
     cubit = _cubitFor(repo);
   });
   tearDown(() async {

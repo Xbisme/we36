@@ -29,6 +29,10 @@ abstract final class AppRoutes {
   static const String composeEdit = '/create/edit';
   static const String composeCaption = '/create/caption';
 
+  // Create Story — compose flow (#005), nav-less full-screen (Screen 9).
+  static const String storyComposePick = '/create/story/pick';
+  static const String storyCompose = '/create/story';
+
   // Dev harness (dev flavor only)
   static const String devGallery = '/dev/gallery';
   static const String devStates = '/dev/states';
