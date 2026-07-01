@@ -83,10 +83,19 @@ Uint8List? _bakeInIsolate(_BakeRequest req) {
 
   // 1. Crop (normalized rect → pixels), if a crop was set.
   if (req.cropWidth != null && req.cropHeight != null) {
-    final x = ((req.cropLeft ?? 0) * image.width).round().clamp(0, image.width - 1);
-    final y = ((req.cropTop ?? 0) * image.height).round().clamp(0, image.height - 1);
+    final x = ((req.cropLeft ?? 0) * image.width).round().clamp(
+      0,
+      image.width - 1,
+    );
+    final y = ((req.cropTop ?? 0) * image.height).round().clamp(
+      0,
+      image.height - 1,
+    );
     final w = (req.cropWidth! * image.width).round().clamp(1, image.width - x);
-    final h = (req.cropHeight! * image.height).round().clamp(1, image.height - y);
+    final h = (req.cropHeight! * image.height).round().clamp(
+      1,
+      image.height - y,
+    );
     image = img.copyCrop(image, x: x, y: y, width: w, height: h);
   }
 
@@ -113,7 +122,13 @@ void _applyMatrix(img.Image image, List<double> m) {
     p
       ..r = (m[0] * r + m[1] * g + m[2] * b + m[3] * a + m[4]).clamp(0, 255)
       ..g = (m[5] * r + m[6] * g + m[7] * b + m[8] * a + m[9]).clamp(0, 255)
-      ..b = (m[10] * r + m[11] * g + m[12] * b + m[13] * a + m[14]).clamp(0, 255)
-      ..a = (m[15] * r + m[16] * g + m[17] * b + m[18] * a + m[19]).clamp(0, 255);
+      ..b = (m[10] * r + m[11] * g + m[12] * b + m[13] * a + m[14]).clamp(
+        0,
+        255,
+      )
+      ..a = (m[15] * r + m[16] * g + m[17] * b + m[18] * a + m[19]).clamp(
+        0,
+        255,
+      );
   }
 }

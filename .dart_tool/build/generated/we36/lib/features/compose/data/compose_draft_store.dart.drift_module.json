@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:injectable/injectable.dart",
-    "package:we36/core/data/cache/app_database.dart",
-    "package:we36/core/data/cache/daos/compose_draft_dao.dart",
-    "package:we36/features/compose/domain/models/compose_draft.dart"
-  ]
-}

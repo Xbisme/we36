@@ -85,7 +85,9 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
   }
 
-  testWidgets('pick page: grid renders and selecting shows an order badge', (tester) async {
+  testWidgets('pick page: grid renders and selecting shows an order badge', (
+    tester,
+  ) async {
     await gallery.loadInitial();
     await tester.pumpWidget(host(const PickPage()));
     await settle(tester);
@@ -102,7 +104,9 @@ void main() {
     expect(gallery.state.selectedIds, hasLength(1));
   });
 
-  testWidgets('caption page: shows the thumbnail, caption field, and Share', (tester) async {
+  testWidgets('caption page: shows the thumbnail, caption field, and Share', (
+    tester,
+  ) async {
     await compose.startFromAssets(['fake-asset-0']);
     await tester.pumpWidget(host(const CaptionPage()));
     await settle(tester);

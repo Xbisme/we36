@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/core/router/adaptive_layout_mode.dart"
-  ]
-}

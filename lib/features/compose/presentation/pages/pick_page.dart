@@ -4,21 +4,93 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:we36/core/constants/app_routes.dart';
+import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_button.dart';
+import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
+import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/presentation/top_bar.dart';
+import 'package:we36/core/services/photo_library_service.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
+import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
+import 'package:we36/features/compose/domain/models/compose_draft.dart';
 import 'package:we36/features/compose/presentation/cubit/compose_cubit.dart';
 import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart';
 import 'package:we36/features/compose/presentation/cubit/gallery_state.dart';
 import 'package:we36/features/compose/presentation/widgets/gallery_grid.dart';
 
 /// Step 1 of the compose flow (Screen 11): pick one or more photos from a
-/// custom device gallery grid, then advance to the edit step.
-class PickPage extends StatelessWidget {
+/// custom device gallery grid, then advance to the edit step. On entry it
+/// offers to restore a persisted draft (FR-021); backing out with a live draft
+/// prompts keep/discard.
+class PickPage extends StatefulWidget {
   const PickPage({super.key});
+
+  @override
+  State<PickPage> createState() => _PickPageState();
+}
+
+class _PickPageState extends State<PickPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeRestore());
+  }
+
+  /// If a draft was persisted (app-kill or an abandoned session), ask to resume
+  /// it or discard. Restoring drops any items whose device asset is gone.
+  Future<void> _maybeRestore() async {
+    final compose = context.read<ComposeCubit>();
+    if (!await compose.hasStoredDraft()) return;
+    if (!mounted) return;
+    final resume = await showAppDialog(
+      context,
+      title: context.l10n.composeDiscardTitle,
+      body: context.l10n.composePermissionBody,
+      primaryLabel: context.l10n.composeDiscardKeep,
+      secondaryLabel: context.l10n.composeDiscardDiscard,
+      destructive: true,
+    );
+    if (!mounted) return;
+    if (resume) {
+      final library = context.read<GalleryCubit>().library;
+      final restored = await compose.tryRestore(
+        assetStillExists: (id) async =>
+            (await library.originBytes(
+              AssetRef(id: id, width: 0, height: 0),
+            )).valueOrNull !=
+            null,
+      );
+      if (restored && mounted) unawaited(context.push(AppRoutes.composeEdit));
+    } else {
+      await compose.discard();
+    }
+  }
+
+  /// Backing out of the flow entry — clear a live draft after confirmation.
+  Future<void> _onExit() async {
+    final compose = context.read<ComposeCubit>();
+    final draft = compose.state.draftOrNull;
+    if (draft == null || draft.items.isEmpty) {
+      if (mounted) context.pop();
+      return;
+    }
+    final keep = await showAppDialog(
+      context,
+      title: context.l10n.composeDiscardTitle,
+      body: context.l10n.composePermissionBody,
+      primaryLabel: context.l10n.composeDiscardKeep,
+      secondaryLabel: context.l10n.composeDiscardDiscard,
+      destructive: true,
+    );
+    if (!mounted) return;
+    if (!keep) {
+      await compose.discard();
+      if (mounted) context.pop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +103,7 @@ class PickPage extends StatelessWidget {
       backgroundColor: tokens.bgApp,
       appBar: TopBar(
         title: context.l10n.composeTitle,
-        onBack: () => context.pop(),
+        onBack: () => unawaited(_onExit()),
         actions: [
           AppButton(
             label: context.l10n.composeNext,
@@ -49,7 +121,9 @@ class PickPage extends StatelessWidget {
         ],
       ),
       body: switch (state) {
-        GalleryError() => _PermissionState(),
+        GalleryError() => _PermissionState(
+          onOpenSettings: () => unawaited(gallery.library.openSettings()),
+        ),
         GalleryInitial() || GalleryLoading() => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -58,9 +132,34 @@ class PickPage extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-              child: Text(
-                context.l10n.composeRecents,
-                style: AppTypography.label.copyWith(color: tokens.textSecondary),
+              child: Row(
+                children: [
+                  Text(
+                    context.l10n.composeRecents,
+                    style: AppTypography.label.copyWith(
+                      color: tokens.textSecondary,
+                    ),
+                  ),
+                  const Spacer(),
+                  if (selected.length > 1)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.sm,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: tokens.accentSoft,
+                        borderRadius: BorderRadius.circular(AppRadius.full),
+                      ),
+                      child: Text(
+                        context.l10n.composeCarousel,
+                        style: AppTypography.caption.copyWith(
+                          color: tokens.accent,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             Expanded(
@@ -68,7 +167,16 @@ class PickPage extends StatelessWidget {
                 assets: state.assets,
                 selectedIds: selected,
                 library: gallery.library,
-                onToggle: gallery.toggleSelect,
+                onToggle: (id) {
+                  if (!gallery.toggleSelect(id)) {
+                    getIt<ToastService>().show(
+                      context,
+                      message: context.l10n.composeMaxReached(
+                        kCarouselMaxItems,
+                      ),
+                    );
+                  }
+                },
                 onEndReached: gallery.loadMore,
               ),
             ),
@@ -80,6 +188,10 @@ class PickPage extends StatelessWidget {
 }
 
 class _PermissionState extends StatelessWidget {
+  const _PermissionState({required this.onOpenSettings});
+
+  final VoidCallback onOpenSettings;
+
   @override
   Widget build(BuildContext context) {
     final tokens = context.tokens;
@@ -101,6 +213,11 @@ class _PermissionState extends StatelessWidget {
               context.l10n.composePermissionBody,
               style: AppTypography.body16.copyWith(color: tokens.textSecondary),
               textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20),
+            AppButton(
+              label: context.l10n.composeOpenSettings,
+              onPressed: onOpenSettings,
             ),
           ],
         ),

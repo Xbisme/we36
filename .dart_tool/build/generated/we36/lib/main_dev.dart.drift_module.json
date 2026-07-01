@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:we36/bootstrap.dart",
-    "package:we36/core/config/app_config.dart"
-  ]
-}

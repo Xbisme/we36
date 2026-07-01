@@ -1,6 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:we36/core/constants/app_routes.dart"
-  ]
-}

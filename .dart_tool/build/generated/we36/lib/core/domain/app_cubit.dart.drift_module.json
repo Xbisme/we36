@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_bloc/flutter_bloc.dart",
-    "package:we36/core/domain/app_failure.dart",
-    "package:we36/core/domain/app_state.dart",
-    "package:we36/core/domain/result.dart"
-  ]
-}

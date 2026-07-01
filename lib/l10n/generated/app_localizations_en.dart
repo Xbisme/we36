@@ -465,4 +465,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get composeDiscardDiscard => 'Discard';
+
+  @override
+  String get composeCrop => 'Crop';
+
+  @override
+  String get composeCropDone => 'Done';
+
+  @override
+  String get composeFilters => 'Filters';
+
+  @override
+  String get composeAdjust => 'Adjust';
 }

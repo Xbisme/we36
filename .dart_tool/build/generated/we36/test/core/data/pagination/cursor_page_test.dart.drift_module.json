@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/core/data/pagination/cursor_page.dart"
-  ]
-}

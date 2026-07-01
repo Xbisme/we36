@@ -52,7 +52,11 @@ class FakeMediaUploadService implements MediaUploadService {
     if (cancelToken?.isCancelled ?? false) return;
     // Deterministic media id derived from the idempotency key (dedupe on retry).
     yield UploadDoneEvent(
-      MediaRef(id: 'fake-media-$idempotencyKey-$itemIndex', width: 1080, height: 1350),
+      MediaRef(
+        id: 'fake-media-$idempotencyKey-$itemIndex',
+        width: 1080,
+        height: 1350,
+      ),
     );
     _counter++;
   }

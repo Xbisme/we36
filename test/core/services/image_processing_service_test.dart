@@ -16,22 +16,25 @@ Uint8List _solid(int w, int h, int r, int g, int b) {
 void main() {
   const service = ImageProcessingService();
 
-  test('original filter: resizes down to the bounded width, keeps color', () async {
-    final source = _solid(2000, 2500, 200, 100, 50); // wider than target
-    final result = await service.bake(
-      source: source,
-      edit: MediaEditState.initial(),
-      targetWidth: 800,
-    );
+  test(
+    'original filter: resizes down to the bounded width, keeps color',
+    () async {
+      final source = _solid(2000, 2500, 200, 100, 50); // wider than target
+      final result = await service.bake(
+        source: source,
+        edit: MediaEditState.initial(),
+        targetWidth: 800,
+      );
 
-    expect(result, isA<Ok<Uint8List>>());
-    final baked = img.decodeImage(result.valueOrNull!)!;
-    expect(baked.width, 800); // resized down
-    final px = baked.getPixel(10, 10);
-    // Roughly the source color (JPEG is lossy — allow tolerance).
-    expect((px.r - 200).abs() < 25, isTrue);
-    expect((px.g - 100).abs() < 25, isTrue);
-  });
+      expect(result, isA<Ok<Uint8List>>());
+      final baked = img.decodeImage(result.valueOrNull!)!;
+      expect(baked.width, 800); // resized down
+      final px = baked.getPixel(10, 10);
+      // Roughly the source color (JPEG is lossy — allow tolerance).
+      expect((px.r - 200).abs() < 25, isTrue);
+      expect((px.g - 100).abs() < 25, isTrue);
+    },
+  );
 
   test('mono filter bakes to grayscale (r≈g≈b)', () async {
     final source = _solid(200, 250, 200, 100, 50);

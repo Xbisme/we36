@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter/material.dart",
-    "package:go_router/go_router.dart",
-    "package:we36/core/theme/app_theme.dart",
-    "package:we36/l10n/generated/app_localizations.dart"
-  ]
-}

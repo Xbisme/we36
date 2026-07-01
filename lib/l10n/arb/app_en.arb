@@ -325,5 +325,13 @@
   "composeDiscardKeep": "Keep editing",
   "@composeDiscardKeep": { "description": "Keep the in-progress draft" },
   "composeDiscardDiscard": "Discard",
-  "@composeDiscardDiscard": { "description": "Discard the in-progress draft" }
+  "@composeDiscardDiscard": { "description": "Discard the in-progress draft" },
+  "composeCrop": "Crop",
+  "@composeCrop": { "description": "Edit-step: enter crop mode" },
+  "composeCropDone": "Done",
+  "@composeCropDone": { "description": "Confirm the crop rectangle" },
+  "composeFilters": "Filters",
+  "@composeFilters": { "description": "Edit-step tab: preset filters" },
+  "composeAdjust": "Adjust",
+  "@composeAdjust": { "description": "Edit-step tab: brightness/contrast/warmth" }
 }

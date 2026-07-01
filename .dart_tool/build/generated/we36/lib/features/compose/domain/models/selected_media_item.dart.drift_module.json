@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:freezed_annotation/freezed_annotation.dart",
-    "package:we36/features/compose/domain/models/media_edit_state.dart"
-  ]
-}

@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/core/utils/count_formatter.dart",
-    "package:we36/core/utils/relative_time_formatter.dart"
-  ]
-}

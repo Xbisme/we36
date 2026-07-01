@@ -41,7 +41,10 @@ class PublishPost {
       }
 
       // 2. Bake edits + compress on a background isolate.
-      final bakedResult = await _processor.bake(source: source, edit: item.edit);
+      final bakedResult = await _processor.bake(
+        source: source,
+        edit: item.edit,
+      );
       final baked = bakedResult.valueOrNull;
       if (baked == null) {
         yield PublishFailed(bakedResult.failureOrNull!);

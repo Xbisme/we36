@@ -67,7 +67,10 @@ class FakeCreatePostRepository implements CreatePostRepository {
       caption: caption.isEmpty ? null : caption,
       location: metadata.location == null
           ? null
-          : Place(id: metadata.location!.id ?? 'loc', name: metadata.location!.label),
+          : Place(
+              id: metadata.location!.id ?? 'loc',
+              name: metadata.location!.label,
+            ),
     );
 
     await _db.postsDao.upsert(post);

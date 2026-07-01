@@ -10,8 +10,7 @@ enum NavDestination {
   explore(AppRoutes.explore, AppIcons.search),
   reels(AppRoutes.reels, AppIcons.reels),
   messages(AppRoutes.messages, AppIcons.messages),
-  profile(AppRoutes.profile, AppIcons.profile)
-  ;
+  profile(AppRoutes.profile, AppIcons.profile);
 
   const NavDestination(this.route, this.icon);
 

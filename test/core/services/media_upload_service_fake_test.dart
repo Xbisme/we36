@@ -51,13 +51,20 @@ void main() {
     expect(service.completedCount, 0);
   });
 
-  test('same idempotency key yields the same media id (dedupe on retry)', () async {
-    final service = FakeMediaUploadService()..stepDelay = Duration.zero;
-    final first = await service.upload(bytes: bytes, idempotencyKey: 'same').toList();
-    final second = await service.upload(bytes: bytes, idempotencyKey: 'same').toList();
+  test(
+    'same idempotency key yields the same media id (dedupe on retry)',
+    () async {
+      final service = FakeMediaUploadService()..stepDelay = Duration.zero;
+      final first = await service
+          .upload(bytes: bytes, idempotencyKey: 'same')
+          .toList();
+      final second = await service
+          .upload(bytes: bytes, idempotencyKey: 'same')
+          .toList();
 
-    final id1 = (first.last as UploadDoneEvent).media.id;
-    final id2 = (second.last as UploadDoneEvent).media.id;
-    expect(id1, id2);
-  });
+      final id1 = (first.last as UploadDoneEvent).media.id;
+      final id2 = (second.last as UploadDoneEvent).media.id;
+      expect(id1, id2);
+    },
+  );
 }

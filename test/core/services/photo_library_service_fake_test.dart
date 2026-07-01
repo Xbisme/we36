@@ -12,7 +12,10 @@ void main() {
       PhotoPermission.granted,
     );
 
-    final first = (await service.loadAssets(page: 0, pageSize: 50)).valueOrNull!;
+    final first = (await service.loadAssets(
+      page: 0,
+      pageSize: 50,
+    )).valueOrNull!;
     expect(first.assets, hasLength(50));
     expect(first.hasMore, isTrue);
 

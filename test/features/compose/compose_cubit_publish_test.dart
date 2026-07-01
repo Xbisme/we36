@@ -35,40 +35,49 @@ void main() {
     await db.close();
   });
 
-  test('publish: loaded → uploading(progress) → published; post cached at top', () async {
-    cubit = build();
-    await cubit.startFromAssets(['fake-asset-0']);
-    cubit.setCaption('hello #we36');
+  test(
+    'publish: loaded → uploading(progress) → published; post cached at top',
+    () async {
+      cubit = build();
+      await cubit.startFromAssets(['fake-asset-0']);
+      cubit.setCaption('hello #we36');
 
-    final states = <ComposeState>[];
-    final sub = cubit.stream.listen(states.add);
-    await cubit.publish();
-    await sub.cancel();
+      final states = <ComposeState>[];
+      final sub = cubit.stream.listen(states.add);
+      await cubit.publish();
+      await sub.cancel();
 
-    expect(states.whereType<ComposeLoadedUploading>(), isNotEmpty);
-    expect(cubit.state, isA<ComposePublished>());
-    // The created post projection carries the parsed hashtags.
-    expect((cubit.state as ComposePublished).post.hashtags, contains('we36'));
+      expect(states.whereType<ComposeLoadedUploading>(), isNotEmpty);
+      expect(cubit.state, isA<ComposePublished>());
+      // The created post projection carries the parsed hashtags.
+      expect((cubit.state as ComposePublished).post.hashtags, contains('we36'));
 
-    // The created post is in the canonical feed cache with its caption.
-    final feed = await db.postsDao.watchHomeFeed().first;
-    expect(feed, hasLength(1));
-    expect(feed.first.caption, 'hello #we36');
-  });
+      // The created post is in the canonical feed cache with its caption.
+      final feed = await db.postsDao.watchHomeFeed().first;
+      expect(feed, hasLength(1));
+      expect(feed.first.caption, 'hello #we36');
+    },
+  );
 
-  test('retry after a failed upload creates exactly one post (idempotent)', () async {
-    cubit = build();
-    await cubit.startFromAssets(['fake-asset-0']);
+  test(
+    'retry after a failed upload creates exactly one post (idempotent)',
+    () async {
+      cubit = build();
+      await cubit.startFromAssets(['fake-asset-0']);
 
-    uploader.failAfterFraction = 0.5; // first attempt fails mid-upload
-    await cubit.publish();
-    expect(cubit.state, isA<ComposeError>());
+      uploader.failAfterFraction = 0.5; // first attempt fails mid-upload
+      await cubit.publish();
+      expect(cubit.state, isA<ComposeError>());
 
-    uploader.failAfterFraction = null; // retry succeeds
-    await cubit.retry();
-    expect(cubit.state, isA<ComposePublished>());
+      uploader.failAfterFraction = null; // retry succeeds
+      await cubit.retry();
+      expect(cubit.state, isA<ComposePublished>());
 
-    final feed = await db.postsDao.watchHomeFeed().first;
-    expect(feed, hasLength(1)); // exactly one — no duplicate (FR-018 / SC-003)
-  });
+      final feed = await db.postsDao.watchHomeFeed().first;
+      expect(
+        feed,
+        hasLength(1),
+      ); // exactly one — no duplicate (FR-018 / SC-003)
+    },
+  );
 }

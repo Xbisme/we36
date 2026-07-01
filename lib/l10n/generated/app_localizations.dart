@@ -973,6 +973,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Discard'**
   String get composeDiscardDiscard;
+
+  /// Edit-step: enter crop mode
+  ///
+  /// In en, this message translates to:
+  /// **'Crop'**
+  String get composeCrop;
+
+  /// Confirm the crop rectangle
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get composeCropDone;
+
+  /// Edit-step tab: preset filters
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get composeFilters;
+
+  /// Edit-step tab: brightness/contrast/warmth
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust'**
+  String get composeAdjust;
 }
 
 class _AppLocalizationsDelegate

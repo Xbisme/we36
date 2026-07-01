@@ -158,5 +158,9 @@
   "composeMaxReached": "Bạn có thể thêm tối đa {max} ảnh.",
   "composeDiscardTitle": "Bỏ bài viết?",
   "composeDiscardKeep": "Tiếp tục sửa",
-  "composeDiscardDiscard": "Bỏ"
+  "composeDiscardDiscard": "Bỏ",
+  "composeCrop": "Cắt",
+  "composeCropDone": "Xong",
+  "composeFilters": "Bộ lọc",
+  "composeAdjust": "Chỉnh"
 }

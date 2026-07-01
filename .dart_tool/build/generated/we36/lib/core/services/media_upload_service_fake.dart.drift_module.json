@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:injectable/injectable.dart",
-    "package:we36/core/domain/app_failure.dart",
-    "package:we36/core/services/media_upload_service.dart",
-    "package:we36/features/compose/domain/models/media_ref.dart"
-  ]
-}

@@ -40,6 +40,7 @@ abstract class ComposeDraft with _$ComposeDraft {
   bool get canAddMore => items.length < kCarouselMaxItems;
 
   /// The edit state for the item at [index] (or a pristine one).
-  MediaEditState editAt(int index) =>
-      (index >= 0 && index < items.length) ? items[index].edit : const MediaEditState();
+  MediaEditState editAt(int index) => (index >= 0 && index < items.length)
+      ? items[index].edit
+      : const MediaEditState();
 }

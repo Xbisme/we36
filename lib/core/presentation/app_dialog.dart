@@ -53,6 +53,8 @@ Future<bool> showAppDialog(
                       child: AppButton(
                         label: secondaryLabel,
                         kind: AppButtonKind.secondary,
+                        size: AppButtonSize.sm,
+                        fullWidth: true,
                         onPressed: () => Navigator.of(dialogContext).pop(false),
                       ),
                     ),
@@ -61,6 +63,8 @@ Future<bool> showAppDialog(
                       child: AppButton(
                         label: primaryLabel,
                         danger: destructive,
+                        size: AppButtonSize.sm,
+                        fullWidth: true,
                         onPressed: () => Navigator.of(dialogContext).pop(true),
                       ),
                     ),

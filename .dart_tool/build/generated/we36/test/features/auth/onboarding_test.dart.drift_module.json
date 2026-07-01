@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:bloc_test/bloc_test.dart",
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/features/auth/presentation/onboarding/onboarding_cubit.dart",
-    "asset:we36/test/support/auth_test_doubles.dart"
-  ]
-}

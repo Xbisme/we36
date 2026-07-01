@@ -26,7 +26,12 @@ class FakePhotoLibraryService implements PhotoLibraryService {
   Uint8List? _solid;
 
   Uint8List get _bytes => _solid ??= Uint8List.fromList(
-    img.encodeJpg(img.fill(img.Image(width: 64, height: 80), color: img.ColorRgb8(200, 100, 60))),
+    img.encodeJpg(
+      img.fill(
+        img.Image(width: 64, height: 80),
+        color: img.ColorRgb8(200, 100, 60),
+      ),
+    ),
   );
 
   @override
@@ -64,4 +69,10 @@ class FakePhotoLibraryService implements PhotoLibraryService {
     }
     return Result.ok(_bytes);
   }
+
+  /// Records that the settings deep-link was requested (for CTA tests).
+  int openSettingsCalls = 0;
+
+  @override
+  Future<void> openSettings() async => openSettingsCalls++;
 }

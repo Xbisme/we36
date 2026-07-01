@@ -81,3 +81,24 @@ dart run bloc_tools:bloc lint .  # zero violations
 Key tests: `gallery_cubit_test`, `compose_cubit_test` (publish success / cancel / fail+retry /
 idempotency / rollback), pick/edit/caption widget + goldens (light+dark), `image_processing` bake
 fidelity, `migration_test` (v3→v4), log-redaction.
+
+## Validation results (2026-07-01, fake mode)
+
+| Scenario | Automated coverage | Result |
+|---|---|---|
+| S1 Publish single photo | `publish_flow_test`, `compose_cubit_publish_test` | ✅ PASS |
+| S2 Per-photo edit | `edit_page_test`, `compose_cubit_edit_test`, `image_processing_service_test` | ✅ PASS |
+| S3 Carousel + per-photo edit + cap 10 | `gallery_multiselect_test`, `carousel_edit_test`, `carousel_feed_render_test` | ✅ PASS |
+| S4 Resilient upload (progress/cancel/retry/idempotency) | `compose_cancel_test`, `compose_retry_idempotency_test` | ✅ PASS |
+| S5 Options + draft persistence | `compose_draft_store_test`, `compose_draft_test`, `caption` widget | ✅ PASS |
+| S6 Permissions & edge cases + log redaction | `compose_edge_cases_test`, `log_redaction_test` | ✅ PASS |
+
+- Compose goldens (pick/caption/edit, light+dark) generated and green on the current toolchain.
+- **On-device gallery-permission check** deferred to the #015 release gate (same as #001's on-device
+  a11y/rotation) — CI/local run uses `FakePhotoLibraryService` (no device).
+- **Gate note**: `flutter analyze` is clean for all #007 code (2 pre-existing `sort_pub_dependencies`
+  infos on the comment-grouped `pubspec.yaml` are unchanged by this spec). The pre-existing repo
+  goldens (#001/#003/#004: tokens, sign-in, PostCard, SidebarRail) mismatch on the upgraded
+  Flutter 3.44.4 engine and need a one-time repo-wide `--update-goldens` refresh (tracked separately).
+  `bloc_tools:bloc lint` is not runnable here (`bloc_lint 0.4.1` ships no CLI and `bloc_tools` is not a
+  dependency); bloc conventions are enforced by construction + `flutter analyze`.

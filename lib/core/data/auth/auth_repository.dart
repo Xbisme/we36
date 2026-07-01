@@ -6,8 +6,7 @@ import 'package:we36/core/domain/result.dart';
 /// segment of `POST /v1/auth/oauth/{provider}`.
 enum OAuthProvider {
   google,
-  apple
-  ;
+  apple;
 
   String get wire => name;
 }

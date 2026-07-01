@@ -47,11 +47,41 @@ class ComposeCubit extends Cubit<ComposeState> {
     await _persist(draft);
   }
 
+  /// Whether a non-empty draft is persisted (drives the restore prompt on entry).
+  Future<bool> hasStoredDraft() async {
+    final draft = await _draftStore.read();
+    return draft != null && draft.items.isNotEmpty;
+  }
+
   /// Restore a persisted draft if one exists (returns true if restored).
-  Future<bool> tryRestore() async {
+  ///
+  /// [assetStillExists] lets the caller drop items whose device asset is gone
+  /// since the draft was saved (Constitution IX); orders are re-packed. If every
+  /// item is gone the draft is cleared and restore fails.
+  Future<bool> tryRestore({
+    Future<bool> Function(String assetId)? assetStillExists,
+  }) async {
     final draft = await _draftStore.read();
     if (draft == null || draft.items.isEmpty) return false;
-    emit(ComposeState.loaded(draft: draft));
+
+    var items = draft.items;
+    if (assetStillExists != null) {
+      final kept = <SelectedMediaItem>[];
+      for (final item in draft.items) {
+        if (await assetStillExists(item.assetId)) kept.add(item);
+      }
+      items = [
+        for (var i = 0; i < kept.length; i++) kept[i].copyWith(order: i),
+      ];
+    }
+
+    if (items.isEmpty) {
+      await _draftStore.clear();
+      return false;
+    }
+    final restored = draft.copyWith(items: items);
+    emit(ComposeState.loaded(draft: restored));
+    if (items.length != draft.items.length) await _persist(restored);
     return true;
   }
 
@@ -67,18 +97,21 @@ class ComposeCubit extends Cubit<ComposeState> {
     emit(ComposeState.loaded(draft: d, activeItemIndex: index));
   }
 
-  void setCaption(String caption) => _mutate((d) => d.copyWith(caption: caption));
+  void setCaption(String caption) =>
+      _mutate((d) => d.copyWith(caption: caption));
 
   void setFilter(FilterPreset filter) =>
       _mutateActive((e) => e.copyWith(filter: filter));
 
-  void setBrightness(double v) => _mutateActive((e) => e.copyWith(brightness: v));
+  void setBrightness(double v) =>
+      _mutateActive((e) => e.copyWith(brightness: v));
 
   void setContrast(double v) => _mutateActive((e) => e.copyWith(contrast: v));
 
   void setWarmth(double v) => _mutateActive((e) => e.copyWith(warmth: v));
 
-  void setCrop(CropRect rect) => _mutateActive((e) => e.copyWith(cropRect: rect));
+  void setCrop(CropRect rect) =>
+      _mutateActive((e) => e.copyWith(cropRect: rect));
 
   void toggleComments({required bool disabled}) => _mutate(
     (d) => d.copyWith(
@@ -103,14 +136,24 @@ class ComposeCubit extends Cubit<ComposeState> {
 
     await for (final event in _publish(draft, cancelToken: _cancelToken)) {
       if (isClosed) return;
+      // Cancelled mid-flight: stop consuming so we don't re-enter uploading
+      // after cancel() has already returned to `loaded` (FR-018a).
+      if (_cancelToken?.isCancelled ?? false) return;
       switch (event) {
         case PublishProgress(:final overallFraction):
-          emit(ComposeState.loadedUploading(draft: draft, progress: overallFraction));
+          emit(
+            ComposeState.loadedUploading(
+              draft: draft,
+              progress: overallFraction,
+            ),
+          );
         case PublishSucceeded(:final post):
           await _draftStore.clear();
           if (!isClosed) emit(ComposeState.published(post));
         case PublishFailed(:final failure):
-          if (!isClosed) emit(ComposeState.error(failure: failure, draft: draft));
+          if (!isClosed) {
+            emit(ComposeState.error(failure: failure, draft: draft));
+          }
           return;
       }
     }

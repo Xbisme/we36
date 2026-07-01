@@ -54,6 +54,10 @@ abstract interface class PhotoLibraryService {
 
   /// Full-resolution bytes of a selected asset (for edit/upload).
   Future<Result<Uint8List>> originBytes(AssetRef ref);
+
+  /// Open the OS settings page so the user can grant library access after a
+  /// denial (contextual permission recovery — Constitution I/VII).
+  Future<void> openSettings();
 }
 
 /// Real platform impl over `photo_manager`. Registered for ALL environments —
@@ -114,8 +118,20 @@ class RealPhotoLibraryService implements PhotoLibraryService {
   Future<Result<Uint8List>> originBytes(AssetRef ref) async {
     final entity = _entities[ref.id];
     if (entity == null) return const Result.err(AppFailure.notFound());
+    // Return a high-res **JPEG** (not the raw original): iOS assets are often
+    // HEIC, which the pure-Dart `image` package (crop + bake) can't decode.
+    // photo_manager transcodes to JPEG here; 2048px is ample for a 1080 upload.
+    final jpeg = await entity.thumbnailDataWithSize(
+      const ThumbnailSize(2048, 2048),
+      quality: 95, // ThumbnailFormat.jpeg is the default → decodable everywhere
+    );
+    if (jpeg != null) return Result.ok(jpeg);
+    // Fallback: original bytes (already JPEG on most Android assets).
     final bytes = await entity.originBytes;
     if (bytes == null) return const Result.err(AppFailure.unsupportedMedia());
     return Result.ok(bytes);
   }
+
+  @override
+  Future<void> openSettings() => PhotoManager.openSetting();
 }

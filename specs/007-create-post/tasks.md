@@ -79,7 +79,7 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 - [X] T029 [P] [US1] Build the `caption_page` (thumbnail + `AppTextField` caption with violet hashtags, 2,200 cap, Share) in `lib/features/compose/presentation/pages/caption_page.dart`.
 - [X] T030 [US1] Build a minimal pass-through `edit_page` shell (Next only; crops to default 4:5) in `lib/features/compose/presentation/pages/edit_page.dart` — enriched in US2.
 - [X] T031 [US1] Wire side effects via `BlocListener` (success Toast + haptic + pop flow + clear draft; failure Toast) — never in `BlocBuilder` (Constitution III/VI).
-- [ ] T032 [P] [US1] Golden tests for pick + caption pages (light + dark) in `test/features/compose/compose_goldens_test.dart`.
+- [X] T032 [P] [US1] Golden tests for pick + caption pages (light + dark) in `test/features/compose/compose_goldens_test.dart`.
 
 **Checkpoint**: MVP — a single photo can be published and appears in the feed, fully in fake mode. STOP & validate (S1).
 
@@ -93,16 +93,16 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T033 [P] [US2] `bloc_test` `ComposeCubit` edit mutations (filter/adjust/crop update the active item's `MediaEditState`) in `test/features/compose/compose_cubit_edit_test.dart`.
-- [ ] T034 [P] [US2] Widget test the edit step (filter select updates preview; sliders update; crop passes through) in `test/features/compose/edit_page_test.dart`.
+- [X] T033 [P] [US2] `bloc_test` `ComposeCubit` edit mutations (filter/adjust/crop update the active item's `MediaEditState`) in `test/features/compose/compose_cubit_edit_test.dart`.
+- [X] T034 [P] [US2] Widget test the edit step (filter select updates preview; sliders update; crop passes through) in `test/features/compose/edit_page_test.dart`.
 
 ### Implementation for User Story 2
 
-- [ ] T035 [US2] Enrich `edit_page` with the live preview using `ColorFilter.matrix` from `filter_matrices.dart` + crop stage (`crop_your_image` v2 `Crop`/`CropController`, `aspectRatio: 4/5`, custom overlay) in `lib/features/compose/presentation/pages/edit_page.dart`.
-- [ ] T036 [P] [US2] Build `filter_row` (Original/Warm/Lux/Mono/Fade, active = rose border) in `lib/features/compose/presentation/widgets/filter_row.dart`.
-- [ ] T037 [P] [US2] Build `adjust_slider` (Brightness/Contrast/Warmth, gradient fill + white knob) in `lib/features/compose/presentation/widgets/adjust_slider.dart`.
-- [ ] T038 [US2] Add edit-mutation methods to `ComposeCubit` (setFilter/setAdjust/setCrop on the active item) and feed the baked result via `ImageProcessingService` at publish (T010).
-- [ ] T039 [P] [US2] Golden test the edit page (light + dark) added to `test/features/compose/compose_goldens_test.dart`.
+- [X] T035 [US2] Enrich `edit_page` with the live preview using `ColorFilter.matrix` from `filter_matrices.dart` + crop stage (`crop_your_image` v2 `Crop`/`CropController`, `aspectRatio: 4/5`, custom overlay) in `lib/features/compose/presentation/pages/edit_page.dart`.
+- [X] T036 [P] [US2] Build `filter_row` (Original/Warm/Lux/Mono/Fade, active = rose border) in `lib/features/compose/presentation/widgets/filter_row.dart`.
+- [X] T037 [P] [US2] Build `adjust_slider` (Brightness/Contrast/Warmth, gradient fill + white knob) in `lib/features/compose/presentation/widgets/adjust_slider.dart`.
+- [X] T038 [US2] Add edit-mutation methods to `ComposeCubit` (setFilter/setAdjust/setCrop on the active item) and feed the baked result via `ImageProcessingService` at publish (T010).
+- [X] T039 [P] [US2] Golden test the edit page (light + dark) added to `test/features/compose/compose_goldens_test.dart`.
 
 **Checkpoint**: Edits preview live and are baked into the published post; US1 still works.
 
@@ -116,15 +116,15 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T040 [P] [US3] `bloc_test` `GalleryCubit` multi-select + order + cap-10 block in `test/features/compose/gallery_multiselect_test.dart`.
-- [ ] T041 [P] [US3] Widget test carousel edit navigation (move between items, each keeps its own edit) in `test/features/compose/carousel_edit_test.dart`.
+- [X] T040 [P] [US3] `bloc_test` `GalleryCubit` multi-select + order + cap-10 block in `test/features/compose/gallery_multiselect_test.dart`.
+- [X] T041 [P] [US3] Widget test carousel edit navigation (move between items, each keeps its own edit) in `test/features/compose/carousel_edit_test.dart`.
 
 ### Implementation for User Story 3
 
-- [ ] T042 [US3] Extend `GalleryCubit` for multi-select: ordered `selectedIds`, "Carousel" indicator, enforce cap 10 with a clear message (FR-006) in `lib/features/compose/presentation/cubit/gallery_cubit.dart`.
-- [ ] T043 [US3] Add per-item navigation to `edit_page` (thumbnail strip / pager to switch the active item) in `lib/features/compose/presentation/pages/edit_page.dart`.
-- [ ] T044 [US3] Ensure `PublishPost` uploads items sequentially with aggregated progress (bounded memory, Constitution II) in `lib/features/compose/domain/usecases/publish_post.dart`.
-- [ ] T045 [P] [US3] Verify the feed `PostCard` renders a multi-image carousel in order (reuse #004 `PostCard`; add carousel support if absent) in `lib/core/presentation/` + `test/features/compose/carousel_feed_render_test.dart`.
+- [X] T042 [US3] Extend `GalleryCubit` for multi-select: ordered `selectedIds`, "Carousel" indicator, enforce cap 10 with a clear message (FR-006) in `lib/features/compose/presentation/cubit/gallery_cubit.dart`.
+- [X] T043 [US3] Add per-item navigation to `edit_page` (thumbnail strip / pager to switch the active item) in `lib/features/compose/presentation/pages/edit_page.dart`.
+- [X] T044 [US3] Ensure `PublishPost` uploads items sequentially with aggregated progress (bounded memory, Constitution II) in `lib/features/compose/domain/usecases/publish_post.dart`.
+- [X] T045 [P] [US3] Verify the feed `PostCard` renders a multi-image carousel in order (reuse #004 `PostCard`; add carousel support if absent) in `lib/core/presentation/` + `test/features/compose/carousel_feed_render_test.dart`.
 
 **Checkpoint**: Carousels publish and render in order; US1/US2 still work.
 
@@ -138,14 +138,14 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 
 ### Tests for User Story 4 ⚠️
 
-- [ ] T046 [P] [US4] `bloc_test` `ComposeCubit` cancel path (loadedUploading → cancel → loaded with selection/edits intact) in `test/features/compose/compose_cancel_test.dart`.
-- [ ] T047 [P] [US4] `bloc_test` failure + retry + **idempotency** (same key → exactly one post; no partial cache on failure) in `test/features/compose/compose_retry_idempotency_test.dart`.
+- [X] T046 [P] [US4] `bloc_test` `ComposeCubit` cancel path (loadedUploading → cancel → loaded with selection/edits intact) in `test/features/compose/compose_cancel_test.dart`.
+- [X] T047 [P] [US4] `bloc_test` failure + retry + **idempotency** (same key → exactly one post; no partial cache on failure) in `test/features/compose/compose_retry_idempotency_test.dart`.
 
 ### Implementation for User Story 4
 
-- [ ] T048 [US4] Build `upload_progress` widget (determinate bar + cancel affordance) in `lib/features/compose/presentation/widgets/upload_progress.dart`; render on `loadedUploading`.
-- [ ] T049 [US4] Wire cancel/retry in `ComposeCubit`: cancel aborts via `CancelToken` (no post, returns to `loaded`); failure → `error(draft kept)`; retry re-runs `publish()` with the same idempotency key (FR-017/018a/019) in `lib/features/compose/presentation/cubit/compose_cubit.dart`.
-- [ ] T050 [US4] Ensure `PublishPost` writes to the Posts cache ONLY on full success (no partial post) and is safe to re-run with the same key in `lib/features/compose/domain/usecases/publish_post.dart`.
+- [X] T048 [US4] Build `upload_progress` widget (determinate bar + cancel affordance) in `lib/features/compose/presentation/widgets/upload_progress.dart`; render on `loadedUploading`.
+- [X] T049 [US4] Wire cancel/retry in `ComposeCubit`: cancel aborts via `CancelToken` (no post, returns to `loaded`); failure → `error(draft kept)`; retry re-runs `publish()` with the same idempotency key (FR-017/018a/019) in `lib/features/compose/presentation/cubit/compose_cubit.dart`.
+- [X] T050 [US4] Ensure `PublishPost` writes to the Posts cache ONLY on full success (no partial post) and is safe to re-run with the same key in `lib/features/compose/domain/usecases/publish_post.dart`.
 
 **Checkpoint**: Upload is observable, cancelable, retryable, and duplicate-free; earlier stories still work.
 
@@ -159,14 +159,14 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 
 ### Tests for User Story 5 ⚠️
 
-- [ ] T051 [P] [US5] Unit test `ComposeDraftStore` round-trip + `clearUserScoped` wipe in `test/features/compose/compose_draft_store_test.dart`.
-- [ ] T052 [P] [US5] `bloc_test` draft restore + keep/discard + metadata carried to created post in `test/features/compose/compose_draft_test.dart`.
+- [X] T051 [P] [US5] Unit test `ComposeDraftStore` round-trip + `clearUserScoped` wipe in `test/features/compose/compose_draft_store_test.dart`.
+- [X] T052 [P] [US5] `bloc_test` draft restore + keep/discard + metadata carried to created post in `test/features/compose/compose_draft_test.dart`.
 
 ### Implementation for User Story 5
 
-- [ ] T053 [US5] Add caption-step option rows to `caption_page`: Tag people (simple picker), Add location (lightweight), and the **Turn off commenting** toggle; **hide** "Also share to Stories" + "Add music" (FR-014, Q5) in `lib/features/compose/presentation/pages/caption_page.dart`.
-- [ ] T054 [US5] Persist the draft on every mutation via `ComposeDraftStore.save`; on compose entry, read an existing draft and show a keep/discard `AppDialog` (restore or clear) in `lib/features/compose/presentation/cubit/compose_cubit.dart`.
-- [ ] T055 [US5] On back-out mid-flow, trigger the keep/discard prompt via `BlocListener`; clear the draft on publish success or explicit discard; drop assets no longer present on restore (Constitution IX) in `lib/features/compose/presentation/pages/`.
+- [X] T053 [US5] Add caption-step option rows to `caption_page`: Tag people (simple picker), Add location (lightweight), and the **Turn off commenting** toggle; **hide** "Also share to Stories" + "Add music" (FR-014, Q5) in `lib/features/compose/presentation/pages/caption_page.dart`.
+- [X] T054 [US5] Persist the draft on every mutation via `ComposeDraftStore.save`; on compose entry, read an existing draft and show a keep/discard `AppDialog` (restore or clear) in `lib/features/compose/presentation/cubit/compose_cubit.dart`.
+- [X] T055 [US5] On back-out mid-flow, trigger the keep/discard prompt via `BlocListener`; clear the draft on publish success or explicit discard; drop assets no longer present on restore (Constitution IX) in `lib/features/compose/presentation/pages/`.
 
 **Checkpoint**: All five stories work independently; drafts survive app-kill.
 
@@ -174,13 +174,13 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 
 ## Phase 8: Polish & Cross-Cutting Concerns
 
-- [ ] T056 [P] Log-redaction test — assert no media paths/bytes/PII in logs across the flow (FR-024 / SC-008) in `test/features/compose/log_redaction_test.dart`.
-- [ ] T057 [P] Edge-case widget tests: permission denied → settings CTA; undecodable file rejected; offline publish → deferred/retry (FR-007 + Edge Cases); **assert the compose routes are auth-gated** (unauthenticated → redirected by the #003 guard, FR-003) in `test/features/compose/compose_edge_cases_test.dart`.
-- [ ] T058 [P] Accessibility + text-scaling + light/dark pass on all three pages (Semantics labels, Reduce-Motion static transitions) — assertions in the widget tests.
-- [ ] T062 [P] Adaptive/tablet widget test — compose pages reflow by width (phone `<700` vs tablet `≥700` via the #001 adaptive shell, no forked screens, FR-022) in `test/features/compose/compose_adaptive_test.dart`.
-- [ ] T059 Run the full Constitution gate: `dart format .` · `flutter analyze` (0 warn) · `flutter test` (all, incl. goldens + v3→v4 migration) · `dart run bloc_tools:bloc lint .` (0).
-- [ ] T060 Execute [quickstart.md](quickstart.md) scenarios S1–S6 (fake mode; on-device gallery-permission check) and mark results.
-- [ ] T061 [P] Update `.claude/claude-app/changelog.md` + `project-context.md` + `sdd-roadmap.md` for #007 completion (do at merge time).
+- [X] T056 [P] Log-redaction test — assert no media paths/bytes/PII in logs across the flow (FR-024 / SC-008) in `test/features/compose/log_redaction_test.dart`.
+- [X] T057 [P] Edge-case widget tests: permission denied → settings CTA; undecodable file rejected; offline publish → deferred/retry (FR-007 + Edge Cases); **assert the compose routes are auth-gated** (unauthenticated → redirected by the #003 guard, FR-003) in `test/features/compose/compose_edge_cases_test.dart`.
+- [X] T058 [P] Accessibility + text-scaling + light/dark pass on all three pages (Semantics labels, Reduce-Motion static transitions) — assertions in the widget tests.
+- [X] T062 [P] Adaptive/tablet widget test — compose pages reflow by width (phone `<700` vs tablet `≥700` via the #001 adaptive shell, no forked screens, FR-022) in `test/features/compose/compose_adaptive_test.dart`.
+- [X] T059 Run the full Constitution gate: `dart format .` · `flutter analyze` (0 warn) · `flutter test` (all, incl. goldens + v3→v4 migration) · `dart run bloc_tools:bloc lint .` (0).
+- [X] T060 Execute [quickstart.md](quickstart.md) scenarios S1–S6 (fake mode; on-device gallery-permission check) and mark results.
+- [X] T061 [P] Update `.claude/claude-app/changelog.md` + `project-context.md` + `sdd-roadmap.md` for #007 completion (do at merge time).
 
 ---
 

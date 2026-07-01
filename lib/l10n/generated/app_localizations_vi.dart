@@ -463,4 +463,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get composeDiscardDiscard => 'Bỏ';
+
+  @override
+  String get composeCrop => 'Cắt';
+
+  @override
+  String get composeCropDone => 'Xong';
+
+  @override
+  String get composeFilters => 'Bộ lọc';
+
+  @override
+  String get composeAdjust => 'Chỉnh';
 }

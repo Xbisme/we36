@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter/widgets.dart",
-    "package:lucide_icons_flutter/lucide_icons.dart",
-    "package:we36/core/theme/app_colors_x.dart"
-  ]
-}

@@ -1,1 +1,0 @@
-{"valid_import":true,"imports":[{"uri":"package:drift/drift.dart","transitive":false},{"uri":"package:we36/core/data/cache/app_database.dart","transitive":false},{"uri":"package:we36/core/data/cache/tables/compose_draft_table.dart","transitive":false}],"elements":[{"kind":"databaseAccessor","name":"ComposeDraftDao","dart_name":"ComposeDraftDao"}]}

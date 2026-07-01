@@ -19,7 +19,8 @@ class CreatePostRequest {
     'mediaIds': mediaIds,
     'idempotencyKey': idempotencyKey,
     if (caption.isNotEmpty) 'caption': caption,
-    if (metadata.taggedUserIds.isNotEmpty) 'taggedUserIds': metadata.taggedUserIds,
+    if (metadata.taggedUserIds.isNotEmpty)
+      'taggedUserIds': metadata.taggedUserIds,
     if (metadata.location != null)
       'location': {
         'label': metadata.location!.label,
