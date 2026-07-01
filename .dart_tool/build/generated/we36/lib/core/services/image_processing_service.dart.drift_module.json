@@ -1,0 +1,12 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/foundation.dart",
+    "package:image/image.dart",
+    "package:injectable/injectable.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/core/domain/result.dart",
+    "package:we36/features/compose/domain/models/filter_matrices.dart",
+    "package:we36/features/compose/domain/models/media_edit_state.dart"
+  ]
+}

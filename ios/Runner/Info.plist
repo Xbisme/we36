@@ -29,6 +29,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>we36</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We36 needs access to your photos so you can pick images to share in a new post.</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

@@ -1,0 +1,20 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:flutter_test/flutter_test.dart",
+    "package:we36/core/data/feed/post.dart",
+    "package:we36/core/di/injection.dart",
+    "package:we36/core/presentation/max_width_box.dart",
+    "package:we36/core/presentation/post_card.dart",
+    "package:we36/core/presentation/toast.dart",
+    "package:we36/core/theme/app_dimens.dart",
+    "package:we36/features/feed/presentation/feed_cubit.dart",
+    "package:we36/features/feed/presentation/feed_state.dart",
+    "package:we36/features/feed/presentation/home_page.dart",
+    "package:we36/features/stories/presentation/stories_rail_cubit.dart",
+    "asset:we36/test/helpers/feed_test_doubles.dart",
+    "asset:we36/test/helpers/pump_app.dart"
+  ]
+}

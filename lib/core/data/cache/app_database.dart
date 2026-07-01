@@ -2,10 +2,12 @@ import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:we36/core/data/cache/daos/compose_draft_dao.dart';
 import 'package:we36/core/data/cache/daos/me_profile_dao.dart';
 import 'package:we36/core/data/cache/daos/posts_dao.dart';
 import 'package:we36/core/data/cache/daos/story_seen_dao.dart';
 import 'package:we36/core/data/cache/daos/users_dao.dart';
+import 'package:we36/core/data/cache/tables/compose_draft_table.dart';
 import 'package:we36/core/data/cache/tables/me_profile_table.dart';
 import 'package:we36/core/data/cache/tables/posts_table.dart';
 import 'package:we36/core/data/cache/tables/story_seen_table.dart';
@@ -20,8 +22,8 @@ part 'app_database.g.dart';
 /// tables are added by their features.
 @lazySingleton
 @DriftDatabase(
-  tables: [Users, MeProfiles, Posts, StorySeenSegments],
-  daos: [UsersDao, MeProfileDao, PostsDao, StorySeenDao],
+  tables: [Users, MeProfiles, Posts, StorySeenSegments, ComposeDrafts],
+  daos: [UsersDao, MeProfileDao, PostsDao, StorySeenDao, ComposeDraftDao],
 )
 class AppDatabase extends _$AppDatabase {
   /// Production: opens the on-device SQLite file.
@@ -32,7 +34,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -48,6 +50,10 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(posts);
         await m.createTable(storySeenSegments);
       }
+      if (from < 4) {
+        // v4 (#007): add the single persisted compose draft.
+        await m.createTable(composeDrafts);
+      }
     },
   );
 
@@ -59,5 +65,6 @@ class AppDatabase extends _$AppDatabase {
     await delete(users).go();
     await delete(posts).go();
     await delete(storySeenSegments).go();
+    await delete(composeDrafts).go();
   }
 }

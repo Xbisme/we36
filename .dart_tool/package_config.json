@@ -20,6 +20,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "archive",
+      "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/archive-4.0.9",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "args",
       "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/args-2.7.0",
       "packageUri": "lib/",
@@ -174,6 +180,12 @@
       "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/coverage-1.15.1",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "crop_your_image",
+      "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/crop_your_image-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "crypto",
@@ -440,6 +452,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "image",
+      "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/image-4.9.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "injectable",
       "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/injectable-3.0.0",
       "packageUri": "lib/",
@@ -632,6 +650,24 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "petitparser",
+      "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/petitparser-7.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.8"
+    },
+    {
+      "name": "photo_manager",
+      "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/photo_manager-3.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
+      "name": "photo_manager_image_provider",
+      "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/photo_manager_image_provider-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/platform-3.1.6",
       "packageUri": "lib/",
@@ -648,6 +684,12 @@
       "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/pool-1.5.2",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "posix",
+      "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/posix-6.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "provider",
@@ -1002,6 +1044,12 @@
       "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/xdg_directories-1.1.0",
       "packageUri": "lib/",
       "languageVersion": "3.3"
+    },
+    {
+      "name": "xml",
+      "rootUri": "file:///Users/ase/.pub-cache/hosted/pub.dev/xml-7.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.11"
     },
     {
       "name": "xxh3",

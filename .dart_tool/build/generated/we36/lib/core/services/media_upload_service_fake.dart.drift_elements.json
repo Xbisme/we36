@@ -1,0 +1,1 @@
+{"valid_import":true,"imports":[{"uri":"package:injectable/injectable.dart","transitive":false},{"uri":"package:we36/core/domain/app_failure.dart","transitive":false},{"uri":"package:we36/core/services/media_upload_service.dart","transitive":false},{"uri":"package:we36/features/compose/domain/models/media_ref.dart","transitive":false}],"elements":[]}

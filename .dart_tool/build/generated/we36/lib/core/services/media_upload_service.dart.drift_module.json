@@ -1,0 +1,11 @@
+{
+  "elements": {},
+  "imports": [
+    "package:dio/dio.dart",
+    "package:injectable/injectable.dart",
+    "package:we36/core/constants/api_endpoints.dart",
+    "package:we36/core/data/api/api_client.dart",
+    "package:we36/core/domain/app_failure.dart",
+    "package:we36/features/compose/domain/models/media_ref.dart"
+  ]
+}

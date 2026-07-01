@@ -1,0 +1,13 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_bloc/flutter_bloc.dart",
+    "package:we36/core/data/feed/post.dart",
+    "package:we36/core/data/stories/story.dart",
+    "package:we36/core/domain/app_cubit.dart",
+    "package:we36/core/domain/result.dart",
+    "package:we36/features/feed/presentation/feed_cubit.dart",
+    "package:we36/features/feed/presentation/feed_state.dart",
+    "package:we36/features/stories/presentation/stories_rail_cubit.dart"
+  ]
+}

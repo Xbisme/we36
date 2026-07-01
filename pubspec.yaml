@@ -54,6 +54,12 @@ dependencies:
   sign_in_with_apple: ^8.1.0
   shared_preferences: ^2.5.5 # non-secret local flags (onboardingSeen, profileCompleted)
 
+  # Create Post — compose & upload (#007)
+  photo_manager: ^3.9.0 # custom in-app gallery grid (device albums/assets, no OS picker UI)
+  photo_manager_image_provider: ^2.2.0 # bounded-resolution asset thumbnails for the grid
+  crop_your_image: ^2.0.0 # pure-Flutter 4:5 crop with custom chrome
+  image: ^4.9.1 # pure-Dart bake color-matrix + resize/encode on isolate (also upload compress)
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

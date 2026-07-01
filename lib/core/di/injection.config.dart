@@ -40,6 +40,9 @@ import 'package:we36/core/data/user/user_repository.dart' as _i247;
 import 'package:we36/core/data/user/user_repository_impl.dart' as _i514;
 import 'package:we36/core/presentation/toast.dart' as _i857;
 import 'package:we36/core/router/app_router.dart' as _i485;
+import 'package:we36/core/services/image_processing_service.dart' as _i12;
+import 'package:we36/core/services/media_upload_service.dart' as _i547;
+import 'package:we36/core/services/media_upload_service_fake.dart' as _i727;
 import 'package:we36/core/services/session/auth_events.dart' as _i242;
 import 'package:we36/core/services/session/local_flags.dart' as _i299;
 import 'package:we36/core/services/session/real_token_refresher.dart' as _i266;
@@ -99,6 +102,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i222.IdempotencyKeys>(() => _i222.IdempotencyKeys());
     gh.lazySingleton<_i270.AppDatabase>(() => _i270.AppDatabase());
     gh.lazySingleton<_i857.ToastService>(() => _i857.ToastService());
+    gh.lazySingleton<_i12.ImageProcessingService>(
+      () => const _i12.ImageProcessingService(),
+    );
     gh.lazySingleton<_i433.AppLogger>(() => const _i433.AppLogger());
     gh.lazySingleton<_i500.RealtimeClient>(
       () => _i500.SocketIoRealtimeClient(
@@ -124,6 +130,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i163.AuthRepository>(
       () => _i548.FakeAuthRepository(gh<_i489.FakeAuthBackend>()),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i547.MediaUploadService>(
+      () => _i727.FakeMediaUploadService(),
       registerFor: {_fake},
     );
     gh.lazySingleton<_i112.StoriesRepository>(
@@ -192,6 +202,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i351.LoadStoryReels>(),
         gh<_i351.WatchSeenSegments>(),
       ),
+    );
+    gh.lazySingleton<_i547.MediaUploadService>(
+      () => _i547.RealMediaUploadService(gh<_i784.ApiClient>()),
+      registerFor: {_real},
     );
     gh.lazySingleton<_i1043.AuthRemoteDataSource>(
       () => _i1043.AuthRemoteDataSource(gh<_i784.ApiClient>()),

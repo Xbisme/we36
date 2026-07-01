@@ -7,7 +7,7 @@
       },
       "declaration": {
         "source_uri": "package:we36/core/data/cache/app_database.dart",
-        "offset": 1226,
+        "offset": 1396,
         "name": "AppDatabase"
       },
       "references": [
@@ -26,6 +26,10 @@
         {
           "library_uri": "package:we36/core/data/cache/tables/story_seen_table.dart",
           "name": "story_seen_segments"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/tables/compose_draft_table.dart",
+          "name": "compose_drafts"
         }
       ],
       "type": "database",
@@ -45,12 +49,16 @@
         {
           "library_uri": "package:we36/core/data/cache/tables/story_seen_table.dart",
           "name": "story_seen_segments"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/tables/compose_draft_table.dart",
+          "name": "compose_drafts"
         }
       ],
       "views": [],
       "includes": [],
       "queries": [],
-      "schema_version": 3,
+      "schema_version": 4,
       "daos": [
         {
           "library_uri": "package:we36/core/data/cache/daos/users_dao.dart",
@@ -67,6 +75,10 @@
         {
           "library_uri": "package:we36/core/data/cache/daos/story_seen_dao.dart",
           "name": "StorySeenDao"
+        },
+        {
+          "library_uri": "package:we36/core/data/cache/daos/compose_draft_dao.dart",
+          "name": "ComposeDraftDao"
         }
       ],
       "has_constructor_arg": false
@@ -77,10 +89,12 @@
     "package:drift_flutter/drift_flutter.dart",
     "package:flutter/foundation.dart",
     "package:injectable/injectable.dart",
+    "package:we36/core/data/cache/daos/compose_draft_dao.dart",
     "package:we36/core/data/cache/daos/me_profile_dao.dart",
     "package:we36/core/data/cache/daos/posts_dao.dart",
     "package:we36/core/data/cache/daos/story_seen_dao.dart",
     "package:we36/core/data/cache/daos/users_dao.dart",
+    "package:we36/core/data/cache/tables/compose_draft_table.dart",
     "package:we36/core/data/cache/tables/me_profile_table.dart",
     "package:we36/core/data/cache/tables/posts_table.dart",
     "package:we36/core/data/cache/tables/story_seen_table.dart",

@@ -1,0 +1,10 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_test/flutter_test.dart",
+    "package:image/image.dart",
+    "package:we36/core/domain/result.dart",
+    "package:we36/core/services/image_processing_service.dart",
+    "package:we36/features/compose/domain/models/media_edit_state.dart"
+  ]
+}

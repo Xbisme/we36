@@ -1,0 +1,23 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'selected_media_item.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_SelectedMediaItem _$SelectedMediaItemFromJson(Map<String, dynamic> json) =>
+    _SelectedMediaItem(
+      assetId: json['assetId'] as String,
+      order: (json['order'] as num).toInt(),
+      edit: json['edit'] == null
+          ? const MediaEditState()
+          : MediaEditState.fromJson(json['edit'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$SelectedMediaItemToJson(_SelectedMediaItem instance) =>
+    <String, dynamic>{
+      'assetId': instance.assetId,
+      'order': instance.order,
+      'edit': instance.edit.toJson(),
+    };

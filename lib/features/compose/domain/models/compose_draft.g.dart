@@ -1,0 +1,35 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'compose_draft.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_ComposeDraft _$ComposeDraftFromJson(Map<String, dynamic> json) =>
+    _ComposeDraft(
+      id: json['id'] as String,
+      idempotencyKey: json['idempotencyKey'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      items:
+          (json['items'] as List<dynamic>?)
+              ?.map(
+                (e) => SelectedMediaItem.fromJson(e as Map<String, dynamic>),
+              )
+              .toList() ??
+          const <SelectedMediaItem>[],
+      caption: json['caption'] as String? ?? '',
+      metadata: json['metadata'] == null
+          ? const PostMetadata()
+          : PostMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ComposeDraftToJson(_ComposeDraft instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'idempotencyKey': instance.idempotencyKey,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'items': instance.items.map((e) => e.toJson()).toList(),
+      'caption': instance.caption,
+      'metadata': instance.metadata.toJson(),
+    };

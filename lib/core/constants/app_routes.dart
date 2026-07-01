@@ -24,6 +24,11 @@ abstract final class AppRoutes {
   static const String create = '/create';
   static const String search = '/search';
 
+  // Create Post — compose flow (#007), nav-less full-screen (Screens 11–13).
+  static const String composePick = '/create/pick';
+  static const String composeEdit = '/create/edit';
+  static const String composeCaption = '/create/caption';
+
   // Dev harness (dev flavor only)
   static const String devGallery = '/dev/gallery';
   static const String devStates = '/dev/states';
