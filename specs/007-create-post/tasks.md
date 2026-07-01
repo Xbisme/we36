@@ -64,17 +64,17 @@ description: "Task list for Create Post (Compose & Upload) — Spec #007"
 
 ### Tests for User Story 1 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T020 [P] [US1] `bloc_test` `GalleryCubit` (permission → loaded → single select) in `test/features/compose/gallery_cubit_test.dart`.
-- [ ] T021 [P] [US1] `bloc_test` `ComposeCubit` publish-success path (loaded → loadedUploading → success writes to Posts cache) in `test/features/compose/compose_cubit_publish_test.dart`.
+- [X] T020 [P] [US1] `bloc_test` `GalleryCubit` (permission → loaded → single select) in `test/features/compose/gallery_cubit_test.dart`.
+- [X] T021 [P] [US1] `bloc_test` `ComposeCubit` publish-success path (loaded → loadedUploading → success writes to Posts cache) in `test/features/compose/compose_cubit_publish_test.dart`.
 - [ ] T022 [P] [US1] Widget test the pick→caption→Share happy path + feed insertion in `test/features/compose/publish_flow_test.dart`.
 
 ### Implementation for User Story 1
 
-- [ ] T023 [US1] Implement `GalleryCubit` (+ freezed `GalleryState` 4-state: loading/loaded/loadedPaginating/error) in `lib/features/compose/presentation/cubit/gallery_cubit.dart` — permission, paged Recents, single-select.
-- [ ] T024 [US1] Implement `ComposeCubit` (+ freezed `ComposeState`: loaded/loadedUploading/error) in `lib/features/compose/presentation/cubit/compose_cubit.dart` — build draft from selection, `publish()` driving `PublishPost`.
-- [ ] T025 [US1] Implement `PublishPost` use case in `lib/features/compose/domain/usecases/publish_post.dart` (orchestrates upload-all → create-post → cache write; idempotency key from draft — no repo→repo, Constitution XI).
-- [ ] T026 [US1] Implement `CreatePostRepository` real seam (`env:['real']`) in `lib/features/compose/data/create_post_repository_real.dart` + write created `Post` into #004 `PostsDao` at feed top (FR-020).
-- [ ] T027 [US1] Implement `FakeCreatePostRepository` (`env:['fake']`, runs) in `lib/features/compose/data/create_post_repository_fake.dart` — synthesize `Post` from draft (author = fake `Me`) and write to `PostsDao`.
+- [X] T023 [US1] Implement `GalleryCubit` (+ freezed `GalleryState` 4-state: loading/loaded/loadedPaginating/error) in `lib/features/compose/presentation/cubit/gallery_cubit.dart` — permission, paged Recents, single-select.
+- [X] T024 [US1] Implement `ComposeCubit` (+ freezed `ComposeState`: loaded/loadedUploading/error) in `lib/features/compose/presentation/cubit/compose_cubit.dart` — build draft from selection, `publish()` driving `PublishPost`.
+- [X] T025 [US1] Implement `PublishPost` use case in `lib/features/compose/domain/usecases/publish_post.dart` (orchestrates upload-all → create-post → cache write; idempotency key from draft — no repo→repo, Constitution XI).
+- [X] T026 [US1] Implement `CreatePostRepository` real seam (`env:['real']`) in `lib/features/compose/data/create_post_repository_real.dart` + write created `Post` into #004 `PostsDao` at feed top (FR-020).
+- [X] T027 [US1] Implement `FakeCreatePostRepository` (`env:['fake']`, runs) in `lib/features/compose/data/create_post_repository_fake.dart` — synthesize `Post` from draft (author = fake `Me`) and write to `PostsDao`.
 - [ ] T028 [P] [US1] Build the `pick_page` (custom 4-col grid, square preview, "Recents", Next disabled until ≥1 selected) in `lib/features/compose/presentation/pages/pick_page.dart` + `gallery_grid`/`selection_badge` widgets — tokens + `AppIcon` + Semantics.
 - [ ] T029 [P] [US1] Build the `caption_page` (thumbnail + `AppTextField` caption with violet hashtags, 2,200 cap, Share) in `lib/features/compose/presentation/pages/caption_page.dart`.
 - [ ] T030 [US1] Build a minimal pass-through `edit_page` shell (Next only; crops to default 4:5) in `lib/features/compose/presentation/pages/edit_page.dart` — enriched in US2.

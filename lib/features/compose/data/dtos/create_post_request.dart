@@ -7,14 +7,17 @@ class CreatePostRequest {
     required this.mediaIds,
     required this.caption,
     required this.metadata,
+    required this.idempotencyKey,
   });
 
   final List<String> mediaIds;
   final String caption;
   final PostMetadata metadata;
+  final String idempotencyKey;
 
   Map<String, dynamic> toJson() => {
     'mediaIds': mediaIds,
+    'idempotencyKey': idempotencyKey,
     if (caption.isNotEmpty) 'caption': caption,
     if (metadata.taggedUserIds.isNotEmpty) 'taggedUserIds': metadata.taggedUserIds,
     if (metadata.location != null)
