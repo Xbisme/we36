@@ -475,4 +475,37 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get composeAdjust => 'Chỉnh';
+
+  @override
+  String get storyShare => 'Chia sẻ';
+
+  @override
+  String get storyYourStory => 'Tin của bạn';
+
+  @override
+  String get storyCloseFriends => 'Bạn thân';
+
+  @override
+  String get storyAddText => 'Thêm chữ';
+
+  @override
+  String get storyStickers => 'Nhãn dán';
+
+  @override
+  String get storyUploading => 'Đang chia sẻ…';
+
+  @override
+  String get storyPublished => 'Đã thêm vào tin của bạn!';
+
+  @override
+  String get storyUploadFailed => 'Không chia sẻ được tin.';
+
+  @override
+  String get storyDiscardTitle => 'Bỏ tin?';
+
+  @override
+  String get storyDiscardKeep => 'Tiếp tục sửa';
+
+  @override
+  String get storyDiscardDiscard => 'Bỏ';
 }

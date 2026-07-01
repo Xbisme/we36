@@ -2,15 +2,19 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/stories/fake_stories_repository.dart';
+import 'package:we36/core/data/stories/own_story_store.dart';
 import 'package:we36/features/stories/domain/usecases/story_usecases.dart';
+import 'package:we36/features/stories/domain/usecases/watch_own_story_changes.dart';
 import 'package:we36/features/stories/presentation/stories_rail_cubit.dart';
 
 /// US4 — stories rail: "Your story" leads, unseen reels (gradient ring) ordered
 /// before seen, ring recomputes live as segments are marked seen.
-StoriesRailCubit _cubitFor(FakeStoriesRepository repo) => StoriesRailCubit(
-  LoadStoryReels(repo),
-  WatchSeenSegments(repo),
-);
+StoriesRailCubit _cubitFor(FakeStoriesRepository repo, OwnStoryStore store) =>
+    StoriesRailCubit(
+      LoadStoryReels(repo),
+      WatchSeenSegments(repo),
+      WatchOwnStoryChanges(store),
+    );
 
 Future<void> _settle() =>
     Future<void>.delayed(const Duration(milliseconds: 10));
@@ -22,8 +26,9 @@ void main() {
 
   setUp(() {
     db = AppDatabase.forTesting(NativeDatabase.memory());
-    repo = FakeStoriesRepository(db);
-    cubit = _cubitFor(repo);
+    final store = OwnStoryStore();
+    repo = FakeStoriesRepository(db, store);
+    cubit = _cubitFor(repo, store);
   });
   tearDown(() async {
     await cubit.close();

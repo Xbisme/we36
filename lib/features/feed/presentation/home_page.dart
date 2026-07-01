@@ -211,6 +211,11 @@ class _StoriesRailSlot extends StatelessWidget {
               items: items,
               onTap: (i) {
                 final reel = reels[i];
+                // "Your story" with no active segments → open the composer (#005).
+                if (reel.isYou && reel.segments.isEmpty) {
+                  unawaited(context.push(AppRoutes.storyComposePick));
+                  return;
+                }
                 if (reel.segments.isEmpty) return; // inert (no active story)
                 final openable = reels
                     .where((r) => r.segments.isNotEmpty)

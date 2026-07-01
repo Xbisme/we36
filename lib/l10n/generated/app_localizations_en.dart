@@ -477,4 +477,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get composeAdjust => 'Adjust';
+
+  @override
+  String get storyShare => 'Share';
+
+  @override
+  String get storyYourStory => 'Your story';
+
+  @override
+  String get storyCloseFriends => 'Close friends';
+
+  @override
+  String get storyAddText => 'Add text';
+
+  @override
+  String get storyStickers => 'Stickers';
+
+  @override
+  String get storyUploading => 'Sharing…';
+
+  @override
+  String get storyPublished => 'Added to your story!';
+
+  @override
+  String get storyUploadFailed => 'Couldn\'t share your story.';
+
+  @override
+  String get storyDiscardTitle => 'Discard story?';
+
+  @override
+  String get storyDiscardKeep => 'Keep editing';
+
+  @override
+  String get storyDiscardDiscard => 'Discard';
 }

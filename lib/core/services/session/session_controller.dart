@@ -6,6 +6,7 @@ import 'package:we36/core/data/auth/dto/session.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/me/me_profile.dart';
 import 'package:we36/core/data/me/me_repository.dart';
+import 'package:we36/core/data/stories/own_story_store.dart';
 import 'package:we36/core/services/session/auth_events.dart';
 import 'package:we36/core/services/session/local_flags.dart';
 import 'package:we36/core/services/session/token_store.dart';
@@ -26,6 +27,7 @@ class SessionController extends ChangeNotifier {
     this._me,
     this._flags,
     this._db,
+    this._ownStories,
     AuthEventsSink authEvents,
   ) {
     _unauthSub = authEvents.unauthenticated.listen((_) => _forceSignOut());
@@ -35,6 +37,7 @@ class SessionController extends ChangeNotifier {
   final MeRepository _me;
   final LocalFlags _flags;
   final AppDatabase _db;
+  final OwnStoryStore _ownStories;
   late final StreamSubscription<void> _unauthSub;
 
   AuthStatus _status = AuthStatus.unknown;
@@ -131,6 +134,7 @@ class SessionController extends ChangeNotifier {
     notifyListeners();
     await _tokenStore.clear();
     await _db.clearUserScoped();
+    _ownStories.clear();
     await _flags.clearProfileCompleted();
   }
 

@@ -2,8 +2,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'story.freezed.dart';
 
+/// Who a story is published to (#005). Lives in core because [StorySegment]
+/// (core) carries it; the compose feature reads it from here. `closeFriends`
+/// list management belongs to #014 — this only records the choice.
+enum StoryAudience { yourStory, closeFriends }
+
 /// One image segment within a story reel (#004 — image segments only; video is
-/// reels #008). `viewerHasLiked` is in-memory (fake) this spec.
+/// reels #008). `viewerHasLiked` is in-memory (fake) this spec. `imageUrl` may
+/// be a `memory://<id>` ref for an offline-published own story (#005) — the
+/// story image rendering resolves it via `MemoryImage(OwnStoryStore.bytesFor)`
+/// (see #005 T020a).
 @freezed
 abstract class StorySegment with _$StorySegment {
   const factory StorySegment({
@@ -14,6 +22,7 @@ abstract class StorySegment with _$StorySegment {
     required int position,
     required DateTime createdAt,
     @Default(false) bool viewerHasLiked,
+    @Default(StoryAudience.yourStory) StoryAudience audience,
   }) = _StorySegment;
 }
 

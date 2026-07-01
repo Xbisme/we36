@@ -162,5 +162,16 @@
   "composeCrop": "Cắt",
   "composeCropDone": "Xong",
   "composeFilters": "Bộ lọc",
-  "composeAdjust": "Chỉnh"
+  "composeAdjust": "Chỉnh",
+  "storyShare": "Chia sẻ",
+  "storyYourStory": "Tin của bạn",
+  "storyCloseFriends": "Bạn thân",
+  "storyAddText": "Thêm chữ",
+  "storyStickers": "Nhãn dán",
+  "storyUploading": "Đang chia sẻ…",
+  "storyPublished": "Đã thêm vào tin của bạn!",
+  "storyUploadFailed": "Không chia sẻ được tin.",
+  "storyDiscardTitle": "Bỏ tin?",
+  "storyDiscardKeep": "Tiếp tục sửa",
+  "storyDiscardDiscard": "Bỏ"
 }

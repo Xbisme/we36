@@ -2,6 +2,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/stories/fake_stories_repository.dart';
+import 'package:we36/core/data/stories/own_story_store.dart';
 
 void main() {
   late AppDatabase db;
@@ -9,7 +10,7 @@ void main() {
 
   setUp(() {
     db = AppDatabase.forTesting(NativeDatabase.memory());
-    repo = FakeStoriesRepository(db);
+    repo = FakeStoriesRepository(db, OwnStoryStore());
   });
   tearDown(() => db.close());
 

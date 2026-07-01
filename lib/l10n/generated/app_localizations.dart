@@ -997,6 +997,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adjust'**
   String get composeAdjust;
+
+  /// Story compose: publish the story
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get storyShare;
+
+  /// Story audience: visible to followers
+  ///
+  /// In en, this message translates to:
+  /// **'Your story'**
+  String get storyYourStory;
+
+  /// Story audience: visible to close friends only
+  ///
+  /// In en, this message translates to:
+  /// **'Close friends'**
+  String get storyCloseFriends;
+
+  /// Story compose: add a text overlay
+  ///
+  /// In en, this message translates to:
+  /// **'Add text'**
+  String get storyAddText;
+
+  /// Story compose: open the sticker tray
+  ///
+  /// In en, this message translates to:
+  /// **'Stickers'**
+  String get storyStickers;
+
+  /// Story compose: upload in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing…'**
+  String get storyUploading;
+
+  /// Story compose: publish success toast
+  ///
+  /// In en, this message translates to:
+  /// **'Added to your story!'**
+  String get storyPublished;
+
+  /// Story compose: publish failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t share your story.'**
+  String get storyUploadFailed;
+
+  /// Discard dialog title on back-out
+  ///
+  /// In en, this message translates to:
+  /// **'Discard story?'**
+  String get storyDiscardTitle;
+
+  /// Keep the in-progress story
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get storyDiscardKeep;
+
+  /// Discard the in-progress story
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get storyDiscardDiscard;
 }
 
 class _AppLocalizationsDelegate
