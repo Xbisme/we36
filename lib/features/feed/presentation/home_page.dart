@@ -127,6 +127,13 @@ class _Header extends StatelessWidget {
           children: [
             const Wordmark(fontSize: 24),
             const Spacer(),
+            // Contextual Create entry (#007) — opens the full-screen compose
+            // flow. (On tablet the Create action lives in the sidebar rail.)
+            AppIconButton(
+              icon: AppIcons.plus,
+              semanticLabel: l10n.navCreate,
+              onPressed: () => unawaited(context.push(AppRoutes.composePick)),
+            ),
             // Activity + Messages are inert placeholders in #004 — they light up
             // with Notifications (#013) and Messages (#012). Unseen dot is fake.
             AppIconButton(
@@ -297,6 +304,12 @@ class _PostTile extends StatelessWidget {
         username: post.author.username ?? post.author.displayName ?? '',
         avatar: _image(post.author.avatarUrl, width: 96),
         media: _image(post.primaryImageUrl, width: 1080),
+        mediaCarousel: post.imageUrls.length > 1
+            ? post.imageUrls
+                  .map((url) => _image(url, width: 1080))
+                  .whereType<ImageProvider<Object>>()
+                  .toList()
+            : null,
         likesText: l10n.feedLikesCount(counts.format(post.likeCount)),
         caption: post.caption ?? '',
         location: post.location?.name,

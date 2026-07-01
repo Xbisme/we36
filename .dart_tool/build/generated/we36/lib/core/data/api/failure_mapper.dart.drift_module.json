@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:dio/dio.dart",
-    "package:injectable/injectable.dart",
-    "package:we36/core/domain/app_failure.dart"
-  ]
-}

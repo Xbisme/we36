@@ -1,0 +1,21 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'media_ref.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_MediaRef _$MediaRefFromJson(Map<String, dynamic> json) => _MediaRef(
+  id: json['id'] as String,
+  url: json['url'] as String?,
+  width: (json['width'] as num?)?.toInt(),
+  height: (json['height'] as num?)?.toInt(),
+);
+
+Map<String, dynamic> _$MediaRefToJson(_MediaRef instance) => <String, dynamic>{
+  'id': instance.id,
+  'url': instance.url,
+  'width': instance.width,
+  'height': instance.height,
+};

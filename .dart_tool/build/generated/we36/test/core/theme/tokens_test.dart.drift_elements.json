@@ -1,1 +1,0 @@
-{"valid_import":true,"imports":[{"uri":"package:flutter/material.dart","transitive":false},{"uri":"package:flutter_test/flutter_test.dart","transitive":false},{"uri":"package:we36/core/theme/app_colors.dart","transitive":false},{"uri":"package:we36/core/theme/app_colors_x.dart","transitive":false},{"uri":"asset:we36/test/helpers/pump_app.dart","transitive":false}],"elements":[]}

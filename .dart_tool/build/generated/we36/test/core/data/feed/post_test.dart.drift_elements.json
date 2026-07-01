@@ -1,1 +1,0 @@
-{"valid_import":true,"imports":[{"uri":"package:flutter_test/flutter_test.dart","transitive":false},{"uri":"package:we36/core/data/feed/post.dart","transitive":false},{"uri":"package:we36/core/data/pagination/cursor_page.dart","transitive":false}],"elements":[]}

@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:injectable/injectable.dart",
-    "package:uuid/uuid.dart",
-    "package:we36/core/data/auth/dto/session.dart",
-    "package:we36/core/data/me/me_profile.dart"
-  ]
-}

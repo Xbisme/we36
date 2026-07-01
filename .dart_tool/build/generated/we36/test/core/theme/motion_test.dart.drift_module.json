@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter/material.dart",
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/core/theme/app_motion.dart"
-  ]
-}

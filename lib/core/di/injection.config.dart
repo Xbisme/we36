@@ -40,6 +40,10 @@ import 'package:we36/core/data/user/user_repository.dart' as _i247;
 import 'package:we36/core/data/user/user_repository_impl.dart' as _i514;
 import 'package:we36/core/presentation/toast.dart' as _i857;
 import 'package:we36/core/router/app_router.dart' as _i485;
+import 'package:we36/core/services/image_processing_service.dart' as _i12;
+import 'package:we36/core/services/media_upload_service.dart' as _i547;
+import 'package:we36/core/services/media_upload_service_fake.dart' as _i727;
+import 'package:we36/core/services/photo_library_service.dart' as _i613;
 import 'package:we36/core/services/session/auth_events.dart' as _i242;
 import 'package:we36/core/services/session/local_flags.dart' as _i299;
 import 'package:we36/core/services/session/real_token_refresher.dart' as _i266;
@@ -76,6 +80,19 @@ import 'package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart'
     as _i942;
 import 'package:we36/features/auth/presentation/sign_up/sign_up_cubit.dart'
     as _i30;
+import 'package:we36/features/compose/data/compose_draft_store.dart' as _i988;
+import 'package:we36/features/compose/data/create_post_repository_fake.dart'
+    as _i792;
+import 'package:we36/features/compose/data/create_post_repository_real.dart'
+    as _i794;
+import 'package:we36/features/compose/domain/create_post_repository.dart'
+    as _i1030;
+import 'package:we36/features/compose/domain/usecases/publish_post.dart'
+    as _i602;
+import 'package:we36/features/compose/presentation/cubit/compose_cubit.dart'
+    as _i238;
+import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart'
+    as _i772;
 import 'package:we36/features/feed/domain/usecases/feed_usecases.dart' as _i321;
 import 'package:we36/features/feed/presentation/feed_cubit.dart' as _i992;
 import 'package:we36/features/stories/domain/usecases/story_usecases.dart'
@@ -99,6 +116,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i222.IdempotencyKeys>(() => _i222.IdempotencyKeys());
     gh.lazySingleton<_i270.AppDatabase>(() => _i270.AppDatabase());
     gh.lazySingleton<_i857.ToastService>(() => _i857.ToastService());
+    gh.lazySingleton<_i12.ImageProcessingService>(
+      () => const _i12.ImageProcessingService(),
+    );
     gh.lazySingleton<_i433.AppLogger>(() => const _i433.AppLogger());
     gh.lazySingleton<_i500.RealtimeClient>(
       () => _i500.SocketIoRealtimeClient(
@@ -107,8 +127,17 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       registerFor: {_real},
     );
+    gh.lazySingleton<_i613.PhotoLibraryService>(
+      () => _i613.RealPhotoLibraryService(),
+    );
     gh.lazySingleton<_i665.TokenStore>(() => _i897.RealTokenStore());
+    gh.lazySingleton<_i988.ComposeDraftStore>(
+      () => _i988.ComposeDraftStore(gh<_i270.AppDatabase>()),
+    );
     gh.lazySingleton<_i299.LocalFlags>(() => _i299.LocalFlagsImpl());
+    gh.factory<_i772.GalleryCubit>(
+      () => _i772.GalleryCubit(gh<_i613.PhotoLibraryService>()),
+    );
     gh.lazySingleton<_i242.AuthEventsSink>(() => _i242.AuthEvents());
     gh.lazySingleton<_i112.StoriesRepository>(
       () => _i840.StoriesRepositoryImpl(gh<_i270.AppDatabase>()),
@@ -124,6 +153,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i163.AuthRepository>(
       () => _i548.FakeAuthRepository(gh<_i489.FakeAuthBackend>()),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i547.MediaUploadService>(
+      () => _i727.FakeMediaUploadService(),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i1030.CreatePostRepository>(
+      () => _i792.FakeCreatePostRepository(gh<_i270.AppDatabase>()),
       registerFor: {_fake},
     );
     gh.lazySingleton<_i112.StoriesRepository>(
@@ -193,6 +230,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i351.WatchSeenSegments>(),
       ),
     );
+    gh.lazySingleton<_i547.MediaUploadService>(
+      () => _i547.RealMediaUploadService(gh<_i784.ApiClient>()),
+      registerFor: {_real},
+    );
     gh.lazySingleton<_i1043.AuthRemoteDataSource>(
       () => _i1043.AuthRemoteDataSource(gh<_i784.ApiClient>()),
     );
@@ -218,6 +259,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i351.LikeStorySegment>(),
       ),
     );
+    gh.lazySingleton<_i1030.CreatePostRepository>(
+      () => _i794.RealCreatePostRepository(
+        gh<_i784.ApiClient>(),
+        gh<_i270.AppDatabase>(),
+      ),
+      registerFor: {_real},
+    );
     gh.lazySingleton<_i958.SessionController>(
       () => _i958.SessionController(
         gh<_i665.TokenStore>(),
@@ -232,6 +280,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i485.AppRouter>(
       () => _i485.AppRouter(gh<_i958.SessionController>()),
+    );
+    gh.factory<_i602.PublishPost>(
+      () => _i602.PublishPost(
+        gh<_i613.PhotoLibraryService>(),
+        gh<_i12.ImageProcessingService>(),
+        gh<_i547.MediaUploadService>(),
+        gh<_i1030.CreatePostRepository>(),
+      ),
     );
     gh.lazySingleton<_i247.UserRepository>(
       () => _i514.UserRepositoryImpl(
@@ -262,6 +318,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i270.AppDatabase>(),
       ),
       registerFor: {_real},
+    );
+    gh.factory<_i238.ComposeCubit>(
+      () => _i238.ComposeCubit(
+        gh<_i602.PublishPost>(),
+        gh<_i988.ComposeDraftStore>(),
+        gh<_i222.IdempotencyKeys>(),
+      ),
     );
     gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
     gh.factory<_i800.SetupProfile>(

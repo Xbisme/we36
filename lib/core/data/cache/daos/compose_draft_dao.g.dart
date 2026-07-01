@@ -1,0 +1,16 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'compose_draft_dao.dart';
+
+// ignore_for_file: type=lint
+mixin _$ComposeDraftDaoMixin on DatabaseAccessor<AppDatabase> {
+  $ComposeDraftsTable get composeDrafts => attachedDatabase.composeDrafts;
+  ComposeDraftDaoManager get managers => ComposeDraftDaoManager(this);
+}
+
+class ComposeDraftDaoManager {
+  final _$ComposeDraftDaoMixin _db;
+  ComposeDraftDaoManager(this._db);
+  $$ComposeDraftsTableTableManager get composeDrafts =>
+      $$ComposeDraftsTableTableManager(_db.attachedDatabase, _db.composeDrafts);
+}

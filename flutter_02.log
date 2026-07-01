@@ -1,0 +1,59 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter analyze lib/features/compose/domain/models
+
+## exception
+
+_Exception: Exception: analysis server exited with code 255 and output:
+[stderr] /Users/ase/Development/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server.dart.snapshot is an AOT snapshot and should be run with 'dartaotruntime'
+
+```
+```
+
+## flutter doctor
+
+```
+[!] Flutter (Channel [user-branch], 3.41.7, on macOS 15.7.2 24G325 darwin-x64, locale en-US) [779ms]
+    ! Flutter version 3.41.7 on channel [user-branch] at /Users/ase/Development/flutter
+      Currently on an unknown channel. Run `flutter channel` to switch to an official channel.
+      If that doesn't fix the issue, reinstall Flutter by following instructions at https://flutter.dev/setup.
+    ! Upstream repository unknown source is not a standard remote.
+      Set environment variable "FLUTTER_GIT_URL" to unknown source to dismiss this error.
+    • Framework revision cc0734ac71 (3 months ago), 2026-04-15 21:21:08 -0700
+    • Engine revision 59aa584fdf
+    • Dart version 3.11.5
+    • DevTools version 2.54.2
+    • Feature flags: no-enable-web, no-enable-linux-desktop, no-enable-macos-desktop, no-enable-windows-desktop, enable-android, enable-ios, cli-animations, enable-native-assets, omit-legacy-version-file, enable-lldb-debugging, enable-uiscene-migration
+    • If those were intentional, you can disregard the above warnings; however it is recommended to use "git" directly to perform update checks and upgrades.
+
+[✗] Android toolchain - develop for Android devices [198ms]
+    ✗ ANDROID_HOME = /Users/ase/Library/Android/sdk
+      but Android SDK not found at this location.
+
+[✓] Xcode - develop for iOS and macOS (Xcode 26.2) [1,636ms]
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Build 17C48
+    • CocoaPods version 1.16.2
+
+[✓] Connected device (2 available) [7.5s]
+    • ase’s iPhone (wireless) (mobile) • 00008030-001D71523610402E            • ios • iOS 18.6.2 22G100
+    • iPhone 16 Pro Max (mobile)       • 5AA75496-8EAD-4276-AF3D-4EC507A80F46 • ios • com.apple.CoreSimulator.SimRuntime.iOS-18-2 (simulator)
+    ! Error: Browsing on the local area network for Ip14Promax. Ensure the device is unlocked and attached with a cable or associated with the same local area network as this Mac.
+      The device must be opted into Developer Mode to connect wirelessly. (code -27)
+    ! Error: Browsing on the local area network for Aaa. Ensure the device is unlocked and attached with a cable or associated with the same local area network as this Mac.
+      The device must be opted into Developer Mode to connect wirelessly. (code -27)
+    ! Error: Browsing on the local area network for iPhone. Ensure the device is unlocked and attached with a cable or associated with the same local area network as this Mac.
+      The device must be opted into Developer Mode to connect wirelessly. (code -27)
+    ! Error: Browsing on the local area network for Justin’s iPhone. Ensure the device is unlocked and attached with a cable or associated with the same local area network as this Mac.
+      The device must be opted into Developer Mode to connect wirelessly. (code -27)
+    ! Error: Browsing on the local area network for admin’s iPhone. Ensure the device is unlocked and attached with a cable or associated with the same local area network as this Mac.
+      The device must be opted into Developer Mode to connect wirelessly. (code -27)
+
+[✓] Network resources [386ms]
+    • All expected network resources are available.
+
+! Doctor found issues in 2 categories.
+```

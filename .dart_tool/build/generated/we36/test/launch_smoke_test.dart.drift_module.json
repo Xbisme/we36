@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/app/app.dart",
-    "package:we36/bootstrap.dart",
-    "package:we36/core/config/app_config.dart"
-  ]
-}

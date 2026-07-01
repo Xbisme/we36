@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/core/data/user/fake_user_repository.dart",
-    "package:we36/core/data/user/user.dart"
-  ]
-}

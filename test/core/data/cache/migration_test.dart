@@ -7,10 +7,18 @@ import 'package:we36/core/data/me/me_profile.dart';
 import 'package:we36/core/data/user/user.dart';
 
 /// Cache schema migration harness. #003 → v2 (`MeProfiles`); #004 → v3 (`Posts`
-/// feed cache + `StorySeenSegments` seen-state). These tests prove: `onCreate`
-/// builds the full current schema, the `onUpgrade` steps are non-destructive and
-/// additive, and `clearUserScoped` wipes all user-scoped data on logout
-/// (Constitution IX/I; spec FR-035).
+/// feed cache + `StorySeenSegments` seen-state); #007 → v4 (`ComposeDrafts`
+/// single persisted draft). These tests prove: `onCreate` builds the full current
+/// schema, the `onUpgrade` steps are non-destructive and additive, and
+/// `clearUserScoped` wipes all user-scoped data on logout (Constitution IX/I).
+ComposeDraftRow _draft(String id) => ComposeDraftRow(
+  id: id,
+  idempotencyKey: 'key-$id',
+  payload: '{}',
+  createdAt: DateTime.utc(2026, 7),
+  updatedAt: DateTime.utc(2026, 7),
+);
+
 Post _post(String id) => Post(
   id: id,
   author: const UserSummary(id: 'u1', username: 'lan', isVerified: false),
@@ -37,13 +45,13 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 3', () {
+    test('schemaVersion is 4', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 3);
+      expect(db.schemaVersion, 4);
       addTearDown(db.close);
     });
 
-    test('onCreate builds a usable v3 schema (all four tables)', () async {
+    test('onCreate builds a usable v4 schema (all tables)', () async {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
       await db.usersDao.upsert(
         const User(
@@ -60,13 +68,33 @@ void main() {
       await db.meProfileDao.upsert(_me('me-1'));
       await db.postsDao.upsertAll([_post('post-1')]);
       await db.storySeenDao.markSeen('seg-1', 'author-1');
+      await db.composeDraftDao.save(_draft('draft-1'));
 
       expect(await db.usersDao.getByUsername('lan'), isNotNull);
       expect(await db.meProfileDao.get(), isNotNull);
       expect(await db.postsDao.getById('post-1'), isNotNull);
       expect(await db.storySeenDao.getSeen(), contains('seg-1'));
+      expect(await db.composeDraftDao.current(), isNotNull);
       await db.close();
     });
+
+    test(
+      'onUpgrade(from<4) additively creates the compose draft table',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        // Simulate a pre-v4 DB: drop the v4 table, keep a v3 row, run onUpgrade.
+        await db.postsDao.upsertAll([_post('post-keep')]);
+        await db.customStatement('DROP TABLE compose_drafts');
+
+        await db.migration.onUpgrade(Migrator(db), 3, 4);
+
+        // New table usable; the older post row survived (non-destructive).
+        await db.composeDraftDao.save(_draft('draft-after'));
+        expect(await db.composeDraftDao.current(), isNotNull);
+        expect(await db.postsDao.getById('post-keep'), isNotNull);
+        await db.close();
+      },
+    );
 
     test('onUpgrade(from<3) additively recreates the v3 tables', () async {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -88,18 +116,23 @@ void main() {
       await db.close();
     });
 
-    test('clearUserScoped wipes users + meProfiles + posts + seen', () async {
-      final db = AppDatabase.forTesting(NativeDatabase.memory());
-      await db.meProfileDao.upsert(_me('me-3'));
-      await db.postsDao.upsertAll([_post('post-x')]);
-      await db.storySeenDao.markSeen('seg-x', 'author-x');
+    test(
+      'clearUserScoped wipes users + meProfiles + posts + seen + draft',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        await db.meProfileDao.upsert(_me('me-3'));
+        await db.postsDao.upsertAll([_post('post-x')]);
+        await db.storySeenDao.markSeen('seg-x', 'author-x');
+        await db.composeDraftDao.save(_draft('draft-x'));
 
-      await db.clearUserScoped();
+        await db.clearUserScoped();
 
-      expect(await db.meProfileDao.get(), isNull);
-      expect(await db.postsDao.getById('post-x'), isNull);
-      expect(await db.storySeenDao.getSeen(), isEmpty);
-      await db.close();
-    });
+        expect(await db.meProfileDao.get(), isNull);
+        expect(await db.postsDao.getById('post-x'), isNull);
+        expect(await db.storySeenDao.getSeen(), isEmpty);
+        expect(await db.composeDraftDao.current(), isNull);
+        await db.close();
+      },
+    );
   });
 }

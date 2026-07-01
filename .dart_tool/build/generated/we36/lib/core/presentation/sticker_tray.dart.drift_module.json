@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter/material.dart",
-    "package:we36/core/presentation/app_tag.dart",
-    "package:we36/core/theme/app_colors_x.dart",
-    "package:we36/core/theme/app_dimens.dart"
-  ]
-}

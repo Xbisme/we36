@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter/painting.dart",
-    "package:we36/core/theme/app_colors.dart"
-  ]
-}

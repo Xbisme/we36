@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-07-01 (#001 + #002 + #003 merged into `main`. Next: #004 Home Feed & Stories ⭐ — first usable surface.)
+> Last updated: 2026-07-01 (#001–#004 merged into `main`. **#007 Create Post 🔵 implemented** on branch `007-create-post` — 61/62 tasks (US1–US5 + Polish; only T061/merge remain), 269 tests pass. #005/#006 follow #007 — they reuse its media pipeline.)
 
 ---
 
@@ -125,26 +125,26 @@ Create Story     Post Detail &    Create Post      Reels
 - **New packages**: `google_sign_in`, `sign_in_with_apple`, image pick/crop for avatar.
 - **Out of scope**: feed, profile content.
 
-### Spec #004: Home Feed & Stories  ⭐  🟡
+### Spec #004: Home Feed & Stories  ⭐  ✅
 - **Depends on**: #002, #003.
 - **Design**: Screens 7 (Home feed + StoriesRail), 8 (Story viewer).
 - **Scope**: paginated reverse-chronological feed; `PostCard` wired; **optimistic** like/save (+ rollback); stories rail + full-screen story viewer (progress segments, reply/like/share); pull-to-refresh; empty/offline-from-cache states. First usable surface.
 - **Out of scope**: creating posts/stories (#005/#007), comments (#006).
 
-### Spec #005: Create Story & Story Tools  ⬜
-- **Depends on**: #004.
+### Spec #005: Create Story & Story Tools  🟡
+- **Depends on**: #004 ✅.
 - **Design**: Screen 9 (Create story).
 - **Scope**: capture/pick → sticker/text overlay → publish to Your story / Close friends; 24h expiry model client-side; upload via the #002/#007 media pipeline.
 - **Out of scope**: post compose (#007), reels (#008).
 
-### Spec #006: Post Detail & Comments  ⬜
-- **Depends on**: #004.
+### Spec #006: Post Detail & Comments  🟡
+- **Depends on**: #004 ✅.
 - **Design**: Screens 14 (Post detail), 15 (Comments); tablet = **two-pane** (media + comments sidebar).
 - **Scope**: post detail; comments list + **one-level replies** + mentions + quick-emoji + comment compose (optimistic add); like a comment; report/delete via action sheet. On tablet/iPad render the **master/detail two-pane** (media pane + info/comments pane) via the #001 primitive; phone keeps push.
 - **Out of scope**: nested reply threads beyond one level (deferred).
 
-### Spec #007: Create Post (Compose & Upload)  ⬜
-- **Depends on**: #004, #002 (upload).
+### Spec #007: Create Post (Compose & Upload)  🔵 (implemented — 61/62, pending merge)
+- **Depends on**: #004 ✅, #002 ✅ (upload).
 - **Design**: Screens 11–13 (pick → edit/filter → caption).
 - **Scope**: multi-select media pick (carousel), crop + filter + brightness/contrast/warmth, caption/hashtag/tag-people/location/music + "also share to Stories"/"turn off comments"; **client-side compress + resumable/chunked upload** with progress/cancel; idempotent create.
 - **New packages**: image cropper + filter pkg, video compress (verify at plan).

@@ -15,6 +15,11 @@ import 'package:we36/features/auth/presentation/profile_setup/profile_setup_page
 import 'package:we36/features/auth/presentation/sign_in/sign_in_page.dart';
 import 'package:we36/features/auth/presentation/sign_up/sign_up_page.dart';
 import 'package:we36/features/auth/presentation/splash/splash_page.dart';
+import 'package:we36/features/compose/presentation/cubit/compose_cubit.dart';
+import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart';
+import 'package:we36/features/compose/presentation/pages/caption_page.dart';
+import 'package:we36/features/compose/presentation/pages/edit_page.dart';
+import 'package:we36/features/compose/presentation/pages/pick_page.dart';
 import 'package:we36/features/dev/presentation/gallery_page.dart';
 import 'package:we36/features/dev/presentation/states_demo_page.dart';
 import 'package:we36/features/dev/presentation/two_pane_demo_page.dart';
@@ -100,8 +105,38 @@ class AppRouter {
           const PlaceholderPage(title: 'Activity'),
         ),
         _flow(AppRoutes.settings, const PlaceholderPage(title: 'Settings')),
-        _flow(AppRoutes.create, const PlaceholderPage(title: 'Create')),
         _flow(AppRoutes.search, const PlaceholderPage(title: 'Search')),
+        // Create Post — compose flow (#007). One ShellRoute so pick→edit→caption
+        // share the GalleryCubit + ComposeCubit; nav-less, centered on tablet.
+        ShellRoute(
+          builder: (context, state, child) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) {
+                  final cubit = getIt<GalleryCubit>();
+                  unawaited(cubit.loadInitial());
+                  return cubit;
+                },
+              ),
+              BlocProvider(create: (_) => getIt<ComposeCubit>()),
+            ],
+            child: CenteredMobile(child: child),
+          ),
+          routes: [
+            GoRoute(
+              path: AppRoutes.composePick,
+              builder: (_, _) => const PickPage(),
+            ),
+            GoRoute(
+              path: AppRoutes.composeEdit,
+              builder: (_, _) => const EditPage(),
+            ),
+            GoRoute(
+              path: AppRoutes.composeCaption,
+              builder: (_, _) => const CaptionPage(),
+            ),
+          ],
+        ),
         // Dev harness
         _flow(AppRoutes.devGallery, const GalleryPage()),
         _flow(AppRoutes.devStates, const StatesDemoPage()),

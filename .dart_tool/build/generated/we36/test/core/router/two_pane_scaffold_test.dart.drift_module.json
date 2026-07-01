@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter/material.dart",
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/core/router/two_pane_scaffold.dart",
-    "asset:we36/test/helpers/pump_app.dart"
-  ]
-}

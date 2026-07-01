@@ -35,6 +35,14 @@ abstract final class ApiEndpoints {
   static String postLike(String id) => '/posts/$id/like';
   static String postSave(String id) => '/posts/$id/save';
 
+  /// Media upload (#007) — multipart upload of a processed image; returns a
+  /// `MediaRef` (id + variants). Idempotent via the client `Idempotency-Key`.
+  static const String media = '/media';
+
+  /// Create post (#007) — publishes a post from uploaded media ids + caption +
+  /// metadata; idempotent via the client `Idempotency-Key`. B#007 seam.
+  static const String posts = '/posts';
+
   /// Stories (#004) — **provisional**: no backend stories contract exists yet
   /// (backend has auth/posts/media/comments only). The `StoriesRepository` real
   /// seam targets this path but is never exercised while the app runs `fake`;

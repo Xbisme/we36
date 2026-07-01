@@ -17,6 +17,7 @@ class PostCard extends StatelessWidget {
     required this.caption,
     required this.timeText,
     this.media,
+    this.mediaCarousel,
     this.avatar,
     this.location,
     this.commentsText,
@@ -33,6 +34,11 @@ class PostCard extends StatelessWidget {
   final String username;
   final ImageProvider<Object>? avatar;
   final ImageProvider<Object>? media;
+
+  /// Ordered providers for a multi-photo post (#007). When it holds more than
+  /// one item the media area becomes a swipeable carousel with a page indicator;
+  /// otherwise [media] renders as a single frame (back-compatible with #004).
+  final List<ImageProvider<Object>>? mediaCarousel;
   final String likesText;
   final String caption;
   final String timeText;
@@ -94,10 +100,13 @@ class PostCard extends StatelessWidget {
               ],
             ),
           ),
-          // Media 4:5 (placeholder when no provider — #001 is offline)
+          // Media 4:5 — carousel for multi-photo posts, else a single frame
+          // (placeholder when no provider — offline feeds render empty surface).
           AspectRatio(
             aspectRatio: 4 / 5,
-            child: media == null
+            child: (mediaCarousel != null && mediaCarousel!.length > 1)
+                ? _MediaCarousel(pages: mediaCarousel!)
+                : media == null
                 ? ColoredBox(color: tokens.surface2)
                 : Image(image: media!, fit: BoxFit.cover),
           ),
@@ -187,6 +196,68 @@ class PostCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Swipeable ordered media carousel with a page-indicator (#007 multi-photo).
+class _MediaCarousel extends StatefulWidget {
+  const _MediaCarousel({required this.pages});
+
+  final List<ImageProvider<Object>> pages;
+
+  @override
+  State<_MediaCarousel> createState() => _MediaCarouselState();
+}
+
+class _MediaCarouselState extends State<_MediaCarousel> {
+  final _controller = PageController();
+  int _index = 0;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = context.tokens;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        PageView.builder(
+          controller: _controller,
+          itemCount: widget.pages.length,
+          onPageChanged: (i) => setState(() => _index = i),
+          itemBuilder: (context, i) => Semantics(
+            label: 'Photo ${i + 1} of ${widget.pages.length}',
+            child: Image(image: widget.pages[i], fit: BoxFit.cover),
+          ),
+        ),
+        Positioned(
+          bottom: AppSpacing.sm,
+          left: 0,
+          right: 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var i = 0; i < widget.pages.length; i++)
+                Container(
+                  width: 6,
+                  height: 6,
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: i == _index
+                        ? tokens.accent
+                        : tokens.textOnBrand.withValues(alpha: 0.6),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

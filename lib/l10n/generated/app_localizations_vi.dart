@@ -370,4 +370,109 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get storyComingSoon => 'Sắp ra mắt';
+
+  @override
+  String get composeTitle => 'Bài viết mới';
+
+  @override
+  String get composeNext => 'Tiếp';
+
+  @override
+  String get composeShare => 'Chia sẻ';
+
+  @override
+  String get composeRecents => 'Gần đây';
+
+  @override
+  String get composeCarousel => 'Nhiều ảnh';
+
+  @override
+  String get composeCaptionHint => 'Viết chú thích…';
+
+  @override
+  String get composeTagPeople => 'Gắn thẻ người';
+
+  @override
+  String get composeAddLocation => 'Thêm vị trí';
+
+  @override
+  String get composeTurnOffComments => 'Tắt bình luận';
+
+  @override
+  String get composeFilterOriginal => 'Gốc';
+
+  @override
+  String get composeFilterWarm => 'Ấm';
+
+  @override
+  String get composeFilterLux => 'Lux';
+
+  @override
+  String get composeFilterMono => 'Đơn sắc';
+
+  @override
+  String get composeFilterFade => 'Phai';
+
+  @override
+  String get composeAdjustBrightness => 'Độ sáng';
+
+  @override
+  String get composeAdjustContrast => 'Tương phản';
+
+  @override
+  String get composeAdjustWarmth => 'Độ ấm';
+
+  @override
+  String get composeUploading => 'Đang chia sẻ…';
+
+  @override
+  String get composeCancel => 'Hủy';
+
+  @override
+  String get composeRetry => 'Thử lại';
+
+  @override
+  String get composePublished => 'Đã đăng!';
+
+  @override
+  String get composeUploadFailed => 'Không chia sẻ được bài viết.';
+
+  @override
+  String get composePermissionTitle => 'Cho phép truy cập ảnh';
+
+  @override
+  String get composePermissionBody =>
+      'We36 cần quyền truy cập ảnh để tạo bài viết.';
+
+  @override
+  String get composeOpenSettings => 'Mở Cài đặt';
+
+  @override
+  String get composeEmptyLibrary => 'Chưa có ảnh nào';
+
+  @override
+  String composeMaxReached(int max) {
+    return 'Bạn có thể thêm tối đa $max ảnh.';
+  }
+
+  @override
+  String get composeDiscardTitle => 'Bỏ bài viết?';
+
+  @override
+  String get composeDiscardKeep => 'Tiếp tục sửa';
+
+  @override
+  String get composeDiscardDiscard => 'Bỏ';
+
+  @override
+  String get composeCrop => 'Cắt';
+
+  @override
+  String get composeCropDone => 'Xong';
+
+  @override
+  String get composeFilters => 'Bộ lọc';
+
+  @override
+  String get composeAdjust => 'Chỉnh';
 }

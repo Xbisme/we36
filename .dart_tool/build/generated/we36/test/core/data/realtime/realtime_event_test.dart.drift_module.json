@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_test/flutter_test.dart",
-    "package:we36/core/constants/socket_events.dart",
-    "package:we36/core/data/realtime/realtime_event.dart"
-  ]
-}

@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-07-01 (**Specs #001 + #002 + #003 merged into `main`** — #003 Auth & Onboarding landed via PR #3, 75/75 tasks (incl. native iOS/Android config + on-device smoke), 156 tests green, `dart analyze` clean. **Next: #004 Home Feed & Stories ⭐** — first usable surface.)
+> Last updated: 2026-07-01 (#001–#004 merged into `main`. **#007 Create Post 🔵 IMPLEMENTED** on branch `007-create-post` — **61/62 tasks** (all US1–US5 + Polish; only T061 docs / merge remain), **269 tests pass** (~44 new compose tests + 6 compose goldens), `flutter analyze` clean for #007 code. Pending merge.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,9 +29,12 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #003 Auth & Onboarding ✅ MERGED into `main`** via PR #3 (**75/75 tasks**; **156 tests green**, `dart analyze` clean; native iOS/Android config + OAuth + on-device smoke all done). The GATE every feature behind login sits on. Built: Splash/Onboarding/Sign in/Sign up/Forgot(6-OTP)/Profile-setup + OAuth Google/Apple, real `flutter_secure_storage` token store + single-flight refresh, `SessionController` (cold-start routing + forced-logout-once + cache wipe) replacing `AuthGuardStub`, drift v2 (`MeProfiles`). App still runs DI `environment: 'fake'` (real impls behind `env:['real']`).
-- **Toolchain bump**: Flutter **3.44.4** / Dart **3.12.2** (was 3.41/3.11 — the installed SDK was below the #001 `^3.11.5` floor; upgraded with user consent). Goldens regenerated.
-- **Next**: **Spec #004 Home Feed & Stories ⭐** — first usable surface (paginated feed, PostCard wired, optimistic like/save, stories rail + viewer). Depends on #002 + #003 (both merged). Pre-spec discussion.
+- **Now**: **Spec #007 Create Post (Compose & Upload) 🔵 IMPLEMENTED** on branch `007-create-post` — **61/62 tasks done** (all of US1–US5 + Polish; only **T061** docs + merge remain). Full SDD cycle done (specify→clarify→plan→tasks→analyze→implement). **269 tests pass** (~44 new compose tests + 6 compose goldens); `flutter analyze` clean for all #007 code. **Not merged yet.**
+  - **Built + verified**: media pipeline in `core/services/` (`ImageProcessingService` bake-on-isolate, `MediaUploadService` +fake, `PhotoLibraryService` +fake + `openSettings`), `CreatePostRepository` +fake (writes canonical #004 `Post`, idempotent), drift **v3→v4** (`ComposeDrafts` + migration test), `GalleryCubit`/`ComposeCubit`, `PublishPost` use case; **US2** edit (live `ColorFilter.matrix` preview + `FilterRow` + `AdjustSlider` + 4:5 crop via `crop_your_image`, baked to match preview); **US3** carousel (ordered multi-select cap-10 + per-item thumbnail strip + swipeable `PostCard` carousel); **US4** `UploadProgress` + cancel/retry (idempotent, no partial cache); **US5** caption options (tag/location/turn-off-comments; Stories+music hidden) + draft restore/keep-discard/drop-missing/logout-wipe. New deps `photo_manager`/`photo_manager_image_provider`/`crop_your_image`/`image`. Native perms wired.
+  - **▶ Remaining**: **T061** (add #007 changelog entry at merge) + open PR; then the trio siblings **#005 Create Story · #006 Post Detail** reuse this media pipeline.
+  - **⚠ Test gotcha (learned)**: widget tests with real `MemoryImage` thumbnails + go_router navigation **hang `pumpAndSettle`/time out**. Use fixed `pump(Duration)` (not settle), test logic-first via cubits, and inject a **synchronous `ImageProcessingService` stub** (no `compute` isolate) in widget tests. See `test/features/compose/publish_flow_test.dart`.
+- **Toolchain**: Flutter **3.44.4** / Dart **3.12.2** (bumped at #003 with user consent — was below the #001 `^3.11.5` floor). Goldens regenerated (sub-pixel toolchain diffs).
+- **#004 ✅ MERGED into `main`** via PR #4 (64/64 tasks; 206 tests). ⭐ First usable surface. Paginated feed + optimistic like/save + StoriesRail/viewer + drift v2→v3. Remaining trio siblings **#005 Create Story · #006 Post Detail** reuse #007's media pipeline (do after #007).
 - **Done — #002 merged**: `ApiClient` + idempotency/auth/**single-flight refresh**/redacted-logging interceptors + `FailureMapper`; `CursorPage<T>` + 4-state `PaginatedListCubit`; **drift** cache base + reactive `.watch()`; `RealtimeClient` Socket.IO scaffold + fake; repository pattern + fakes (`User` slice). App runs DI `environment: 'fake'`; real impls annotated `env: ['real']` (auth real impls start landing in #003). 103 tests green.
 - **Resolved at #002**: cache engine = **drift**; realtime = **`socket_io_client`** (constitution v1.0.2); cursor envelope shipped as `CursorPage<T>`.
 - **To confirm at #003**: OAuth client ids/redirect schemes; OTP channel (email vs SMS) for forgot-password; avatar pick/crop package; token-refresh seam wiring (#002 `TokenStore`/`TokenRefresher`/`AuthEventsSink` fakes → real `flutter_secure_storage` impls); dev/prod API base URL + bundle ids (`app.we36` / `app.we36.dev` proposed).
@@ -45,10 +48,10 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 | 001 | Project Foundation, Design System & Navigation | ✅ **Merged** | `001-project-foundation` (PR #1) |
 | 002 | Networking, Cache & Realtime Core | ✅ **Merged** | `002-networking-core` (PR #2) |
 | 003 | Auth & Onboarding | ✅ **Merged** | `003-auth-onboarding` (PR #3) |
-| 004 | Home Feed & Stories ⭐ | 🟡 **Next** | `004-home-feed-stories` |
-| 005 | Create Story & Tools | ⬜ Not started | `005-create-story` |
-| 006 | Post Detail & Comments | ⬜ Not started | `006-post-comments` |
-| 007 | Create Post (Compose & Upload) | ⬜ Not started | `007-create-post` |
+| 004 | Home Feed & Stories ⭐ | ✅ **Merged** | `004-home-feed-stories` (PR #4) |
+| 005 | Create Story & Tools | 🟡 **Next** (trio) | `005-create-story` |
+| 006 | Post Detail & Comments | 🟡 **Next** (trio) | `006-post-comments` |
+| 007 | Create Post (Compose & Upload) | 🔵 **Implemented** (61/62; pending merge) | `007-create-post` |
 | 008 | Reels | ⬜ Not started | `008-reels` |
 | 009 | Explore & Search | ⬜ Not started | `009-explore-search` |
 | 010 | Profile & Follow | ⬜ Not started | `010-profile-follow` |

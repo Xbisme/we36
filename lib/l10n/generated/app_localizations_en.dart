@@ -372,4 +372,109 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storyComingSoon => 'Coming soon';
+
+  @override
+  String get composeTitle => 'New post';
+
+  @override
+  String get composeNext => 'Next';
+
+  @override
+  String get composeShare => 'Share';
+
+  @override
+  String get composeRecents => 'Recents';
+
+  @override
+  String get composeCarousel => 'Carousel';
+
+  @override
+  String get composeCaptionHint => 'Write a caption…';
+
+  @override
+  String get composeTagPeople => 'Tag people';
+
+  @override
+  String get composeAddLocation => 'Add location';
+
+  @override
+  String get composeTurnOffComments => 'Turn off commenting';
+
+  @override
+  String get composeFilterOriginal => 'Original';
+
+  @override
+  String get composeFilterWarm => 'Warm';
+
+  @override
+  String get composeFilterLux => 'Lux';
+
+  @override
+  String get composeFilterMono => 'Mono';
+
+  @override
+  String get composeFilterFade => 'Fade';
+
+  @override
+  String get composeAdjustBrightness => 'Brightness';
+
+  @override
+  String get composeAdjustContrast => 'Contrast';
+
+  @override
+  String get composeAdjustWarmth => 'Warmth';
+
+  @override
+  String get composeUploading => 'Sharing…';
+
+  @override
+  String get composeCancel => 'Cancel';
+
+  @override
+  String get composeRetry => 'Retry';
+
+  @override
+  String get composePublished => 'Posted!';
+
+  @override
+  String get composeUploadFailed => 'Couldn\'t share your post.';
+
+  @override
+  String get composePermissionTitle => 'Allow photo access';
+
+  @override
+  String get composePermissionBody =>
+      'We36 needs access to your photos to create a post.';
+
+  @override
+  String get composeOpenSettings => 'Open Settings';
+
+  @override
+  String get composeEmptyLibrary => 'No photos yet';
+
+  @override
+  String composeMaxReached(int max) {
+    return 'You can add up to $max photos.';
+  }
+
+  @override
+  String get composeDiscardTitle => 'Discard post?';
+
+  @override
+  String get composeDiscardKeep => 'Keep editing';
+
+  @override
+  String get composeDiscardDiscard => 'Discard';
+
+  @override
+  String get composeCrop => 'Crop';
+
+  @override
+  String get composeCropDone => 'Done';
+
+  @override
+  String get composeFilters => 'Filters';
+
+  @override
+  String get composeAdjust => 'Adjust';
 }

@@ -113,6 +113,24 @@ abstract class Post with _$Post {
     final display = v['display'] ?? v['thumb'] ?? v['url'];
     return display is String ? display : null;
   }
+
+  /// All ready-image delivery URLs in carousel order (#007 multi-photo posts).
+  /// Empty while media is still processing or has no delivery variants.
+  List<String> get imageUrls {
+    final sorted = [...media]..sort((a, b) => a.position.compareTo(b.position));
+    final urls = <String>[];
+    for (final item in sorted) {
+      final md = item.media;
+      if (md.kind != MediaKind.image || md.status != MediaStatus.ready) {
+        continue;
+      }
+      final v = md.variants;
+      if (v == null) continue;
+      final display = v['display'] ?? v['thumb'] ?? v['url'];
+      if (display is String) urls.add(display);
+    }
+    return urls;
+  }
 }
 
 /// Returned by like/unlike/save/unsave so the client reconciles optimistic UI

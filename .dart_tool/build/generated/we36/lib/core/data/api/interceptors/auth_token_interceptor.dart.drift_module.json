@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:dio/dio.dart",
-    "package:we36/core/services/session/token_store.dart"
-  ]
-}

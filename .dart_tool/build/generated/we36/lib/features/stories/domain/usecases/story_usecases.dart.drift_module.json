@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:injectable/injectable.dart",
-    "package:we36/core/data/stories/stories_repository.dart",
-    "package:we36/core/data/stories/story.dart",
-    "package:we36/core/domain/result.dart"
-  ]
-}
