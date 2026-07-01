@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StorySegment {
 
- String get id; String get authorId; String get imageUrl; int get durationMs; int get position; DateTime get createdAt; bool get viewerHasLiked;
+ String get id; String get authorId; String get imageUrl; int get durationMs; int get position; DateTime get createdAt; bool get viewerHasLiked; StoryAudience get audience;
 /// Create a copy of StorySegment
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $StorySegmentCopyWith<StorySegment> get copyWith => _$StorySegmentCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StorySegment&&(identical(other.id, id) || other.id == id)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.durationMs, durationMs) || other.durationMs == durationMs)&&(identical(other.position, position) || other.position == position)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.viewerHasLiked, viewerHasLiked) || other.viewerHasLiked == viewerHasLiked));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StorySegment&&(identical(other.id, id) || other.id == id)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.durationMs, durationMs) || other.durationMs == durationMs)&&(identical(other.position, position) || other.position == position)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.viewerHasLiked, viewerHasLiked) || other.viewerHasLiked == viewerHasLiked)&&(identical(other.audience, audience) || other.audience == audience));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,authorId,imageUrl,durationMs,position,createdAt,viewerHasLiked);
+int get hashCode => Object.hash(runtimeType,id,authorId,imageUrl,durationMs,position,createdAt,viewerHasLiked,audience);
 
 @override
 String toString() {
-  return 'StorySegment(id: $id, authorId: $authorId, imageUrl: $imageUrl, durationMs: $durationMs, position: $position, createdAt: $createdAt, viewerHasLiked: $viewerHasLiked)';
+  return 'StorySegment(id: $id, authorId: $authorId, imageUrl: $imageUrl, durationMs: $durationMs, position: $position, createdAt: $createdAt, viewerHasLiked: $viewerHasLiked, audience: $audience)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $StorySegmentCopyWith<$Res>  {
   factory $StorySegmentCopyWith(StorySegment value, $Res Function(StorySegment) _then) = _$StorySegmentCopyWithImpl;
 @useResult
 $Res call({
- String id, String authorId, String imageUrl, int durationMs, int position, DateTime createdAt, bool viewerHasLiked
+ String id, String authorId, String imageUrl, int durationMs, int position, DateTime createdAt, bool viewerHasLiked, StoryAudience audience
 });
 
 
@@ -62,7 +62,7 @@ class _$StorySegmentCopyWithImpl<$Res>
 
 /// Create a copy of StorySegment
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? authorId = null,Object? imageUrl = null,Object? durationMs = null,Object? position = null,Object? createdAt = null,Object? viewerHasLiked = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? authorId = null,Object? imageUrl = null,Object? durationMs = null,Object? position = null,Object? createdAt = null,Object? viewerHasLiked = null,Object? audience = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,authorId: null == authorId ? _self.authorId : authorId // ignore: cast_nullable_to_non_nullable
@@ -71,7 +71,8 @@ as String,durationMs: null == durationMs ? _self.durationMs : durationMs // igno
 as int,position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
 as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,viewerHasLiked: null == viewerHasLiked ? _self.viewerHasLiked : viewerHasLiked // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,audience: null == audience ? _self.audience : audience // ignore: cast_nullable_to_non_nullable
+as StoryAudience,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String authorId,  String imageUrl,  int durationMs,  int position,  DateTime createdAt,  bool viewerHasLiked)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String authorId,  String imageUrl,  int durationMs,  int position,  DateTime createdAt,  bool viewerHasLiked,  StoryAudience audience)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StorySegment() when $default != null:
-return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.position,_that.createdAt,_that.viewerHasLiked);case _:
+return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.position,_that.createdAt,_that.viewerHasLiked,_that.audience);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.po
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String authorId,  String imageUrl,  int durationMs,  int position,  DateTime createdAt,  bool viewerHasLiked)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String authorId,  String imageUrl,  int durationMs,  int position,  DateTime createdAt,  bool viewerHasLiked,  StoryAudience audience)  $default,) {final _that = this;
 switch (_that) {
 case _StorySegment():
-return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.position,_that.createdAt,_that.viewerHasLiked);case _:
+return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.position,_that.createdAt,_that.viewerHasLiked,_that.audience);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.po
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String authorId,  String imageUrl,  int durationMs,  int position,  DateTime createdAt,  bool viewerHasLiked)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String authorId,  String imageUrl,  int durationMs,  int position,  DateTime createdAt,  bool viewerHasLiked,  StoryAudience audience)?  $default,) {final _that = this;
 switch (_that) {
 case _StorySegment() when $default != null:
-return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.position,_that.createdAt,_that.viewerHasLiked);case _:
+return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.position,_that.createdAt,_that.viewerHasLiked,_that.audience);case _:
   return null;
 
 }
@@ -212,7 +213,7 @@ return $default(_that.id,_that.authorId,_that.imageUrl,_that.durationMs,_that.po
 
 
 class _StorySegment implements StorySegment {
-  const _StorySegment({required this.id, required this.authorId, required this.imageUrl, required this.durationMs, required this.position, required this.createdAt, this.viewerHasLiked = false});
+  const _StorySegment({required this.id, required this.authorId, required this.imageUrl, required this.durationMs, required this.position, required this.createdAt, this.viewerHasLiked = false, this.audience = StoryAudience.yourStory});
   
 
 @override final  String id;
@@ -222,6 +223,7 @@ class _StorySegment implements StorySegment {
 @override final  int position;
 @override final  DateTime createdAt;
 @override@JsonKey() final  bool viewerHasLiked;
+@override@JsonKey() final  StoryAudience audience;
 
 /// Create a copy of StorySegment
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ _$StorySegmentCopyWith<_StorySegment> get copyWith => __$StorySegmentCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StorySegment&&(identical(other.id, id) || other.id == id)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.durationMs, durationMs) || other.durationMs == durationMs)&&(identical(other.position, position) || other.position == position)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.viewerHasLiked, viewerHasLiked) || other.viewerHasLiked == viewerHasLiked));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StorySegment&&(identical(other.id, id) || other.id == id)&&(identical(other.authorId, authorId) || other.authorId == authorId)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.durationMs, durationMs) || other.durationMs == durationMs)&&(identical(other.position, position) || other.position == position)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.viewerHasLiked, viewerHasLiked) || other.viewerHasLiked == viewerHasLiked)&&(identical(other.audience, audience) || other.audience == audience));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,authorId,imageUrl,durationMs,position,createdAt,viewerHasLiked);
+int get hashCode => Object.hash(runtimeType,id,authorId,imageUrl,durationMs,position,createdAt,viewerHasLiked,audience);
 
 @override
 String toString() {
-  return 'StorySegment(id: $id, authorId: $authorId, imageUrl: $imageUrl, durationMs: $durationMs, position: $position, createdAt: $createdAt, viewerHasLiked: $viewerHasLiked)';
+  return 'StorySegment(id: $id, authorId: $authorId, imageUrl: $imageUrl, durationMs: $durationMs, position: $position, createdAt: $createdAt, viewerHasLiked: $viewerHasLiked, audience: $audience)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$StorySegmentCopyWith<$Res> implements $StorySegmentCopyWi
   factory _$StorySegmentCopyWith(_StorySegment value, $Res Function(_StorySegment) _then) = __$StorySegmentCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String authorId, String imageUrl, int durationMs, int position, DateTime createdAt, bool viewerHasLiked
+ String id, String authorId, String imageUrl, int durationMs, int position, DateTime createdAt, bool viewerHasLiked, StoryAudience audience
 });
 
 
@@ -270,7 +272,7 @@ class __$StorySegmentCopyWithImpl<$Res>
 
 /// Create a copy of StorySegment
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? authorId = null,Object? imageUrl = null,Object? durationMs = null,Object? position = null,Object? createdAt = null,Object? viewerHasLiked = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? authorId = null,Object? imageUrl = null,Object? durationMs = null,Object? position = null,Object? createdAt = null,Object? viewerHasLiked = null,Object? audience = null,}) {
   return _then(_StorySegment(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,authorId: null == authorId ? _self.authorId : authorId // ignore: cast_nullable_to_non_nullable
@@ -279,7 +281,8 @@ as String,durationMs: null == durationMs ? _self.durationMs : durationMs // igno
 as int,position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
 as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,viewerHasLiked: null == viewerHasLiked ? _self.viewerHasLiked : viewerHasLiked // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,audience: null == audience ? _self.audience : audience // ignore: cast_nullable_to_non_nullable
+as StoryAudience,
   ));
 }
 

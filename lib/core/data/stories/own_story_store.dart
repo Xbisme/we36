@@ -30,6 +30,11 @@ class OwnStoryStore {
   OwnStoryStore({DateTime Function()? clock})
     : _clock = clock ?? (() => DateTime.now().toUtc());
 
+  /// Constructor injectable uses (it can't resolve the inline function type of
+  /// the `clock` test seam above, so we expose a parameterless factory).
+  @factoryMethod
+  factory OwnStoryStore.create() => OwnStoryStore();
+
   final DateTime Function() _clock;
   final List<StorySegment> _segments = [];
   final Map<String, Uint8List> _bytes = {};
