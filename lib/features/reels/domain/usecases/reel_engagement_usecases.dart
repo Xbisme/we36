@@ -23,3 +23,11 @@ class ToggleReelSave {
   Future<Result<EngagementState>> call(String reelId, {required bool save}) =>
       _repo.toggleSave(reelId, save: save);
 }
+
+/// Delete the caller's own reel (soft delete; drops it from cache).
+@injectable
+class DeleteReel {
+  const DeleteReel(this._repo);
+  final ReelsRepository _repo;
+  Future<Result<void>> call(String reelId) => _repo.deleteReel(reelId);
+}

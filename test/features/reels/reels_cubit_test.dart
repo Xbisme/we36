@@ -22,6 +22,7 @@ ReelsCubit _cubitFor(ReelsRepository repo) => ReelsCubit(
   LoadMoreReels(repo),
   ToggleReelLike(repo),
   ToggleReelSave(repo),
+  DeleteReel(repo),
 );
 
 void main() {

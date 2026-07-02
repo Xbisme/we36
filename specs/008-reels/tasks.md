@@ -88,21 +88,21 @@ Flutter feature-first (Constitution XI): core slice `lib/core/data/reels/`, feat
 
 ### Tests for User Story 2
 
-- [ ] T024 [P] [US2] `ReelsCubit` optimistic like/save + rollback + last-intent `bloc_test` in `test/features/reels/reels_engagement_test.dart`
-- [ ] T025 [P] [US2] Comment-count-delta seam routes reel adds/deletes to `ReelsRepository.applyCommentCountDelta` unit test in `test/features/reels/reel_comment_seam_test.dart`
+- [x] T024 [P] [US2] `ReelsCubit` optimistic like/save + rollback + last-intent `bloc_test` in `test/features/reels/reels_engagement_test.dart`
+- [x] T025 [P] [US2] Comment-count-delta seam routes reel adds/deletes to `ReelsRepository.applyCommentCountDelta` unit test in `test/features/reels/reel_comment_seam_test.dart`
 
 ### Implementation for User Story 2
 
-- [ ] T026 [P] [US2] `ToggleReelLike` + `ToggleReelSave` use cases in `lib/features/reels/domain/usecases/reel_engagement_usecases.dart`
-- [ ] T027 [US2] Add `toggleLike`/`toggleSave` to `ReelsCubit` (optimistic write to `ReelsDao` → repo → reconcile/revert + Toast; one canonical `Reel`) in `lib/features/reels/presentation/cubit/reels_cubit.dart`
-- [ ] T028 [P] [US2] `ReelActionRail` widget in `lib/features/reels/presentation/widgets/reel_action_rail.dart` (like/comment/share/save; solid `AppIcon` for active like/save; press scale-down)
-- [ ] T029 [P] [US2] `ReelAuthorHeader` widget + surface-only follow Toast in `lib/features/reels/presentation/widgets/reel_author_header.dart`
-- [ ] T030 [P] [US2] `ReelCaption` widget with `@mention`/`#hashtag` violet styling (reuse the #006 `CommentText` tokenizer) in `lib/features/reels/presentation/widgets/reel_caption.dart`
-- [ ] T031 [US2] Introduce `CommentTarget` (post vs reel) and generalize `AddComment`/`DeleteComment` count-delta routing to the right repository in `lib/features/post/domain/usecases/comment_usecases.dart` (keeps #006 post path intact — analyze-F1 parity)
-- [ ] T032 [US2] `ReelCommentsSheet` — modal bottom sheet reusing #006 `CommentsCubit` + comment widgets, keyed by reel id, honoring `commentsDisabled`, in `lib/features/reels/presentation/widgets/reel_comments_sheet.dart`; open from the action rail comment button
-- [ ] T033 [US2] Wire reel comments to `reelComments(id)` endpoint + confirm `FakeCommentsRepository` is target-agnostic (keyed by id) so fake mode works unchanged. **Note (I1):** the reused #006 `CommentsCubit` is oldest-first, while the backend reel-comments alias is newest-first — document/resolve ordering at real cutover (invisible in fake mode)
-- [ ] T034 [US2] Share action → surface-only Toast (share-to-DM deferred to #012) in the action rail
-- [ ] T034a [US2] Reel overflow/`ActionSheet`: **Report** (surface-only Toast ack, FR-024a) for others' reels, **Delete** for own (wired to T042); reachable from every reel (Constitution I) — mirror #006 report-other, in `lib/features/reels/presentation/widgets/reel_more_sheet.dart`
+- [x] T026 [P] [US2] `ToggleReelLike` + `ToggleReelSave` use cases in `lib/features/reels/domain/usecases/reel_engagement_usecases.dart`
+- [x] T027 [US2] Add `toggleLike`/`toggleSave` to `ReelsCubit` (optimistic write to `ReelsDao` → repo → reconcile/revert + Toast; one canonical `Reel`) in `lib/features/reels/presentation/cubit/reels_cubit.dart`
+- [x] T028 [P] [US2] `ReelActionRail` widget in `lib/features/reels/presentation/widgets/reel_action_rail.dart` (like/comment/share/save; solid `AppIcon` for active like/save; press scale-down)
+- [x] T029 [P] [US2] `ReelAuthorHeader` widget + surface-only follow Toast in `lib/features/reels/presentation/widgets/reel_author_header.dart`
+- [x] T030 [P] [US2] `ReelCaption` widget with `@mention`/`#hashtag` violet styling (reuse the #006 `CommentText` tokenizer) in `lib/features/reels/presentation/widgets/reel_caption.dart`
+- [x] T031 [US2] Introduce `CommentTarget` (post vs reel) and generalize `AddComment`/`DeleteComment` count-delta routing to the right repository in `lib/features/post/domain/usecases/comment_usecases.dart` (keeps #006 post path intact — analyze-F1 parity)
+- [x] T032 [US2] `ReelCommentsSheet` — modal bottom sheet reusing #006 `CommentsCubit` + comment widgets, keyed by reel id, honoring `commentsDisabled`, in `lib/features/reels/presentation/widgets/reel_comments_sheet.dart`; open from the action rail comment button
+- [x] T033 [US2] Wire reel comments to `reelComments(id)` endpoint + confirm `FakeCommentsRepository` is target-agnostic (keyed by id) so fake mode works unchanged. **Note (I1):** the reused #006 `CommentsCubit` is oldest-first, while the backend reel-comments alias is newest-first — document/resolve ordering at real cutover (invisible in fake mode)
+- [x] T034 [US2] Share action → surface-only Toast (share-to-DM deferred to #012) in the action rail
+- [x] T034a [US2] Reel overflow/`ActionSheet`: **Report** (surface-only Toast ack, FR-024a) for others' reels, **Delete** for own (wired to T042); reachable from every reel (Constitution I) — mirror #006 report-other, in `lib/features/reels/presentation/widgets/reel_more_sheet.dart`
 
 **Checkpoint**: US1 + US2 both work independently.
 
@@ -126,7 +126,7 @@ Flutter feature-first (Constitution XI): core slice `lib/core/data/reels/`, feat
 - [ ] T039 [US3] `PublishReel` use case in `lib/features/reels/domain/usecases/publish_reel.dart` (resolve video bytes → `MediaUploadService.upload` (reuse #007) → `ReelsRepository.createReel`; reuse idempotency key on retry; emit progress; optimistic top-of-feed insert)
 - [ ] T040 [US3] `ReelComposeCubit` + freezed 4-state (`initial/loading/loaded(draft)/loadedUploading(draft,progress)/error(draft)/published(reel)`) in `lib/features/reels/presentation/cubit/reel_compose_cubit.dart` + state (pick/validate/setCaption/setOptions/publish/cancel/retry/discard)
 - [ ] T041 [US3] `ReelComposePage` in `lib/features/reels/presentation/reel_compose_page.dart` (video preview, caption input, tag-people/location/comments-off, upload progress + cancel, discard-confirm dialog)
-- [ ] T042 [US3] `DeleteReel` use case + delete-own via `ActionSheet` + confirm in `lib/features/reels/domain/usecases/delete_reel.dart` (wire into action rail overflow)
+- [x] T042 [US3] `DeleteReel` use case + delete-own via `ActionSheet` + confirm in `lib/features/reels/domain/usecases/delete_reel.dart` (wire into action rail overflow)
 - [ ] T043 [US3] Wire `reelCompose` route + contextual **Create** entry point (not a tab) in `lib/core/router/app_router.dart`
 - [ ] T044 [US3] `ProcessingBadge` widget + cubit handling for optimistic processing reel → reconcile to ready in `lib/features/reels/presentation/widgets/processing_badge.dart`
 

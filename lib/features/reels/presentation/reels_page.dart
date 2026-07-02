@@ -3,13 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:we36/core/data/reels/reel.dart';
+import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
+import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_colors.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
+import 'package:we36/features/post/presentation/widgets/comment_text.dart';
 import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart';
 import 'package:we36/features/reels/presentation/cubit/reels_state.dart';
 import 'package:we36/features/reels/presentation/playback/reel_playback_controller.dart';
+import 'package:we36/features/reels/presentation/widgets/reel_action_rail.dart';
+import 'package:we36/features/reels/presentation/widgets/reel_comments_sheet.dart';
+import 'package:we36/features/reels/presentation/widgets/reel_more_sheet.dart';
 import 'package:we36/features/reels/presentation/widgets/reel_view.dart';
 
 /// The Reels tab (#008, Screen 10): a full-screen vertical `PageView` of reels.
@@ -126,14 +132,49 @@ class _ReelsPageState extends State<ReelsPage> {
   }
 }
 
-/// Bottom-left author + caption + a processing badge (US1 minimal overlay; the
-/// action rail + report arrive in US2).
+/// Overlays the media surface: right-side action rail + bottom-left author +
+/// caption + a processing badge. Wires like/save (optimistic via the cubit),
+/// comment (bottom sheet), share/follow (surface-only Toast), and the overflow
+/// (report / delete-own) — US2.
 class _ReelOverlay extends StatelessWidget {
   const _ReelOverlay({required this.reel});
   final Reel reel;
 
+  // Fake-mode ownership heuristic; real ownership resolves with session/#010.
+  bool get _isOwn => reel.author.username == 'you';
+
+  void _toast(BuildContext context, String message, {ToastTone tone = ToastTone.neutral}) {
+    getIt<ToastService>().show(context, message: message, tone: tone);
+  }
+
+  Future<void> _like(BuildContext context) async {
+    final result = await context.read<ReelsCubit>().toggleLike(reel);
+    if (result.isErr && context.mounted) {
+      _toast(context, context.l10n.reelLikeFailed, tone: ToastTone.error);
+    }
+  }
+
+  Future<void> _save(BuildContext context) async {
+    final result = await context.read<ReelsCubit>().toggleSave(reel);
+    if (result.isErr && context.mounted) {
+      _toast(context, context.l10n.reelSaveFailed, tone: ToastTone.error);
+    }
+  }
+
+  Future<void> _delete(BuildContext context) async {
+    final cubit = context.read<ReelsCubit>();
+    final result = await cubit.deleteReel(reel);
+    if (!context.mounted) return;
+    _toast(
+      context,
+      result.isOk ? context.l10n.reelDeleted : context.l10n.reelDeleteFailed,
+      tone: result.isOk ? ToastTone.success : ToastTone.error,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return SafeArea(
       child: Stack(
         children: [
@@ -146,39 +187,107 @@ class _ReelOverlay extends StatelessWidget {
               ),
             ),
           Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                right: AppSpacing.md,
+                bottom: AppSpacing.xl,
+              ),
+              child: ReelActionRail(
+                reel: reel,
+                onLike: () => _like(context),
+                onComment: () => showReelCommentsSheet(
+                  context,
+                  reelId: reel.id,
+                  commentsDisabled: reel.commentsDisabled,
+                ),
+                onShare: () => _toast(context, l10n.reelShareAck),
+                onSave: () => _save(context),
+                onMore: () => showReelMoreSheet(
+                  context,
+                  isOwn: _isOwn,
+                  onDeleteConfirmed: () => _delete(context),
+                ),
+              ),
+            ),
+          ),
+          Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '@${reel.author.username ?? 'someone'}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'PlusJakartaSans',
-                      fontWeight: FontWeight.w800,
-                      fontSize: 15,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 280),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '@${reel.author.username ?? 'someone'}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'PlusJakartaSans',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 15,
+                          ),
+                        ),
+                        if (!_isOwn) ...[
+                          const SizedBox(width: AppSpacing.sm),
+                          _FollowButton(
+                            onTap: () => _toast(context, l10n.reelFollowAck),
+                          ),
+                        ],
+                      ],
                     ),
-                  ),
-                  if (reel.caption != null) ...[
-                    const SizedBox(height: AppSpacing.xs),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 280),
-                      child: Text(
-                        reel.caption!,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: Colors.white, fontSize: 14),
+                    if (reel.caption != null) ...[
+                      const SizedBox(height: AppSpacing.xs),
+                      DefaultTextStyle(
+                        style: const TextStyle(color: Colors.white),
+                        child: CommentText(reel.caption!),
                       ),
-                    ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _FollowButton extends StatelessWidget {
+  const _FollowButton({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Follow',
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: 2,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            borderRadius: BorderRadius.circular(AppRadius.full),
+          ),
+          child: const Text(
+            'Follow',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
       ),
     );
   }

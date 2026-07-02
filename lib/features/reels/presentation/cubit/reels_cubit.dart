@@ -22,6 +22,7 @@ class ReelsCubit extends Cubit<ReelsState> {
     this._loadMoreReels,
     this._toggleLike,
     this._toggleSave,
+    this._deleteReel,
   ) : super(const ReelsState.initial());
 
   final WatchReelsFeed _watchReels;
@@ -29,6 +30,7 @@ class ReelsCubit extends Cubit<ReelsState> {
   final LoadMoreReels _loadMoreReels;
   final ToggleReelLike _toggleLike;
   final ToggleReelSave _toggleSave;
+  final DeleteReel _deleteReel;
 
   StreamSubscription<List<Reel>>? _sub;
   List<Reel> _latest = const [];
@@ -119,6 +121,10 @@ class ReelsCubit extends Cubit<ReelsState> {
   /// Optimistic save (US2).
   Future<Result<EngagementState>> toggleSave(Reel reel) =>
       _toggleSave(reel.id, save: !reel.viewerHasSaved);
+
+  /// Delete the viewer's own reel (US2 overflow → confirm). Drops from cache;
+  /// returns a failure to toast.
+  Future<Result<void>> deleteReel(Reel reel) => _deleteReel(reel.id);
 
   @override
   Future<void> close() async {

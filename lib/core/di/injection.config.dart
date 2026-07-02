@@ -110,10 +110,14 @@ import 'package:we36/features/post/domain/usecases/comment_usecases.dart'
     as _i140;
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart'
     as _i321;
+import 'package:we36/features/reels/domain/usecases/reel_comment_usecases.dart'
+    as _i893;
 import 'package:we36/features/reels/domain/usecases/reel_engagement_usecases.dart'
     as _i728;
 import 'package:we36/features/reels/domain/usecases/reel_feed_usecases.dart'
     as _i740;
+import 'package:we36/features/reels/presentation/cubit/reel_comments_cubit.dart'
+    as _i989;
 import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart'
     as _i846;
 import 'package:we36/features/stories/data/create_story_repository.dart'
@@ -444,6 +448,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i728.ToggleReelSave>(
       () => _i728.ToggleReelSave(gh<_i724.ReelsRepository>()),
     );
+    gh.factory<_i728.DeleteReel>(
+      () => _i728.DeleteReel(gh<_i724.ReelsRepository>()),
+    );
     gh.factory<_i740.WatchReelsFeed>(
       () => _i740.WatchReelsFeed(gh<_i724.ReelsRepository>()),
     );
@@ -479,6 +486,28 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i140.ReportComment>(
       () => _i140.ReportComment(gh<_i552.CommentsRepository>()),
     );
+    gh.factory<_i846.ReelsCubit>(
+      () => _i846.ReelsCubit(
+        gh<_i740.WatchReelsFeed>(),
+        gh<_i740.LoadReels>(),
+        gh<_i740.LoadMoreReels>(),
+        gh<_i728.ToggleReelLike>(),
+        gh<_i728.ToggleReelSave>(),
+        gh<_i728.DeleteReel>(),
+      ),
+    );
+    gh.factory<_i893.AddReelComment>(
+      () => _i893.AddReelComment(
+        gh<_i552.CommentsRepository>(),
+        gh<_i724.ReelsRepository>(),
+      ),
+    );
+    gh.factory<_i893.DeleteReelComment>(
+      () => _i893.DeleteReelComment(
+        gh<_i552.CommentsRepository>(),
+        gh<_i724.ReelsRepository>(),
+      ),
+    );
     gh.factory<_i140.WatchPost>(
       () => _i140.WatchPost(gh<_i850.FeedRepository>()),
     );
@@ -504,6 +533,17 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i894.ResetPassword>(
       () => _i894.ResetPassword(gh<_i163.AuthRepository>()),
+    );
+    gh.factory<_i989.ReelCommentsCubit>(
+      () => _i989.ReelCommentsCubit(
+        gh<_i140.LoadComments>(),
+        gh<_i140.LoadReplies>(),
+        gh<_i893.AddReelComment>(),
+        gh<_i140.ToggleCommentLike>(),
+        gh<_i893.DeleteReelComment>(),
+        gh<_i140.ReportComment>(),
+        gh<_i222.IdempotencyKeys>(),
+      ),
     );
     gh.factory<_i321.WatchFeed>(
       () => _i321.WatchFeed(gh<_i850.FeedRepository>()),
@@ -531,15 +571,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i16.ProfileSetupCubit(
         gh<_i985.CheckUsername>(),
         gh<_i800.SetupProfile>(),
-      ),
-    );
-    gh.factory<_i846.ReelsCubit>(
-      () => _i846.ReelsCubit(
-        gh<_i740.WatchReelsFeed>(),
-        gh<_i740.LoadReels>(),
-        gh<_i740.LoadMoreReels>(),
-        gh<_i728.ToggleReelLike>(),
-        gh<_i728.ToggleReelSave>(),
       ),
     );
     gh.factory<_i992.FeedCubit>(
