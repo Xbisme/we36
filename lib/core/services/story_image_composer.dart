@@ -19,7 +19,7 @@ import 'package:we36/core/domain/result.dart';
 class StoryImageComposer {
   const StoryImageComposer();
 
-  /// Target export width — produces a deterministic [targetWidth] × 16/9 image
+  /// Target export width — produces a deterministic `targetWidth` × 16/9 image
   /// regardless of device DPR, keeping goldens/tests stable and memory bounded.
   static const int defaultTargetWidth = 1080;
 

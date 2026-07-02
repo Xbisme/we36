@@ -1,5 +1,7 @@
 # Spec #005 — Create Story & Story Tools · Alignment Decisions
 
+> **✅ Shipped 2026-07-02 — merged into `main` via PR #6** (47/47 tasks). See [`../changelog.md`](../changelog.md) §2026-07-02 and [`../../specs/005-create-story/tasks.md`](../../specs/005-create-story/tasks.md).
+
 > Pre-`/speckit.specify` alignment session (2026-07-01). Depends on #004 (StoriesRail + Story viewer) ✅ and #007 (media pipeline) ✅. **No backend stories contract exists yet** (`StoriesRepository` real seam is a stub, `lib/core/data/stories/stories_repository.dart`) — #005 builds on **fakes + a provisional client contract**, writing the created story into the in-memory reel list so it appears immediately in the #004 rail/viewer (same zero-network `environment:'fake'` pattern as #002/#007).
 
 ## Context

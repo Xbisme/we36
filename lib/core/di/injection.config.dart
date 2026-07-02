@@ -21,6 +21,11 @@ import 'package:we36/core/data/auth/auth_repository_impl.dart' as _i235;
 import 'package:we36/core/data/auth/fake_auth_backend.dart' as _i489;
 import 'package:we36/core/data/auth/fake_auth_repository.dart' as _i548;
 import 'package:we36/core/data/cache/app_database.dart' as _i270;
+import 'package:we36/core/data/comments/comments_remote_data_source.dart'
+    as _i814;
+import 'package:we36/core/data/comments/comments_repository.dart' as _i552;
+import 'package:we36/core/data/comments/comments_repository_impl.dart' as _i440;
+import 'package:we36/core/data/comments/fake_comments_repository.dart' as _i67;
 import 'package:we36/core/data/feed/fake_feed_repository.dart' as _i144;
 import 'package:we36/core/data/feed/feed_remote_data_source.dart' as _i138;
 import 'package:we36/core/data/feed/feed_repository.dart' as _i850;
@@ -97,6 +102,10 @@ import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart'
     as _i772;
 import 'package:we36/features/feed/domain/usecases/feed_usecases.dart' as _i321;
 import 'package:we36/features/feed/presentation/feed_cubit.dart' as _i992;
+import 'package:we36/features/post/domain/usecases/comment_usecases.dart'
+    as _i140;
+import 'package:we36/features/post/presentation/cubit/comments_cubit.dart'
+    as _i321;
 import 'package:we36/features/stories/data/create_story_repository.dart'
     as _i674;
 import 'package:we36/features/stories/data/create_story_repository_fake.dart'
@@ -182,6 +191,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i897.WatchOwnStoryChanges>(
       () => _i897.WatchOwnStoryChanges(gh<_i767.OwnStoryStore>()),
+    );
+    gh.lazySingleton<_i552.CommentsRepository>(
+      () => _i67.FakeCommentsRepository.create(),
+      registerFor: {_fake},
     );
     gh.lazySingleton<_i873.OAuthTokenSource>(
       () => _i350.RealOAuthTokenSource(gh<_i434.AppConfig>()),
@@ -291,6 +304,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1043.AuthRemoteDataSource>(
       () => _i1043.AuthRemoteDataSource(gh<_i784.ApiClient>()),
     );
+    gh.lazySingleton<_i814.CommentsRemoteDataSource>(
+      () => _i814.CommentsRemoteDataSource(gh<_i784.ApiClient>()),
+    );
     gh.lazySingleton<_i138.FeedRemoteDataSource>(
       () => _i138.FeedRemoteDataSource(gh<_i784.ApiClient>()),
     );
@@ -330,6 +346,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i767.OwnStoryStore>(),
         gh<_i242.AuthEventsSink>(),
       ),
+    );
+    gh.lazySingleton<_i552.CommentsRepository>(
+      () => _i440.CommentsRepositoryImpl(gh<_i814.CommentsRemoteDataSource>()),
+      registerFor: {_real},
     );
     gh.factory<_i902.OnboardingCubit>(
       () => _i902.OnboardingCubit(gh<_i958.SessionController>()),
@@ -382,6 +402,18 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i222.IdempotencyKeys>(),
       ),
     );
+    gh.factory<_i140.AddComment>(
+      () => _i140.AddComment(
+        gh<_i552.CommentsRepository>(),
+        gh<_i850.FeedRepository>(),
+      ),
+    );
+    gh.factory<_i140.DeleteComment>(
+      () => _i140.DeleteComment(
+        gh<_i552.CommentsRepository>(),
+        gh<_i850.FeedRepository>(),
+      ),
+    );
     gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
     gh.factory<_i800.SetupProfile>(
       () => _i800.SetupProfile(
@@ -395,6 +427,21 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i665.TokenStore>(),
         gh<_i958.SessionController>(),
       ),
+    );
+    gh.factory<_i140.LoadComments>(
+      () => _i140.LoadComments(gh<_i552.CommentsRepository>()),
+    );
+    gh.factory<_i140.LoadReplies>(
+      () => _i140.LoadReplies(gh<_i552.CommentsRepository>()),
+    );
+    gh.factory<_i140.ToggleCommentLike>(
+      () => _i140.ToggleCommentLike(gh<_i552.CommentsRepository>()),
+    );
+    gh.factory<_i140.ReportComment>(
+      () => _i140.ReportComment(gh<_i552.CommentsRepository>()),
+    );
+    gh.factory<_i140.WatchPost>(
+      () => _i140.WatchPost(gh<_i850.FeedRepository>()),
     );
     gh.factory<_i915.SignInWithApple>(
       () => _i915.SignInWithApple(
@@ -454,6 +501,18 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i321.LoadMoreFeed>(),
         gh<_i321.ToggleLike>(),
         gh<_i321.ToggleSave>(),
+      ),
+    );
+    gh.factory<_i321.CommentsCubit>(
+      () => _i321.CommentsCubit(
+        gh<_i140.WatchPost>(),
+        gh<_i140.LoadComments>(),
+        gh<_i140.LoadReplies>(),
+        gh<_i140.AddComment>(),
+        gh<_i140.ToggleCommentLike>(),
+        gh<_i140.DeleteComment>(),
+        gh<_i140.ReportComment>(),
+        gh<_i222.IdempotencyKeys>(),
       ),
     );
     gh.factory<_i764.ForgotPasswordCubit>(

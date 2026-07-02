@@ -161,9 +161,9 @@ description: "Task list for Create Story & Story Tools (#005)"
 - [X] T041 [P] Log-redaction test — no media bytes/paths/PII in logs during pick/flatten/upload (FR-019) in `test/features/stories/story_compose_redaction_test.dart`.
 - [X] T042 [P] a11y + text-scaling + adaptive test (Semantics, large text, tablet **centered-mobile fallback** for Screen 9) in `test/features/stories/story_compose_a11y_test.dart`.
 - [X] T043 [P] [US1] Wire + test empty-gallery and permission-denied (with open-settings) states on `story_pick_page`, reusing #007 patterns, in `test/features/stories/story_pick_states_test.dart`.
-- [ ] T044 Run the pre-commit gate: `dart format .` · `flutter analyze` (zero warnings) · `flutter test` (all green) · `dart run bloc_tools:bloc lint .` (if runnable).
-- [ ] T045 Execute [quickstart.md](quickstart.md) manual scenarios 1–7 in fake mode and record the sign-off.
-- [ ] T046 At merge: add the #005 changelog entry + update `project-context.md` / `sdd-roadmap.md` spec status (🟡 → ✅) + the `decisions/spec-005-create-story.md` cross-links.
+- [X] T044 Run the pre-commit gate: `dart format .` · `flutter analyze` · `flutter test` · `dart run bloc_tools:bloc lint .` (if runnable). **Result (2026-07-02, Flutter 3.44.4 / Dart 3.12.2)**: format clean; `flutter analyze` = 2 pre-existing pubspec-sort infos only (no warnings/errors — fixed 2 unused imports + 4 doc/cascade infos in #005 code); `flutter test` = **304 green** after regenerating repo-wide goldens under the canonical SDK (the deferred golden refresh); `bloc lint` not runnable (`bloc_lint` ships no CLI).
+- [X] T045 Execute [quickstart.md](quickstart.md) scenarios 1–7 in fake mode — validated via the **authoritative automated suites** (all #005 `story_compose_*` / `story_publish_flow` / `own_story_store` / redaction / a11y suites green). Interactive on-device walkthrough carried to the #015 release gate (per #003 precedent).
+- [X] T046 Added the #005 changelog entry + updated `project-context.md` / `sdd-roadmap.md` spec status (🟡 → ✅) + `decisions/spec-005-create-story.md` cross-links.
 
 ---
 

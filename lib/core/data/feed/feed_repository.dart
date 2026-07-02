@@ -11,6 +11,15 @@ abstract interface class FeedRepository {
   /// Reactive, reverse-chronological canonical feed read (FR-001/FR-004).
   Stream<List<Post>> watchHomeFeed();
 
+  /// Reactive read of one canonical cached [Post] by id — the render source for
+  /// the post detail (#006). Emits null while the post is not cached.
+  Stream<Post?> watchPost(String id);
+
+  /// Adjust the cached post's `commentCount` by [delta] (#006). Owned by the
+  /// comment add/delete use cases so feed and detail stay consistent
+  /// (Constitution IX; SC-005). No-op if the post is not cached.
+  Future<void> applyCommentCountDelta(String id, int delta);
+
   /// Load the first page (`GET /feed`), replacing the cached feed (FR-003).
   Future<Result<CursorPage<Post>>> loadFirstPage();
 

@@ -1063,6 +1063,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Discard'**
   String get storyDiscardDiscard;
+
+  /// Post detail screen title (#006)
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get postTitle;
+
+  /// Comments screen/pane title
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get commentsTitle;
+
+  /// Comment input placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Add a comment…'**
+  String get commentAddHint;
+
+  /// Submit a comment button
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get commentPost;
+
+  /// Reply to a comment action
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get commentReply;
+
+  /// Expand a comment's replies
+  ///
+  /// In en, this message translates to:
+  /// **'View {count} replies'**
+  String commentViewReplies(String count);
+
+  /// Reply-to banner above the input
+  ///
+  /// In en, this message translates to:
+  /// **'Replying to {handle}'**
+  String commentReplyingTo(String handle);
+
+  /// Dismiss the reply-to banner
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel reply'**
+  String get commentReplyCancel;
+
+  /// Delete own comment (action sheet)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get commentDelete;
+
+  /// Report another's comment (action sheet)
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get commentReport;
+
+  /// Cancel the comment action sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commentActionsCancel;
+
+  /// Confirm-delete dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete comment?'**
+  String get commentDeleteConfirmTitle;
+
+  /// Confirm-delete dialog body
+  ///
+  /// In en, this message translates to:
+  /// **'This comment and its replies will be removed.'**
+  String get commentDeleteConfirmBody;
+
+  /// Confirm delete
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get commentDeleteConfirm;
+
+  /// Cancel delete
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commentDeleteCancel;
+
+  /// Shown when a post disables comments
+  ///
+  /// In en, this message translates to:
+  /// **'Comments are turned off'**
+  String get commentsDisabledNotice;
+
+  /// Empty comment list
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet'**
+  String get commentsEmpty;
+
+  /// Empty comment list subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to comment.'**
+  String get commentsEmptyHint;
+
+  /// Comment list first-load error
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load comments'**
+  String get commentsError;
+
+  /// Offline comment list notice
+  ///
+  /// In en, this message translates to:
+  /// **'Comments unavailable offline'**
+  String get commentsOffline;
+
+  /// Retry loading comments
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get commentRetry;
+
+  /// Add-comment failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t post your comment.'**
+  String get commentAddFailed;
+
+  /// Comment like failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update the like.'**
+  String get commentLikeFailed;
+
+  /// Delete-comment failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t delete the comment.'**
+  String get commentDeleteFailed;
+
+  /// Report acknowledgement toast
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks — we\'ll review this comment.'**
+  String get commentReported;
 }
 
 class _AppLocalizationsDelegate

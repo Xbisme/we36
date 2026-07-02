@@ -11,7 +11,6 @@ import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/services/photo_library_service.dart';
-import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
@@ -120,10 +119,15 @@ class _StoryComposePageState extends State<StoryComposePage> {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: uploading ? null : () => unawaited(
-                          _onClose(draft),
+                        onPressed: uploading
+                            ? null
+                            : () => unawaited(
+                                _onClose(draft),
+                              ),
+                        icon: const AppIcon(
+                          AppIcons.close,
+                          color: Colors.white,
                         ),
-                        icon: const AppIcon(AppIcons.close, color: Colors.white),
                       ),
                       const Spacer(),
                       AppButton(

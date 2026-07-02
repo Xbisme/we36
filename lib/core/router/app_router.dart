@@ -28,6 +28,8 @@ import 'package:we36/features/feed/presentation/feed_cubit.dart';
 import 'package:we36/features/feed/presentation/home_page.dart';
 import 'package:we36/features/messaging/presentation/messages_page.dart';
 import 'package:we36/features/placeholder_page.dart';
+import 'package:we36/features/post/presentation/cubit/comments_cubit.dart';
+import 'package:we36/features/post/presentation/post_detail_page.dart';
 import 'package:we36/features/profile/presentation/profile_page.dart';
 import 'package:we36/features/reels/presentation/reels_page.dart';
 import 'package:we36/features/stories/presentation/compose/story_compose_page.dart';
@@ -110,6 +112,22 @@ class AppRouter {
         ),
         _flow(AppRoutes.settings, const PlaceholderPage(title: 'Settings')),
         _flow(AppRoutes.search, const PlaceholderPage(title: 'Search')),
+        // Post detail + comments (#006) — full-screen nav-less; the page itself
+        // adapts to a two-column split on tablet (US6). Page-scoped CommentsCubit.
+        GoRoute(
+          path: AppRoutes.postDetail,
+          builder: (_, state) {
+            final id = state.pathParameters['id']!;
+            return BlocProvider(
+              create: (_) {
+                final cubit = getIt<CommentsCubit>();
+                unawaited(cubit.load(id));
+                return cubit;
+              },
+              child: const PostDetailPage(),
+            );
+          },
+        ),
         // Create Post — compose flow (#007). One ShellRoute so pick→edit→caption
         // share the GalleryCubit + ComposeCubit; nav-less, centered on tablet.
         ShellRoute(

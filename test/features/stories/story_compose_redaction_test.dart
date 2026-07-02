@@ -41,7 +41,8 @@ void main() {
     expect(
       offenders,
       isEmpty,
-      reason: 'Use AppLogger (redacted), never print/debugPrint:\n'
+      reason:
+          'Use AppLogger (redacted), never print/debugPrint:\n'
           '${offenders.join('\n')}',
     );
   });

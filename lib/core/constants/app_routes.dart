@@ -24,6 +24,12 @@ abstract final class AppRoutes {
   static const String create = '/create';
   static const String search = '/search';
 
+  // Post detail + comments (#006), nav-less full-screen (Screens 14–15).
+  static const String postDetail = '/post/:id';
+
+  /// Build the concrete post-detail path for [postId].
+  static String postDetailPath(String postId) => '/post/$postId';
+
   // Create Post — compose flow (#007), nav-less full-screen (Screens 11–13).
   static const String composePick = '/create/pick';
   static const String composeEdit = '/create/edit';

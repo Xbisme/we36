@@ -54,22 +54,25 @@ void main() {
     await db.close();
   });
 
-  test('pick a photo, publish, and the rail repaints with the new story', () async {
-    await rail.load();
-    final youBefore = rail.state.dataOrNull!.firstWhere((r) => r.isYou);
+  test(
+    'pick a photo, publish, and the rail repaints with the new story',
+    () async {
+      await rail.load();
+      final youBefore = rail.state.dataOrNull!.firstWhere((r) => r.isYou);
 
-    // Pick one photo, then start + publish the compose flow.
-    await gallery.loadInitial();
-    gallery.select('fake-asset-0');
-    expect(gallery.state.selectedId, 'fake-asset-0');
+      // Pick one photo, then start + publish the compose flow.
+      await gallery.loadInitial();
+      gallery.select('fake-asset-0');
+      expect(gallery.state.selectedId, 'fake-asset-0');
 
-    compose.startFromAsset(gallery.state.selectedId!);
-    await compose.publish(boundaryKey: GlobalKey());
-    await _settle(); // OwnStoryStore.changes → rail re-reads (no manual refresh)
+      compose.startFromAsset(gallery.state.selectedId!);
+      await compose.publish(boundaryKey: GlobalKey());
+      await _settle(); // OwnStoryStore.changes → rail re-reads (no manual refresh)
 
-    final youAfter = rail.state.dataOrNull!.firstWhere((r) => r.isYou);
-    expect(youAfter.segments.length, youBefore.segments.length + 1);
-    expect(youAfter.hasUnseen, isTrue);
-    expect(store.activeSegments(), hasLength(1));
-  });
+      final youAfter = rail.state.dataOrNull!.firstWhere((r) => r.isYou);
+      expect(youAfter.segments.length, youBefore.segments.length + 1);
+      expect(youAfter.hasUnseen, isTrue);
+      expect(store.activeSegments(), hasLength(1));
+    },
+  );
 }

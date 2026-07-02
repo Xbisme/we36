@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-07-01 (#001–#004 + **#007 Create Post ✅ merged** into `main` (PR #5) — 62/62 tasks (US1–US5 + Polish), 269 tests pass. Next: #005/#006 follow #007 — they reuse its media pipeline.)
+> Last updated: 2026-07-02 (#001–#005 + #007 merged; **#006 Post Detail & Comments ✅ implemented** on `006-post-comments` — 46/46 tasks, 349 tests pass, pending PR. Content trio complete. Next: **#008 Reels**.)
 
 ---
 
@@ -131,13 +131,13 @@ Create Story     Post Detail &    Create Post      Reels
 - **Scope**: paginated reverse-chronological feed; `PostCard` wired; **optimistic** like/save (+ rollback); stories rail + full-screen story viewer (progress segments, reply/like/share); pull-to-refresh; empty/offline-from-cache states. First usable surface.
 - **Out of scope**: creating posts/stories (#005/#007), comments (#006).
 
-### Spec #005: Create Story & Story Tools  🟡
+### Spec #005: Create Story & Story Tools  ✅ (merged — 47/47, PR #6)
 - **Depends on**: #004 ✅.
 - **Design**: Screen 9 (Create story).
 - **Scope**: capture/pick → sticker/text overlay → publish to Your story / Close friends; 24h expiry model client-side; upload via the #002/#007 media pipeline.
 - **Out of scope**: post compose (#007), reels (#008).
 
-### Spec #006: Post Detail & Comments  🟡
+### Spec #006: Post Detail & Comments  🔵 (implemented — 46/46, pending PR)
 - **Depends on**: #004 ✅.
 - **Design**: Screens 14 (Post detail), 15 (Comments); tablet = **two-pane** (media + comments sidebar).
 - **Scope**: post detail; comments list + **one-level replies** + mentions + quick-emoji + comment compose (optimistic add); like a comment; report/delete via action sheet. On tablet/iPad render the **master/detail two-pane** (media pane + info/comments pane) via the #001 primitive; phone keeps push.

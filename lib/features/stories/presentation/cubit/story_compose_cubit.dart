@@ -151,8 +151,7 @@ class StoryComposeCubit extends Cubit<StoryComposeState> {
       if (bytes == null) {
         emit(
           StoryComposeState.error(
-            failure:
-                flattened.failureOrNull ?? const AppFailure.uploadFailed(),
+            failure: flattened.failureOrNull ?? const AppFailure.uploadFailed(),
             draft: draft,
           ),
         );
@@ -195,7 +194,8 @@ class StoryComposeCubit extends Cubit<StoryComposeState> {
     if (isClosed || (_cancelToken?.isCancelled ?? false)) return;
     result.fold(
       (segment) => emit(StoryComposeState.published(segment)),
-      (failure) => emit(StoryComposeState.error(failure: failure, draft: draft)),
+      (failure) =>
+          emit(StoryComposeState.error(failure: failure, draft: draft)),
     );
   }
 }

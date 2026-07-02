@@ -35,6 +35,19 @@ abstract final class ApiEndpoints {
   static String postLike(String id) => '/posts/$id/like';
   static String postSave(String id) => '/posts/$id/save';
 
+  /// Comments (#006) — B#comments contract. Top-level comments for a post
+  /// (cursor, oldest-first) and one level of replies for a comment; add a
+  /// comment/reply (idempotent via `Idempotency-Key`); idempotent like toggle
+  /// (`POST` adds / `DELETE` removes, target-state); delete own (cascade for a
+  /// parent); surface-only report.
+  static String postComments(String postId) => '/posts/$postId/comments';
+  static String commentReplies(String commentId) =>
+      '/comments/$commentId/replies';
+  static String commentLike(String commentId) => '/comments/$commentId/like';
+  static String comment(String commentId) => '/comments/$commentId';
+  static String commentReport(String commentId) =>
+      '/comments/$commentId/report';
+
   /// Media upload (#007) — multipart upload of a processed image; returns a
   /// `MediaRef` (id + variants). Idempotent via the client `Idempotency-Key`.
   static const String media = '/media';

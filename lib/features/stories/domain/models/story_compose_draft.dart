@@ -21,6 +21,5 @@ abstract class StoryComposeDraft with _$StoryComposeDraft {
   const StoryComposeDraft._();
 
   /// True once overlays exist — drives the discard-confirm on back-out (FR-015).
-  bool get hasOverlays =>
-      textOverlays.isNotEmpty || stickerOverlays.isNotEmpty;
+  bool get hasOverlays => textOverlays.isNotEmpty || stickerOverlays.isNotEmpty;
 }
