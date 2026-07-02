@@ -26,6 +26,14 @@ class ReelsRemoteDataSource {
         ),
       );
 
+  /// Fetch a single reel (`GET /reels/:id`). Unlike the ready-only feed, this
+  /// returns the reel even while its video is still transcoding — used to poll a
+  /// just-published reel until `isVideoReady` flips.
+  Future<Result<Reel>> getReel(String id) => _api.get<Reel>(
+    ApiEndpoints.reel(id),
+    decode: (data) => Reel.fromJson(data as Map<String, dynamic>),
+  );
+
   Future<Result<EngagementState>> like(String reelId, {required bool like}) {
     final path = ApiEndpoints.reelLike(reelId);
     EngagementState decode(dynamic data) =>

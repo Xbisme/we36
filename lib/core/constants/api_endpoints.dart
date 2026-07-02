@@ -72,9 +72,9 @@ abstract final class ApiEndpoints {
   static String reelSave(String id) => '/reels/$id/save';
   static String reelComments(String id) => '/reels/$id/comments';
 
-  /// Stories (#004) — **provisional**: no backend stories contract exists yet
-  /// (backend has auth/posts/media/comments only). The `StoriesRepository` real
-  /// seam targets this path but is never exercised while the app runs `fake`;
-  /// finalize when a backend stories spec lands.
+  /// Stories (#004 / B#006 contract). Publish (`POST /stories`, idempotent) from
+  /// one uploaded media + audience; the bounded tray (`GET /stories/feed`) is
+  /// unseen-first, self entry first.
   static const String stories = '/stories';
+  static const String storiesFeed = '/stories/feed';
 }

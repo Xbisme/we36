@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/cache/daos/reels_dao.dart';
@@ -19,6 +22,14 @@ class ReelsRepositoryImpl implements ReelsRepository {
 
   final ReelsRemoteDataSource _remote;
   final AppDatabase _db;
+
+  // Post-publish transcode reconciliation cadence. Mutable only so tests can
+  // shrink the wait; injectable builds this repo from its two real deps alone
+  // (a constructor `Duration` param would make get_it try to resolve `Duration`).
+  @visibleForTesting
+  Duration pollInterval = const Duration(milliseconds: 1500);
+  @visibleForTesting
+  int pollMaxAttempts = 40; // ~60s ceiling for a slow/long transcode.
 
   ReelsDao get _dao => _db.reelsDao;
 
@@ -117,11 +128,35 @@ class ReelsRepositoryImpl implements ReelsRepository {
       taggedUserIds: taggedUserIds,
     );
     if (result.isOk) {
-      // Optimistic top-of-feed insert; reconciles to ready on the next feed
-      // refresh / a re-fetch of the reel once its video transcodes.
-      await _dao.upsert(result.valueOrNull!);
+      // Optimistic top-of-feed insert; the reel is returned with its video still
+      // `processing` (isVideoReady == false → poster placeholder, no playable URL).
+      final reel = result.valueOrNull!;
+      await _dao.upsert(reel);
+      // The video transcodes asynchronously server-side. `GET /reels` is ready-only
+      // and never returns this reel until it's ready, so a plain feed refresh can't
+      // reconcile it — poll the single-reel endpoint until the video is ready and
+      // upsert the canonical copy, letting [watchReelsFeed] flip the UI to playable.
+      if (!reel.isVideoReady) {
+        unawaited(_reconcileWhenVideoReady(reel.id));
+      }
     }
     return result;
+  }
+
+  /// Background poll of `GET /reels/:id` after publish until the video finishes
+  /// transcoding (or fails), then upsert the canonical reel so the reactive feed
+  /// updates itself — no manual pull-to-refresh. Bounded (~60s); transient fetch
+  /// errors are retried; the loop is fire-and-forget (never blocks publish).
+  Future<void> _reconcileWhenVideoReady(String reelId) async {
+    for (var attempt = 0; attempt < pollMaxAttempts; attempt++) {
+      await Future<void>.delayed(pollInterval);
+      final reel = (await _remote.getReel(reelId)).valueOrNull;
+      if (reel == null) continue; // Transient error → keep polling.
+      if (reel.isVideoReady || reel.video.status == MediaStatus.failed) {
+        await _dao.upsert(reel);
+        return;
+      }
+    }
   }
 
   @override

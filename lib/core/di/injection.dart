@@ -4,12 +4,14 @@ import 'package:we36/core/di/injection.config.dart';
 
 final GetIt getIt = GetIt.instance;
 
-/// DI environment for #002: the app runs on in-memory fakes (no live backend).
-/// #003 switches this to a real environment once auth + a backend are wired.
-const String diEnvironment = 'fake';
+/// Default DI environment: `'real'` (the live backend). The app runs on real
+/// implementations; the `'fake'` env is an in-memory, zero-network graph used
+/// only by hermetic tests (`AppConfig.diEnvironment` / `--dart-define=DI_ENV`).
+const String diEnvironment = 'real';
 
 /// Wires the injectable dependency graph (Constitution XI). Called from
-/// bootstrap before the UI starts. Defaults to the fake environment (#002).
+/// bootstrap before the UI starts with `AppConfig.diEnvironment` (`'real'`);
+/// tests opt into the fake graph explicitly.
 @InjectableInit()
 void configureDependencies({String environment = diEnvironment}) =>
     getIt.init(environment: environment);
