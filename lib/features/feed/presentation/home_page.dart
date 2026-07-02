@@ -328,6 +328,8 @@ class _PostTile extends StatelessWidget {
             _onMutation(context, cubit.toggleLike(post), l10n.feedLikeFailed),
         onSave: () =>
             _onMutation(context, cubit.toggleSave(post), l10n.feedSaveFailed),
+        onComment: () =>
+            context.push(AppRoutes.postDetailPath(post.id)),
       ),
     );
   }

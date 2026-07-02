@@ -13,6 +13,7 @@ abstract class StoryTextOverlay with _$StoryTextOverlay {
   const factory StoryTextOverlay({
     required String id,
     required String text,
+
     /// A key into the small fixed set of token-driven text styles/colors.
     required String styleId,
     @Default(0.5) double dx,

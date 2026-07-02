@@ -91,6 +91,13 @@ class FakeFeedRepository implements FeedRepository {
   Stream<List<Post>> watchHomeFeed() => _dao.watchHomeFeed();
 
   @override
+  Stream<Post?> watchPost(String id) => _dao.watchPost(id);
+
+  @override
+  Future<void> applyCommentCountDelta(String id, int delta) =>
+      _dao.adjustCommentCount(id, delta);
+
+  @override
   Future<Result<CursorPage<Post>>> loadFirstPage() async {
     final page = _page(0);
     await _dao.clearFeed();

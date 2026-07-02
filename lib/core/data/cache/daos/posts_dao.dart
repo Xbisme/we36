@@ -36,6 +36,26 @@ class PostsDao extends DatabaseAccessor<AppDatabase> with _$PostsDaoMixin {
     return row == null ? null : _toDomain(row);
   }
 
+  /// Reactive read of one canonical post by id — the post-detail render source
+  /// (#006). Emits null while the post is not cached.
+  Stream<domain.Post?> watchPost(String id) =>
+      (select(posts)..where((t) => t.id.equals(id)))
+          .watchSingleOrNull()
+          .map((row) => row == null ? null : _toDomain(row));
+
+  /// Adjust a cached post's `commentCount` by [delta], clamped at 0 (#006).
+  /// No-op if the post is not cached.
+  Future<void> adjustCommentCount(String id, int delta) async {
+    final row = await (select(
+      posts,
+    )..where((t) => t.id.equals(id))).getSingleOrNull();
+    if (row == null) return;
+    final next = (row.commentCount + delta).clamp(0, 1 << 30);
+    await (update(posts)..where((t) => t.id.equals(id))).write(
+      PostsCompanion(commentCount: Value(next)),
+    );
+  }
+
   /// Reconcile one post with server-authoritative engagement counts (FR-013).
   Future<void> applyEngagement(domain.EngagementState e) =>
       (update(posts)..where((t) => t.id.equals(e.postId))).write(

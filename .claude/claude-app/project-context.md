@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-07-01 (#001–#004 + **#007 Create Post ✅ MERGED** into `main` (PR #5) — **62/62 tasks** (all US1–US5 + Polish), **269 tests pass** (~44 new compose tests + 6 compose goldens), `flutter analyze` clean for #007 code. Next: trio siblings **#005 Create Story · #006 Post Detail**.)
+> Last updated: 2026-07-02 (#001–#005 + #007 merged; **#006 Post Detail & Comments ✅ IMPLEMENTED** on `006-post-comments` — 46/46 tasks, **349 tests pass**, `dart analyze` clean, pending PR/merge. Trio complete. Next: **#008 Reels**.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,11 +29,12 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #007 Create Post (Compose & Upload) ✅ MERGED** into `main` (PR #5) — **62/62 tasks done** (all of US1–US5 + Polish). Full SDD cycle done (specify→clarify→plan→tasks→analyze→implement). **269 tests pass** (~44 new compose tests + 6 compose goldens); `flutter analyze` clean for all #007 code.
-  - **Built + verified**: media pipeline in `core/services/` (`ImageProcessingService` bake-on-isolate, `MediaUploadService` +fake, `PhotoLibraryService` +fake + `openSettings`), `CreatePostRepository` +fake (writes canonical #004 `Post`, idempotent), drift **v3→v4** (`ComposeDrafts` + migration test), `GalleryCubit`/`ComposeCubit`, `PublishPost` use case; **US2** edit (live `ColorFilter.matrix` preview + `FilterRow` + `AdjustSlider` + 4:5 crop via `crop_your_image`, baked to match preview); **US3** carousel (ordered multi-select cap-10 + per-item thumbnail strip + swipeable `PostCard` carousel); **US4** `UploadProgress` + cancel/retry (idempotent, no partial cache); **US5** caption options (tag/location/turn-off-comments; Stories+music hidden) + draft restore/keep-discard/drop-missing/logout-wipe. New deps `photo_manager`/`photo_manager_image_provider`/`crop_your_image`/`image`. Native perms wired.
-  - **▶ Next**: start the trio siblings **#005 Create Story** or **#006 Post Detail** — both reuse this media pipeline (create the branch + run `/speckit.specify`).
-  - **⚠ Test gotcha (learned)**: widget tests with real `MemoryImage` thumbnails + go_router navigation **hang `pumpAndSettle`/time out**. Use fixed `pump(Duration)` (not settle), test logic-first via cubits, and inject a **synchronous `ImageProcessingService` stub** (no `compute` isolate) in widget tests. See `test/features/compose/publish_flow_test.dart`.
-- **Toolchain**: Flutter **3.44.4** / Dart **3.12.2** (bumped at #003 with user consent — was below the #001 `^3.11.5` floor). Goldens regenerated (sub-pixel toolchain diffs).
+- **Now**: **Spec #006 Post Detail & Comments ✅ IMPLEMENTED** on `006-post-comments` — **46/46 tasks done** (US1–US6 + Polish), full SDD cycle (specify→clarify→plan→tasks→analyze→implement). **349 tests pass**; `dart analyze` clean. **Pending PR/merge** (changes uncommitted on the branch, plus the still-uncommitted #005 close-out cleanup that rode along). Completes the content-creation/engagement **trio** (#005 story / #006 comments / #007 post).
+  - **Built + verified**: `lib/core/data/comments/` (`Comment`/`CommentAuthor`/`CommentEngagement`, `CommentsRepository` real + `FakeCommentsRepository`, remote source) + `lib/features/post/` (`CommentsCubit` 4-state, `comment_usecases`, `PostDetailPage`, `CommentTile`/`CommentText`/`CommentInput`/`QuickEmojiRow`). Post detail from feed (`/post/:id`) + oldest-first paginated comments, one-level replies, quick-emoji, optimistic+idempotent add/reply, optimistic comment-like, delete-own(cascade)/report-other, `@mention`/`#hashtag` styling, commentsDisabled, tablet two-column split. **Canonical `commentCount` consistency** via new `FeedRepository.watchPost`/`applyCommentCountDelta` owned by the add/delete use cases (analyze F1). **No drift schema change, no new dep.**
+  - **▶ Next**: open the PR for `006-post-comments` (still uncommitted — user opted to defer commits), then start **#008 Reels** (`git checkout -b 008-reels` + `/speckit.specify`; shares the #007 upload pipeline, needs `video_player`/`chewie`/`visibility_detector`).
+  - **Clarifications locked (#006)**: oldest-first · 2,200-char max · count includes replies (delete cascade −(1+replies)) · quick-emoji inserts into input.
+  - **⚠ Test gotcha (carried, still applies)**: widget tests with real `MemoryImage` + go_router **hang `pumpAndSettle`**. Use fixed `pump(Duration)`, logic-first cubit assertions, synchronous fakes; for post-detail widget tests use a **tall `surfaceSize`** so lazy slivers lay out the comment list. See `test/features/post/`.
+- **Toolchain**: Flutter **3.44.4** / Dart **3.12.2** — the canonical baseline (bumped at #003). ⚠️ At #005 close (2026-07-02) this machine's global SDK at `/Users/ase/Development/flutter` was found stale at **3.41.7** and re-checked-out to 3.44.4 (`git checkout 3.44.4`); this also fixed a `flutter analyze` AOT-snapshot cache crash. The **long-deferred repo-wide golden refresh was executed** — all goldens regenerated under 3.44.4 (incl. the previously-uncommitted `test/features/stories/goldens/` baseline). No fvm/puro; `pubspec` still pins `sdk: ^3.11.5` (3.44.4 satisfies it).
 - **#004 ✅ MERGED into `main`** via PR #4 (64/64 tasks; 206 tests). ⭐ First usable surface. Paginated feed + optimistic like/save + StoriesRail/viewer + drift v2→v3. Remaining trio siblings **#005 Create Story · #006 Post Detail** reuse #007's media pipeline (do after #007).
 - **Done — #002 merged**: `ApiClient` + idempotency/auth/**single-flight refresh**/redacted-logging interceptors + `FailureMapper`; `CursorPage<T>` + 4-state `PaginatedListCubit`; **drift** cache base + reactive `.watch()`; `RealtimeClient` Socket.IO scaffold + fake; repository pattern + fakes (`User` slice). App runs DI `environment: 'fake'`; real impls annotated `env: ['real']` (auth real impls start landing in #003). 103 tests green.
 - **Resolved at #002**: cache engine = **drift**; realtime = **`socket_io_client`** (constitution v1.0.2); cursor envelope shipped as `CursorPage<T>`.
@@ -49,8 +50,8 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 | 002 | Networking, Cache & Realtime Core | ✅ **Merged** | `002-networking-core` (PR #2) |
 | 003 | Auth & Onboarding | ✅ **Merged** | `003-auth-onboarding` (PR #3) |
 | 004 | Home Feed & Stories ⭐ | ✅ **Merged** | `004-home-feed-stories` (PR #4) |
-| 005 | Create Story & Tools | 🟡 **Next** (trio) | `005-create-story` |
-| 006 | Post Detail & Comments | 🟡 **Next** (trio) | `006-post-comments` |
+| 005 | Create Story & Tools | ✅ **Merged** (47/47) | `005-create-story` (PR #6) |
+| 006 | Post Detail & Comments | 🔵 **Implemented** (46/46, pending PR) | `006-post-comments` |
 | 007 | Create Post (Compose & Upload) | ✅ **Merged** (62/62) | `007-create-post` (PR #5) |
 | 008 | Reels | ⬜ Not started | `008-reels` |
 | 009 | Explore & Search | ⬜ Not started | `009-explore-search` |

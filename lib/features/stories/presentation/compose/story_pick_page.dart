@@ -10,7 +10,6 @@ import 'package:we36/core/presentation/top_bar.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
-import 'package:we36/features/stories/presentation/compose/story_compose_page.dart';
 import 'package:we36/features/stories/presentation/cubit/story_compose_cubit.dart';
 import 'package:we36/features/stories/presentation/cubit/story_gallery_cubit.dart';
 import 'package:we36/features/stories/presentation/cubit/story_gallery_state.dart';

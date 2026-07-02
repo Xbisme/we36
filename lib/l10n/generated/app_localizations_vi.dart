@@ -508,4 +508,84 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get storyDiscardDiscard => 'Bỏ';
+
+  @override
+  String get postTitle => 'Bài viết';
+
+  @override
+  String get commentsTitle => 'Bình luận';
+
+  @override
+  String get commentAddHint => 'Thêm bình luận…';
+
+  @override
+  String get commentPost => 'Đăng';
+
+  @override
+  String get commentReply => 'Trả lời';
+
+  @override
+  String commentViewReplies(String count) {
+    return 'Xem $count trả lời';
+  }
+
+  @override
+  String commentReplyingTo(String handle) {
+    return 'Đang trả lời $handle';
+  }
+
+  @override
+  String get commentReplyCancel => 'Huỷ trả lời';
+
+  @override
+  String get commentDelete => 'Xoá';
+
+  @override
+  String get commentReport => 'Báo cáo';
+
+  @override
+  String get commentActionsCancel => 'Huỷ';
+
+  @override
+  String get commentDeleteConfirmTitle => 'Xoá bình luận?';
+
+  @override
+  String get commentDeleteConfirmBody =>
+      'Bình luận này và các trả lời sẽ bị xoá.';
+
+  @override
+  String get commentDeleteConfirm => 'Xoá';
+
+  @override
+  String get commentDeleteCancel => 'Huỷ';
+
+  @override
+  String get commentsDisabledNotice => 'Bình luận đã bị tắt';
+
+  @override
+  String get commentsEmpty => 'Chưa có bình luận';
+
+  @override
+  String get commentsEmptyHint => 'Hãy là người bình luận đầu tiên.';
+
+  @override
+  String get commentsError => 'Không tải được bình luận';
+
+  @override
+  String get commentsOffline => 'Không có bình luận khi ngoại tuyến';
+
+  @override
+  String get commentRetry => 'Thử lại';
+
+  @override
+  String get commentAddFailed => 'Không đăng được bình luận.';
+
+  @override
+  String get commentLikeFailed => 'Không cập nhật được lượt thích.';
+
+  @override
+  String get commentDeleteFailed => 'Không xoá được bình luận.';
+
+  @override
+  String get commentReported => 'Cảm ơn — chúng tôi sẽ xem xét bình luận này.';
 }

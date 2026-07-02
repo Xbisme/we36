@@ -17,8 +17,8 @@ String ownStoryImageUrl(String segmentId) => '$kOwnStoryScheme://$segmentId';
 
 /// The one canonical representation of the current user's own **published**
 /// story segments for this session (#005, Constitution IX). It bridges the
-/// write path ([FakeCreateStoryRepository]) and the #004 read path
-/// ([FakeStoriesRepository]) without a repo→repo dependency and without a drift
+/// write path (`FakeCreateStoryRepository`) and the #004 read path
+/// (`FakeStoriesRepository`) without a repo→repo dependency and without a drift
 /// schema change (research R3). Session-scoped: not persisted across app kill
 /// (acceptable with no backend; revisit when a backend stories contract lands).
 ///

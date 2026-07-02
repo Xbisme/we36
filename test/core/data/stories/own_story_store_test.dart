@@ -14,8 +14,7 @@ StorySegment _segment(String id, {DateTime? createdAt}) => StorySegment(
 void main() {
   group('OwnStoryStore', () {
     test('add exposes the segment via activeSegments (newest first)', () {
-      final store = OwnStoryStore(clock: () => DateTime.utc(2026, 7, 1, 12));
-      store
+      final store = OwnStoryStore(clock: () => DateTime.utc(2026, 7, 1, 12))
         ..add(_segment('a', createdAt: DateTime.utc(2026, 7, 1, 10)))
         ..add(_segment('b', createdAt: DateTime.utc(2026, 7, 1, 11)));
 

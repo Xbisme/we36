@@ -12,7 +12,11 @@ import 'package:we36/l10n/generated/app_localizations.dart';
 /// US1/US2/US3 polish — the new story widgets meet Semantics + text-scaling +
 /// light/dark requirements (SC-008).
 void main() {
-  Widget host(Widget child, {ThemeMode mode = ThemeMode.light, double scale = 1}) {
+  Widget host(
+    Widget child, {
+    ThemeMode mode = ThemeMode.light,
+    double scale = 1,
+  }) {
     return MaterialApp(
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,

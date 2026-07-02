@@ -510,4 +510,84 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get storyDiscardDiscard => 'Discard';
+
+  @override
+  String get postTitle => 'Post';
+
+  @override
+  String get commentsTitle => 'Comments';
+
+  @override
+  String get commentAddHint => 'Add a comment…';
+
+  @override
+  String get commentPost => 'Post';
+
+  @override
+  String get commentReply => 'Reply';
+
+  @override
+  String commentViewReplies(String count) {
+    return 'View $count replies';
+  }
+
+  @override
+  String commentReplyingTo(String handle) {
+    return 'Replying to $handle';
+  }
+
+  @override
+  String get commentReplyCancel => 'Cancel reply';
+
+  @override
+  String get commentDelete => 'Delete';
+
+  @override
+  String get commentReport => 'Report';
+
+  @override
+  String get commentActionsCancel => 'Cancel';
+
+  @override
+  String get commentDeleteConfirmTitle => 'Delete comment?';
+
+  @override
+  String get commentDeleteConfirmBody =>
+      'This comment and its replies will be removed.';
+
+  @override
+  String get commentDeleteConfirm => 'Delete';
+
+  @override
+  String get commentDeleteCancel => 'Cancel';
+
+  @override
+  String get commentsDisabledNotice => 'Comments are turned off';
+
+  @override
+  String get commentsEmpty => 'No comments yet';
+
+  @override
+  String get commentsEmptyHint => 'Be the first to comment.';
+
+  @override
+  String get commentsError => 'Couldn\'t load comments';
+
+  @override
+  String get commentsOffline => 'Comments unavailable offline';
+
+  @override
+  String get commentRetry => 'Retry';
+
+  @override
+  String get commentAddFailed => 'Couldn\'t post your comment.';
+
+  @override
+  String get commentLikeFailed => 'Couldn\'t update the like.';
+
+  @override
+  String get commentDeleteFailed => 'Couldn\'t delete the comment.';
+
+  @override
+  String get commentReported => 'Thanks — we\'ll review this comment.';
 }

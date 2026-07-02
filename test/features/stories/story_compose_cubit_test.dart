@@ -34,16 +34,19 @@ void main() {
     await db.close();
   });
 
-  test('publish flattens, uploads, writes one segment, emits published', () async {
-    cubit.startFromAsset('asset-1');
-    await cubit.publish(boundaryKey: GlobalKey());
+  test(
+    'publish flattens, uploads, writes one segment, emits published',
+    () async {
+      cubit.startFromAsset('asset-1');
+      await cubit.publish(boundaryKey: GlobalKey());
 
-    expect(cubit.state, isA<StoryComposePublished>());
-    expect(composer.flattenCalls, 1);
-    final active = store.activeSegments();
-    expect(active, hasLength(1));
-    expect(active.single.imageUrl, startsWith('memory://'));
-  });
+      expect(cubit.state, isA<StoryComposePublished>());
+      expect(composer.flattenCalls, 1);
+      final active = store.activeSegments();
+      expect(active, hasLength(1));
+      expect(active.single.imageUrl, startsWith('memory://'));
+    },
+  );
 
   test('cancel mid-upload writes nothing and returns to loaded', () async {
     upload
