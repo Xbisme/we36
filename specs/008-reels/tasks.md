@@ -116,19 +116,19 @@ Flutter feature-first (Constitution XI): core slice `lib/core/data/reels/`, feat
 
 ### Tests for User Story 3
 
-- [ ] T035 [P] [US3] `PhotoLibraryService` video pick + duration/size validation test — rejects > 90s and > 150 MB (real+fake) in `test/core/services/photo_library_service_video_test.dart`
-- [ ] T036 [P] [US3] `ReelComposeCubit` pick→validate(≤90s)→publish + cancel + retry-idempotency `bloc_test` in `test/features/reels/reel_compose_cubit_test.dart`
+- [x] T035 [P] [US3] `PhotoLibraryService` video pick + duration/size validation test — rejects > 90s and > 150 MB (real+fake) in `test/core/services/photo_library_service_video_test.dart`
+- [x] T036 [P] [US3] `ReelComposeCubit` pick→validate(≤90s)→publish + cancel + retry-idempotency `bloc_test` in `test/features/reels/reel_compose_cubit_test.dart`
 
 ### Implementation for User Story 3
 
-- [ ] T037 [US3] Extend `PhotoLibraryService` (+ fake) for video in `lib/core/services/photo_library_service.dart` (`RequestType.video` query, `videoDuration`, video bytes/file accessor, poster thumbnail) + enforce the 90s / 150 MB caps (constants aligned with the backend media pipeline)
-- [ ] T038 [P] [US3] `ReelDraft` model in `lib/features/reels/domain/reel_draft.dart` (stable `idempotencyKey` UUIDv7; `videoAssetId`, `videoDurationMs`, `posterThumb`, `caption`, reused `PostMetadata`)
-- [ ] T039 [US3] `PublishReel` use case in `lib/features/reels/domain/usecases/publish_reel.dart` (resolve video bytes → `MediaUploadService.upload` (reuse #007) → `ReelsRepository.createReel`; reuse idempotency key on retry; emit progress; optimistic top-of-feed insert)
-- [ ] T040 [US3] `ReelComposeCubit` + freezed 4-state (`initial/loading/loaded(draft)/loadedUploading(draft,progress)/error(draft)/published(reel)`) in `lib/features/reels/presentation/cubit/reel_compose_cubit.dart` + state (pick/validate/setCaption/setOptions/publish/cancel/retry/discard)
-- [ ] T041 [US3] `ReelComposePage` in `lib/features/reels/presentation/reel_compose_page.dart` (video preview, caption input, tag-people/location/comments-off, upload progress + cancel, discard-confirm dialog)
+- [x] T037 [US3] Extend `PhotoLibraryService` (+ fake) for video in `lib/core/services/photo_library_service.dart` (`RequestType.video` query, `videoDuration`, video bytes/file accessor, poster thumbnail) + enforce the 90s / 150 MB caps (constants aligned with the backend media pipeline)
+- [x] T038 [P] [US3] `ReelDraft` model in `lib/features/reels/domain/reel_draft.dart` (stable `idempotencyKey` UUIDv7; `videoAssetId`, `videoDurationMs`, `posterThumb`, `caption`, reused `PostMetadata`)
+- [x] T039 [US3] `PublishReel` use case in `lib/features/reels/domain/usecases/publish_reel.dart` (resolve video bytes → `MediaUploadService.upload` (reuse #007) → `ReelsRepository.createReel`; reuse idempotency key on retry; emit progress; optimistic top-of-feed insert)
+- [x] T040 [US3] `ReelComposeCubit` + freezed 4-state (`initial/loading/loaded(draft)/loadedUploading(draft,progress)/error(draft)/published(reel)`) in `lib/features/reels/presentation/cubit/reel_compose_cubit.dart` + state (pick/validate/setCaption/setOptions/publish/cancel/retry/discard)
+- [x] T041 [US3] `ReelComposePage` in `lib/features/reels/presentation/reel_compose_page.dart` (video preview, caption input, tag-people/location/comments-off, upload progress + cancel, discard-confirm dialog)
 - [x] T042 [US3] `DeleteReel` use case + delete-own via `ActionSheet` + confirm in `lib/features/reels/domain/usecases/delete_reel.dart` (wire into action rail overflow)
-- [ ] T043 [US3] Wire `reelCompose` route + contextual **Create** entry point (not a tab) in `lib/core/router/app_router.dart`
-- [ ] T044 [US3] `ProcessingBadge` widget + cubit handling for optimistic processing reel → reconcile to ready in `lib/features/reels/presentation/widgets/processing_badge.dart`
+- [x] T043 [US3] Wire `reelCompose` route + contextual **Create** entry point (not a tab) in `lib/core/router/app_router.dart`
+- [x] T044 [US3] `ProcessingBadge` widget + cubit handling for optimistic processing reel → reconcile to ready in `lib/features/reels/presentation/widgets/processing_badge.dart`
 
 **Checkpoint**: All three stories independently functional.
 
@@ -138,15 +138,15 @@ Flutter feature-first (Constitution XI): core slice `lib/core/data/reels/`, feat
 
 **Purpose**: Accessibility, resilience, adaptivity (US4 P4) + quality gate across all stories.
 
-- [ ] T045 [P] Reduce Motion: poster + tap-to-play, no autoplay-loop, across `ReelView`/`ReelPlaybackController` (FR-026, SC-007)
-- [ ] T046 [P] `Semantics` labels on action rail, author, and caption; verify screen-reader announcement (FR-027, SC-009) in reels widgets
+- [x] T045 [P] Reduce Motion: poster + tap-to-play, no autoplay-loop, across `ReelView`/`ReelPlaybackController` (FR-026, SC-007)
+- [x] T046 [P] `Semantics` labels on action rail, author, and caption; verify screen-reader announcement (FR-027, SC-009) in reels widgets
 - [ ] T047 [P] iOS audio session honoring the silent switch (`ambient` category) — channel-first per research R3 (only add `audio_session` if the channel is fragile); Android per stream volume
 - [ ] T048 [P] Adaptive tablet/iPad reels layout (centered/constrained video column per §Responsive) in `reels_page.dart` (FR-028)
-- [ ] T049 [P] Verify all user messages use `Toast` (no `ScaffoldMessenger.showSnackBar`) across reels (FR-025)
-- [ ] T050 [P] Finalize reels ARB strings EN + VI in `lib/l10n/arb/` (counts/relative-time via shared `intl` formatters)
+- [x] T049 [P] Verify all user messages use `Toast` (no `ScaffoldMessenger.showSnackBar`) across reels (FR-025)
+- [x] T050 [P] Finalize reels ARB strings EN + VI in `lib/l10n/arb/` (counts/relative-time via shared `intl` formatters)
 - [ ] T051 [P] Log-redaction test — no video URLs/tokens logged — in `test/features/reels/log_redaction_test.dart`
 - [ ] T052 [P] Golden tests: `ReelActionRail` + `ProcessingBadge` (light + dark) in `test/features/reels/goldens/`
-- [ ] T053 [P] Widget test: `ReelsPage` render + swipe + Reduce-Motion poster path (fixed `pump(Duration)`, avoid `pumpAndSettle` with video/router — carried #006 gotcha) in `test/features/reels/reels_page_test.dart`
+- [x] T053 [P] Widget test: `ReelsPage` render + swipe + Reduce-Motion poster path (fixed `pump(Duration)`, avoid `pumpAndSettle` with video/router — carried #006 gotcha) in `test/features/reels/reels_page_test.dart`
 - [x] T054 [P] Drift v4→v5 migration test (Reels table added, existing rows intact) in `test/core/data/cache/migration_v4_to_v5_test.dart`
 - [ ] T055 Run pre-commit gate (`dart format .`, `flutter analyze` zero warnings, `flutter test` all pass, `dart run bloc_tools:bloc lint .`) + walk quickstart.md US1–US4
 

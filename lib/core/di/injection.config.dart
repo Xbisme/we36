@@ -110,6 +110,7 @@ import 'package:we36/features/post/domain/usecases/comment_usecases.dart'
     as _i140;
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart'
     as _i321;
+import 'package:we36/features/reels/domain/usecases/publish_reel.dart' as _i51;
 import 'package:we36/features/reels/domain/usecases/reel_comment_usecases.dart'
     as _i893;
 import 'package:we36/features/reels/domain/usecases/reel_engagement_usecases.dart'
@@ -118,6 +119,8 @@ import 'package:we36/features/reels/domain/usecases/reel_feed_usecases.dart'
     as _i740;
 import 'package:we36/features/reels/presentation/cubit/reel_comments_cubit.dart'
     as _i989;
+import 'package:we36/features/reels/presentation/cubit/reel_compose_cubit.dart'
+    as _i762;
 import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart'
     as _i846;
 import 'package:we36/features/stories/data/create_story_repository.dart'
@@ -427,6 +430,20 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i238.ComposeCubit(
         gh<_i602.PublishPost>(),
         gh<_i988.ComposeDraftStore>(),
+        gh<_i222.IdempotencyKeys>(),
+      ),
+    );
+    gh.factory<_i51.PublishReel>(
+      () => _i51.PublishReel(
+        gh<_i613.PhotoLibraryService>(),
+        gh<_i547.MediaUploadService>(),
+        gh<_i724.ReelsRepository>(),
+      ),
+    );
+    gh.factory<_i762.ReelComposeCubit>(
+      () => _i762.ReelComposeCubit(
+        gh<_i613.PhotoLibraryService>(),
+        gh<_i51.PublishReel>(),
         gh<_i222.IdempotencyKeys>(),
       ),
     );

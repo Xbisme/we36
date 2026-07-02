@@ -96,6 +96,8 @@ class _RailButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
+      container: true,
+      excludeSemantics: true,
       label: semanticLabel,
       child: InkResponse(
         onTap: onTap,

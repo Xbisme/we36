@@ -10,14 +10,21 @@ import 'package:we36/core/domain/result.dart';
 /// Photo-library permission state (contextual request — Constitution I/VII).
 enum PhotoPermission { granted, limited, denied }
 
-/// A device photo reference for the pick grid (our type — no plugin leak).
+/// A device photo/video reference for the pick grid (our type — no plugin leak).
+/// [durationMs] is set for video assets (#008), null for images.
 @immutable
 class AssetRef {
-  const AssetRef({required this.id, required this.width, required this.height});
+  const AssetRef({
+    required this.id,
+    required this.width,
+    required this.height,
+    this.durationMs,
+  });
 
   final String id;
   final int width;
   final int height;
+  final int? durationMs;
 
   @override
   bool operator ==(Object other) => other is AssetRef && other.id == id;
@@ -54,6 +61,15 @@ abstract interface class PhotoLibraryService {
 
   /// Full-resolution bytes of a selected asset (for edit/upload).
   Future<Result<Uint8List>> originBytes(AssetRef ref);
+
+  /// A page of device **videos** for the reel picker (#008), each carrying its
+  /// `durationMs` so the ≤90s cap can be enforced at pick time (FR-017).
+  Future<Result<AssetPage>> loadVideos({required int page, int pageSize});
+
+  /// The raw video file bytes of a selected video asset (for reel upload, #008).
+  /// Unlike [originBytes] (which returns a JPEG for images), this returns the
+  /// actual video container bytes.
+  Future<Result<Uint8List>> videoBytes(AssetRef ref);
 
   /// Open the OS settings page so the user can grant library access after a
   /// denial (contextual permission recovery — Constitution I/VII).
@@ -127,6 +143,47 @@ class RealPhotoLibraryService implements PhotoLibraryService {
     );
     if (jpeg != null) return Result.ok(jpeg);
     // Fallback: original bytes (already JPEG on most Android assets).
+    final bytes = await entity.originBytes;
+    if (bytes == null) return const Result.err(AppFailure.unsupportedMedia());
+    return Result.ok(bytes);
+  }
+
+  @override
+  Future<Result<AssetPage>> loadVideos({
+    required int page,
+    int pageSize = 60,
+  }) async {
+    final paths = await PhotoManager.getAssetPathList(
+      type: RequestType.video,
+      onlyAll: true,
+    );
+    if (paths.isEmpty) {
+      return const Result.ok(AssetPage(assets: [], hasMore: false));
+    }
+    final album = paths.first;
+    final entities = await album.getAssetListPaged(page: page, size: pageSize);
+    final assets = <AssetRef>[];
+    for (final e in entities) {
+      _entities[e.id] = e;
+      assets.add(
+        AssetRef(
+          id: e.id,
+          width: e.width,
+          height: e.height,
+          durationMs: e.videoDuration.inMilliseconds,
+        ),
+      );
+    }
+    final total = await album.assetCountAsync;
+    return Result.ok(
+      AssetPage(assets: assets, hasMore: (page + 1) * pageSize < total),
+    );
+  }
+
+  @override
+  Future<Result<Uint8List>> videoBytes(AssetRef ref) async {
+    final entity = _entities[ref.id];
+    if (entity == null) return const Result.err(AppFailure.notFound());
     final bytes = await entity.originBytes;
     if (bytes == null) return const Result.err(AppFailure.unsupportedMedia());
     return Result.ok(bytes);

@@ -23,6 +23,12 @@ class FakePhotoLibraryService implements PhotoLibraryService {
   /// When false, [originBytes] returns undecodable bytes (unsupportedMedia path).
   bool originDecodable;
 
+  /// Video pick config (#008): count, per-video duration, and byte size so the
+  /// ≤90s / ≤150 MB caps can be exercised.
+  int videoCount = 8;
+  int videoDurationMs = 15000;
+  int videoByteCount = 4;
+
   Uint8List? _solid;
 
   Uint8List get _bytes => _solid ??= Uint8List.fromList(
@@ -69,6 +75,35 @@ class FakePhotoLibraryService implements PhotoLibraryService {
     }
     return Result.ok(_bytes);
   }
+
+  @override
+  Future<Result<AssetPage>> loadVideos({
+    required int page,
+    int pageSize = 60,
+  }) async {
+    if (permission == PhotoPermission.denied) {
+      return const Result.err(AppFailure.permissionDenied());
+    }
+    final start = page * pageSize;
+    if (start >= videoCount) {
+      return const Result.ok(AssetPage(assets: [], hasMore: false));
+    }
+    final end = (start + pageSize).clamp(0, videoCount);
+    final assets = [
+      for (var i = start; i < end; i++)
+        AssetRef(
+          id: 'fake-video-$i',
+          width: 720,
+          height: 1280,
+          durationMs: videoDurationMs,
+        ),
+    ];
+    return Result.ok(AssetPage(assets: assets, hasMore: end < videoCount));
+  }
+
+  @override
+  Future<Result<Uint8List>> videoBytes(AssetRef ref) async =>
+      Result.ok(Uint8List(videoByteCount));
 
   /// Records that the settings deep-link was requested (for CTA tests).
   int openSettingsCalls = 0;
