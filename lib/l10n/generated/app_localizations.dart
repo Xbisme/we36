@@ -1213,6 +1213,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thanks — we\'ll review this comment.'**
   String get commentReported;
+
+  /// Reels tab title
+  ///
+  /// In en, this message translates to:
+  /// **'Reels'**
+  String get reelsTitle;
+
+  /// Empty reels feed
+  ///
+  /// In en, this message translates to:
+  /// **'No reels yet'**
+  String get reelsEmpty;
+
+  /// Empty reels feed subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Reels you follow will show up here.'**
+  String get reelsEmptyHint;
+
+  /// Reels feed first-load error
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load reels'**
+  String get reelsError;
+
+  /// Retry loading reels
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get reelRetry;
+
+  /// Badge on a reel whose video is still processing
+  ///
+  /// In en, this message translates to:
+  /// **'Processing…'**
+  String get reelProcessing;
+
+  /// Reel like failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update the like.'**
+  String get reelLikeFailed;
+
+  /// Reel save failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update saved.'**
+  String get reelSaveFailed;
+
+  /// Surface-only share acknowledgement
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing is coming soon.'**
+  String get reelShareAck;
+
+  /// Surface-only follow acknowledgement
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll be able to follow soon.'**
+  String get reelFollowAck;
+
+  /// Report a reel action
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get reelReport;
+
+  /// Reel report acknowledgement toast
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks — we\'ll review this reel.'**
+  String get reelReported;
+
+  /// Delete own reel action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get reelDelete;
+
+  /// Delete-reel confirmation title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this reel?'**
+  String get reelDeleteConfirm;
+
+  /// Reel delete success toast
+  ///
+  /// In en, this message translates to:
+  /// **'Reel deleted.'**
+  String get reelDeleted;
+
+  /// Reel delete failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t delete the reel.'**
+  String get reelDeleteFailed;
+
+  /// Create-reel screen title
+  ///
+  /// In en, this message translates to:
+  /// **'New reel'**
+  String get reelComposeTitle;
+
+  /// Create-reel pick prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a video'**
+  String get reelComposePick;
+
+  /// Create-reel caption field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Write a caption…'**
+  String get reelComposeCaptionHint;
+
+  /// Publish reel button
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get reelComposePublish;
+
+  /// Reel upload in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading…'**
+  String get reelComposeUploading;
+
+  /// Cancel reel upload
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get reelComposeCancel;
+
+  /// Video exceeds max duration
+  ///
+  /// In en, this message translates to:
+  /// **'Videos must be 90 seconds or shorter.'**
+  String get reelComposeTooLong;
+
+  /// Video exceeds max size
+  ///
+  /// In en, this message translates to:
+  /// **'Video is too large (max 150 MB).'**
+  String get reelComposeTooLarge;
+
+  /// Discard-compose confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Discard this reel?'**
+  String get reelComposeDiscard;
+
+  /// Reel publish failure toast
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t publish your reel.'**
+  String get reelPublishFailed;
+
+  /// Create menu: new post
+  ///
+  /// In en, this message translates to:
+  /// **'New post'**
+  String get createPostLabel;
+
+  /// Create menu: new reel
+  ///
+  /// In en, this message translates to:
+  /// **'New reel'**
+  String get createReelLabel;
+
+  /// Create menu: new story
+  ///
+  /// In en, this message translates to:
+  /// **'New story'**
+  String get createStoryLabel;
 }
 
 class _AppLocalizationsDelegate

@@ -10,6 +10,7 @@ import 'package:we36/core/data/stories/story.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/domain/app_state.dart';
 import 'package:we36/core/domain/result.dart';
+import 'package:we36/core/presentation/action_sheet.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_icon_button.dart';
 import 'package:we36/core/presentation/max_width_box.dart';
@@ -127,12 +128,12 @@ class _Header extends StatelessWidget {
           children: [
             const Wordmark(fontSize: 24),
             const Spacer(),
-            // Contextual Create entry (#007) — opens the full-screen compose
-            // flow. (On tablet the Create action lives in the sidebar rail.)
+            // Contextual Create entry — a menu to compose a post / reel / story
+            // (#007/#008/#005). Create is contextual, not a tab (Constitution VI).
             AppIconButton(
               icon: AppIcons.plus,
               semanticLabel: l10n.navCreate,
-              onPressed: () => unawaited(context.push(AppRoutes.composePick)),
+              onPressed: () => unawaited(_showCreateMenu(context)),
             ),
             // Activity + Messages are inert placeholders in #004 — they light up
             // with Notifications (#013) and Messages (#012). Unseen dot is fake.
@@ -150,6 +151,32 @@ class _Header extends StatelessWidget {
       ),
     );
   }
+}
+
+/// The contextual Create menu — choose what to compose (post / reel / story).
+Future<void> _showCreateMenu(BuildContext context) {
+  final l10n = context.l10n;
+  return showAppActionSheet(
+    context,
+    cancelLabel: l10n.reelComposeCancel,
+    items: [
+      ActionSheetItem(
+        icon: AppIcons.plus,
+        label: l10n.createPostLabel,
+        onTap: () => unawaited(context.push(AppRoutes.composePick)),
+      ),
+      ActionSheetItem(
+        icon: AppIcons.reels,
+        label: l10n.createReelLabel,
+        onTap: () => unawaited(context.push(AppRoutes.reelCompose)),
+      ),
+      ActionSheetItem(
+        icon: AppIcons.camera,
+        label: l10n.createStoryLabel,
+        onTap: () => unawaited(context.push(AppRoutes.storyComposePick)),
+      ),
+    ],
+  );
 }
 
 class _FeedList extends StatelessWidget {

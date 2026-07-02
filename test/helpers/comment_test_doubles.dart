@@ -4,6 +4,8 @@ import 'package:we36/core/data/api/idempotency.dart';
 import 'package:we36/core/data/comments/fake_comments_repository.dart';
 import 'package:we36/core/data/feed/feed_repository.dart';
 import 'package:we36/core/data/feed/post.dart';
+import 'package:we36/features/feed/domain/usecases/feed_usecases.dart'
+    show ToggleLike, ToggleSave;
 import 'package:we36/features/post/domain/usecases/comment_usecases.dart';
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart';
 
@@ -81,4 +83,6 @@ CommentsCubit buildCommentsCubit(
   DeleteComment(comments, feed),
   ReportComment(comments),
   IdempotencyKeys(),
+  ToggleLike(feed),
+  ToggleSave(feed),
 );

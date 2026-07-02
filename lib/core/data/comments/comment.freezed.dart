@@ -290,7 +290,9 @@ as String?,
 /// @nodoc
 mixin _$Comment {
 
- String get id; String get postId; CommentAuthor get author; String get text; DateTime get createdAt; int get likeCount; bool get viewerHasLiked; bool get isOwn; int get replyCount; String? get parentId;@JsonKey(includeFromJson: false, includeToJson: false) bool get pending;@JsonKey(includeFromJson: false, includeToJson: false) String? get clientKey;
+ String get id; String get postId; CommentAuthor get author;// Backend `CommentDto` names the content `body`.
+@JsonKey(name: 'body') String get text; DateTime get createdAt; int get likeCount; bool get viewerHasLiked;// Not sent by the backend — derived at render (author == current user).
+@JsonKey(includeFromJson: false, includeToJson: false) bool get isOwn; int get replyCount; String? get parentId;@JsonKey(includeFromJson: false, includeToJson: false) bool get pending;@JsonKey(includeFromJson: false, includeToJson: false) String? get clientKey;
 /// Create a copy of Comment
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -323,7 +325,7 @@ abstract mixin class $CommentCopyWith<$Res>  {
   factory $CommentCopyWith(Comment value, $Res Function(Comment) _then) = _$CommentCopyWithImpl;
 @useResult
 $Res call({
- String id, String postId, CommentAuthor author, String text, DateTime createdAt, int likeCount, bool viewerHasLiked, bool isOwn, int replyCount, String? parentId,@JsonKey(includeFromJson: false, includeToJson: false) bool pending,@JsonKey(includeFromJson: false, includeToJson: false) String? clientKey
+ String id, String postId, CommentAuthor author,@JsonKey(name: 'body') String text, DateTime createdAt, int likeCount, bool viewerHasLiked,@JsonKey(includeFromJson: false, includeToJson: false) bool isOwn, int replyCount, String? parentId,@JsonKey(includeFromJson: false, includeToJson: false) bool pending,@JsonKey(includeFromJson: false, includeToJson: false) String? clientKey
 });
 
 
@@ -448,7 +450,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String postId,  CommentAuthor author,  String text,  DateTime createdAt,  int likeCount,  bool viewerHasLiked,  bool isOwn,  int replyCount,  String? parentId, @JsonKey(includeFromJson: false, includeToJson: false)  bool pending, @JsonKey(includeFromJson: false, includeToJson: false)  String? clientKey)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String postId,  CommentAuthor author, @JsonKey(name: 'body')  String text,  DateTime createdAt,  int likeCount,  bool viewerHasLiked, @JsonKey(includeFromJson: false, includeToJson: false)  bool isOwn,  int replyCount,  String? parentId, @JsonKey(includeFromJson: false, includeToJson: false)  bool pending, @JsonKey(includeFromJson: false, includeToJson: false)  String? clientKey)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Comment() when $default != null:
 return $default(_that.id,_that.postId,_that.author,_that.text,_that.createdAt,_that.likeCount,_that.viewerHasLiked,_that.isOwn,_that.replyCount,_that.parentId,_that.pending,_that.clientKey);case _:
@@ -469,7 +471,7 @@ return $default(_that.id,_that.postId,_that.author,_that.text,_that.createdAt,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String postId,  CommentAuthor author,  String text,  DateTime createdAt,  int likeCount,  bool viewerHasLiked,  bool isOwn,  int replyCount,  String? parentId, @JsonKey(includeFromJson: false, includeToJson: false)  bool pending, @JsonKey(includeFromJson: false, includeToJson: false)  String? clientKey)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String postId,  CommentAuthor author, @JsonKey(name: 'body')  String text,  DateTime createdAt,  int likeCount,  bool viewerHasLiked, @JsonKey(includeFromJson: false, includeToJson: false)  bool isOwn,  int replyCount,  String? parentId, @JsonKey(includeFromJson: false, includeToJson: false)  bool pending, @JsonKey(includeFromJson: false, includeToJson: false)  String? clientKey)  $default,) {final _that = this;
 switch (_that) {
 case _Comment():
 return $default(_that.id,_that.postId,_that.author,_that.text,_that.createdAt,_that.likeCount,_that.viewerHasLiked,_that.isOwn,_that.replyCount,_that.parentId,_that.pending,_that.clientKey);case _:
@@ -489,7 +491,7 @@ return $default(_that.id,_that.postId,_that.author,_that.text,_that.createdAt,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String postId,  CommentAuthor author,  String text,  DateTime createdAt,  int likeCount,  bool viewerHasLiked,  bool isOwn,  int replyCount,  String? parentId, @JsonKey(includeFromJson: false, includeToJson: false)  bool pending, @JsonKey(includeFromJson: false, includeToJson: false)  String? clientKey)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String postId,  CommentAuthor author, @JsonKey(name: 'body')  String text,  DateTime createdAt,  int likeCount,  bool viewerHasLiked, @JsonKey(includeFromJson: false, includeToJson: false)  bool isOwn,  int replyCount,  String? parentId, @JsonKey(includeFromJson: false, includeToJson: false)  bool pending, @JsonKey(includeFromJson: false, includeToJson: false)  String? clientKey)?  $default,) {final _that = this;
 switch (_that) {
 case _Comment() when $default != null:
 return $default(_that.id,_that.postId,_that.author,_that.text,_that.createdAt,_that.likeCount,_that.viewerHasLiked,_that.isOwn,_that.replyCount,_that.parentId,_that.pending,_that.clientKey);case _:
@@ -504,17 +506,19 @@ return $default(_that.id,_that.postId,_that.author,_that.text,_that.createdAt,_t
 @JsonSerializable()
 
 class _Comment extends Comment {
-  const _Comment({required this.id, required this.postId, required this.author, required this.text, required this.createdAt, required this.likeCount, required this.viewerHasLiked, required this.isOwn, this.replyCount = 0, this.parentId, @JsonKey(includeFromJson: false, includeToJson: false) this.pending = false, @JsonKey(includeFromJson: false, includeToJson: false) this.clientKey}): super._();
+  const _Comment({required this.id, required this.postId, required this.author, @JsonKey(name: 'body') required this.text, required this.createdAt, required this.likeCount, required this.viewerHasLiked, @JsonKey(includeFromJson: false, includeToJson: false) this.isOwn = false, this.replyCount = 0, this.parentId, @JsonKey(includeFromJson: false, includeToJson: false) this.pending = false, @JsonKey(includeFromJson: false, includeToJson: false) this.clientKey}): super._();
   factory _Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
 
 @override final  String id;
 @override final  String postId;
 @override final  CommentAuthor author;
-@override final  String text;
+// Backend `CommentDto` names the content `body`.
+@override@JsonKey(name: 'body') final  String text;
 @override final  DateTime createdAt;
 @override final  int likeCount;
 @override final  bool viewerHasLiked;
-@override final  bool isOwn;
+// Not sent by the backend — derived at render (author == current user).
+@override@JsonKey(includeFromJson: false, includeToJson: false) final  bool isOwn;
 @override@JsonKey() final  int replyCount;
 @override final  String? parentId;
 @override@JsonKey(includeFromJson: false, includeToJson: false) final  bool pending;
@@ -553,7 +557,7 @@ abstract mixin class _$CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
   factory _$CommentCopyWith(_Comment value, $Res Function(_Comment) _then) = __$CommentCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String postId, CommentAuthor author, String text, DateTime createdAt, int likeCount, bool viewerHasLiked, bool isOwn, int replyCount, String? parentId,@JsonKey(includeFromJson: false, includeToJson: false) bool pending,@JsonKey(includeFromJson: false, includeToJson: false) String? clientKey
+ String id, String postId, CommentAuthor author,@JsonKey(name: 'body') String text, DateTime createdAt, int likeCount, bool viewerHasLiked,@JsonKey(includeFromJson: false, includeToJson: false) bool isOwn, int replyCount, String? parentId,@JsonKey(includeFromJson: false, includeToJson: false) bool pending,@JsonKey(includeFromJson: false, includeToJson: false) String? clientKey
 });
 
 

@@ -7,6 +7,7 @@ import 'package:we36/core/constants/app_breakpoints.dart';
 import 'package:we36/core/data/comments/comment.dart';
 import 'package:we36/core/data/feed/post.dart';
 import 'package:we36/core/di/injection.dart';
+import 'package:we36/core/domain/app_failure.dart';
 import 'package:we36/core/presentation/action_sheet.dart';
 import 'package:we36/core/presentation/app_button.dart';
 import 'package:we36/core/presentation/app_dialog.dart';
@@ -340,9 +341,30 @@ class _PostHeader extends StatelessWidget {
     return ResizeImage(CachedNetworkImageProvider(url), width: width);
   }
 
+  Future<void> _run(
+    BuildContext context,
+    Future<AppFailure?> Function() op,
+    String failMessage,
+  ) async {
+    final failure = await op();
+    if (failure != null && context.mounted) {
+      getIt<ToastService>().show(
+        context,
+        message: failMessage,
+        tone: ToastTone.error,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final cubit = context.read<CommentsCubit>();
+    // Full carousel for multi-photo posts (single frame for one image).
+    final carousel = post.imageUrls
+        .map((u) => _image(u, width: 1080))
+        .whereType<ImageProvider<Object>>()
+        .toList();
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
@@ -352,6 +374,7 @@ class _PostHeader extends StatelessWidget {
         username: post.author.username ?? post.author.displayName ?? '',
         avatar: _image(post.author.avatarUrl, width: 96),
         media: _image(post.primaryImageUrl, width: 1080),
+        mediaCarousel: carousel.length > 1 ? carousel : null,
         likesText: l10n.feedLikesCount(counts.format(post.likeCount)),
         caption: post.caption ?? '',
         location: post.location?.name,
@@ -361,6 +384,14 @@ class _PostHeader extends StatelessWidget {
         timeText: time.format(post.createdAt, now: DateTime.now()),
         liked: post.viewerHasLiked,
         saved: post.viewerHasSaved,
+        onLike: () =>
+            unawaited(_run(context, cubit.togglePostLike, l10n.commentLikeFailed)),
+        onSave: () =>
+            unawaited(_run(context, cubit.togglePostSave, l10n.commentLikeFailed)),
+        onShare: () => getIt<ToastService>().show(
+          context,
+          message: l10n.reelShareAck,
+        ),
       ),
     );
   }

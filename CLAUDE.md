@@ -25,7 +25,7 @@ We36 — cross-platform (iOS + Android phones + iPad/Android tablets) **Instagra
 - One `ApiClient` (single `Dio`) behind interceptors: idempotency → auth-token → single-flight refresh → logging. Repos call it; widgets/Cubits never touch HTTP. Errors centralized in `FailureMapper` (envelope `{error:{code,message,details}}` → `AppFailure`; `code`s contract-stable). Returns `Result<T>`.
 - Single-flight refresh on `401 SESSION_EXPIRED` via `TokenStore`/`TokenRefresher`/`AuthEventsSink` seams (fakes now; real in #003). Cursor pagination = `CursorPage<T>` + reusable `PaginatedListCubit<T>` (4-state). Endpoints/events in `core/constants/{api_endpoints,socket_events}.dart` — never inline literals.
 - Cache = `AppDatabase` (drift) + DAO base; reactive `.watch()` reads (one canonical copy). Realtime = one `RealtimeClient` (scaffold; wired #012/#013).
-- **DI environments**: app runs `environment: 'fake'` (in-memory fakes, no backend) until #003; real impls annotated `env: ['real']`. Every repo has a real + fake behind one interface.
+- **DI environments**: app runs `environment: 'real'` (live backend at `http://localhost:3000/v1` in dev; annotated `env: ['real']`). The `env: ['fake']` graph is in-memory/zero-network and used **only by hermetic tests** — every repo keeps a real + fake behind one interface. Override at launch with `--dart-define=DI_ENV=fake`.
 
 ## Architecture anchors
 - Clean Architecture, feature-first. `lib/core/` MUST NOT import `lib/features/`; features don't import each other's internals (handoff via core/router/DI).

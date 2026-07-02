@@ -1557,6 +1557,17 @@ class $PostsTable extends Posts with TableInfo<$PostsTable, CachedPost> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _mediaUrlsJsonMeta = const VerificationMeta(
+    'mediaUrlsJson',
+  );
+  @override
+  late final GeneratedColumn<String> mediaUrlsJson = GeneratedColumn<String>(
+    'media_urls_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _mediaWidthMeta = const VerificationMeta(
     'mediaWidth',
   );
@@ -1697,6 +1708,7 @@ class $PostsTable extends Posts with TableInfo<$PostsTable, CachedPost> {
     authorIsVerified,
     caption,
     mediaImageUrl,
+    mediaUrlsJson,
     mediaWidth,
     mediaHeight,
     locationName,
@@ -1784,6 +1796,15 @@ class $PostsTable extends Posts with TableInfo<$PostsTable, CachedPost> {
         mediaImageUrl.isAcceptableOrUnknown(
           data['media_image_url']!,
           _mediaImageUrlMeta,
+        ),
+      );
+    }
+    if (data.containsKey('media_urls_json')) {
+      context.handle(
+        _mediaUrlsJsonMeta,
+        mediaUrlsJson.isAcceptableOrUnknown(
+          data['media_urls_json']!,
+          _mediaUrlsJsonMeta,
         ),
       );
     }
@@ -1928,6 +1949,10 @@ class $PostsTable extends Posts with TableInfo<$PostsTable, CachedPost> {
         DriftSqlType.string,
         data['${effectivePrefix}media_image_url'],
       ),
+      mediaUrlsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}media_urls_json'],
+      ),
       mediaWidth: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}media_width'],
@@ -1990,6 +2015,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
   final bool authorIsVerified;
   final String? caption;
   final String? mediaImageUrl;
+
+  /// JSON array of all carousel image delivery URLs (#008 real-backend carousel).
+  final String? mediaUrlsJson;
   final int? mediaWidth;
   final int? mediaHeight;
   final String? locationName;
@@ -2010,6 +2038,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     required this.authorIsVerified,
     this.caption,
     this.mediaImageUrl,
+    this.mediaUrlsJson,
     this.mediaWidth,
     this.mediaHeight,
     this.locationName,
@@ -2042,6 +2071,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     }
     if (!nullToAbsent || mediaImageUrl != null) {
       map['media_image_url'] = Variable<String>(mediaImageUrl);
+    }
+    if (!nullToAbsent || mediaUrlsJson != null) {
+      map['media_urls_json'] = Variable<String>(mediaUrlsJson);
     }
     if (!nullToAbsent || mediaWidth != null) {
       map['media_width'] = Variable<int>(mediaWidth);
@@ -2083,6 +2115,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
       mediaImageUrl: mediaImageUrl == null && nullToAbsent
           ? const Value.absent()
           : Value(mediaImageUrl),
+      mediaUrlsJson: mediaUrlsJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mediaUrlsJson),
       mediaWidth: mediaWidth == null && nullToAbsent
           ? const Value.absent()
           : Value(mediaWidth),
@@ -2119,6 +2154,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
       authorIsVerified: serializer.fromJson<bool>(json['authorIsVerified']),
       caption: serializer.fromJson<String?>(json['caption']),
       mediaImageUrl: serializer.fromJson<String?>(json['mediaImageUrl']),
+      mediaUrlsJson: serializer.fromJson<String?>(json['mediaUrlsJson']),
       mediaWidth: serializer.fromJson<int?>(json['mediaWidth']),
       mediaHeight: serializer.fromJson<int?>(json['mediaHeight']),
       locationName: serializer.fromJson<String?>(json['locationName']),
@@ -2144,6 +2180,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
       'authorIsVerified': serializer.toJson<bool>(authorIsVerified),
       'caption': serializer.toJson<String?>(caption),
       'mediaImageUrl': serializer.toJson<String?>(mediaImageUrl),
+      'mediaUrlsJson': serializer.toJson<String?>(mediaUrlsJson),
       'mediaWidth': serializer.toJson<int?>(mediaWidth),
       'mediaHeight': serializer.toJson<int?>(mediaHeight),
       'locationName': serializer.toJson<String?>(locationName),
@@ -2167,6 +2204,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     bool? authorIsVerified,
     Value<String?> caption = const Value.absent(),
     Value<String?> mediaImageUrl = const Value.absent(),
+    Value<String?> mediaUrlsJson = const Value.absent(),
     Value<int?> mediaWidth = const Value.absent(),
     Value<int?> mediaHeight = const Value.absent(),
     Value<String?> locationName = const Value.absent(),
@@ -2195,6 +2233,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     mediaImageUrl: mediaImageUrl.present
         ? mediaImageUrl.value
         : this.mediaImageUrl,
+    mediaUrlsJson: mediaUrlsJson.present
+        ? mediaUrlsJson.value
+        : this.mediaUrlsJson,
     mediaWidth: mediaWidth.present ? mediaWidth.value : this.mediaWidth,
     mediaHeight: mediaHeight.present ? mediaHeight.value : this.mediaHeight,
     locationName: locationName.present ? locationName.value : this.locationName,
@@ -2227,6 +2268,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
       mediaImageUrl: data.mediaImageUrl.present
           ? data.mediaImageUrl.value
           : this.mediaImageUrl,
+      mediaUrlsJson: data.mediaUrlsJson.present
+          ? data.mediaUrlsJson.value
+          : this.mediaUrlsJson,
       mediaWidth: data.mediaWidth.present
           ? data.mediaWidth.value
           : this.mediaWidth,
@@ -2266,6 +2310,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
           ..write('authorIsVerified: $authorIsVerified, ')
           ..write('caption: $caption, ')
           ..write('mediaImageUrl: $mediaImageUrl, ')
+          ..write('mediaUrlsJson: $mediaUrlsJson, ')
           ..write('mediaWidth: $mediaWidth, ')
           ..write('mediaHeight: $mediaHeight, ')
           ..write('locationName: $locationName, ')
@@ -2291,6 +2336,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     authorIsVerified,
     caption,
     mediaImageUrl,
+    mediaUrlsJson,
     mediaWidth,
     mediaHeight,
     locationName,
@@ -2315,6 +2361,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
           other.authorIsVerified == this.authorIsVerified &&
           other.caption == this.caption &&
           other.mediaImageUrl == this.mediaImageUrl &&
+          other.mediaUrlsJson == this.mediaUrlsJson &&
           other.mediaWidth == this.mediaWidth &&
           other.mediaHeight == this.mediaHeight &&
           other.locationName == this.locationName &&
@@ -2337,6 +2384,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
   final Value<bool> authorIsVerified;
   final Value<String?> caption;
   final Value<String?> mediaImageUrl;
+  final Value<String?> mediaUrlsJson;
   final Value<int?> mediaWidth;
   final Value<int?> mediaHeight;
   final Value<String?> locationName;
@@ -2358,6 +2406,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     this.authorIsVerified = const Value.absent(),
     this.caption = const Value.absent(),
     this.mediaImageUrl = const Value.absent(),
+    this.mediaUrlsJson = const Value.absent(),
     this.mediaWidth = const Value.absent(),
     this.mediaHeight = const Value.absent(),
     this.locationName = const Value.absent(),
@@ -2380,6 +2429,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     required bool authorIsVerified,
     this.caption = const Value.absent(),
     this.mediaImageUrl = const Value.absent(),
+    this.mediaUrlsJson = const Value.absent(),
     this.mediaWidth = const Value.absent(),
     this.mediaHeight = const Value.absent(),
     this.locationName = const Value.absent(),
@@ -2412,6 +2462,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     Expression<bool>? authorIsVerified,
     Expression<String>? caption,
     Expression<String>? mediaImageUrl,
+    Expression<String>? mediaUrlsJson,
     Expression<int>? mediaWidth,
     Expression<int>? mediaHeight,
     Expression<String>? locationName,
@@ -2434,6 +2485,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
       if (authorIsVerified != null) 'author_is_verified': authorIsVerified,
       if (caption != null) 'caption': caption,
       if (mediaImageUrl != null) 'media_image_url': mediaImageUrl,
+      if (mediaUrlsJson != null) 'media_urls_json': mediaUrlsJson,
       if (mediaWidth != null) 'media_width': mediaWidth,
       if (mediaHeight != null) 'media_height': mediaHeight,
       if (locationName != null) 'location_name': locationName,
@@ -2458,6 +2510,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     Value<bool>? authorIsVerified,
     Value<String?>? caption,
     Value<String?>? mediaImageUrl,
+    Value<String?>? mediaUrlsJson,
     Value<int?>? mediaWidth,
     Value<int?>? mediaHeight,
     Value<String?>? locationName,
@@ -2480,6 +2533,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
       authorIsVerified: authorIsVerified ?? this.authorIsVerified,
       caption: caption ?? this.caption,
       mediaImageUrl: mediaImageUrl ?? this.mediaImageUrl,
+      mediaUrlsJson: mediaUrlsJson ?? this.mediaUrlsJson,
       mediaWidth: mediaWidth ?? this.mediaWidth,
       mediaHeight: mediaHeight ?? this.mediaHeight,
       locationName: locationName ?? this.locationName,
@@ -2521,6 +2575,9 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     }
     if (mediaImageUrl.present) {
       map['media_image_url'] = Variable<String>(mediaImageUrl.value);
+    }
+    if (mediaUrlsJson.present) {
+      map['media_urls_json'] = Variable<String>(mediaUrlsJson.value);
     }
     if (mediaWidth.present) {
       map['media_width'] = Variable<int>(mediaWidth.value);
@@ -2572,6 +2629,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
           ..write('authorIsVerified: $authorIsVerified, ')
           ..write('caption: $caption, ')
           ..write('mediaImageUrl: $mediaImageUrl, ')
+          ..write('mediaUrlsJson: $mediaUrlsJson, ')
           ..write('mediaWidth: $mediaWidth, ')
           ..write('mediaHeight: $mediaHeight, ')
           ..write('locationName: $locationName, ')
@@ -3224,6 +3282,1287 @@ class ComposeDraftsCompanion extends UpdateCompanion<ComposeDraftRow> {
   }
 }
 
+class $ReelsTable extends Reels with TableInfo<$ReelsTable, CachedReel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReelsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _authorIdMeta = const VerificationMeta(
+    'authorId',
+  );
+  @override
+  late final GeneratedColumn<String> authorId = GeneratedColumn<String>(
+    'author_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _authorUsernameMeta = const VerificationMeta(
+    'authorUsername',
+  );
+  @override
+  late final GeneratedColumn<String> authorUsername = GeneratedColumn<String>(
+    'author_username',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _authorDisplayNameMeta = const VerificationMeta(
+    'authorDisplayName',
+  );
+  @override
+  late final GeneratedColumn<String> authorDisplayName =
+      GeneratedColumn<String>(
+        'author_display_name',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _authorAvatarUrlMeta = const VerificationMeta(
+    'authorAvatarUrl',
+  );
+  @override
+  late final GeneratedColumn<String> authorAvatarUrl = GeneratedColumn<String>(
+    'author_avatar_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _authorIsVerifiedMeta = const VerificationMeta(
+    'authorIsVerified',
+  );
+  @override
+  late final GeneratedColumn<bool> authorIsVerified = GeneratedColumn<bool>(
+    'author_is_verified',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("author_is_verified" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _captionMeta = const VerificationMeta(
+    'caption',
+  );
+  @override
+  late final GeneratedColumn<String> caption = GeneratedColumn<String>(
+    'caption',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _videoUrlMeta = const VerificationMeta(
+    'videoUrl',
+  );
+  @override
+  late final GeneratedColumn<String> videoUrl = GeneratedColumn<String>(
+    'video_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _posterUrlMeta = const VerificationMeta(
+    'posterUrl',
+  );
+  @override
+  late final GeneratedColumn<String> posterUrl = GeneratedColumn<String>(
+    'poster_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _videoWidthMeta = const VerificationMeta(
+    'videoWidth',
+  );
+  @override
+  late final GeneratedColumn<int> videoWidth = GeneratedColumn<int>(
+    'video_width',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _videoHeightMeta = const VerificationMeta(
+    'videoHeight',
+  );
+  @override
+  late final GeneratedColumn<int> videoHeight = GeneratedColumn<int>(
+    'video_height',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _videoDurationMsMeta = const VerificationMeta(
+    'videoDurationMs',
+  );
+  @override
+  late final GeneratedColumn<int> videoDurationMs = GeneratedColumn<int>(
+    'video_duration_ms',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isVideoReadyMeta = const VerificationMeta(
+    'isVideoReady',
+  );
+  @override
+  late final GeneratedColumn<bool> isVideoReady = GeneratedColumn<bool>(
+    'is_video_ready',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_video_ready" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _locationNameMeta = const VerificationMeta(
+    'locationName',
+  );
+  @override
+  late final GeneratedColumn<String> locationName = GeneratedColumn<String>(
+    'location_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _likeCountMeta = const VerificationMeta(
+    'likeCount',
+  );
+  @override
+  late final GeneratedColumn<int> likeCount = GeneratedColumn<int>(
+    'like_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _saveCountMeta = const VerificationMeta(
+    'saveCount',
+  );
+  @override
+  late final GeneratedColumn<int> saveCount = GeneratedColumn<int>(
+    'save_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _commentCountMeta = const VerificationMeta(
+    'commentCount',
+  );
+  @override
+  late final GeneratedColumn<int> commentCount = GeneratedColumn<int>(
+    'comment_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _viewerHasLikedMeta = const VerificationMeta(
+    'viewerHasLiked',
+  );
+  @override
+  late final GeneratedColumn<bool> viewerHasLiked = GeneratedColumn<bool>(
+    'viewer_has_liked',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("viewer_has_liked" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _viewerHasSavedMeta = const VerificationMeta(
+    'viewerHasSaved',
+  );
+  @override
+  late final GeneratedColumn<bool> viewerHasSaved = GeneratedColumn<bool>(
+    'viewer_has_saved',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("viewer_has_saved" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _commentsDisabledMeta = const VerificationMeta(
+    'commentsDisabled',
+  );
+  @override
+  late final GeneratedColumn<bool> commentsDisabled = GeneratedColumn<bool>(
+    'comments_disabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("comments_disabled" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cachedAtMeta = const VerificationMeta(
+    'cachedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> cachedAt = GeneratedColumn<DateTime>(
+    'cached_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    authorId,
+    authorUsername,
+    authorDisplayName,
+    authorAvatarUrl,
+    authorIsVerified,
+    caption,
+    videoUrl,
+    posterUrl,
+    videoWidth,
+    videoHeight,
+    videoDurationMs,
+    isVideoReady,
+    locationName,
+    likeCount,
+    saveCount,
+    commentCount,
+    viewerHasLiked,
+    viewerHasSaved,
+    commentsDisabled,
+    createdAt,
+    cachedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reels';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CachedReel> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('author_id')) {
+      context.handle(
+        _authorIdMeta,
+        authorId.isAcceptableOrUnknown(data['author_id']!, _authorIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_authorIdMeta);
+    }
+    if (data.containsKey('author_username')) {
+      context.handle(
+        _authorUsernameMeta,
+        authorUsername.isAcceptableOrUnknown(
+          data['author_username']!,
+          _authorUsernameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('author_display_name')) {
+      context.handle(
+        _authorDisplayNameMeta,
+        authorDisplayName.isAcceptableOrUnknown(
+          data['author_display_name']!,
+          _authorDisplayNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('author_avatar_url')) {
+      context.handle(
+        _authorAvatarUrlMeta,
+        authorAvatarUrl.isAcceptableOrUnknown(
+          data['author_avatar_url']!,
+          _authorAvatarUrlMeta,
+        ),
+      );
+    }
+    if (data.containsKey('author_is_verified')) {
+      context.handle(
+        _authorIsVerifiedMeta,
+        authorIsVerified.isAcceptableOrUnknown(
+          data['author_is_verified']!,
+          _authorIsVerifiedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_authorIsVerifiedMeta);
+    }
+    if (data.containsKey('caption')) {
+      context.handle(
+        _captionMeta,
+        caption.isAcceptableOrUnknown(data['caption']!, _captionMeta),
+      );
+    }
+    if (data.containsKey('video_url')) {
+      context.handle(
+        _videoUrlMeta,
+        videoUrl.isAcceptableOrUnknown(data['video_url']!, _videoUrlMeta),
+      );
+    }
+    if (data.containsKey('poster_url')) {
+      context.handle(
+        _posterUrlMeta,
+        posterUrl.isAcceptableOrUnknown(data['poster_url']!, _posterUrlMeta),
+      );
+    }
+    if (data.containsKey('video_width')) {
+      context.handle(
+        _videoWidthMeta,
+        videoWidth.isAcceptableOrUnknown(data['video_width']!, _videoWidthMeta),
+      );
+    }
+    if (data.containsKey('video_height')) {
+      context.handle(
+        _videoHeightMeta,
+        videoHeight.isAcceptableOrUnknown(
+          data['video_height']!,
+          _videoHeightMeta,
+        ),
+      );
+    }
+    if (data.containsKey('video_duration_ms')) {
+      context.handle(
+        _videoDurationMsMeta,
+        videoDurationMs.isAcceptableOrUnknown(
+          data['video_duration_ms']!,
+          _videoDurationMsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_video_ready')) {
+      context.handle(
+        _isVideoReadyMeta,
+        isVideoReady.isAcceptableOrUnknown(
+          data['is_video_ready']!,
+          _isVideoReadyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_isVideoReadyMeta);
+    }
+    if (data.containsKey('location_name')) {
+      context.handle(
+        _locationNameMeta,
+        locationName.isAcceptableOrUnknown(
+          data['location_name']!,
+          _locationNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('like_count')) {
+      context.handle(
+        _likeCountMeta,
+        likeCount.isAcceptableOrUnknown(data['like_count']!, _likeCountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_likeCountMeta);
+    }
+    if (data.containsKey('save_count')) {
+      context.handle(
+        _saveCountMeta,
+        saveCount.isAcceptableOrUnknown(data['save_count']!, _saveCountMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_saveCountMeta);
+    }
+    if (data.containsKey('comment_count')) {
+      context.handle(
+        _commentCountMeta,
+        commentCount.isAcceptableOrUnknown(
+          data['comment_count']!,
+          _commentCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_commentCountMeta);
+    }
+    if (data.containsKey('viewer_has_liked')) {
+      context.handle(
+        _viewerHasLikedMeta,
+        viewerHasLiked.isAcceptableOrUnknown(
+          data['viewer_has_liked']!,
+          _viewerHasLikedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_viewerHasLikedMeta);
+    }
+    if (data.containsKey('viewer_has_saved')) {
+      context.handle(
+        _viewerHasSavedMeta,
+        viewerHasSaved.isAcceptableOrUnknown(
+          data['viewer_has_saved']!,
+          _viewerHasSavedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_viewerHasSavedMeta);
+    }
+    if (data.containsKey('comments_disabled')) {
+      context.handle(
+        _commentsDisabledMeta,
+        commentsDisabled.isAcceptableOrUnknown(
+          data['comments_disabled']!,
+          _commentsDisabledMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_commentsDisabledMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('cached_at')) {
+      context.handle(
+        _cachedAtMeta,
+        cachedAt.isAcceptableOrUnknown(data['cached_at']!, _cachedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cachedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CachedReel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CachedReel(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      authorId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}author_id'],
+      )!,
+      authorUsername: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}author_username'],
+      ),
+      authorDisplayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}author_display_name'],
+      ),
+      authorAvatarUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}author_avatar_url'],
+      ),
+      authorIsVerified: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}author_is_verified'],
+      )!,
+      caption: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}caption'],
+      ),
+      videoUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}video_url'],
+      ),
+      posterUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}poster_url'],
+      ),
+      videoWidth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}video_width'],
+      ),
+      videoHeight: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}video_height'],
+      ),
+      videoDurationMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}video_duration_ms'],
+      ),
+      isVideoReady: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_video_ready'],
+      )!,
+      locationName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}location_name'],
+      ),
+      likeCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}like_count'],
+      )!,
+      saveCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}save_count'],
+      )!,
+      commentCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}comment_count'],
+      )!,
+      viewerHasLiked: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}viewer_has_liked'],
+      )!,
+      viewerHasSaved: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}viewer_has_saved'],
+      )!,
+      commentsDisabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}comments_disabled'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      cachedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}cached_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ReelsTable createAlias(String alias) {
+    return $ReelsTable(attachedDatabase, alias);
+  }
+}
+
+class CachedReel extends DataClass implements Insertable<CachedReel> {
+  final String id;
+  final String authorId;
+  final String? authorUsername;
+  final String? authorDisplayName;
+  final String? authorAvatarUrl;
+  final bool authorIsVerified;
+  final String? caption;
+  final String? videoUrl;
+  final String? posterUrl;
+  final int? videoWidth;
+  final int? videoHeight;
+  final int? videoDurationMs;
+  final bool isVideoReady;
+  final String? locationName;
+  final int likeCount;
+  final int saveCount;
+  final int commentCount;
+  final bool viewerHasLiked;
+  final bool viewerHasSaved;
+  final bool commentsDisabled;
+  final DateTime createdAt;
+  final DateTime cachedAt;
+  const CachedReel({
+    required this.id,
+    required this.authorId,
+    this.authorUsername,
+    this.authorDisplayName,
+    this.authorAvatarUrl,
+    required this.authorIsVerified,
+    this.caption,
+    this.videoUrl,
+    this.posterUrl,
+    this.videoWidth,
+    this.videoHeight,
+    this.videoDurationMs,
+    required this.isVideoReady,
+    this.locationName,
+    required this.likeCount,
+    required this.saveCount,
+    required this.commentCount,
+    required this.viewerHasLiked,
+    required this.viewerHasSaved,
+    required this.commentsDisabled,
+    required this.createdAt,
+    required this.cachedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['author_id'] = Variable<String>(authorId);
+    if (!nullToAbsent || authorUsername != null) {
+      map['author_username'] = Variable<String>(authorUsername);
+    }
+    if (!nullToAbsent || authorDisplayName != null) {
+      map['author_display_name'] = Variable<String>(authorDisplayName);
+    }
+    if (!nullToAbsent || authorAvatarUrl != null) {
+      map['author_avatar_url'] = Variable<String>(authorAvatarUrl);
+    }
+    map['author_is_verified'] = Variable<bool>(authorIsVerified);
+    if (!nullToAbsent || caption != null) {
+      map['caption'] = Variable<String>(caption);
+    }
+    if (!nullToAbsent || videoUrl != null) {
+      map['video_url'] = Variable<String>(videoUrl);
+    }
+    if (!nullToAbsent || posterUrl != null) {
+      map['poster_url'] = Variable<String>(posterUrl);
+    }
+    if (!nullToAbsent || videoWidth != null) {
+      map['video_width'] = Variable<int>(videoWidth);
+    }
+    if (!nullToAbsent || videoHeight != null) {
+      map['video_height'] = Variable<int>(videoHeight);
+    }
+    if (!nullToAbsent || videoDurationMs != null) {
+      map['video_duration_ms'] = Variable<int>(videoDurationMs);
+    }
+    map['is_video_ready'] = Variable<bool>(isVideoReady);
+    if (!nullToAbsent || locationName != null) {
+      map['location_name'] = Variable<String>(locationName);
+    }
+    map['like_count'] = Variable<int>(likeCount);
+    map['save_count'] = Variable<int>(saveCount);
+    map['comment_count'] = Variable<int>(commentCount);
+    map['viewer_has_liked'] = Variable<bool>(viewerHasLiked);
+    map['viewer_has_saved'] = Variable<bool>(viewerHasSaved);
+    map['comments_disabled'] = Variable<bool>(commentsDisabled);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['cached_at'] = Variable<DateTime>(cachedAt);
+    return map;
+  }
+
+  ReelsCompanion toCompanion(bool nullToAbsent) {
+    return ReelsCompanion(
+      id: Value(id),
+      authorId: Value(authorId),
+      authorUsername: authorUsername == null && nullToAbsent
+          ? const Value.absent()
+          : Value(authorUsername),
+      authorDisplayName: authorDisplayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(authorDisplayName),
+      authorAvatarUrl: authorAvatarUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(authorAvatarUrl),
+      authorIsVerified: Value(authorIsVerified),
+      caption: caption == null && nullToAbsent
+          ? const Value.absent()
+          : Value(caption),
+      videoUrl: videoUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(videoUrl),
+      posterUrl: posterUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(posterUrl),
+      videoWidth: videoWidth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(videoWidth),
+      videoHeight: videoHeight == null && nullToAbsent
+          ? const Value.absent()
+          : Value(videoHeight),
+      videoDurationMs: videoDurationMs == null && nullToAbsent
+          ? const Value.absent()
+          : Value(videoDurationMs),
+      isVideoReady: Value(isVideoReady),
+      locationName: locationName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(locationName),
+      likeCount: Value(likeCount),
+      saveCount: Value(saveCount),
+      commentCount: Value(commentCount),
+      viewerHasLiked: Value(viewerHasLiked),
+      viewerHasSaved: Value(viewerHasSaved),
+      commentsDisabled: Value(commentsDisabled),
+      createdAt: Value(createdAt),
+      cachedAt: Value(cachedAt),
+    );
+  }
+
+  factory CachedReel.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CachedReel(
+      id: serializer.fromJson<String>(json['id']),
+      authorId: serializer.fromJson<String>(json['authorId']),
+      authorUsername: serializer.fromJson<String?>(json['authorUsername']),
+      authorDisplayName: serializer.fromJson<String?>(
+        json['authorDisplayName'],
+      ),
+      authorAvatarUrl: serializer.fromJson<String?>(json['authorAvatarUrl']),
+      authorIsVerified: serializer.fromJson<bool>(json['authorIsVerified']),
+      caption: serializer.fromJson<String?>(json['caption']),
+      videoUrl: serializer.fromJson<String?>(json['videoUrl']),
+      posterUrl: serializer.fromJson<String?>(json['posterUrl']),
+      videoWidth: serializer.fromJson<int?>(json['videoWidth']),
+      videoHeight: serializer.fromJson<int?>(json['videoHeight']),
+      videoDurationMs: serializer.fromJson<int?>(json['videoDurationMs']),
+      isVideoReady: serializer.fromJson<bool>(json['isVideoReady']),
+      locationName: serializer.fromJson<String?>(json['locationName']),
+      likeCount: serializer.fromJson<int>(json['likeCount']),
+      saveCount: serializer.fromJson<int>(json['saveCount']),
+      commentCount: serializer.fromJson<int>(json['commentCount']),
+      viewerHasLiked: serializer.fromJson<bool>(json['viewerHasLiked']),
+      viewerHasSaved: serializer.fromJson<bool>(json['viewerHasSaved']),
+      commentsDisabled: serializer.fromJson<bool>(json['commentsDisabled']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      cachedAt: serializer.fromJson<DateTime>(json['cachedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'authorId': serializer.toJson<String>(authorId),
+      'authorUsername': serializer.toJson<String?>(authorUsername),
+      'authorDisplayName': serializer.toJson<String?>(authorDisplayName),
+      'authorAvatarUrl': serializer.toJson<String?>(authorAvatarUrl),
+      'authorIsVerified': serializer.toJson<bool>(authorIsVerified),
+      'caption': serializer.toJson<String?>(caption),
+      'videoUrl': serializer.toJson<String?>(videoUrl),
+      'posterUrl': serializer.toJson<String?>(posterUrl),
+      'videoWidth': serializer.toJson<int?>(videoWidth),
+      'videoHeight': serializer.toJson<int?>(videoHeight),
+      'videoDurationMs': serializer.toJson<int?>(videoDurationMs),
+      'isVideoReady': serializer.toJson<bool>(isVideoReady),
+      'locationName': serializer.toJson<String?>(locationName),
+      'likeCount': serializer.toJson<int>(likeCount),
+      'saveCount': serializer.toJson<int>(saveCount),
+      'commentCount': serializer.toJson<int>(commentCount),
+      'viewerHasLiked': serializer.toJson<bool>(viewerHasLiked),
+      'viewerHasSaved': serializer.toJson<bool>(viewerHasSaved),
+      'commentsDisabled': serializer.toJson<bool>(commentsDisabled),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'cachedAt': serializer.toJson<DateTime>(cachedAt),
+    };
+  }
+
+  CachedReel copyWith({
+    String? id,
+    String? authorId,
+    Value<String?> authorUsername = const Value.absent(),
+    Value<String?> authorDisplayName = const Value.absent(),
+    Value<String?> authorAvatarUrl = const Value.absent(),
+    bool? authorIsVerified,
+    Value<String?> caption = const Value.absent(),
+    Value<String?> videoUrl = const Value.absent(),
+    Value<String?> posterUrl = const Value.absent(),
+    Value<int?> videoWidth = const Value.absent(),
+    Value<int?> videoHeight = const Value.absent(),
+    Value<int?> videoDurationMs = const Value.absent(),
+    bool? isVideoReady,
+    Value<String?> locationName = const Value.absent(),
+    int? likeCount,
+    int? saveCount,
+    int? commentCount,
+    bool? viewerHasLiked,
+    bool? viewerHasSaved,
+    bool? commentsDisabled,
+    DateTime? createdAt,
+    DateTime? cachedAt,
+  }) => CachedReel(
+    id: id ?? this.id,
+    authorId: authorId ?? this.authorId,
+    authorUsername: authorUsername.present
+        ? authorUsername.value
+        : this.authorUsername,
+    authorDisplayName: authorDisplayName.present
+        ? authorDisplayName.value
+        : this.authorDisplayName,
+    authorAvatarUrl: authorAvatarUrl.present
+        ? authorAvatarUrl.value
+        : this.authorAvatarUrl,
+    authorIsVerified: authorIsVerified ?? this.authorIsVerified,
+    caption: caption.present ? caption.value : this.caption,
+    videoUrl: videoUrl.present ? videoUrl.value : this.videoUrl,
+    posterUrl: posterUrl.present ? posterUrl.value : this.posterUrl,
+    videoWidth: videoWidth.present ? videoWidth.value : this.videoWidth,
+    videoHeight: videoHeight.present ? videoHeight.value : this.videoHeight,
+    videoDurationMs: videoDurationMs.present
+        ? videoDurationMs.value
+        : this.videoDurationMs,
+    isVideoReady: isVideoReady ?? this.isVideoReady,
+    locationName: locationName.present ? locationName.value : this.locationName,
+    likeCount: likeCount ?? this.likeCount,
+    saveCount: saveCount ?? this.saveCount,
+    commentCount: commentCount ?? this.commentCount,
+    viewerHasLiked: viewerHasLiked ?? this.viewerHasLiked,
+    viewerHasSaved: viewerHasSaved ?? this.viewerHasSaved,
+    commentsDisabled: commentsDisabled ?? this.commentsDisabled,
+    createdAt: createdAt ?? this.createdAt,
+    cachedAt: cachedAt ?? this.cachedAt,
+  );
+  CachedReel copyWithCompanion(ReelsCompanion data) {
+    return CachedReel(
+      id: data.id.present ? data.id.value : this.id,
+      authorId: data.authorId.present ? data.authorId.value : this.authorId,
+      authorUsername: data.authorUsername.present
+          ? data.authorUsername.value
+          : this.authorUsername,
+      authorDisplayName: data.authorDisplayName.present
+          ? data.authorDisplayName.value
+          : this.authorDisplayName,
+      authorAvatarUrl: data.authorAvatarUrl.present
+          ? data.authorAvatarUrl.value
+          : this.authorAvatarUrl,
+      authorIsVerified: data.authorIsVerified.present
+          ? data.authorIsVerified.value
+          : this.authorIsVerified,
+      caption: data.caption.present ? data.caption.value : this.caption,
+      videoUrl: data.videoUrl.present ? data.videoUrl.value : this.videoUrl,
+      posterUrl: data.posterUrl.present ? data.posterUrl.value : this.posterUrl,
+      videoWidth: data.videoWidth.present
+          ? data.videoWidth.value
+          : this.videoWidth,
+      videoHeight: data.videoHeight.present
+          ? data.videoHeight.value
+          : this.videoHeight,
+      videoDurationMs: data.videoDurationMs.present
+          ? data.videoDurationMs.value
+          : this.videoDurationMs,
+      isVideoReady: data.isVideoReady.present
+          ? data.isVideoReady.value
+          : this.isVideoReady,
+      locationName: data.locationName.present
+          ? data.locationName.value
+          : this.locationName,
+      likeCount: data.likeCount.present ? data.likeCount.value : this.likeCount,
+      saveCount: data.saveCount.present ? data.saveCount.value : this.saveCount,
+      commentCount: data.commentCount.present
+          ? data.commentCount.value
+          : this.commentCount,
+      viewerHasLiked: data.viewerHasLiked.present
+          ? data.viewerHasLiked.value
+          : this.viewerHasLiked,
+      viewerHasSaved: data.viewerHasSaved.present
+          ? data.viewerHasSaved.value
+          : this.viewerHasSaved,
+      commentsDisabled: data.commentsDisabled.present
+          ? data.commentsDisabled.value
+          : this.commentsDisabled,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      cachedAt: data.cachedAt.present ? data.cachedAt.value : this.cachedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedReel(')
+          ..write('id: $id, ')
+          ..write('authorId: $authorId, ')
+          ..write('authorUsername: $authorUsername, ')
+          ..write('authorDisplayName: $authorDisplayName, ')
+          ..write('authorAvatarUrl: $authorAvatarUrl, ')
+          ..write('authorIsVerified: $authorIsVerified, ')
+          ..write('caption: $caption, ')
+          ..write('videoUrl: $videoUrl, ')
+          ..write('posterUrl: $posterUrl, ')
+          ..write('videoWidth: $videoWidth, ')
+          ..write('videoHeight: $videoHeight, ')
+          ..write('videoDurationMs: $videoDurationMs, ')
+          ..write('isVideoReady: $isVideoReady, ')
+          ..write('locationName: $locationName, ')
+          ..write('likeCount: $likeCount, ')
+          ..write('saveCount: $saveCount, ')
+          ..write('commentCount: $commentCount, ')
+          ..write('viewerHasLiked: $viewerHasLiked, ')
+          ..write('viewerHasSaved: $viewerHasSaved, ')
+          ..write('commentsDisabled: $commentsDisabled, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('cachedAt: $cachedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    authorId,
+    authorUsername,
+    authorDisplayName,
+    authorAvatarUrl,
+    authorIsVerified,
+    caption,
+    videoUrl,
+    posterUrl,
+    videoWidth,
+    videoHeight,
+    videoDurationMs,
+    isVideoReady,
+    locationName,
+    likeCount,
+    saveCount,
+    commentCount,
+    viewerHasLiked,
+    viewerHasSaved,
+    commentsDisabled,
+    createdAt,
+    cachedAt,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CachedReel &&
+          other.id == this.id &&
+          other.authorId == this.authorId &&
+          other.authorUsername == this.authorUsername &&
+          other.authorDisplayName == this.authorDisplayName &&
+          other.authorAvatarUrl == this.authorAvatarUrl &&
+          other.authorIsVerified == this.authorIsVerified &&
+          other.caption == this.caption &&
+          other.videoUrl == this.videoUrl &&
+          other.posterUrl == this.posterUrl &&
+          other.videoWidth == this.videoWidth &&
+          other.videoHeight == this.videoHeight &&
+          other.videoDurationMs == this.videoDurationMs &&
+          other.isVideoReady == this.isVideoReady &&
+          other.locationName == this.locationName &&
+          other.likeCount == this.likeCount &&
+          other.saveCount == this.saveCount &&
+          other.commentCount == this.commentCount &&
+          other.viewerHasLiked == this.viewerHasLiked &&
+          other.viewerHasSaved == this.viewerHasSaved &&
+          other.commentsDisabled == this.commentsDisabled &&
+          other.createdAt == this.createdAt &&
+          other.cachedAt == this.cachedAt);
+}
+
+class ReelsCompanion extends UpdateCompanion<CachedReel> {
+  final Value<String> id;
+  final Value<String> authorId;
+  final Value<String?> authorUsername;
+  final Value<String?> authorDisplayName;
+  final Value<String?> authorAvatarUrl;
+  final Value<bool> authorIsVerified;
+  final Value<String?> caption;
+  final Value<String?> videoUrl;
+  final Value<String?> posterUrl;
+  final Value<int?> videoWidth;
+  final Value<int?> videoHeight;
+  final Value<int?> videoDurationMs;
+  final Value<bool> isVideoReady;
+  final Value<String?> locationName;
+  final Value<int> likeCount;
+  final Value<int> saveCount;
+  final Value<int> commentCount;
+  final Value<bool> viewerHasLiked;
+  final Value<bool> viewerHasSaved;
+  final Value<bool> commentsDisabled;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> cachedAt;
+  final Value<int> rowid;
+  const ReelsCompanion({
+    this.id = const Value.absent(),
+    this.authorId = const Value.absent(),
+    this.authorUsername = const Value.absent(),
+    this.authorDisplayName = const Value.absent(),
+    this.authorAvatarUrl = const Value.absent(),
+    this.authorIsVerified = const Value.absent(),
+    this.caption = const Value.absent(),
+    this.videoUrl = const Value.absent(),
+    this.posterUrl = const Value.absent(),
+    this.videoWidth = const Value.absent(),
+    this.videoHeight = const Value.absent(),
+    this.videoDurationMs = const Value.absent(),
+    this.isVideoReady = const Value.absent(),
+    this.locationName = const Value.absent(),
+    this.likeCount = const Value.absent(),
+    this.saveCount = const Value.absent(),
+    this.commentCount = const Value.absent(),
+    this.viewerHasLiked = const Value.absent(),
+    this.viewerHasSaved = const Value.absent(),
+    this.commentsDisabled = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.cachedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReelsCompanion.insert({
+    required String id,
+    required String authorId,
+    this.authorUsername = const Value.absent(),
+    this.authorDisplayName = const Value.absent(),
+    this.authorAvatarUrl = const Value.absent(),
+    required bool authorIsVerified,
+    this.caption = const Value.absent(),
+    this.videoUrl = const Value.absent(),
+    this.posterUrl = const Value.absent(),
+    this.videoWidth = const Value.absent(),
+    this.videoHeight = const Value.absent(),
+    this.videoDurationMs = const Value.absent(),
+    required bool isVideoReady,
+    this.locationName = const Value.absent(),
+    required int likeCount,
+    required int saveCount,
+    required int commentCount,
+    required bool viewerHasLiked,
+    required bool viewerHasSaved,
+    required bool commentsDisabled,
+    required DateTime createdAt,
+    required DateTime cachedAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       authorId = Value(authorId),
+       authorIsVerified = Value(authorIsVerified),
+       isVideoReady = Value(isVideoReady),
+       likeCount = Value(likeCount),
+       saveCount = Value(saveCount),
+       commentCount = Value(commentCount),
+       viewerHasLiked = Value(viewerHasLiked),
+       viewerHasSaved = Value(viewerHasSaved),
+       commentsDisabled = Value(commentsDisabled),
+       createdAt = Value(createdAt),
+       cachedAt = Value(cachedAt);
+  static Insertable<CachedReel> custom({
+    Expression<String>? id,
+    Expression<String>? authorId,
+    Expression<String>? authorUsername,
+    Expression<String>? authorDisplayName,
+    Expression<String>? authorAvatarUrl,
+    Expression<bool>? authorIsVerified,
+    Expression<String>? caption,
+    Expression<String>? videoUrl,
+    Expression<String>? posterUrl,
+    Expression<int>? videoWidth,
+    Expression<int>? videoHeight,
+    Expression<int>? videoDurationMs,
+    Expression<bool>? isVideoReady,
+    Expression<String>? locationName,
+    Expression<int>? likeCount,
+    Expression<int>? saveCount,
+    Expression<int>? commentCount,
+    Expression<bool>? viewerHasLiked,
+    Expression<bool>? viewerHasSaved,
+    Expression<bool>? commentsDisabled,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? cachedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (authorId != null) 'author_id': authorId,
+      if (authorUsername != null) 'author_username': authorUsername,
+      if (authorDisplayName != null) 'author_display_name': authorDisplayName,
+      if (authorAvatarUrl != null) 'author_avatar_url': authorAvatarUrl,
+      if (authorIsVerified != null) 'author_is_verified': authorIsVerified,
+      if (caption != null) 'caption': caption,
+      if (videoUrl != null) 'video_url': videoUrl,
+      if (posterUrl != null) 'poster_url': posterUrl,
+      if (videoWidth != null) 'video_width': videoWidth,
+      if (videoHeight != null) 'video_height': videoHeight,
+      if (videoDurationMs != null) 'video_duration_ms': videoDurationMs,
+      if (isVideoReady != null) 'is_video_ready': isVideoReady,
+      if (locationName != null) 'location_name': locationName,
+      if (likeCount != null) 'like_count': likeCount,
+      if (saveCount != null) 'save_count': saveCount,
+      if (commentCount != null) 'comment_count': commentCount,
+      if (viewerHasLiked != null) 'viewer_has_liked': viewerHasLiked,
+      if (viewerHasSaved != null) 'viewer_has_saved': viewerHasSaved,
+      if (commentsDisabled != null) 'comments_disabled': commentsDisabled,
+      if (createdAt != null) 'created_at': createdAt,
+      if (cachedAt != null) 'cached_at': cachedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReelsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? authorId,
+    Value<String?>? authorUsername,
+    Value<String?>? authorDisplayName,
+    Value<String?>? authorAvatarUrl,
+    Value<bool>? authorIsVerified,
+    Value<String?>? caption,
+    Value<String?>? videoUrl,
+    Value<String?>? posterUrl,
+    Value<int?>? videoWidth,
+    Value<int?>? videoHeight,
+    Value<int?>? videoDurationMs,
+    Value<bool>? isVideoReady,
+    Value<String?>? locationName,
+    Value<int>? likeCount,
+    Value<int>? saveCount,
+    Value<int>? commentCount,
+    Value<bool>? viewerHasLiked,
+    Value<bool>? viewerHasSaved,
+    Value<bool>? commentsDisabled,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? cachedAt,
+    Value<int>? rowid,
+  }) {
+    return ReelsCompanion(
+      id: id ?? this.id,
+      authorId: authorId ?? this.authorId,
+      authorUsername: authorUsername ?? this.authorUsername,
+      authorDisplayName: authorDisplayName ?? this.authorDisplayName,
+      authorAvatarUrl: authorAvatarUrl ?? this.authorAvatarUrl,
+      authorIsVerified: authorIsVerified ?? this.authorIsVerified,
+      caption: caption ?? this.caption,
+      videoUrl: videoUrl ?? this.videoUrl,
+      posterUrl: posterUrl ?? this.posterUrl,
+      videoWidth: videoWidth ?? this.videoWidth,
+      videoHeight: videoHeight ?? this.videoHeight,
+      videoDurationMs: videoDurationMs ?? this.videoDurationMs,
+      isVideoReady: isVideoReady ?? this.isVideoReady,
+      locationName: locationName ?? this.locationName,
+      likeCount: likeCount ?? this.likeCount,
+      saveCount: saveCount ?? this.saveCount,
+      commentCount: commentCount ?? this.commentCount,
+      viewerHasLiked: viewerHasLiked ?? this.viewerHasLiked,
+      viewerHasSaved: viewerHasSaved ?? this.viewerHasSaved,
+      commentsDisabled: commentsDisabled ?? this.commentsDisabled,
+      createdAt: createdAt ?? this.createdAt,
+      cachedAt: cachedAt ?? this.cachedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (authorId.present) {
+      map['author_id'] = Variable<String>(authorId.value);
+    }
+    if (authorUsername.present) {
+      map['author_username'] = Variable<String>(authorUsername.value);
+    }
+    if (authorDisplayName.present) {
+      map['author_display_name'] = Variable<String>(authorDisplayName.value);
+    }
+    if (authorAvatarUrl.present) {
+      map['author_avatar_url'] = Variable<String>(authorAvatarUrl.value);
+    }
+    if (authorIsVerified.present) {
+      map['author_is_verified'] = Variable<bool>(authorIsVerified.value);
+    }
+    if (caption.present) {
+      map['caption'] = Variable<String>(caption.value);
+    }
+    if (videoUrl.present) {
+      map['video_url'] = Variable<String>(videoUrl.value);
+    }
+    if (posterUrl.present) {
+      map['poster_url'] = Variable<String>(posterUrl.value);
+    }
+    if (videoWidth.present) {
+      map['video_width'] = Variable<int>(videoWidth.value);
+    }
+    if (videoHeight.present) {
+      map['video_height'] = Variable<int>(videoHeight.value);
+    }
+    if (videoDurationMs.present) {
+      map['video_duration_ms'] = Variable<int>(videoDurationMs.value);
+    }
+    if (isVideoReady.present) {
+      map['is_video_ready'] = Variable<bool>(isVideoReady.value);
+    }
+    if (locationName.present) {
+      map['location_name'] = Variable<String>(locationName.value);
+    }
+    if (likeCount.present) {
+      map['like_count'] = Variable<int>(likeCount.value);
+    }
+    if (saveCount.present) {
+      map['save_count'] = Variable<int>(saveCount.value);
+    }
+    if (commentCount.present) {
+      map['comment_count'] = Variable<int>(commentCount.value);
+    }
+    if (viewerHasLiked.present) {
+      map['viewer_has_liked'] = Variable<bool>(viewerHasLiked.value);
+    }
+    if (viewerHasSaved.present) {
+      map['viewer_has_saved'] = Variable<bool>(viewerHasSaved.value);
+    }
+    if (commentsDisabled.present) {
+      map['comments_disabled'] = Variable<bool>(commentsDisabled.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (cachedAt.present) {
+      map['cached_at'] = Variable<DateTime>(cachedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReelsCompanion(')
+          ..write('id: $id, ')
+          ..write('authorId: $authorId, ')
+          ..write('authorUsername: $authorUsername, ')
+          ..write('authorDisplayName: $authorDisplayName, ')
+          ..write('authorAvatarUrl: $authorAvatarUrl, ')
+          ..write('authorIsVerified: $authorIsVerified, ')
+          ..write('caption: $caption, ')
+          ..write('videoUrl: $videoUrl, ')
+          ..write('posterUrl: $posterUrl, ')
+          ..write('videoWidth: $videoWidth, ')
+          ..write('videoHeight: $videoHeight, ')
+          ..write('videoDurationMs: $videoDurationMs, ')
+          ..write('isVideoReady: $isVideoReady, ')
+          ..write('locationName: $locationName, ')
+          ..write('likeCount: $likeCount, ')
+          ..write('saveCount: $saveCount, ')
+          ..write('commentCount: $commentCount, ')
+          ..write('viewerHasLiked: $viewerHasLiked, ')
+          ..write('viewerHasSaved: $viewerHasSaved, ')
+          ..write('commentsDisabled: $commentsDisabled, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('cachedAt: $cachedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3233,6 +4572,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $StorySeenSegmentsTable storySeenSegments =
       $StorySeenSegmentsTable(this);
   late final $ComposeDraftsTable composeDrafts = $ComposeDraftsTable(this);
+  late final $ReelsTable reels = $ReelsTable(this);
   late final UsersDao usersDao = UsersDao(this as AppDatabase);
   late final MeProfileDao meProfileDao = MeProfileDao(this as AppDatabase);
   late final PostsDao postsDao = PostsDao(this as AppDatabase);
@@ -3240,6 +4580,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final ComposeDraftDao composeDraftDao = ComposeDraftDao(
     this as AppDatabase,
   );
+  late final ReelsDao reelsDao = ReelsDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3250,6 +4591,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     posts,
     storySeenSegments,
     composeDrafts,
+    reels,
   ];
 }
 
@@ -3940,6 +5282,7 @@ typedef $$PostsTableCreateCompanionBuilder =
       required bool authorIsVerified,
       Value<String?> caption,
       Value<String?> mediaImageUrl,
+      Value<String?> mediaUrlsJson,
       Value<int?> mediaWidth,
       Value<int?> mediaHeight,
       Value<String?> locationName,
@@ -3963,6 +5306,7 @@ typedef $$PostsTableUpdateCompanionBuilder =
       Value<bool> authorIsVerified,
       Value<String?> caption,
       Value<String?> mediaImageUrl,
+      Value<String?> mediaUrlsJson,
       Value<int?> mediaWidth,
       Value<int?> mediaHeight,
       Value<String?> locationName,
@@ -4022,6 +5366,11 @@ class $$PostsTableFilterComposer extends Composer<_$AppDatabase, $PostsTable> {
 
   ColumnFilters<String> get mediaImageUrl => $composableBuilder(
     column: $table.mediaImageUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mediaUrlsJson => $composableBuilder(
+    column: $table.mediaUrlsJson,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4130,6 +5479,11 @@ class $$PostsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get mediaUrlsJson => $composableBuilder(
+    column: $table.mediaUrlsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get mediaWidth => $composableBuilder(
     column: $table.mediaWidth,
     builder: (column) => ColumnOrderings(column),
@@ -4229,6 +5583,11 @@ class $$PostsTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get mediaUrlsJson => $composableBuilder(
+    column: $table.mediaUrlsJson,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<int> get mediaWidth => $composableBuilder(
     column: $table.mediaWidth,
     builder: (column) => column,
@@ -4313,6 +5672,7 @@ class $$PostsTableTableManager
                 Value<bool> authorIsVerified = const Value.absent(),
                 Value<String?> caption = const Value.absent(),
                 Value<String?> mediaImageUrl = const Value.absent(),
+                Value<String?> mediaUrlsJson = const Value.absent(),
                 Value<int?> mediaWidth = const Value.absent(),
                 Value<int?> mediaHeight = const Value.absent(),
                 Value<String?> locationName = const Value.absent(),
@@ -4334,6 +5694,7 @@ class $$PostsTableTableManager
                 authorIsVerified: authorIsVerified,
                 caption: caption,
                 mediaImageUrl: mediaImageUrl,
+                mediaUrlsJson: mediaUrlsJson,
                 mediaWidth: mediaWidth,
                 mediaHeight: mediaHeight,
                 locationName: locationName,
@@ -4357,6 +5718,7 @@ class $$PostsTableTableManager
                 required bool authorIsVerified,
                 Value<String?> caption = const Value.absent(),
                 Value<String?> mediaImageUrl = const Value.absent(),
+                Value<String?> mediaUrlsJson = const Value.absent(),
                 Value<int?> mediaWidth = const Value.absent(),
                 Value<int?> mediaHeight = const Value.absent(),
                 Value<String?> locationName = const Value.absent(),
@@ -4378,6 +5740,7 @@ class $$PostsTableTableManager
                 authorIsVerified: authorIsVerified,
                 caption: caption,
                 mediaImageUrl: mediaImageUrl,
+                mediaUrlsJson: mediaUrlsJson,
                 mediaWidth: mediaWidth,
                 mediaHeight: mediaHeight,
                 locationName: locationName,
@@ -4782,6 +6145,548 @@ typedef $$ComposeDraftsTableProcessedTableManager =
       ComposeDraftRow,
       PrefetchHooks Function()
     >;
+typedef $$ReelsTableCreateCompanionBuilder =
+    ReelsCompanion Function({
+      required String id,
+      required String authorId,
+      Value<String?> authorUsername,
+      Value<String?> authorDisplayName,
+      Value<String?> authorAvatarUrl,
+      required bool authorIsVerified,
+      Value<String?> caption,
+      Value<String?> videoUrl,
+      Value<String?> posterUrl,
+      Value<int?> videoWidth,
+      Value<int?> videoHeight,
+      Value<int?> videoDurationMs,
+      required bool isVideoReady,
+      Value<String?> locationName,
+      required int likeCount,
+      required int saveCount,
+      required int commentCount,
+      required bool viewerHasLiked,
+      required bool viewerHasSaved,
+      required bool commentsDisabled,
+      required DateTime createdAt,
+      required DateTime cachedAt,
+      Value<int> rowid,
+    });
+typedef $$ReelsTableUpdateCompanionBuilder =
+    ReelsCompanion Function({
+      Value<String> id,
+      Value<String> authorId,
+      Value<String?> authorUsername,
+      Value<String?> authorDisplayName,
+      Value<String?> authorAvatarUrl,
+      Value<bool> authorIsVerified,
+      Value<String?> caption,
+      Value<String?> videoUrl,
+      Value<String?> posterUrl,
+      Value<int?> videoWidth,
+      Value<int?> videoHeight,
+      Value<int?> videoDurationMs,
+      Value<bool> isVideoReady,
+      Value<String?> locationName,
+      Value<int> likeCount,
+      Value<int> saveCount,
+      Value<int> commentCount,
+      Value<bool> viewerHasLiked,
+      Value<bool> viewerHasSaved,
+      Value<bool> commentsDisabled,
+      Value<DateTime> createdAt,
+      Value<DateTime> cachedAt,
+      Value<int> rowid,
+    });
+
+class $$ReelsTableFilterComposer extends Composer<_$AppDatabase, $ReelsTable> {
+  $$ReelsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authorId => $composableBuilder(
+    column: $table.authorId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authorUsername => $composableBuilder(
+    column: $table.authorUsername,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authorDisplayName => $composableBuilder(
+    column: $table.authorDisplayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get authorAvatarUrl => $composableBuilder(
+    column: $table.authorAvatarUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get authorIsVerified => $composableBuilder(
+    column: $table.authorIsVerified,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get caption => $composableBuilder(
+    column: $table.caption,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get videoUrl => $composableBuilder(
+    column: $table.videoUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get posterUrl => $composableBuilder(
+    column: $table.posterUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get videoWidth => $composableBuilder(
+    column: $table.videoWidth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get videoHeight => $composableBuilder(
+    column: $table.videoHeight,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get videoDurationMs => $composableBuilder(
+    column: $table.videoDurationMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isVideoReady => $composableBuilder(
+    column: $table.isVideoReady,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get locationName => $composableBuilder(
+    column: $table.locationName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get likeCount => $composableBuilder(
+    column: $table.likeCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get saveCount => $composableBuilder(
+    column: $table.saveCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get commentCount => $composableBuilder(
+    column: $table.commentCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get viewerHasLiked => $composableBuilder(
+    column: $table.viewerHasLiked,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get viewerHasSaved => $composableBuilder(
+    column: $table.viewerHasSaved,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get commentsDisabled => $composableBuilder(
+    column: $table.commentsDisabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get cachedAt => $composableBuilder(
+    column: $table.cachedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ReelsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReelsTable> {
+  $$ReelsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authorId => $composableBuilder(
+    column: $table.authorId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authorUsername => $composableBuilder(
+    column: $table.authorUsername,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authorDisplayName => $composableBuilder(
+    column: $table.authorDisplayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get authorAvatarUrl => $composableBuilder(
+    column: $table.authorAvatarUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get authorIsVerified => $composableBuilder(
+    column: $table.authorIsVerified,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get caption => $composableBuilder(
+    column: $table.caption,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get videoUrl => $composableBuilder(
+    column: $table.videoUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get posterUrl => $composableBuilder(
+    column: $table.posterUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get videoWidth => $composableBuilder(
+    column: $table.videoWidth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get videoHeight => $composableBuilder(
+    column: $table.videoHeight,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get videoDurationMs => $composableBuilder(
+    column: $table.videoDurationMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isVideoReady => $composableBuilder(
+    column: $table.isVideoReady,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get locationName => $composableBuilder(
+    column: $table.locationName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get likeCount => $composableBuilder(
+    column: $table.likeCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get saveCount => $composableBuilder(
+    column: $table.saveCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get commentCount => $composableBuilder(
+    column: $table.commentCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get viewerHasLiked => $composableBuilder(
+    column: $table.viewerHasLiked,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get viewerHasSaved => $composableBuilder(
+    column: $table.viewerHasSaved,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get commentsDisabled => $composableBuilder(
+    column: $table.commentsDisabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get cachedAt => $composableBuilder(
+    column: $table.cachedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ReelsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReelsTable> {
+  $$ReelsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get authorId =>
+      $composableBuilder(column: $table.authorId, builder: (column) => column);
+
+  GeneratedColumn<String> get authorUsername => $composableBuilder(
+    column: $table.authorUsername,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get authorDisplayName => $composableBuilder(
+    column: $table.authorDisplayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get authorAvatarUrl => $composableBuilder(
+    column: $table.authorAvatarUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get authorIsVerified => $composableBuilder(
+    column: $table.authorIsVerified,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get caption =>
+      $composableBuilder(column: $table.caption, builder: (column) => column);
+
+  GeneratedColumn<String> get videoUrl =>
+      $composableBuilder(column: $table.videoUrl, builder: (column) => column);
+
+  GeneratedColumn<String> get posterUrl =>
+      $composableBuilder(column: $table.posterUrl, builder: (column) => column);
+
+  GeneratedColumn<int> get videoWidth => $composableBuilder(
+    column: $table.videoWidth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get videoHeight => $composableBuilder(
+    column: $table.videoHeight,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get videoDurationMs => $composableBuilder(
+    column: $table.videoDurationMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isVideoReady => $composableBuilder(
+    column: $table.isVideoReady,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get locationName => $composableBuilder(
+    column: $table.locationName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get likeCount =>
+      $composableBuilder(column: $table.likeCount, builder: (column) => column);
+
+  GeneratedColumn<int> get saveCount =>
+      $composableBuilder(column: $table.saveCount, builder: (column) => column);
+
+  GeneratedColumn<int> get commentCount => $composableBuilder(
+    column: $table.commentCount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get viewerHasLiked => $composableBuilder(
+    column: $table.viewerHasLiked,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get viewerHasSaved => $composableBuilder(
+    column: $table.viewerHasSaved,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get commentsDisabled => $composableBuilder(
+    column: $table.commentsDisabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get cachedAt =>
+      $composableBuilder(column: $table.cachedAt, builder: (column) => column);
+}
+
+class $$ReelsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ReelsTable,
+          CachedReel,
+          $$ReelsTableFilterComposer,
+          $$ReelsTableOrderingComposer,
+          $$ReelsTableAnnotationComposer,
+          $$ReelsTableCreateCompanionBuilder,
+          $$ReelsTableUpdateCompanionBuilder,
+          (CachedReel, BaseReferences<_$AppDatabase, $ReelsTable, CachedReel>),
+          CachedReel,
+          PrefetchHooks Function()
+        > {
+  $$ReelsTableTableManager(_$AppDatabase db, $ReelsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReelsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReelsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReelsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> authorId = const Value.absent(),
+                Value<String?> authorUsername = const Value.absent(),
+                Value<String?> authorDisplayName = const Value.absent(),
+                Value<String?> authorAvatarUrl = const Value.absent(),
+                Value<bool> authorIsVerified = const Value.absent(),
+                Value<String?> caption = const Value.absent(),
+                Value<String?> videoUrl = const Value.absent(),
+                Value<String?> posterUrl = const Value.absent(),
+                Value<int?> videoWidth = const Value.absent(),
+                Value<int?> videoHeight = const Value.absent(),
+                Value<int?> videoDurationMs = const Value.absent(),
+                Value<bool> isVideoReady = const Value.absent(),
+                Value<String?> locationName = const Value.absent(),
+                Value<int> likeCount = const Value.absent(),
+                Value<int> saveCount = const Value.absent(),
+                Value<int> commentCount = const Value.absent(),
+                Value<bool> viewerHasLiked = const Value.absent(),
+                Value<bool> viewerHasSaved = const Value.absent(),
+                Value<bool> commentsDisabled = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> cachedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReelsCompanion(
+                id: id,
+                authorId: authorId,
+                authorUsername: authorUsername,
+                authorDisplayName: authorDisplayName,
+                authorAvatarUrl: authorAvatarUrl,
+                authorIsVerified: authorIsVerified,
+                caption: caption,
+                videoUrl: videoUrl,
+                posterUrl: posterUrl,
+                videoWidth: videoWidth,
+                videoHeight: videoHeight,
+                videoDurationMs: videoDurationMs,
+                isVideoReady: isVideoReady,
+                locationName: locationName,
+                likeCount: likeCount,
+                saveCount: saveCount,
+                commentCount: commentCount,
+                viewerHasLiked: viewerHasLiked,
+                viewerHasSaved: viewerHasSaved,
+                commentsDisabled: commentsDisabled,
+                createdAt: createdAt,
+                cachedAt: cachedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String authorId,
+                Value<String?> authorUsername = const Value.absent(),
+                Value<String?> authorDisplayName = const Value.absent(),
+                Value<String?> authorAvatarUrl = const Value.absent(),
+                required bool authorIsVerified,
+                Value<String?> caption = const Value.absent(),
+                Value<String?> videoUrl = const Value.absent(),
+                Value<String?> posterUrl = const Value.absent(),
+                Value<int?> videoWidth = const Value.absent(),
+                Value<int?> videoHeight = const Value.absent(),
+                Value<int?> videoDurationMs = const Value.absent(),
+                required bool isVideoReady,
+                Value<String?> locationName = const Value.absent(),
+                required int likeCount,
+                required int saveCount,
+                required int commentCount,
+                required bool viewerHasLiked,
+                required bool viewerHasSaved,
+                required bool commentsDisabled,
+                required DateTime createdAt,
+                required DateTime cachedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ReelsCompanion.insert(
+                id: id,
+                authorId: authorId,
+                authorUsername: authorUsername,
+                authorDisplayName: authorDisplayName,
+                authorAvatarUrl: authorAvatarUrl,
+                authorIsVerified: authorIsVerified,
+                caption: caption,
+                videoUrl: videoUrl,
+                posterUrl: posterUrl,
+                videoWidth: videoWidth,
+                videoHeight: videoHeight,
+                videoDurationMs: videoDurationMs,
+                isVideoReady: isVideoReady,
+                locationName: locationName,
+                likeCount: likeCount,
+                saveCount: saveCount,
+                commentCount: commentCount,
+                viewerHasLiked: viewerHasLiked,
+                viewerHasSaved: viewerHasSaved,
+                commentsDisabled: commentsDisabled,
+                createdAt: createdAt,
+                cachedAt: cachedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ReelsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ReelsTable,
+      CachedReel,
+      $$ReelsTableFilterComposer,
+      $$ReelsTableOrderingComposer,
+      $$ReelsTableAnnotationComposer,
+      $$ReelsTableCreateCompanionBuilder,
+      $$ReelsTableUpdateCompanionBuilder,
+      (CachedReel, BaseReferences<_$AppDatabase, $ReelsTable, CachedReel>),
+      CachedReel,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4796,4 +6701,6 @@ class $AppDatabaseManager {
       $$StorySeenSegmentsTableTableManager(_db, _db.storySeenSegments);
   $$ComposeDraftsTableTableManager get composeDrafts =>
       $$ComposeDraftsTableTableManager(_db, _db.composeDrafts);
+  $$ReelsTableTableManager get reels =>
+      $$ReelsTableTableManager(_db, _db.reels);
 }

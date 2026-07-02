@@ -31,11 +31,15 @@ abstract class Comment with _$Comment {
     required String id,
     required String postId,
     required CommentAuthor author,
-    required String text,
+    // Backend `CommentDto` names the content `body`.
+    @JsonKey(name: 'body') required String text,
     required DateTime createdAt,
     required int likeCount,
     required bool viewerHasLiked,
-    required bool isOwn,
+    // Not sent by the backend — derived at render (author == current user).
+    @JsonKey(includeFromJson: false, includeToJson: false)
+    @Default(false)
+    bool isOwn,
     @Default(0) int replyCount,
     String? parentId,
     @JsonKey(includeFromJson: false, includeToJson: false)

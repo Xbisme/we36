@@ -95,7 +95,6 @@ class FakeCommentsRepository implements CommentsRepository {
               createdAt: _base.add(Duration(minutes: i * 3 + r + 1)),
               likeCount: r,
               viewerHasLiked: false,
-              isOwn: false,
               parentId: id,
             ),
           );

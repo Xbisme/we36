@@ -60,6 +60,9 @@ dependencies:
   crop_your_image: ^2.0.0 # pure-Flutter 4:5 crop with custom chrome
   image: ^4.9.1 # pure-Dart bake color-matrix + resize/encode on isolate (also upload compress)
 
+  # Reels — vertical short-video feed (#008)
+  video_player: ^2.11.1 # inline video (flutter.dev Flutter Favorite); iOS 13 / Android minSdk 24 (met)
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

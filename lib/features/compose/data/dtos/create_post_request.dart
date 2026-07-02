@@ -15,17 +15,17 @@ class CreatePostRequest {
   final PostMetadata metadata;
   final String idempotencyKey;
 
+  /// Wire body for `POST /posts`. The idempotency key travels in the
+  /// `Idempotency-Key` **header** (not the body — the backend whitelists the body
+  /// and rejects unknown fields). `location` uses the backend `PlaceInputDto`
+  /// shape (`name` required).
   Map<String, dynamic> toJson() => {
     'mediaIds': mediaIds,
-    'idempotencyKey': idempotencyKey,
     if (caption.isNotEmpty) 'caption': caption,
     if (metadata.taggedUserIds.isNotEmpty)
       'taggedUserIds': metadata.taggedUserIds,
     if (metadata.location != null)
-      'location': {
-        'label': metadata.location!.label,
-        if (metadata.location!.id != null) 'id': metadata.location!.id,
-      },
+      'location': {'name': metadata.location!.label},
     'commentsDisabled': metadata.commentsDisabled,
   };
 }

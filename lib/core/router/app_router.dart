@@ -31,6 +31,9 @@ import 'package:we36/features/placeholder_page.dart';
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart';
 import 'package:we36/features/post/presentation/post_detail_page.dart';
 import 'package:we36/features/profile/presentation/profile_page.dart';
+import 'package:we36/features/reels/presentation/cubit/reel_compose_cubit.dart';
+import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart';
+import 'package:we36/features/reels/presentation/reel_compose_page.dart';
 import 'package:we36/features/reels/presentation/reels_page.dart';
 import 'package:we36/features/stories/presentation/compose/story_compose_page.dart';
 import 'package:we36/features/stories/presentation/compose/story_pick_page.dart';
@@ -79,7 +82,17 @@ class AppRouter {
               ),
             ),
             _branch(AppRoutes.explore, const ExplorePage()),
-            _branch(AppRoutes.reels, const ReelsPage()),
+            _branch(
+              AppRoutes.reels,
+              BlocProvider(
+                create: (_) {
+                  final cubit = getIt<ReelsCubit>();
+                  unawaited(cubit.loadInitial());
+                  return cubit;
+                },
+                child: const ReelsPage(),
+              ),
+            ),
             _branch(AppRoutes.messages, const MessagesPage()),
             _branch(AppRoutes.profile, const ProfilePage()),
           ],
@@ -158,6 +171,19 @@ class AppRouter {
               builder: (_, _) => const CaptionPage(),
             ),
           ],
+        ),
+        // Create Reel — compose flow (#008). Nav-less, centered on tablet;
+        // page-scoped ReelComposeCubit (pick→caption→publish).
+        GoRoute(
+          path: AppRoutes.reelCompose,
+          builder: (_, _) => BlocProvider(
+            create: (_) {
+              final cubit = getIt<ReelComposeCubit>();
+              unawaited(cubit.loadInitial());
+              return cubit;
+            },
+            child: const CenteredMobile(child: ReelComposePage()),
+          ),
         ),
         // Create Story — compose flow (#005). One ShellRoute so pick→compose
         // share the StoryGalleryCubit + StoryComposeCubit; nav-less, centered

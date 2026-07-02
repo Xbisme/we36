@@ -588,4 +588,91 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get commentReported => 'Cảm ơn — chúng tôi sẽ xem xét bình luận này.';
+
+  @override
+  String get reelsTitle => 'Reels';
+
+  @override
+  String get reelsEmpty => 'Chưa có reel nào';
+
+  @override
+  String get reelsEmptyHint => 'Reels từ người bạn theo dõi sẽ hiện ở đây.';
+
+  @override
+  String get reelsError => 'Không tải được reels';
+
+  @override
+  String get reelRetry => 'Thử lại';
+
+  @override
+  String get reelProcessing => 'Đang xử lý…';
+
+  @override
+  String get reelLikeFailed => 'Không cập nhật được lượt thích.';
+
+  @override
+  String get reelSaveFailed => 'Không cập nhật được mục đã lưu.';
+
+  @override
+  String get reelShareAck => 'Tính năng chia sẻ sắp ra mắt.';
+
+  @override
+  String get reelFollowAck => 'Bạn sẽ sớm có thể theo dõi.';
+
+  @override
+  String get reelReport => 'Báo cáo';
+
+  @override
+  String get reelReported => 'Cảm ơn — chúng tôi sẽ xem xét reel này.';
+
+  @override
+  String get reelDelete => 'Xoá';
+
+  @override
+  String get reelDeleteConfirm => 'Xoá reel này?';
+
+  @override
+  String get reelDeleted => 'Đã xoá reel.';
+
+  @override
+  String get reelDeleteFailed => 'Không xoá được reel.';
+
+  @override
+  String get reelComposeTitle => 'Reel mới';
+
+  @override
+  String get reelComposePick => 'Chọn video';
+
+  @override
+  String get reelComposeCaptionHint => 'Viết chú thích…';
+
+  @override
+  String get reelComposePublish => 'Chia sẻ';
+
+  @override
+  String get reelComposeUploading => 'Đang tải lên…';
+
+  @override
+  String get reelComposeCancel => 'Huỷ';
+
+  @override
+  String get reelComposeTooLong => 'Video phải dài tối đa 90 giây.';
+
+  @override
+  String get reelComposeTooLarge => 'Video quá lớn (tối đa 150 MB).';
+
+  @override
+  String get reelComposeDiscard => 'Bỏ reel này?';
+
+  @override
+  String get reelPublishFailed => 'Không đăng được reel.';
+
+  @override
+  String get createPostLabel => 'Bài viết mới';
+
+  @override
+  String get createReelLabel => 'Reel mới';
+
+  @override
+  String get createStoryLabel => 'Tin mới';
 }

@@ -38,7 +38,7 @@ class RealCreatePostRepository implements CreatePostRepository {
       ApiEndpoints.posts,
       body: request.toJson(),
       decode: (json) => Post.fromJson(json as Map<String, dynamic>),
-      idempotent: true,
+      idempotencyKey: idempotencyKey,
     );
     if (result.isOk) {
       await _db.postsDao.upsert(result.valueOrNull!);

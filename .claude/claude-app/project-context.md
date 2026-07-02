@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-07-02 (#001–#005 + #007 merged; **#006 Post Detail & Comments ✅ IMPLEMENTED** on `006-post-comments` — 46/46 tasks, **349 tests pass**, `dart analyze` clean, pending PR/merge. Trio complete. Next: **#008 Reels**.)
+> Last updated: 2026-07-02 (#001–#007 all merged; **#006 Post Detail & Comments ✅ MERGED** into `main` via **PR #7** — 46/46 tasks, **349 tests pass**, `dart analyze` clean. Content trio complete. Next: **#008 Reels**.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,9 +29,9 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #006 Post Detail & Comments ✅ IMPLEMENTED** on `006-post-comments` — **46/46 tasks done** (US1–US6 + Polish), full SDD cycle (specify→clarify→plan→tasks→analyze→implement). **349 tests pass**; `dart analyze` clean. **Pending PR/merge** (changes uncommitted on the branch, plus the still-uncommitted #005 close-out cleanup that rode along). Completes the content-creation/engagement **trio** (#005 story / #006 comments / #007 post).
+- **Now**: **Spec #006 Post Detail & Comments ✅ MERGED** into `main` via **PR #7** (`cb3c7f4`) — **46/46 tasks done** (US1–US6 + Polish), full SDD cycle (specify→clarify→plan→tasks→analyze→implement). **349 tests pass**; `dart analyze` clean. Completes the content-creation/engagement **trio** (#005 story / #006 comments / #007 post).
   - **Built + verified**: `lib/core/data/comments/` (`Comment`/`CommentAuthor`/`CommentEngagement`, `CommentsRepository` real + `FakeCommentsRepository`, remote source) + `lib/features/post/` (`CommentsCubit` 4-state, `comment_usecases`, `PostDetailPage`, `CommentTile`/`CommentText`/`CommentInput`/`QuickEmojiRow`). Post detail from feed (`/post/:id`) + oldest-first paginated comments, one-level replies, quick-emoji, optimistic+idempotent add/reply, optimistic comment-like, delete-own(cascade)/report-other, `@mention`/`#hashtag` styling, commentsDisabled, tablet two-column split. **Canonical `commentCount` consistency** via new `FeedRepository.watchPost`/`applyCommentCountDelta` owned by the add/delete use cases (analyze F1). **No drift schema change, no new dep.**
-  - **▶ Next**: open the PR for `006-post-comments` (still uncommitted — user opted to defer commits), then start **#008 Reels** (`git checkout -b 008-reels` + `/speckit.specify`; shares the #007 upload pipeline, needs `video_player`/`chewie`/`visibility_detector`).
+  - **▶ Next**: start **#008 Reels** (`git checkout -b 008-reels` + `/speckit.specify`; shares the #007 upload pipeline, needs `video_player`/`chewie`/`visibility_detector`).
   - **Clarifications locked (#006)**: oldest-first · 2,200-char max · count includes replies (delete cascade −(1+replies)) · quick-emoji inserts into input.
   - **⚠ Test gotcha (carried, still applies)**: widget tests with real `MemoryImage` + go_router **hang `pumpAndSettle`**. Use fixed `pump(Duration)`, logic-first cubit assertions, synchronous fakes; for post-detail widget tests use a **tall `surfaceSize`** so lazy slivers lay out the comment list. See `test/features/post/`.
 - **Toolchain**: Flutter **3.44.4** / Dart **3.12.2** — the canonical baseline (bumped at #003). ⚠️ At #005 close (2026-07-02) this machine's global SDK at `/Users/ase/Development/flutter` was found stale at **3.41.7** and re-checked-out to 3.44.4 (`git checkout 3.44.4`); this also fixed a `flutter analyze` AOT-snapshot cache crash. The **long-deferred repo-wide golden refresh was executed** — all goldens regenerated under 3.44.4 (incl. the previously-uncommitted `test/features/stories/goldens/` baseline). No fvm/puro; `pubspec` still pins `sdk: ^3.11.5` (3.44.4 satisfies it).
@@ -51,7 +51,7 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 | 003 | Auth & Onboarding | ✅ **Merged** | `003-auth-onboarding` (PR #3) |
 | 004 | Home Feed & Stories ⭐ | ✅ **Merged** | `004-home-feed-stories` (PR #4) |
 | 005 | Create Story & Tools | ✅ **Merged** (47/47) | `005-create-story` (PR #6) |
-| 006 | Post Detail & Comments | 🔵 **Implemented** (46/46, pending PR) | `006-post-comments` |
+| 006 | Post Detail & Comments | ✅ **Merged** (46/46) | `006-post-comments` (PR #7) |
 | 007 | Create Post (Compose & Upload) | ✅ **Merged** (62/62) | `007-create-post` (PR #5) |
 | 008 | Reels | ⬜ Not started | `008-reels` |
 | 009 | Explore & Search | ⬜ Not started | `009-explore-search` |

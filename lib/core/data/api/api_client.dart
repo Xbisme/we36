@@ -100,19 +100,28 @@ class ApiClient {
   }) => _request(() => _dio.get<dynamic>(path, queryParameters: query), decode);
 
   /// POST → decoded `T`. Pass [idempotent] = true for content-creating mutations.
+  /// Pass an explicit [idempotencyKey] (e.g. a draft's stable key) to reuse the
+  /// same `Idempotency-Key` header across retries so exactly one entity is
+  /// created (FR-020); otherwise the interceptor generates a per-request key.
   Future<Result<T>> post<T>(
     String path, {
     Object? body,
     Map<String, dynamic>? query,
     T Function(dynamic data)? decode,
     bool idempotent = false,
+    String? idempotencyKey,
   }) => _request(
     () => _dio.post<dynamic>(
       path,
       data: body,
       queryParameters: query,
-      options: idempotent
-          ? Options(extra: const {kIdempotentFlag: true})
+      options: (idempotent || idempotencyKey != null)
+          ? Options(
+              extra: const {kIdempotentFlag: true},
+              headers: idempotencyKey != null
+                  ? {kIdempotencyHeader: idempotencyKey}
+                  : null,
+            )
           : null,
     ),
     decode,

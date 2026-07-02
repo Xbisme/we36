@@ -7,7 +7,16 @@ void main() {
   testWidgets(
     'bootstrap() boots the app (DI + error hooks, no zone mismatch)',
     (tester) async {
-      await bootstrap(const AppConfig.dev());
+      // Hermetic: boot the fake DI graph (zero-network) regardless of the
+      // dev/prod default of 'real'.
+      await bootstrap(
+        const AppConfig(
+          flavor: Flavor.dev,
+          appName: 'We36 Dev',
+          bundleId: 'app.we36.dev',
+          diEnvironment: 'fake',
+        ),
+      );
       await tester.pumpAndSettle();
       expect(find.byType(We36App), findsOneWidget);
     },

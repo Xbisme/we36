@@ -98,9 +98,9 @@ abstract class Post with _$Post {
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
-  /// The first image media's delivery URL (display variant → thumb fallback),
-  /// or null while processing / when the first item is not a ready image.
-  /// #004 renders this single image (FR-008).
+  /// The first image media's delivery URL (the `feed` rendition, falling back to
+  /// any rendition then the thumbnail), or null while processing / when the first
+  /// item is not a ready image. #004 renders this single image (FR-008).
   String? get primaryImageUrl {
     if (media.isEmpty) return null;
     final sorted = [...media]..sort((a, b) => a.position.compareTo(b.position));
@@ -108,10 +108,7 @@ abstract class Post with _$Post {
     if (first.kind != MediaKind.image || first.status != MediaStatus.ready) {
       return null;
     }
-    final v = first.variants;
-    if (v == null) return null;
-    final display = v['display'] ?? v['thumb'] ?? v['url'];
-    return display is String ? display : null;
+    return renditionUrl(first.variants);
   }
 
   /// All ready-image delivery URLs in carousel order (#007 multi-photo posts).
@@ -124,13 +121,37 @@ abstract class Post with _$Post {
       if (md.kind != MediaKind.image || md.status != MediaStatus.ready) {
         continue;
       }
-      final v = md.variants;
-      if (v == null) continue;
-      final display = v['display'] ?? v['thumb'] ?? v['url'];
-      if (display is String) urls.add(display);
+      final url = renditionUrl(md.variants);
+      if (url != null) urls.add(url);
     }
     return urls;
   }
+}
+
+/// Extract a delivery URL from the B#003 media `variants` shape
+/// (`{renditions:[{label,url}], poster, thumbnail}`): prefer the [preferred]
+/// rendition label, else any rendition, else the thumbnail.
+String? renditionUrl(
+  Map<String, dynamic>? variants, {
+  String preferred = 'feed',
+}) {
+  if (variants == null) return null;
+  final rends = variants['renditions'];
+  if (rends is List) {
+    for (final r in rends) {
+      if (r is Map && r['label'] == preferred && r['url'] is String) {
+        return r['url'] as String;
+      }
+    }
+    for (final r in rends) {
+      if (r is Map && r['url'] is String) return r['url'] as String;
+    }
+  }
+  final thumb = variants['thumbnail'];
+  if (thumb is Map && thumb['url'] is String) return thumb['url'] as String;
+  // Fallbacks for the flattened drift-cache shape (`{'display': url}`).
+  final flat = variants['display'] ?? variants['url'];
+  return flat is String ? flat : null;
 }
 
 /// Returned by like/unlike/save/unsave so the client reconciles optimistic UI

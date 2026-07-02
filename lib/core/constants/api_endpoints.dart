@@ -48,17 +48,33 @@ abstract final class ApiEndpoints {
   static String commentReport(String commentId) =>
       '/comments/$commentId/report';
 
-  /// Media upload (#007) — multipart upload of a processed image; returns a
-  /// `MediaRef` (id + variants). Idempotent via the client `Idempotency-Key`.
-  static const String media = '/media';
+  /// Media upload (B#003 presigned direct-upload flow): request a ticket
+  /// (`POST /media/uploads` → `{mediaId, uploadUrl, method, headers}`), `PUT` the
+  /// bytes straight to object storage at `uploadUrl`, then finalize
+  /// (`POST /media/:id/finalize` → `MediaDto`) to enqueue processing. The API
+  /// never proxies the binary (scalable large-video uploads, Constitution II).
+  static const String mediaUploads = '/media/uploads';
+  static String mediaFinalize(String id) => '/media/$id/finalize';
+  static String mediaById(String id) => '/media/$id';
 
   /// Create post (#007) — publishes a post from uploaded media ids + caption +
   /// metadata; idempotent via the client `Idempotency-Key`. B#007 seam.
   static const String posts = '/posts';
 
-  /// Stories (#004) — **provisional**: no backend stories contract exists yet
-  /// (backend has auth/posts/media/comments only). The `StoriesRepository` real
-  /// seam targets this path but is never exercised while the app runs `fake`;
-  /// finalize when a backend stories spec lands.
+  /// Reels (#008) — B#007 contract. Global reels feed (`GET`, cursor,
+  /// reverse-chron, ready-only) + create (`POST`, idempotent via
+  /// `Idempotency-Key`). Single reel (`GET`) / delete own (`DELETE`). Idempotent
+  /// like/save toggles returning `EngagementState` (`POST` adds / `DELETE`
+  /// removes). Reel comments delegate to the B#005 comments surface.
+  static const String reels = '/reels';
+  static String reel(String id) => '/reels/$id';
+  static String reelLike(String id) => '/reels/$id/like';
+  static String reelSave(String id) => '/reels/$id/save';
+  static String reelComments(String id) => '/reels/$id/comments';
+
+  /// Stories (#004 / B#006 contract). Publish (`POST /stories`, idempotent) from
+  /// one uploaded media + audience; the bounded tray (`GET /stories/feed`) is
+  /// unseen-first, self entry first.
   static const String stories = '/stories';
+  static const String storiesFeed = '/stories/feed';
 }
