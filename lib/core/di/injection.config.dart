@@ -36,6 +36,10 @@ import 'package:we36/core/data/me/me_repository.dart' as _i485;
 import 'package:we36/core/data/me/me_repository_impl.dart' as _i858;
 import 'package:we36/core/data/realtime/fake_realtime_client.dart' as _i261;
 import 'package:we36/core/data/realtime/realtime_client.dart' as _i500;
+import 'package:we36/core/data/reels/fake_reels_repository.dart' as _i713;
+import 'package:we36/core/data/reels/reels_remote_data_source.dart' as _i746;
+import 'package:we36/core/data/reels/reels_repository.dart' as _i724;
+import 'package:we36/core/data/reels/reels_repository_impl.dart' as _i571;
 import 'package:we36/core/data/stories/fake_stories_repository.dart' as _i154;
 import 'package:we36/core/data/stories/own_story_store.dart' as _i767;
 import 'package:we36/core/data/stories/stories_repository.dart' as _i112;
@@ -106,6 +110,12 @@ import 'package:we36/features/post/domain/usecases/comment_usecases.dart'
     as _i140;
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart'
     as _i321;
+import 'package:we36/features/reels/domain/usecases/reel_engagement_usecases.dart'
+    as _i728;
+import 'package:we36/features/reels/domain/usecases/reel_feed_usecases.dart'
+    as _i740;
+import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart'
+    as _i846;
 import 'package:we36/features/stories/data/create_story_repository.dart'
     as _i674;
 import 'package:we36/features/stories/data/create_story_repository_fake.dart'
@@ -191,6 +201,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i897.WatchOwnStoryChanges>(
       () => _i897.WatchOwnStoryChanges(gh<_i767.OwnStoryStore>()),
+    );
+    gh.lazySingleton<_i724.ReelsRepository>(
+      () => _i713.FakeReelsRepository(gh<_i270.AppDatabase>()),
+      registerFor: {_fake},
     );
     gh.lazySingleton<_i552.CommentsRepository>(
       () => _i67.FakeCommentsRepository.create(),
@@ -313,6 +327,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i46.MeRemoteDataSource>(
       () => _i46.MeRemoteDataSource(gh<_i784.ApiClient>()),
     );
+    gh.lazySingleton<_i746.ReelsRemoteDataSource>(
+      () => _i746.ReelsRemoteDataSource(gh<_i784.ApiClient>()),
+    );
     gh.lazySingleton<_i528.UserRemoteDataSource>(
       () => _i528.UserRemoteDataSource(gh<_i784.ApiClient>()),
     );
@@ -365,6 +382,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1030.CreatePostRepository>(),
       ),
     );
+    gh.lazySingleton<_i724.ReelsRepository>(
+      () => _i571.ReelsRepositoryImpl(
+        gh<_i746.ReelsRemoteDataSource>(),
+        gh<_i270.AppDatabase>(),
+      ),
+      registerFor: {_real},
+    );
     gh.lazySingleton<_i247.UserRepository>(
       () => _i514.UserRepositoryImpl(
         gh<_i528.UserRemoteDataSource>(),
@@ -413,6 +437,21 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i552.CommentsRepository>(),
         gh<_i850.FeedRepository>(),
       ),
+    );
+    gh.factory<_i728.ToggleReelLike>(
+      () => _i728.ToggleReelLike(gh<_i724.ReelsRepository>()),
+    );
+    gh.factory<_i728.ToggleReelSave>(
+      () => _i728.ToggleReelSave(gh<_i724.ReelsRepository>()),
+    );
+    gh.factory<_i740.WatchReelsFeed>(
+      () => _i740.WatchReelsFeed(gh<_i724.ReelsRepository>()),
+    );
+    gh.factory<_i740.LoadReels>(
+      () => _i740.LoadReels(gh<_i724.ReelsRepository>()),
+    );
+    gh.factory<_i740.LoadMoreReels>(
+      () => _i740.LoadMoreReels(gh<_i724.ReelsRepository>()),
     );
     gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
     gh.factory<_i800.SetupProfile>(
@@ -492,6 +531,15 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i16.ProfileSetupCubit(
         gh<_i985.CheckUsername>(),
         gh<_i800.SetupProfile>(),
+      ),
+    );
+    gh.factory<_i846.ReelsCubit>(
+      () => _i846.ReelsCubit(
+        gh<_i740.WatchReelsFeed>(),
+        gh<_i740.LoadReels>(),
+        gh<_i740.LoadMoreReels>(),
+        gh<_i728.ToggleReelLike>(),
+        gh<_i728.ToggleReelSave>(),
       ),
     );
     gh.factory<_i992.FeedCubit>(

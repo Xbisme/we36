@@ -39,6 +39,9 @@ abstract final class AppRoutes {
   static const String storyComposePick = '/create/story/pick';
   static const String storyCompose = '/create/story';
 
+  // Create Reel — compose flow (#008), nav-less full-screen (contextual Create).
+  static const String reelCompose = '/create/reel';
+
   // Dev harness (dev flavor only)
   static const String devGallery = '/dev/gallery';
   static const String devStates = '/dev/states';

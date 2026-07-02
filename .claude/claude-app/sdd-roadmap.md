@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-07-02 (#001–#005 + #007 merged; **#006 Post Detail & Comments ✅ implemented** on `006-post-comments` — 46/46 tasks, 349 tests pass, pending PR. Content trio complete. Next: **#008 Reels**.)
+> Last updated: 2026-07-02 (#001–#007 all merged; **#006 Post Detail & Comments ✅ merged** into `main` via PR #7 — 46/46 tasks, 349 tests pass. Content trio complete. Next: **#008 Reels**.)
 
 ---
 
@@ -137,7 +137,7 @@ Create Story     Post Detail &    Create Post      Reels
 - **Scope**: capture/pick → sticker/text overlay → publish to Your story / Close friends; 24h expiry model client-side; upload via the #002/#007 media pipeline.
 - **Out of scope**: post compose (#007), reels (#008).
 
-### Spec #006: Post Detail & Comments  🔵 (implemented — 46/46, pending PR)
+### Spec #006: Post Detail & Comments  ✅ (merged — 46/46, PR #7)
 - **Depends on**: #004 ✅.
 - **Design**: Screens 14 (Post detail), 15 (Comments); tablet = **two-pane** (media + comments sidebar).
 - **Scope**: post detail; comments list + **one-level replies** + mentions + quick-emoji + comment compose (optimistic add); like a comment; report/delete via action sheet. On tablet/iPad render the **master/detail two-pane** (media pane + info/comments pane) via the #001 primitive; phone keeps push.
@@ -150,7 +150,7 @@ Create Story     Post Detail &    Create Post      Reels
 - **New packages**: image cropper + filter pkg, video compress (verify at plan).
 - **Out of scope**: reels-specific create (#008).
 
-### Spec #008: Reels  ⬜
+### Spec #008: Reels  🟡 (next)
 - **Depends on**: #002, #004, #007 (shares upload).
 - **Design**: Screen 10 (Reels).
 - **Scope**: vertical short-video feed (PageView), **disciplined video lifecycle** (only visible plays; off-screen pause+dispose; small preload window — Constitution II); action rail (like/comment/share/save), follow, caption; create reel.

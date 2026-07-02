@@ -56,6 +56,17 @@ abstract final class ApiEndpoints {
   /// metadata; idempotent via the client `Idempotency-Key`. B#007 seam.
   static const String posts = '/posts';
 
+  /// Reels (#008) — B#007 contract. Global reels feed (`GET`, cursor,
+  /// reverse-chron, ready-only) + create (`POST`, idempotent via
+  /// `Idempotency-Key`). Single reel (`GET`) / delete own (`DELETE`). Idempotent
+  /// like/save toggles returning `EngagementState` (`POST` adds / `DELETE`
+  /// removes). Reel comments delegate to the B#005 comments surface.
+  static const String reels = '/reels';
+  static String reel(String id) => '/reels/$id';
+  static String reelLike(String id) => '/reels/$id/like';
+  static String reelSave(String id) => '/reels/$id/save';
+  static String reelComments(String id) => '/reels/$id/comments';
+
   /// Stories (#004) — **provisional**: no backend stories contract exists yet
   /// (backend has auth/posts/media/comments only). The `StoriesRepository` real
   /// seam targets this path but is never exercised while the app runs `fake`;

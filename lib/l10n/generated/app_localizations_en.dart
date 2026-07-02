@@ -590,4 +590,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentReported => 'Thanks — we\'ll review this comment.';
+
+  @override
+  String get reelsTitle => 'Reels';
+
+  @override
+  String get reelsEmpty => 'No reels yet';
+
+  @override
+  String get reelsEmptyHint => 'Reels you follow will show up here.';
+
+  @override
+  String get reelsError => 'Couldn\'t load reels';
+
+  @override
+  String get reelRetry => 'Retry';
+
+  @override
+  String get reelProcessing => 'Processing…';
+
+  @override
+  String get reelLikeFailed => 'Couldn\'t update the like.';
+
+  @override
+  String get reelSaveFailed => 'Couldn\'t update saved.';
+
+  @override
+  String get reelShareAck => 'Sharing is coming soon.';
+
+  @override
+  String get reelFollowAck => 'You\'ll be able to follow soon.';
+
+  @override
+  String get reelReport => 'Report';
+
+  @override
+  String get reelReported => 'Thanks — we\'ll review this reel.';
+
+  @override
+  String get reelDelete => 'Delete';
+
+  @override
+  String get reelDeleteConfirm => 'Delete this reel?';
+
+  @override
+  String get reelDeleted => 'Reel deleted.';
+
+  @override
+  String get reelDeleteFailed => 'Couldn\'t delete the reel.';
+
+  @override
+  String get reelComposeTitle => 'New reel';
+
+  @override
+  String get reelComposePick => 'Pick a video';
+
+  @override
+  String get reelComposeCaptionHint => 'Write a caption…';
+
+  @override
+  String get reelComposePublish => 'Share';
+
+  @override
+  String get reelComposeUploading => 'Uploading…';
+
+  @override
+  String get reelComposeCancel => 'Cancel';
+
+  @override
+  String get reelComposeTooLong => 'Videos must be 90 seconds or shorter.';
+
+  @override
+  String get reelComposeTooLarge => 'Video is too large (max 150 MB).';
+
+  @override
+  String get reelComposeDiscard => 'Discard this reel?';
+
+  @override
+  String get reelPublishFailed => 'Couldn\'t publish your reel.';
 }

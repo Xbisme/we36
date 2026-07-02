@@ -4,13 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/feed/post.dart';
 import 'package:we36/core/data/me/me_profile.dart';
+import 'package:we36/core/data/reels/reel.dart';
 import 'package:we36/core/data/user/user.dart';
 
 /// Cache schema migration harness. #003 → v2 (`MeProfiles`); #004 → v3 (`Posts`
 /// feed cache + `StorySeenSegments` seen-state); #007 → v4 (`ComposeDrafts`
-/// single persisted draft). These tests prove: `onCreate` builds the full current
-/// schema, the `onUpgrade` steps are non-destructive and additive, and
-/// `clearUserScoped` wipes all user-scoped data on logout (Constitution IX/I).
+/// single persisted draft); #008 → v5 (`Reels` feed cache). These tests prove:
+/// `onCreate` builds the full current schema, the `onUpgrade` steps are
+/// non-destructive and additive, and `clearUserScoped` wipes all user-scoped data
+/// on logout (Constitution IX/I).
 ComposeDraftRow _draft(String id) => ComposeDraftRow(
   id: id,
   idempotencyKey: 'key-$id',
@@ -34,6 +36,26 @@ Post _post(String id) => Post(
   createdAt: DateTime.utc(2026, 7),
 );
 
+Reel _reel(String id) => Reel(
+  id: id,
+  author: const UserSummary(id: 'u1', username: 'lan', isVerified: false),
+  video: const Media(
+    id: 'v-1',
+    kind: MediaKind.video,
+    status: MediaStatus.ready,
+  ),
+  hashtags: const [],
+  taggedUsers: const [],
+  commentsDisabled: false,
+  likeCount: 5,
+  saveCount: 0,
+  commentCount: 0,
+  viewerHasLiked: false,
+  viewerHasSaved: false,
+  isVideoReady: true,
+  createdAt: DateTime.utc(2026, 7),
+);
+
 MeProfile _me(String id) => MeProfile(
   id: id,
   email: '$id@we36.app',
@@ -45,13 +67,13 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 4', () {
+    test('schemaVersion is 5', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 4);
+      expect(db.schemaVersion, 5);
       addTearDown(db.close);
     });
 
-    test('onCreate builds a usable v4 schema (all tables)', () async {
+    test('onCreate builds a usable v5 schema (all tables)', () async {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
       await db.usersDao.upsert(
         const User(
@@ -69,14 +91,34 @@ void main() {
       await db.postsDao.upsertAll([_post('post-1')]);
       await db.storySeenDao.markSeen('seg-1', 'author-1');
       await db.composeDraftDao.save(_draft('draft-1'));
+      await db.reelsDao.upsertAll([_reel('reel-1')]);
 
       expect(await db.usersDao.getByUsername('lan'), isNotNull);
       expect(await db.meProfileDao.get(), isNotNull);
       expect(await db.postsDao.getById('post-1'), isNotNull);
       expect(await db.storySeenDao.getSeen(), contains('seg-1'));
       expect(await db.composeDraftDao.current(), isNotNull);
+      expect(await db.reelsDao.getById('reel-1'), isNotNull);
       await db.close();
     });
+
+    test(
+      'onUpgrade(from<5) additively creates the reels table',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        // Simulate a pre-v5 DB: drop the v5 table, keep a v4 row, run onUpgrade.
+        await db.postsDao.upsertAll([_post('post-keep')]);
+        await db.customStatement('DROP TABLE reels');
+
+        await db.migration.onUpgrade(Migrator(db), 4, 5);
+
+        // New table usable; the older post row survived (non-destructive).
+        await db.reelsDao.upsertAll([_reel('reel-after')]);
+        expect(await db.reelsDao.getById('reel-after'), isNotNull);
+        expect(await db.postsDao.getById('post-keep'), isNotNull);
+        await db.close();
+      },
+    );
 
     test(
       'onUpgrade(from<4) additively creates the compose draft table',
@@ -124,6 +166,7 @@ void main() {
         await db.postsDao.upsertAll([_post('post-x')]);
         await db.storySeenDao.markSeen('seg-x', 'author-x');
         await db.composeDraftDao.save(_draft('draft-x'));
+        await db.reelsDao.upsertAll([_reel('reel-x')]);
 
         await db.clearUserScoped();
 
@@ -131,6 +174,7 @@ void main() {
         expect(await db.postsDao.getById('post-x'), isNull);
         expect(await db.storySeenDao.getSeen(), isEmpty);
         expect(await db.composeDraftDao.current(), isNull);
+        expect(await db.reelsDao.getById('reel-x'), isNull);
         await db.close();
       },
     );
