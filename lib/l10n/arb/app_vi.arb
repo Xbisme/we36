@@ -225,5 +225,8 @@
   "reelComposeTooLong": "Video phải dài tối đa 90 giây.",
   "reelComposeTooLarge": "Video quá lớn (tối đa 150 MB).",
   "reelComposeDiscard": "Bỏ reel này?",
-  "reelPublishFailed": "Không đăng được reel."
+  "reelPublishFailed": "Không đăng được reel.",
+  "createPostLabel": "Bài viết mới",
+  "createReelLabel": "Reel mới",
+  "createStoryLabel": "Tin mới"
 }

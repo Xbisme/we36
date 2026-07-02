@@ -6,6 +6,8 @@ import 'package:we36/core/data/api/idempotency.dart';
 import 'package:we36/core/data/comments/comment.dart';
 import 'package:we36/core/data/feed/post.dart';
 import 'package:we36/core/domain/app_failure.dart';
+import 'package:we36/features/feed/domain/usecases/feed_usecases.dart'
+    show ToggleLike, ToggleSave;
 import 'package:we36/features/post/domain/usecases/comment_usecases.dart';
 import 'package:we36/features/post/presentation/cubit/comments_state.dart';
 
@@ -27,6 +29,8 @@ class CommentsCubit extends Cubit<CommentsState> {
     this._deleteComment,
     this._reportComment,
     this._keys,
+    this._toggleLike,
+    this._toggleSave,
   ) : super(const CommentsState.initial());
 
   final WatchPost _watchPost;
@@ -37,6 +41,8 @@ class CommentsCubit extends Cubit<CommentsState> {
   final DeleteComment _deleteComment;
   final ReportComment _reportComment;
   final IdempotencyKeys _keys;
+  final ToggleLike _toggleLike;
+  final ToggleSave _toggleSave;
 
   late String _postId;
   Post? _post;
@@ -271,6 +277,25 @@ class CommentsCubit extends Cubit<CommentsState> {
 
   Future<AppFailure?> reportComment(Comment comment) async {
     final result = await _reportComment(comment.id);
+    return result.isOk ? null : result.failureOrNull;
+  }
+
+  // ---- Post like / save (optimistic; reflected via watchPost) ---------------
+
+  /// Toggle like on the post being viewed (optimistic + idempotent in the feed
+  /// repository; the canonical post flips via the `watchPost` stream).
+  Future<AppFailure?> togglePostLike() async {
+    final post = _post;
+    if (post == null) return null;
+    final result = await _toggleLike(post.id, like: !post.viewerHasLiked);
+    return result.isOk ? null : result.failureOrNull;
+  }
+
+  /// Toggle save on the post being viewed.
+  Future<AppFailure?> togglePostSave() async {
+    final post = _post;
+    if (post == null) return null;
+    final result = await _toggleSave(post.id, save: !post.viewerHasSaved);
     return result.isOk ? null : result.failureOrNull;
   }
 

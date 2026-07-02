@@ -1557,6 +1557,17 @@ class $PostsTable extends Posts with TableInfo<$PostsTable, CachedPost> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _mediaUrlsJsonMeta = const VerificationMeta(
+    'mediaUrlsJson',
+  );
+  @override
+  late final GeneratedColumn<String> mediaUrlsJson = GeneratedColumn<String>(
+    'media_urls_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _mediaWidthMeta = const VerificationMeta(
     'mediaWidth',
   );
@@ -1697,6 +1708,7 @@ class $PostsTable extends Posts with TableInfo<$PostsTable, CachedPost> {
     authorIsVerified,
     caption,
     mediaImageUrl,
+    mediaUrlsJson,
     mediaWidth,
     mediaHeight,
     locationName,
@@ -1784,6 +1796,15 @@ class $PostsTable extends Posts with TableInfo<$PostsTable, CachedPost> {
         mediaImageUrl.isAcceptableOrUnknown(
           data['media_image_url']!,
           _mediaImageUrlMeta,
+        ),
+      );
+    }
+    if (data.containsKey('media_urls_json')) {
+      context.handle(
+        _mediaUrlsJsonMeta,
+        mediaUrlsJson.isAcceptableOrUnknown(
+          data['media_urls_json']!,
+          _mediaUrlsJsonMeta,
         ),
       );
     }
@@ -1928,6 +1949,10 @@ class $PostsTable extends Posts with TableInfo<$PostsTable, CachedPost> {
         DriftSqlType.string,
         data['${effectivePrefix}media_image_url'],
       ),
+      mediaUrlsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}media_urls_json'],
+      ),
       mediaWidth: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}media_width'],
@@ -1990,6 +2015,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
   final bool authorIsVerified;
   final String? caption;
   final String? mediaImageUrl;
+
+  /// JSON array of all carousel image delivery URLs (#008 real-backend carousel).
+  final String? mediaUrlsJson;
   final int? mediaWidth;
   final int? mediaHeight;
   final String? locationName;
@@ -2010,6 +2038,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     required this.authorIsVerified,
     this.caption,
     this.mediaImageUrl,
+    this.mediaUrlsJson,
     this.mediaWidth,
     this.mediaHeight,
     this.locationName,
@@ -2042,6 +2071,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     }
     if (!nullToAbsent || mediaImageUrl != null) {
       map['media_image_url'] = Variable<String>(mediaImageUrl);
+    }
+    if (!nullToAbsent || mediaUrlsJson != null) {
+      map['media_urls_json'] = Variable<String>(mediaUrlsJson);
     }
     if (!nullToAbsent || mediaWidth != null) {
       map['media_width'] = Variable<int>(mediaWidth);
@@ -2083,6 +2115,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
       mediaImageUrl: mediaImageUrl == null && nullToAbsent
           ? const Value.absent()
           : Value(mediaImageUrl),
+      mediaUrlsJson: mediaUrlsJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mediaUrlsJson),
       mediaWidth: mediaWidth == null && nullToAbsent
           ? const Value.absent()
           : Value(mediaWidth),
@@ -2119,6 +2154,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
       authorIsVerified: serializer.fromJson<bool>(json['authorIsVerified']),
       caption: serializer.fromJson<String?>(json['caption']),
       mediaImageUrl: serializer.fromJson<String?>(json['mediaImageUrl']),
+      mediaUrlsJson: serializer.fromJson<String?>(json['mediaUrlsJson']),
       mediaWidth: serializer.fromJson<int?>(json['mediaWidth']),
       mediaHeight: serializer.fromJson<int?>(json['mediaHeight']),
       locationName: serializer.fromJson<String?>(json['locationName']),
@@ -2144,6 +2180,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
       'authorIsVerified': serializer.toJson<bool>(authorIsVerified),
       'caption': serializer.toJson<String?>(caption),
       'mediaImageUrl': serializer.toJson<String?>(mediaImageUrl),
+      'mediaUrlsJson': serializer.toJson<String?>(mediaUrlsJson),
       'mediaWidth': serializer.toJson<int?>(mediaWidth),
       'mediaHeight': serializer.toJson<int?>(mediaHeight),
       'locationName': serializer.toJson<String?>(locationName),
@@ -2167,6 +2204,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     bool? authorIsVerified,
     Value<String?> caption = const Value.absent(),
     Value<String?> mediaImageUrl = const Value.absent(),
+    Value<String?> mediaUrlsJson = const Value.absent(),
     Value<int?> mediaWidth = const Value.absent(),
     Value<int?> mediaHeight = const Value.absent(),
     Value<String?> locationName = const Value.absent(),
@@ -2195,6 +2233,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     mediaImageUrl: mediaImageUrl.present
         ? mediaImageUrl.value
         : this.mediaImageUrl,
+    mediaUrlsJson: mediaUrlsJson.present
+        ? mediaUrlsJson.value
+        : this.mediaUrlsJson,
     mediaWidth: mediaWidth.present ? mediaWidth.value : this.mediaWidth,
     mediaHeight: mediaHeight.present ? mediaHeight.value : this.mediaHeight,
     locationName: locationName.present ? locationName.value : this.locationName,
@@ -2227,6 +2268,9 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
       mediaImageUrl: data.mediaImageUrl.present
           ? data.mediaImageUrl.value
           : this.mediaImageUrl,
+      mediaUrlsJson: data.mediaUrlsJson.present
+          ? data.mediaUrlsJson.value
+          : this.mediaUrlsJson,
       mediaWidth: data.mediaWidth.present
           ? data.mediaWidth.value
           : this.mediaWidth,
@@ -2266,6 +2310,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
           ..write('authorIsVerified: $authorIsVerified, ')
           ..write('caption: $caption, ')
           ..write('mediaImageUrl: $mediaImageUrl, ')
+          ..write('mediaUrlsJson: $mediaUrlsJson, ')
           ..write('mediaWidth: $mediaWidth, ')
           ..write('mediaHeight: $mediaHeight, ')
           ..write('locationName: $locationName, ')
@@ -2291,6 +2336,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
     authorIsVerified,
     caption,
     mediaImageUrl,
+    mediaUrlsJson,
     mediaWidth,
     mediaHeight,
     locationName,
@@ -2315,6 +2361,7 @@ class CachedPost extends DataClass implements Insertable<CachedPost> {
           other.authorIsVerified == this.authorIsVerified &&
           other.caption == this.caption &&
           other.mediaImageUrl == this.mediaImageUrl &&
+          other.mediaUrlsJson == this.mediaUrlsJson &&
           other.mediaWidth == this.mediaWidth &&
           other.mediaHeight == this.mediaHeight &&
           other.locationName == this.locationName &&
@@ -2337,6 +2384,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
   final Value<bool> authorIsVerified;
   final Value<String?> caption;
   final Value<String?> mediaImageUrl;
+  final Value<String?> mediaUrlsJson;
   final Value<int?> mediaWidth;
   final Value<int?> mediaHeight;
   final Value<String?> locationName;
@@ -2358,6 +2406,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     this.authorIsVerified = const Value.absent(),
     this.caption = const Value.absent(),
     this.mediaImageUrl = const Value.absent(),
+    this.mediaUrlsJson = const Value.absent(),
     this.mediaWidth = const Value.absent(),
     this.mediaHeight = const Value.absent(),
     this.locationName = const Value.absent(),
@@ -2380,6 +2429,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     required bool authorIsVerified,
     this.caption = const Value.absent(),
     this.mediaImageUrl = const Value.absent(),
+    this.mediaUrlsJson = const Value.absent(),
     this.mediaWidth = const Value.absent(),
     this.mediaHeight = const Value.absent(),
     this.locationName = const Value.absent(),
@@ -2412,6 +2462,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     Expression<bool>? authorIsVerified,
     Expression<String>? caption,
     Expression<String>? mediaImageUrl,
+    Expression<String>? mediaUrlsJson,
     Expression<int>? mediaWidth,
     Expression<int>? mediaHeight,
     Expression<String>? locationName,
@@ -2434,6 +2485,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
       if (authorIsVerified != null) 'author_is_verified': authorIsVerified,
       if (caption != null) 'caption': caption,
       if (mediaImageUrl != null) 'media_image_url': mediaImageUrl,
+      if (mediaUrlsJson != null) 'media_urls_json': mediaUrlsJson,
       if (mediaWidth != null) 'media_width': mediaWidth,
       if (mediaHeight != null) 'media_height': mediaHeight,
       if (locationName != null) 'location_name': locationName,
@@ -2458,6 +2510,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     Value<bool>? authorIsVerified,
     Value<String?>? caption,
     Value<String?>? mediaImageUrl,
+    Value<String?>? mediaUrlsJson,
     Value<int?>? mediaWidth,
     Value<int?>? mediaHeight,
     Value<String?>? locationName,
@@ -2480,6 +2533,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
       authorIsVerified: authorIsVerified ?? this.authorIsVerified,
       caption: caption ?? this.caption,
       mediaImageUrl: mediaImageUrl ?? this.mediaImageUrl,
+      mediaUrlsJson: mediaUrlsJson ?? this.mediaUrlsJson,
       mediaWidth: mediaWidth ?? this.mediaWidth,
       mediaHeight: mediaHeight ?? this.mediaHeight,
       locationName: locationName ?? this.locationName,
@@ -2521,6 +2575,9 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
     }
     if (mediaImageUrl.present) {
       map['media_image_url'] = Variable<String>(mediaImageUrl.value);
+    }
+    if (mediaUrlsJson.present) {
+      map['media_urls_json'] = Variable<String>(mediaUrlsJson.value);
     }
     if (mediaWidth.present) {
       map['media_width'] = Variable<int>(mediaWidth.value);
@@ -2572,6 +2629,7 @@ class PostsCompanion extends UpdateCompanion<CachedPost> {
           ..write('authorIsVerified: $authorIsVerified, ')
           ..write('caption: $caption, ')
           ..write('mediaImageUrl: $mediaImageUrl, ')
+          ..write('mediaUrlsJson: $mediaUrlsJson, ')
           ..write('mediaWidth: $mediaWidth, ')
           ..write('mediaHeight: $mediaHeight, ')
           ..write('locationName: $locationName, ')
@@ -5224,6 +5282,7 @@ typedef $$PostsTableCreateCompanionBuilder =
       required bool authorIsVerified,
       Value<String?> caption,
       Value<String?> mediaImageUrl,
+      Value<String?> mediaUrlsJson,
       Value<int?> mediaWidth,
       Value<int?> mediaHeight,
       Value<String?> locationName,
@@ -5247,6 +5306,7 @@ typedef $$PostsTableUpdateCompanionBuilder =
       Value<bool> authorIsVerified,
       Value<String?> caption,
       Value<String?> mediaImageUrl,
+      Value<String?> mediaUrlsJson,
       Value<int?> mediaWidth,
       Value<int?> mediaHeight,
       Value<String?> locationName,
@@ -5306,6 +5366,11 @@ class $$PostsTableFilterComposer extends Composer<_$AppDatabase, $PostsTable> {
 
   ColumnFilters<String> get mediaImageUrl => $composableBuilder(
     column: $table.mediaImageUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mediaUrlsJson => $composableBuilder(
+    column: $table.mediaUrlsJson,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5414,6 +5479,11 @@ class $$PostsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get mediaUrlsJson => $composableBuilder(
+    column: $table.mediaUrlsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get mediaWidth => $composableBuilder(
     column: $table.mediaWidth,
     builder: (column) => ColumnOrderings(column),
@@ -5513,6 +5583,11 @@ class $$PostsTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get mediaUrlsJson => $composableBuilder(
+    column: $table.mediaUrlsJson,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<int> get mediaWidth => $composableBuilder(
     column: $table.mediaWidth,
     builder: (column) => column,
@@ -5597,6 +5672,7 @@ class $$PostsTableTableManager
                 Value<bool> authorIsVerified = const Value.absent(),
                 Value<String?> caption = const Value.absent(),
                 Value<String?> mediaImageUrl = const Value.absent(),
+                Value<String?> mediaUrlsJson = const Value.absent(),
                 Value<int?> mediaWidth = const Value.absent(),
                 Value<int?> mediaHeight = const Value.absent(),
                 Value<String?> locationName = const Value.absent(),
@@ -5618,6 +5694,7 @@ class $$PostsTableTableManager
                 authorIsVerified: authorIsVerified,
                 caption: caption,
                 mediaImageUrl: mediaImageUrl,
+                mediaUrlsJson: mediaUrlsJson,
                 mediaWidth: mediaWidth,
                 mediaHeight: mediaHeight,
                 locationName: locationName,
@@ -5641,6 +5718,7 @@ class $$PostsTableTableManager
                 required bool authorIsVerified,
                 Value<String?> caption = const Value.absent(),
                 Value<String?> mediaImageUrl = const Value.absent(),
+                Value<String?> mediaUrlsJson = const Value.absent(),
                 Value<int?> mediaWidth = const Value.absent(),
                 Value<int?> mediaHeight = const Value.absent(),
                 Value<String?> locationName = const Value.absent(),
@@ -5662,6 +5740,7 @@ class $$PostsTableTableManager
                 authorIsVerified: authorIsVerified,
                 caption: caption,
                 mediaImageUrl: mediaImageUrl,
+                mediaUrlsJson: mediaUrlsJson,
                 mediaWidth: mediaWidth,
                 mediaHeight: mediaHeight,
                 locationName: locationName,

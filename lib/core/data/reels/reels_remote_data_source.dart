@@ -53,10 +53,9 @@ class ReelsRemoteDataSource {
     List<String> taggedUserIds = const [],
   }) => _api.post<Reel>(
     ApiEndpoints.reels,
-    idempotent: true,
+    idempotencyKey: clientKey, // Idempotency-Key header (not a body field)
     body: {
       'videoMediaId': videoMediaId,
-      'clientKey': clientKey,
       'commentsDisabled': commentsDisabled,
       'caption': ?caption,
       if (locationName != null) 'location': {'name': locationName},

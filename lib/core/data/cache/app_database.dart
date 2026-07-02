@@ -43,7 +43,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -66,6 +66,12 @@ class AppDatabase extends _$AppDatabase {
       if (from < 5) {
         // v5 (#008): add the canonical reels feed cache.
         await m.createTable(reels);
+      }
+      if (from >= 3 && from < 6) {
+        // v6: cache all carousel image URLs (multi-photo posts). Only for DBs
+        // that already had `posts` (v3–v5) without the column — a fresh `posts`
+        // created by the `from < 3` step above already includes it.
+        await m.addColumn(posts, posts.mediaUrlsJson);
       }
     },
   );

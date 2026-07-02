@@ -16,6 +16,8 @@ class Posts extends Table {
   BoolColumn get authorIsVerified => boolean()();
   TextColumn get caption => text().nullable()();
   TextColumn get mediaImageUrl => text().nullable()();
+  /// JSON array of all carousel image delivery URLs (#008 real-backend carousel).
+  TextColumn get mediaUrlsJson => text().nullable()();
   IntColumn get mediaWidth => integer().nullable()();
   IntColumn get mediaHeight => integer().nullable()();
   TextColumn get locationName => text().nullable()();

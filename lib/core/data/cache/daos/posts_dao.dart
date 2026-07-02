@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/cache/tables/posts_table.dart';
@@ -81,6 +83,7 @@ class PostsDao extends DatabaseAccessor<AppDatabase> with _$PostsDaoMixin {
         : ([
             ...p.media,
           ]..sort((a, b) => a.position.compareTo(b.position))).first.media;
+    final urls = p.imageUrls;
     return PostsCompanion.insert(
       id: p.id,
       authorId: p.author.id,
@@ -90,6 +93,7 @@ class PostsDao extends DatabaseAccessor<AppDatabase> with _$PostsDaoMixin {
       authorIsVerified: p.author.isVerified,
       caption: Value(p.caption),
       mediaImageUrl: Value(p.primaryImageUrl),
+      mediaUrlsJson: Value(urls.length > 1 ? jsonEncode(urls) : null),
       mediaWidth: Value(firstMedia?.width),
       mediaHeight: Value(firstMedia?.height),
       locationName: Value(p.location?.name),
@@ -116,21 +120,7 @@ class PostsDao extends DatabaseAccessor<AppDatabase> with _$PostsDaoMixin {
       avatarUrl: row.authorAvatarUrl,
       isVerified: row.authorIsVerified,
     ),
-    media: row.mediaImageUrl == null
-        ? const []
-        : [
-            domain.PostMedia(
-              position: 0,
-              media: domain.Media(
-                id: '${row.id}:0',
-                kind: domain.MediaKind.image,
-                status: domain.MediaStatus.ready,
-                width: row.mediaWidth,
-                height: row.mediaHeight,
-                variants: {'display': row.mediaImageUrl},
-              ),
-            ),
-          ],
+    media: _mediaFromRow(row),
     hashtags: const [],
     taggedUsers: const [],
     commentsDisabled: row.commentsDisabled,
@@ -145,4 +135,36 @@ class PostsDao extends DatabaseAccessor<AppDatabase> with _$PostsDaoMixin {
         ? null
         : domain.Place(id: '${row.id}:place', name: row.locationName!),
   );
+
+  /// Rebuild the carousel media from the cached row: the full URL list
+  /// (`mediaUrlsJson`) when a multi-photo post was cached, else the single
+  /// `mediaImageUrl`, else empty. Each URL is wrapped as a ready image so the
+  /// domain `imageUrls`/`primaryImageUrl` getters resolve it.
+  List<domain.PostMedia> _mediaFromRow(CachedPost row) {
+    final urls = <String>[];
+    final raw = row.mediaUrlsJson;
+    if (raw != null) {
+      final decoded = jsonDecode(raw);
+      if (decoded is List) {
+        urls.addAll(decoded.whereType<String>());
+      }
+    }
+    if (urls.isEmpty && row.mediaImageUrl != null) {
+      urls.add(row.mediaImageUrl!);
+    }
+    return [
+      for (var i = 0; i < urls.length; i++)
+        domain.PostMedia(
+          position: i,
+          media: domain.Media(
+            id: '${row.id}:$i',
+            kind: domain.MediaKind.image,
+            status: domain.MediaStatus.ready,
+            width: i == 0 ? row.mediaWidth : null,
+            height: i == 0 ? row.mediaHeight : null,
+            variants: {'display': urls[i]},
+          ),
+        ),
+    ];
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:injectable/injectable.dart';
+import 'package:we36/core/data/feed/post.dart' show MediaKind;
 import 'package:we36/core/domain/app_failure.dart';
 import 'package:we36/core/services/media_upload_service.dart';
 import 'package:we36/features/compose/domain/models/media_ref.dart';
@@ -27,6 +28,8 @@ class FakeMediaUploadService implements MediaUploadService {
   Stream<UploadEvent> upload({
     required Uint8List bytes,
     required String idempotencyKey,
+    MediaKind kind = MediaKind.image,
+    String? contentType,
     int itemIndex = 0,
     int itemCount = 1,
     UploadCancelToken? cancelToken,

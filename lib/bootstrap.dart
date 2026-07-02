@@ -18,7 +18,7 @@ Future<void> bootstrap(AppConfig config) async {
   // Reset so hot-restart re-runs of main() don't double-register.
   await getIt.reset();
   getIt.registerSingleton<AppConfig>(config);
-  configureDependencies();
+  configureDependencies(environment: config.diEnvironment);
 
   final logger = getIt<AppLogger>()
     ..info('Bootstrapping We36', data: {'flavor': config.flavor.name});

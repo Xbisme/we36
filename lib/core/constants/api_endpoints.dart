@@ -48,9 +48,14 @@ abstract final class ApiEndpoints {
   static String commentReport(String commentId) =>
       '/comments/$commentId/report';
 
-  /// Media upload (#007) — multipart upload of a processed image; returns a
-  /// `MediaRef` (id + variants). Idempotent via the client `Idempotency-Key`.
-  static const String media = '/media';
+  /// Media upload (B#003 presigned direct-upload flow): request a ticket
+  /// (`POST /media/uploads` → `{mediaId, uploadUrl, method, headers}`), `PUT` the
+  /// bytes straight to object storage at `uploadUrl`, then finalize
+  /// (`POST /media/:id/finalize` → `MediaDto`) to enqueue processing. The API
+  /// never proxies the binary (scalable large-video uploads, Constitution II).
+  static const String mediaUploads = '/media/uploads';
+  static String mediaFinalize(String id) => '/media/$id/finalize';
+  static String mediaById(String id) => '/media/$id';
 
   /// Create post (#007) — publishes a post from uploaded media ids + caption +
   /// metadata; idempotent via the client `Idempotency-Key`. B#007 seam.

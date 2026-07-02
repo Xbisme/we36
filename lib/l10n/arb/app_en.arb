@@ -464,5 +464,11 @@
   "reelComposeDiscard": "Discard this reel?",
   "@reelComposeDiscard": { "description": "Discard-compose confirmation" },
   "reelPublishFailed": "Couldn't publish your reel.",
-  "@reelPublishFailed": { "description": "Reel publish failure toast" }
+  "@reelPublishFailed": { "description": "Reel publish failure toast" },
+  "createPostLabel": "New post",
+  "@createPostLabel": { "description": "Create menu: new post" },
+  "createReelLabel": "New reel",
+  "@createReelLabel": { "description": "Create menu: new reel" },
+  "createStoryLabel": "New story",
+  "@createStoryLabel": { "description": "Create menu: new story" }
 }

@@ -18,7 +18,6 @@ void main() {
     createdAt: DateTime.utc(2026, 7, 2, 9),
     likeCount: 12,
     viewerHasLiked: true,
-    isOwn: false,
     replyCount: 1,
   );
 

@@ -666,4 +666,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get reelPublishFailed => 'Không đăng được reel.';
+
+  @override
+  String get createPostLabel => 'Bài viết mới';
+
+  @override
+  String get createReelLabel => 'Reel mới';
+
+  @override
+  String get createStoryLabel => 'Tin mới';
 }

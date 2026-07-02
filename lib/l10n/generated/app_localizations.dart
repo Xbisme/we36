@@ -1369,6 +1369,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t publish your reel.'**
   String get reelPublishFailed;
+
+  /// Create menu: new post
+  ///
+  /// In en, this message translates to:
+  /// **'New post'**
+  String get createPostLabel;
+
+  /// Create menu: new reel
+  ///
+  /// In en, this message translates to:
+  /// **'New reel'**
+  String get createReelLabel;
+
+  /// Create menu: new story
+  ///
+  /// In en, this message translates to:
+  /// **'New story'**
+  String get createStoryLabel;
 }
 
 class _AppLocalizationsDelegate

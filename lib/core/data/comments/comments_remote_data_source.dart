@@ -45,7 +45,8 @@ class CommentsRemoteDataSource {
     String? parentId,
   }) => _api.post<Comment>(
     ApiEndpoints.postComments(postId),
-    body: {'text': text, 'parentId': ?parentId},
+    // Backend `CreateCommentDto`: the text field is `body` (not `text`).
+    body: {'body': text, 'parentId': ?parentId},
     idempotent: true,
     decode: (data) => Comment.fromJson(data as Map<String, dynamic>),
   );

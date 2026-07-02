@@ -609,6 +609,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i140.DeleteComment>(),
         gh<_i140.ReportComment>(),
         gh<_i222.IdempotencyKeys>(),
+        gh<_i321.ToggleLike>(),
+        gh<_i321.ToggleSave>(),
       ),
     );
     gh.factory<_i764.ForgotPasswordCubit>(

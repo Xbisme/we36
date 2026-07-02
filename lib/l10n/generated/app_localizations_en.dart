@@ -668,4 +668,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reelPublishFailed => 'Couldn\'t publish your reel.';
+
+  @override
+  String get createPostLabel => 'New post';
+
+  @override
+  String get createReelLabel => 'New reel';
+
+  @override
+  String get createStoryLabel => 'New story';
 }

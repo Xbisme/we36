@@ -67,10 +67,20 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 5', () {
+    test('schemaVersion is 6', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 5);
+      expect(db.schemaVersion, 6);
       addTearDown(db.close);
+    });
+
+    test('onUpgrade(from<6) additively adds the post media-urls column', () async {
+      final db = AppDatabase.forTesting(NativeDatabase.memory());
+      await db.postsDao.upsertAll([_post('post-keep')]);
+      await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
+      await db.migration.onUpgrade(Migrator(db), 5, 6);
+      // Column back + the older row survived (non-destructive).
+      expect(await db.postsDao.getById('post-keep'), isNotNull);
+      await db.close();
     });
 
     test('onCreate builds a usable v5 schema (all tables)', () async {
@@ -106,11 +116,12 @@ void main() {
       'onUpgrade(from<5) additively creates the reels table',
       () async {
         final db = AppDatabase.forTesting(NativeDatabase.memory());
-        // Simulate a pre-v5 DB: drop the v5 table, keep a v4 row, run onUpgrade.
+        // Simulate a pre-v5 DB: drop the v5 table + v6 column, keep a v4 row.
         await db.postsDao.upsertAll([_post('post-keep')]);
         await db.customStatement('DROP TABLE reels');
+        await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
 
-        await db.migration.onUpgrade(Migrator(db), 4, 5);
+        await db.migration.onUpgrade(Migrator(db), 4, 6);
 
         // New table usable; the older post row survived (non-destructive).
         await db.reelsDao.upsertAll([_reel('reel-after')]);
@@ -124,11 +135,12 @@ void main() {
       'onUpgrade(from<4) additively creates the compose draft table',
       () async {
         final db = AppDatabase.forTesting(NativeDatabase.memory());
-        // Simulate a pre-v4 DB: drop the v4 table, keep a v3 row, run onUpgrade.
+        // Simulate a pre-v4 DB: drop the v4 table + v6 column, keep a v3 row.
         await db.postsDao.upsertAll([_post('post-keep')]);
         await db.customStatement('DROP TABLE compose_drafts');
+        await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
 
-        await db.migration.onUpgrade(Migrator(db), 3, 4);
+        await db.migration.onUpgrade(Migrator(db), 3, 6);
 
         // New table usable; the older post row survived (non-destructive).
         await db.composeDraftDao.save(_draft('draft-after'));

@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:we36/core/data/feed/post.dart' show MediaKind;
 import 'package:we36/core/data/reels/reel.dart';
 import 'package:we36/core/data/reels/reels_repository.dart';
 import 'package:we36/core/domain/app_failure.dart';
@@ -65,6 +66,7 @@ class PublishReel {
     await for (final event in _uploader.upload(
       bytes: bytes,
       idempotencyKey: '${draft.idempotencyKey}-video',
+      kind: MediaKind.video,
       cancelToken: cancelToken,
     )) {
       switch (event) {
