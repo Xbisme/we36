@@ -4563,6 +4563,318 @@ class ReelsCompanion extends UpdateCompanion<CachedReel> {
   }
 }
 
+class $ExploreItemsTable extends ExploreItems
+    with TableInfo<$ExploreItemsTable, CachedExploreItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExploreItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _orderIndexMeta = const VerificationMeta(
+    'orderIndex',
+  );
+  @override
+  late final GeneratedColumn<int> orderIndex = GeneratedColumn<int>(
+    'order_index',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _itemIdMeta = const VerificationMeta('itemId');
+  @override
+  late final GeneratedColumn<String> itemId = GeneratedColumn<String>(
+    'item_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadJsonMeta = const VerificationMeta(
+    'payloadJson',
+  );
+  @override
+  late final GeneratedColumn<String> payloadJson = GeneratedColumn<String>(
+    'payload_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [orderIndex, itemId, kind, payloadJson];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'explore_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CachedExploreItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('order_index')) {
+      context.handle(
+        _orderIndexMeta,
+        orderIndex.isAcceptableOrUnknown(data['order_index']!, _orderIndexMeta),
+      );
+    }
+    if (data.containsKey('item_id')) {
+      context.handle(
+        _itemIdMeta,
+        itemId.isAcceptableOrUnknown(data['item_id']!, _itemIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemIdMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('payload_json')) {
+      context.handle(
+        _payloadJsonMeta,
+        payloadJson.isAcceptableOrUnknown(
+          data['payload_json']!,
+          _payloadJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadJsonMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {orderIndex};
+  @override
+  CachedExploreItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CachedExploreItem(
+      orderIndex: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}order_index'],
+      )!,
+      itemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}item_id'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      payloadJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload_json'],
+      )!,
+    );
+  }
+
+  @override
+  $ExploreItemsTable createAlias(String alias) {
+    return $ExploreItemsTable(attachedDatabase, alias);
+  }
+}
+
+class CachedExploreItem extends DataClass
+    implements Insertable<CachedExploreItem> {
+  /// Grid position (0-based) — preserves the server order; the primary key.
+  final int orderIndex;
+
+  /// The underlying post/reel id (dedupe within the snapshot).
+  final String itemId;
+
+  /// Cell kind: `post` | `reel`.
+  final String kind;
+
+  /// Serialized `ExploreItem` JSON (post/reel payload).
+  final String payloadJson;
+  const CachedExploreItem({
+    required this.orderIndex,
+    required this.itemId,
+    required this.kind,
+    required this.payloadJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['order_index'] = Variable<int>(orderIndex);
+    map['item_id'] = Variable<String>(itemId);
+    map['kind'] = Variable<String>(kind);
+    map['payload_json'] = Variable<String>(payloadJson);
+    return map;
+  }
+
+  ExploreItemsCompanion toCompanion(bool nullToAbsent) {
+    return ExploreItemsCompanion(
+      orderIndex: Value(orderIndex),
+      itemId: Value(itemId),
+      kind: Value(kind),
+      payloadJson: Value(payloadJson),
+    );
+  }
+
+  factory CachedExploreItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CachedExploreItem(
+      orderIndex: serializer.fromJson<int>(json['orderIndex']),
+      itemId: serializer.fromJson<String>(json['itemId']),
+      kind: serializer.fromJson<String>(json['kind']),
+      payloadJson: serializer.fromJson<String>(json['payloadJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'orderIndex': serializer.toJson<int>(orderIndex),
+      'itemId': serializer.toJson<String>(itemId),
+      'kind': serializer.toJson<String>(kind),
+      'payloadJson': serializer.toJson<String>(payloadJson),
+    };
+  }
+
+  CachedExploreItem copyWith({
+    int? orderIndex,
+    String? itemId,
+    String? kind,
+    String? payloadJson,
+  }) => CachedExploreItem(
+    orderIndex: orderIndex ?? this.orderIndex,
+    itemId: itemId ?? this.itemId,
+    kind: kind ?? this.kind,
+    payloadJson: payloadJson ?? this.payloadJson,
+  );
+  CachedExploreItem copyWithCompanion(ExploreItemsCompanion data) {
+    return CachedExploreItem(
+      orderIndex: data.orderIndex.present
+          ? data.orderIndex.value
+          : this.orderIndex,
+      itemId: data.itemId.present ? data.itemId.value : this.itemId,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      payloadJson: data.payloadJson.present
+          ? data.payloadJson.value
+          : this.payloadJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CachedExploreItem(')
+          ..write('orderIndex: $orderIndex, ')
+          ..write('itemId: $itemId, ')
+          ..write('kind: $kind, ')
+          ..write('payloadJson: $payloadJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(orderIndex, itemId, kind, payloadJson);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CachedExploreItem &&
+          other.orderIndex == this.orderIndex &&
+          other.itemId == this.itemId &&
+          other.kind == this.kind &&
+          other.payloadJson == this.payloadJson);
+}
+
+class ExploreItemsCompanion extends UpdateCompanion<CachedExploreItem> {
+  final Value<int> orderIndex;
+  final Value<String> itemId;
+  final Value<String> kind;
+  final Value<String> payloadJson;
+  const ExploreItemsCompanion({
+    this.orderIndex = const Value.absent(),
+    this.itemId = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.payloadJson = const Value.absent(),
+  });
+  ExploreItemsCompanion.insert({
+    this.orderIndex = const Value.absent(),
+    required String itemId,
+    required String kind,
+    required String payloadJson,
+  }) : itemId = Value(itemId),
+       kind = Value(kind),
+       payloadJson = Value(payloadJson);
+  static Insertable<CachedExploreItem> custom({
+    Expression<int>? orderIndex,
+    Expression<String>? itemId,
+    Expression<String>? kind,
+    Expression<String>? payloadJson,
+  }) {
+    return RawValuesInsertable({
+      if (orderIndex != null) 'order_index': orderIndex,
+      if (itemId != null) 'item_id': itemId,
+      if (kind != null) 'kind': kind,
+      if (payloadJson != null) 'payload_json': payloadJson,
+    });
+  }
+
+  ExploreItemsCompanion copyWith({
+    Value<int>? orderIndex,
+    Value<String>? itemId,
+    Value<String>? kind,
+    Value<String>? payloadJson,
+  }) {
+    return ExploreItemsCompanion(
+      orderIndex: orderIndex ?? this.orderIndex,
+      itemId: itemId ?? this.itemId,
+      kind: kind ?? this.kind,
+      payloadJson: payloadJson ?? this.payloadJson,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (orderIndex.present) {
+      map['order_index'] = Variable<int>(orderIndex.value);
+    }
+    if (itemId.present) {
+      map['item_id'] = Variable<String>(itemId.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (payloadJson.present) {
+      map['payload_json'] = Variable<String>(payloadJson.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExploreItemsCompanion(')
+          ..write('orderIndex: $orderIndex, ')
+          ..write('itemId: $itemId, ')
+          ..write('kind: $kind, ')
+          ..write('payloadJson: $payloadJson')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -4573,6 +4885,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $StorySeenSegmentsTable(this);
   late final $ComposeDraftsTable composeDrafts = $ComposeDraftsTable(this);
   late final $ReelsTable reels = $ReelsTable(this);
+  late final $ExploreItemsTable exploreItems = $ExploreItemsTable(this);
   late final UsersDao usersDao = UsersDao(this as AppDatabase);
   late final MeProfileDao meProfileDao = MeProfileDao(this as AppDatabase);
   late final PostsDao postsDao = PostsDao(this as AppDatabase);
@@ -4581,6 +4894,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this as AppDatabase,
   );
   late final ReelsDao reelsDao = ReelsDao(this as AppDatabase);
+  late final ExploreDao exploreDao = ExploreDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4592,6 +4906,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     storySeenSegments,
     composeDrafts,
     reels,
+    exploreItems,
   ];
 }
 
@@ -6687,6 +7002,189 @@ typedef $$ReelsTableProcessedTableManager =
       CachedReel,
       PrefetchHooks Function()
     >;
+typedef $$ExploreItemsTableCreateCompanionBuilder =
+    ExploreItemsCompanion Function({
+      Value<int> orderIndex,
+      required String itemId,
+      required String kind,
+      required String payloadJson,
+    });
+typedef $$ExploreItemsTableUpdateCompanionBuilder =
+    ExploreItemsCompanion Function({
+      Value<int> orderIndex,
+      Value<String> itemId,
+      Value<String> kind,
+      Value<String> payloadJson,
+    });
+
+class $$ExploreItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $ExploreItemsTable> {
+  $$ExploreItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get orderIndex => $composableBuilder(
+    column: $table.orderIndex,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get itemId => $composableBuilder(
+    column: $table.itemId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExploreItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ExploreItemsTable> {
+  $$ExploreItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get orderIndex => $composableBuilder(
+    column: $table.orderIndex,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get itemId => $composableBuilder(
+    column: $table.itemId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExploreItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ExploreItemsTable> {
+  $$ExploreItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get orderIndex => $composableBuilder(
+    column: $table.orderIndex,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get itemId =>
+      $composableBuilder(column: $table.itemId, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => column,
+  );
+}
+
+class $$ExploreItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ExploreItemsTable,
+          CachedExploreItem,
+          $$ExploreItemsTableFilterComposer,
+          $$ExploreItemsTableOrderingComposer,
+          $$ExploreItemsTableAnnotationComposer,
+          $$ExploreItemsTableCreateCompanionBuilder,
+          $$ExploreItemsTableUpdateCompanionBuilder,
+          (
+            CachedExploreItem,
+            BaseReferences<
+              _$AppDatabase,
+              $ExploreItemsTable,
+              CachedExploreItem
+            >,
+          ),
+          CachedExploreItem,
+          PrefetchHooks Function()
+        > {
+  $$ExploreItemsTableTableManager(_$AppDatabase db, $ExploreItemsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExploreItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ExploreItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ExploreItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> orderIndex = const Value.absent(),
+                Value<String> itemId = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<String> payloadJson = const Value.absent(),
+              }) => ExploreItemsCompanion(
+                orderIndex: orderIndex,
+                itemId: itemId,
+                kind: kind,
+                payloadJson: payloadJson,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> orderIndex = const Value.absent(),
+                required String itemId,
+                required String kind,
+                required String payloadJson,
+              }) => ExploreItemsCompanion.insert(
+                orderIndex: orderIndex,
+                itemId: itemId,
+                kind: kind,
+                payloadJson: payloadJson,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExploreItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ExploreItemsTable,
+      CachedExploreItem,
+      $$ExploreItemsTableFilterComposer,
+      $$ExploreItemsTableOrderingComposer,
+      $$ExploreItemsTableAnnotationComposer,
+      $$ExploreItemsTableCreateCompanionBuilder,
+      $$ExploreItemsTableUpdateCompanionBuilder,
+      (
+        CachedExploreItem,
+        BaseReferences<_$AppDatabase, $ExploreItemsTable, CachedExploreItem>,
+      ),
+      CachedExploreItem,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -6703,4 +7201,6 @@ class $AppDatabaseManager {
       $$ComposeDraftsTableTableManager(_db, _db.composeDrafts);
   $$ReelsTableTableManager get reels =>
       $$ReelsTableTableManager(_db, _db.reels);
+  $$ExploreItemsTableTableManager get exploreItems =>
+      $$ExploreItemsTableTableManager(_db, _db.exploreItems);
 }

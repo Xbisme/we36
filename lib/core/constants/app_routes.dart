@@ -30,6 +30,17 @@ abstract final class AppRoutes {
   /// Build the concrete post-detail path for [postId].
   static String postDetailPath(String postId) => '/post/$postId';
 
+  // Explore & Search (#009), nav-less full-screen (Screens 17–19). `search` is
+  // declared above. Hashtag/place pages are deep-linkable pushed routes.
+  static const String hashtag = '/hashtags/:tag';
+  static const String place = '/places/:id';
+
+  /// Build the concrete hashtag-page path for [tag] (lowercase, no `#`).
+  static String hashtagPath(String tag) => '/hashtags/$tag';
+
+  /// Build the concrete place-page path for [placeId].
+  static String placePath(String placeId) => '/places/$placeId';
+
   // Create Post — compose flow (#007), nav-less full-screen (Screens 11–13).
   static const String composePick = '/create/pick';
   static const String composeEdit = '/create/edit';

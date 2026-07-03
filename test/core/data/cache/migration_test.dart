@@ -67,10 +67,20 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 6', () {
+    test('schemaVersion is 7', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 6);
+      expect(db.schemaVersion, 7);
       addTearDown(db.close);
+    });
+
+    test('onUpgrade(from<7) additively creates the explore-items table (#009)', () async {
+      final db = AppDatabase.forTesting(NativeDatabase.memory());
+      addTearDown(db.close);
+      // Simulate a v6 DB upgrading to v7: the ExploreItems table is added.
+      await db.migration.onUpgrade(Migrator(db), 6, 7);
+      // A write+read round-trip proves the table exists and is usable.
+      await db.exploreDao.replaceAll(const []);
+      expect(await db.exploreDao.watchExplore().first, isEmpty);
     });
 
     test(

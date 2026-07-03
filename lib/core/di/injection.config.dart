@@ -26,6 +26,13 @@ import 'package:we36/core/data/comments/comments_remote_data_source.dart'
 import 'package:we36/core/data/comments/comments_repository.dart' as _i552;
 import 'package:we36/core/data/comments/comments_repository_impl.dart' as _i440;
 import 'package:we36/core/data/comments/fake_comments_repository.dart' as _i67;
+import 'package:we36/core/data/discovery/discovery_remote_data_source.dart'
+    as _i191;
+import 'package:we36/core/data/discovery/discovery_repository.dart' as _i550;
+import 'package:we36/core/data/discovery/discovery_repository_impl.dart'
+    as _i943;
+import 'package:we36/core/data/discovery/fake_discovery_repository.dart'
+    as _i751;
 import 'package:we36/core/data/feed/fake_feed_repository.dart' as _i144;
 import 'package:we36/core/data/feed/feed_remote_data_source.dart' as _i138;
 import 'package:we36/core/data/feed/feed_repository.dart' as _i850;
@@ -237,6 +244,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => const _i873.FakeOAuthTokenSource(),
       registerFor: {_fake},
     );
+    gh.lazySingleton<_i550.DiscoveryRepository>(
+      () => _i751.FakeDiscoveryRepository(gh<_i270.AppDatabase>()),
+      registerFor: {_fake},
+    );
     gh.lazySingleton<_i247.UserRepository>(
       () => _i156.FakeUserRepository(),
       registerFor: {_fake},
@@ -300,6 +311,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i814.CommentsRemoteDataSource>(
       () => _i814.CommentsRemoteDataSource(gh<_i784.ApiClient>()),
     );
+    gh.lazySingleton<_i191.DiscoveryRemoteDataSource>(
+      () => _i191.DiscoveryRemoteDataSource(gh<_i784.ApiClient>()),
+    );
     gh.lazySingleton<_i138.FeedRemoteDataSource>(
       () => _i138.FeedRemoteDataSource(gh<_i784.ApiClient>()),
     );
@@ -335,6 +349,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i767.OwnStoryStore>(),
         gh<_i242.AuthEventsSink>(),
       ),
+    );
+    gh.lazySingleton<_i550.DiscoveryRepository>(
+      () => _i943.DiscoveryRepositoryImpl(
+        gh<_i191.DiscoveryRemoteDataSource>(),
+        gh<_i270.AppDatabase>(),
+      ),
+      registerFor: {_real},
     );
     gh.lazySingleton<_i674.CreateStoryRepository>(
       () => _i649.RealCreateStoryRepository(

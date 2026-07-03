@@ -3,12 +3,14 @@ import 'package:drift_flutter/drift_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:we36/core/data/cache/daos/compose_draft_dao.dart';
+import 'package:we36/core/data/cache/daos/explore_dao.dart';
 import 'package:we36/core/data/cache/daos/me_profile_dao.dart';
 import 'package:we36/core/data/cache/daos/posts_dao.dart';
 import 'package:we36/core/data/cache/daos/reels_dao.dart';
 import 'package:we36/core/data/cache/daos/story_seen_dao.dart';
 import 'package:we36/core/data/cache/daos/users_dao.dart';
 import 'package:we36/core/data/cache/tables/compose_draft_table.dart';
+import 'package:we36/core/data/cache/tables/explore_items_table.dart';
 import 'package:we36/core/data/cache/tables/me_profile_table.dart';
 import 'package:we36/core/data/cache/tables/posts_table.dart';
 import 'package:we36/core/data/cache/tables/reels_table.dart';
@@ -24,7 +26,15 @@ part 'app_database.g.dart';
 /// tables are added by their features.
 @lazySingleton
 @DriftDatabase(
-  tables: [Users, MeProfiles, Posts, StorySeenSegments, ComposeDrafts, Reels],
+  tables: [
+    Users,
+    MeProfiles,
+    Posts,
+    StorySeenSegments,
+    ComposeDrafts,
+    Reels,
+    ExploreItems,
+  ],
   daos: [
     UsersDao,
     MeProfileDao,
@@ -32,6 +42,7 @@ part 'app_database.g.dart';
     StorySeenDao,
     ComposeDraftDao,
     ReelsDao,
+    ExploreDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -43,7 +54,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -73,6 +84,10 @@ class AppDatabase extends _$AppDatabase {
         // created by the `from < 3` step above already includes it.
         await m.addColumn(posts, posts.mediaUrlsJson);
       }
+      if (from < 7) {
+        // v7 (#009): add the persisted Explore-grid snapshot.
+        await m.createTable(exploreItems);
+      }
     },
   );
 
@@ -86,5 +101,6 @@ class AppDatabase extends _$AppDatabase {
     await delete(storySeenSegments).go();
     await delete(composeDrafts).go();
     await delete(reels).go();
+    await delete(exploreItems).go();
   }
 }
