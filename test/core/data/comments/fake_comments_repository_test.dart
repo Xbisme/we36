@@ -66,7 +66,9 @@ void main() {
     test('reply-to-a-reply normalizes to the top-level ancestor', () async {
       final top = (await repo.loadComments('post-001')).valueOrNull!;
       final parent = top.items.firstWhere((c) => c.replyCount > 0);
-      final reply = (await repo.loadReplies(parent.id)).valueOrNull!.items.first;
+      final reply = (await repo.loadReplies(
+        parent.id,
+      )).valueOrNull!.items.first;
       final added = (await repo.addComment(
         'post-001',
         text: 'deep',
@@ -97,7 +99,11 @@ void main() {
       expect(fail.isOk, isFalse);
       final ok = await repo.addComment('post-001', text: 'x', clientKey: 'r');
       expect(ok.isOk, isTrue);
-      final again = await repo.addComment('post-001', text: 'x', clientKey: 'r');
+      final again = await repo.addComment(
+        'post-001',
+        text: 'x',
+        clientKey: 'r',
+      );
       expect(again.valueOrNull!.id, ok.valueOrNull!.id); // one comment
     });
   });
@@ -109,39 +115,46 @@ void main() {
     expect(liked.viewerHasLiked, isTrue);
     expect(liked.likeCount, c.likeCount + 1);
     // Same-direction repeat is a no-op on the count.
-    final again =
-        (await repo.toggleCommentLike(c.id, like: true)).valueOrNull!;
+    final again = (await repo.toggleCommentLike(c.id, like: true)).valueOrNull!;
     expect(again.likeCount, c.likeCount + 1);
-    final unliked =
-        (await repo.toggleCommentLike(c.id, like: false)).valueOrNull!;
+    final unliked = (await repo.toggleCommentLike(
+      c.id,
+      like: false,
+    )).valueOrNull!;
     expect(unliked.viewerHasLiked, isFalse);
     expect(unliked.likeCount, c.likeCount);
   });
 
   group('deleteComment', () {
-    test('top-level cascade removes replies and returns 1+replyCount', () async {
-      final top = (await repo.loadComments('post-001')).valueOrNull!;
-      final parent = top.items.firstWhere((c) => c.replyCount > 0);
-      final removed =
-          (await repo.deleteComment(parent.id)).valueOrNull!;
-      expect(removed, 1 + parent.replyCount);
-      final after = (await repo.loadComments('post-001')).valueOrNull!;
-      expect(after.items.any((c) => c.id == parent.id), isFalse);
-      final replies = (await repo.loadReplies(parent.id)).valueOrNull!;
-      expect(replies.items, isEmpty);
-    });
+    test(
+      'top-level cascade removes replies and returns 1+replyCount',
+      () async {
+        final top = (await repo.loadComments('post-001')).valueOrNull!;
+        final parent = top.items.firstWhere((c) => c.replyCount > 0);
+        final removed = (await repo.deleteComment(parent.id)).valueOrNull!;
+        expect(removed, 1 + parent.replyCount);
+        final after = (await repo.loadComments('post-001')).valueOrNull!;
+        expect(after.items.any((c) => c.id == parent.id), isFalse);
+        final replies = (await repo.loadReplies(parent.id)).valueOrNull!;
+        expect(replies.items, isEmpty);
+      },
+    );
 
-    test('reply delete returns 1 and decrements the parent replyCount',
-        () async {
-      final top = (await repo.loadComments('post-001')).valueOrNull!;
-      final parent = top.items.firstWhere((c) => c.replyCount > 0);
-      final reply = (await repo.loadReplies(parent.id)).valueOrNull!.items.first;
-      final removed = (await repo.deleteComment(reply.id)).valueOrNull!;
-      expect(removed, 1);
-      final after = (await repo.loadComments('post-001')).valueOrNull!;
-      final parentAfter = after.items.firstWhere((c) => c.id == parent.id);
-      expect(parentAfter.replyCount, parent.replyCount - 1);
-    });
+    test(
+      'reply delete returns 1 and decrements the parent replyCount',
+      () async {
+        final top = (await repo.loadComments('post-001')).valueOrNull!;
+        final parent = top.items.firstWhere((c) => c.replyCount > 0);
+        final reply = (await repo.loadReplies(
+          parent.id,
+        )).valueOrNull!.items.first;
+        final removed = (await repo.deleteComment(reply.id)).valueOrNull!;
+        expect(removed, 1);
+        final after = (await repo.loadComments('post-001')).valueOrNull!;
+        final parentAfter = after.items.firstWhere((c) => c.id == parent.id);
+        expect(parentAfter.replyCount, parent.replyCount - 1);
+      },
+    );
 
     test('deleting a missing comment is a no-op (0)', () async {
       final removed = (await repo.deleteComment('nope')).valueOrNull!;

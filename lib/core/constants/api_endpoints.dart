@@ -77,4 +77,17 @@ abstract final class ApiEndpoints {
   /// unseen-first, self entry first.
   static const String stories = '/stories';
   static const String storiesFeed = '/stories/feed';
+
+  /// Explore & Search (#009) — B#009 contract. Non-personalized discovery grid
+  /// (`GET /explore`, cursor, ready-only). Full-text search (`GET /search`,
+  /// `q`+`type`∈{top,accounts,tags,places}; `top` is a fixed blended snapshot,
+  /// single-type is cursor-paginated). Hashtag/place pages (`GET`, cursor grid).
+  /// Recent-search history (`GET/POST /me/search-recents`, dedupe-and-promote;
+  /// `DELETE /me/search-recents/:id` one, `DELETE /me/search-recents` clear all).
+  static const String explore = '/explore';
+  static const String search = '/search';
+  static String hashtagPage(String tag) => '/hashtags/$tag';
+  static String placePage(String id) => '/places/$id';
+  static const String searchRecents = '/me/search-recents';
+  static String searchRecent(String id) => '/me/search-recents/$id';
 }

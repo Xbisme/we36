@@ -675,4 +675,76 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get createStoryLabel => 'Tin mới';
+
+  @override
+  String get follow => 'Theo dõi';
+
+  @override
+  String get following => 'Đang theo dõi';
+
+  @override
+  String get requested => 'Đã yêu cầu';
+
+  @override
+  String get searchTabTop => 'Hàng đầu';
+
+  @override
+  String get searchTabAccounts => 'Tài khoản';
+
+  @override
+  String get searchTabTags => 'Thẻ';
+
+  @override
+  String get searchTabPlaces => 'Địa điểm';
+
+  @override
+  String get searchSeeMore => 'Xem thêm';
+
+  @override
+  String get searchNoResults => 'Không tìm thấy kết quả';
+
+  @override
+  String get searchError => 'Không tìm kiếm được';
+
+  @override
+  String get discoveryRetry => 'Thử lại';
+
+  @override
+  String get recentTitle => 'Gần đây';
+
+  @override
+  String get recentClearAll => 'Xóa tất cả';
+
+  @override
+  String get recentRemove => 'Xóa';
+
+  @override
+  String get recentsEmpty => 'Chưa có tìm kiếm gần đây';
+
+  @override
+  String get exploreEmpty => 'Chưa có gì để khám phá';
+
+  @override
+  String get exploreEmptyHint => 'Bài viết và reel để khám phá sẽ hiện ở đây.';
+
+  @override
+  String get exploreError => 'Không tải được Khám phá';
+
+  @override
+  String get discoveryOffline => 'Ngoại tuyến — đang hiển thị nội dung đã lưu';
+
+  @override
+  String get postsLabel => 'bài viết';
+
+  @override
+  String get hashtagFollow => 'Theo dõi';
+
+  @override
+  String get hashtagFollowAck => 'Theo dõi chủ đề sẽ sớm ra mắt.';
+
+  @override
+  String get reelTileLabel => 'Reel';
+
+  @override
+  String get photoTileLabel => 'Ảnh';
 }

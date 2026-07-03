@@ -23,7 +23,10 @@ Future<void> showReelMoreSheet(
           icon: AppIcons.close,
           label: l10n.reelDelete,
           onTap: () async {
-            final confirmed = await _confirmDelete(context, l10n.reelDeleteConfirm);
+            final confirmed = await _confirmDelete(
+              context,
+              l10n.reelDeleteConfirm,
+            );
             if (confirmed) await onDeleteConfirmed();
           },
         )

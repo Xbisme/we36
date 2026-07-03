@@ -67,21 +67,39 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 6', () {
+    test('schemaVersion is 7', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 6);
+      expect(db.schemaVersion, 7);
       addTearDown(db.close);
     });
 
-    test('onUpgrade(from<6) additively adds the post media-urls column', () async {
-      final db = AppDatabase.forTesting(NativeDatabase.memory());
-      await db.postsDao.upsertAll([_post('post-keep')]);
-      await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
-      await db.migration.onUpgrade(Migrator(db), 5, 6);
-      // Column back + the older row survived (non-destructive).
-      expect(await db.postsDao.getById('post-keep'), isNotNull);
-      await db.close();
-    });
+    test(
+      'onUpgrade(from<7) additively creates the explore-items table (#009)',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(db.close);
+        // Simulate a v6 DB upgrading to v7: the ExploreItems table is added.
+        await db.migration.onUpgrade(Migrator(db), 6, 7);
+        // A write+read round-trip proves the table exists and is usable.
+        await db.exploreDao.replaceAll(const []);
+        expect(await db.exploreDao.watchExplore().first, isEmpty);
+      },
+    );
+
+    test(
+      'onUpgrade(from<6) additively adds the post media-urls column',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        await db.postsDao.upsertAll([_post('post-keep')]);
+        await db.customStatement(
+          'ALTER TABLE posts DROP COLUMN media_urls_json',
+        );
+        await db.migration.onUpgrade(Migrator(db), 5, 6);
+        // Column back + the older row survived (non-destructive).
+        expect(await db.postsDao.getById('post-keep'), isNotNull);
+        await db.close();
+      },
+    );
 
     test('onCreate builds a usable v5 schema (all tables)', () async {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -119,7 +137,9 @@ void main() {
         // Simulate a pre-v5 DB: drop the v5 table + v6 column, keep a v4 row.
         await db.postsDao.upsertAll([_post('post-keep')]);
         await db.customStatement('DROP TABLE reels');
-        await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
+        await db.customStatement(
+          'ALTER TABLE posts DROP COLUMN media_urls_json',
+        );
 
         await db.migration.onUpgrade(Migrator(db), 4, 6);
 
@@ -138,7 +158,9 @@ void main() {
         // Simulate a pre-v4 DB: drop the v4 table + v6 column, keep a v3 row.
         await db.postsDao.upsertAll([_post('post-keep')]);
         await db.customStatement('DROP TABLE compose_drafts');
-        await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
+        await db.customStatement(
+          'ALTER TABLE posts DROP COLUMN media_urls_json',
+        );
 
         await db.migration.onUpgrade(Migrator(db), 3, 6);
 

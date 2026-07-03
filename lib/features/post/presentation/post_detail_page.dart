@@ -384,10 +384,12 @@ class _PostHeader extends StatelessWidget {
         timeText: time.format(post.createdAt, now: DateTime.now()),
         liked: post.viewerHasLiked,
         saved: post.viewerHasSaved,
-        onLike: () =>
-            unawaited(_run(context, cubit.togglePostLike, l10n.commentLikeFailed)),
-        onSave: () =>
-            unawaited(_run(context, cubit.togglePostSave, l10n.commentLikeFailed)),
+        onLike: () => unawaited(
+          _run(context, cubit.togglePostLike, l10n.commentLikeFailed),
+        ),
+        onSave: () => unawaited(
+          _run(context, cubit.togglePostSave, l10n.commentLikeFailed),
+        ),
         onShare: () => getIt<ToastService>().show(
           context,
           message: l10n.reelShareAck,

@@ -13,21 +13,24 @@ void main() {
   });
   tearDown(() => db.close());
 
-  test('loadFirstPage writes a deterministic first page to the cache', () async {
-    final result = await repo.loadFirstPage();
-    expect(result.isOk, isTrue);
-    final page = result.valueOrNull!;
-    expect(page.items, hasLength(6));
-    expect(page.hasMore, isTrue);
-    expect(page.nextCursor, '6');
+  test(
+    'loadFirstPage writes a deterministic first page to the cache',
+    () async {
+      final result = await repo.loadFirstPage();
+      expect(result.isOk, isTrue);
+      final page = result.valueOrNull!;
+      expect(page.items, hasLength(6));
+      expect(page.hasMore, isTrue);
+      expect(page.nextCursor, '6');
 
-    final cached = await repo.watchReelsFeed().first;
-    expect(cached, hasLength(6));
-    // Reverse-chronological (newest first).
-    expect(cached.first.createdAt.isAfter(cached.last.createdAt), isTrue);
-    // Synthesized reels are ready.
-    expect(cached.every((r) => r.isVideoReady), isTrue);
-  });
+      final cached = await repo.watchReelsFeed().first;
+      expect(cached, hasLength(6));
+      // Reverse-chronological (newest first).
+      expect(cached.first.createdAt.isAfter(cached.last.createdAt), isTrue);
+      // Synthesized reels are ready.
+      expect(cached.every((r) => r.isVideoReady), isTrue);
+    },
+  );
 
   test('loadNextPage appends the remainder and ends pagination', () async {
     await repo.loadFirstPage();

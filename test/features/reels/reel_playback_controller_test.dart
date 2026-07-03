@@ -105,12 +105,15 @@ void main() {
     c.dispose();
   });
 
-  test('autoplay:false does not play the active reel (Reduce Motion)', () async {
-    final c = ReelPlaybackController(factory: factory, autoplay: false);
-    await c.setActive(0, reels);
-    expect(c.playerFor(0)!.isPlaying, isFalse);
-    c.dispose();
-  });
+  test(
+    'autoplay:false does not play the active reel (Reduce Motion)',
+    () async {
+      final c = ReelPlaybackController(factory: factory, autoplay: false);
+      await c.setActive(0, reels);
+      expect(c.playerFor(0)!.isPlaying, isFalse);
+      c.dispose();
+    },
+  );
 
   test('togglePlayPause flips the active player', () async {
     final c = ReelPlaybackController(factory: factory);
@@ -121,4 +124,41 @@ void main() {
     expect(c.isPaused, isTrue);
     c.dispose();
   });
+
+  test(
+    'pauseAll stops audio when the tab is hidden / app backgrounded',
+    () async {
+      final c = ReelPlaybackController(factory: factory);
+      await c.setActive(1, reels);
+      expect(c.playerFor(1)!.isPlaying, isTrue);
+      await c.pauseAll();
+      for (var i = 0; i < reels.length; i++) {
+        final p = c.playerFor(i);
+        if (p != null) expect(p.isPlaying, isFalse);
+      }
+      c.dispose();
+    },
+  );
+
+  test('resumeActive replays the active reel on return (autoplay)', () async {
+    final c = ReelPlaybackController(factory: factory);
+    await c.setActive(1, reels);
+    await c.pauseAll();
+    expect(c.playerFor(1)!.isPlaying, isFalse);
+    await c.resumeActive();
+    expect(c.playerFor(1)!.isPlaying, isTrue);
+    expect(c.isPaused, isFalse);
+    c.dispose();
+  });
+
+  test(
+    'resumeActive is a no-op under Reduce Motion (autoplay:false)',
+    () async {
+      final c = ReelPlaybackController(factory: factory, autoplay: false);
+      await c.setActive(0, reels);
+      await c.resumeActive();
+      expect(c.playerFor(0)!.isPlaying, isFalse);
+      c.dispose();
+    },
+  );
 }

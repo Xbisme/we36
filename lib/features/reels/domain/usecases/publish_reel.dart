@@ -79,7 +79,9 @@ class PublishReel {
           failed = true;
       }
     }
-    if (failed || (cancelToken?.isCancelled ?? false) || mediaId == null) return;
+    if (failed || (cancelToken?.isCancelled ?? false) || mediaId == null) {
+      return;
+    }
 
     // 4. Create the reel (writes optimistically to the canonical cache).
     final result = await _reels.createReel(

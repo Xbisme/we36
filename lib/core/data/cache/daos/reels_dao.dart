@@ -32,9 +32,9 @@ class ReelsDao extends DatabaseAccessor<AppDatabase> with _$ReelsDaoMixin {
 
   /// Reactive read of one canonical reel by id. Emits null while not cached.
   Stream<domain.Reel?> watchReel(String id) =>
-      (select(reels)..where((t) => t.id.equals(id)))
-          .watchSingleOrNull()
-          .map((row) => row == null ? null : _toDomain(row));
+      (select(reels)..where((t) => t.id.equals(id))).watchSingleOrNull().map(
+        (row) => row == null ? null : _toDomain(row),
+      );
 
   Future<domain.Reel?> getById(String id) async {
     final row = await (select(

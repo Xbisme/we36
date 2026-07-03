@@ -677,4 +677,77 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createStoryLabel => 'New story';
+
+  @override
+  String get follow => 'Follow';
+
+  @override
+  String get following => 'Following';
+
+  @override
+  String get requested => 'Requested';
+
+  @override
+  String get searchTabTop => 'Top';
+
+  @override
+  String get searchTabAccounts => 'Accounts';
+
+  @override
+  String get searchTabTags => 'Tags';
+
+  @override
+  String get searchTabPlaces => 'Places';
+
+  @override
+  String get searchSeeMore => 'See more';
+
+  @override
+  String get searchNoResults => 'No results found';
+
+  @override
+  String get searchError => 'Couldn\'t search';
+
+  @override
+  String get discoveryRetry => 'Retry';
+
+  @override
+  String get recentTitle => 'Recent';
+
+  @override
+  String get recentClearAll => 'Clear all';
+
+  @override
+  String get recentRemove => 'Remove';
+
+  @override
+  String get recentsEmpty => 'No recent searches';
+
+  @override
+  String get exploreEmpty => 'Nothing to explore yet';
+
+  @override
+  String get exploreEmptyHint =>
+      'Posts and reels to discover will show up here.';
+
+  @override
+  String get exploreError => 'Couldn\'t load Explore';
+
+  @override
+  String get discoveryOffline => 'Offline — showing saved content';
+
+  @override
+  String get postsLabel => 'posts';
+
+  @override
+  String get hashtagFollow => 'Follow';
+
+  @override
+  String get hashtagFollowAck => 'Following topics is coming soon.';
+
+  @override
+  String get reelTileLabel => 'Reel';
+
+  @override
+  String get photoTileLabel => 'Photo';
 }

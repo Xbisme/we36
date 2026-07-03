@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:we36/core/constants/app_breakpoints.dart';
 import 'package:we36/core/data/reels/reel.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
@@ -12,7 +13,9 @@ import 'package:we36/core/utils/l10n_extension.dart';
 import 'package:we36/features/post/presentation/widgets/comment_text.dart';
 import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart';
 import 'package:we36/features/reels/presentation/cubit/reels_state.dart';
+import 'package:we36/features/reels/presentation/playback/reel_audio_session.dart';
 import 'package:we36/features/reels/presentation/playback/reel_playback_controller.dart';
+import 'package:we36/features/reels/presentation/widgets/processing_badge.dart';
 import 'package:we36/features/reels/presentation/widgets/reel_action_rail.dart';
 import 'package:we36/features/reels/presentation/widgets/reel_comments_sheet.dart';
 import 'package:we36/features/reels/presentation/widgets/reel_more_sheet.dart';
@@ -29,11 +32,18 @@ class ReelsPage extends StatefulWidget {
   State<ReelsPage> createState() => _ReelsPageState();
 }
 
-class _ReelsPageState extends State<ReelsPage> {
+class _ReelsPageState extends State<ReelsPage> with WidgetsBindingObserver {
   final PageController _pageController = PageController();
   ReelPlaybackController? _playback;
   int _index = 0;
   bool _synced = false;
+  bool _tabVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   @override
   void didChangeDependencies() {
@@ -41,11 +51,38 @@ class _ReelsPageState extends State<ReelsPage> {
     if (_playback == null) {
       final reduceMotion = MediaQuery.of(context).disableAnimations;
       _playback = ReelPlaybackController(autoplay: !reduceMotion);
+      // Honor the iOS silent switch for reel audio (FR / R3); no-op off iOS.
+      unawaited(const ReelAudioSession().configureAmbient());
+    }
+    // The 5-tab shell is an IndexedStack, so switching tabs does NOT dispose this
+    // page — go_router wraps the inactive branch in `TickerMode(enabled: false)`.
+    // Track that flip to pause/resume playback, else reel audio keeps sounding
+    // from the hidden tab.
+    final tabVisible = TickerMode.valuesOf(context).enabled;
+    if (tabVisible != _tabVisible) {
+      _tabVisible = tabVisible;
+      if (!tabVisible) {
+        unawaited(_playback?.pauseAll());
+      } else if (_synced) {
+        unawaited(_playback?.resumeActive());
+      }
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Pause when the app leaves the foreground; resume the active reel on return
+    // (only if the Reels tab is the visible one).
+    if (state != AppLifecycleState.resumed) {
+      unawaited(_playback?.pauseAll());
+    } else if (_tabVisible && _synced) {
+      unawaited(_playback?.resumeActive());
     }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _pageController.dispose();
     _playback?.dispose();
     super.dispose();
@@ -66,7 +103,9 @@ class _ReelsPageState extends State<ReelsPage> {
     _synced = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        unawaited(_playback?.setActive(_index.clamp(0, reels.length - 1), reels));
+        unawaited(
+          _playback?.setActive(_index.clamp(0, reels.length - 1), reels),
+        );
       }
     });
   }
@@ -98,7 +137,7 @@ class _ReelsPageState extends State<ReelsPage> {
 
   Widget _feed(BuildContext context, List<Reel> reels, bool reduceMotion) {
     final playback = _playback!;
-    return RefreshIndicator(
+    final pageView = RefreshIndicator(
       onRefresh: () => context.read<ReelsCubit>().refresh(),
       child: AnimatedBuilder(
         animation: playback,
@@ -129,6 +168,22 @@ class _ReelsPageState extends State<ReelsPage> {
         },
       ),
     );
+
+    // Adaptive layout (FR-028): on tablet/iPad widths, center the reel in a
+    // portrait 9:16 column against the dark background instead of stretching the
+    // phone layout across the pane. Phones (<700) render full-bleed.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < AppBreakpoints.tablet) return pageView;
+        final columnWidth = (constraints.maxHeight * 9 / 16).clamp(
+          0.0,
+          constraints.maxWidth,
+        );
+        return Center(
+          child: SizedBox(width: columnWidth, child: pageView),
+        );
+      },
+    );
   }
 }
 
@@ -143,7 +198,11 @@ class _ReelOverlay extends StatelessWidget {
   // Fake-mode ownership heuristic; real ownership resolves with session/#010.
   bool get _isOwn => reel.author.username == 'you';
 
-  void _toast(BuildContext context, String message, {ToastTone tone = ToastTone.neutral}) {
+  void _toast(
+    BuildContext context,
+    String message, {
+    ToastTone tone = ToastTone.neutral,
+  }) {
     getIt<ToastService>().show(context, message: message, tone: tone);
   }
 
@@ -179,11 +238,11 @@ class _ReelOverlay extends StatelessWidget {
       child: Stack(
         children: [
           if (reel.isProcessing)
-            Align(
+            const Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: _ProcessingBadge(),
+                padding: EdgeInsets.all(AppSpacing.md),
+                child: ProcessingBadge(),
               ),
             ),
           Align(
@@ -287,28 +346,6 @@ class _FollowButton extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ProcessingBadge extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Colors.black54,
-        borderRadius: BorderRadius.circular(AppRadius.full),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.xs,
-        ),
-        child: Text(
-          context.l10n.reelProcessing,
-          style: const TextStyle(color: Colors.white, fontSize: 12),
         ),
       ),
     );

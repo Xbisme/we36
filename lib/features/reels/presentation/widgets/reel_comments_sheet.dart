@@ -79,10 +79,14 @@ class _ReelCommentsSheet extends StatelessWidget {
               ),
               Expanded(
                 child: BlocBuilder<ReelCommentsCubit, CommentsState>(
-                  builder: (context, state) => _body(context, state, scrollController),
+                  builder: (context, state) =>
+                      _body(context, state, scrollController),
                 ),
               ),
-              if (!commentsDisabled) _input(context) else _disabledNotice(context),
+              if (!commentsDisabled)
+                _input(context)
+              else
+                _disabledNotice(context),
             ],
           ),
         );

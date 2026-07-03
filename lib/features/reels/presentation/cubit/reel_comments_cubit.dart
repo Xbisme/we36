@@ -171,7 +171,10 @@ class ReelCommentsCubit extends Cubit<CommentsState> {
       final e = result.valueOrNull!;
       _updateComment(
         comment.id,
-        (c) => c.copyWith(viewerHasLiked: e.viewerHasLiked, likeCount: e.likeCount),
+        (c) => c.copyWith(
+          viewerHasLiked: e.viewerHasLiked,
+          likeCount: e.likeCount,
+        ),
       );
       _emitLoaded();
       return null;
@@ -290,7 +293,9 @@ class ReelCommentsCubit extends Cubit<CommentsState> {
       _topLevel.removeWhere((c) => c.id == comment.id);
       _repliesByParent.remove(comment.id);
     } else {
-      _repliesByParent[comment.parentId]?.removeWhere((c) => c.id == comment.id);
+      _repliesByParent[comment.parentId]?.removeWhere(
+        (c) => c.id == comment.id,
+      );
       final pi = _topLevel.indexWhere((t) => t.id == comment.parentId);
       if (pi >= 0) {
         _topLevel[pi] = _topLevel[pi].copyWith(

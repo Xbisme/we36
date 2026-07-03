@@ -1387,6 +1387,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New story'**
   String get createStoryLabel;
+
+  /// Follow account label (read-only in search, #009)
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get follow;
+
+  /// Already-following label
+  ///
+  /// In en, this message translates to:
+  /// **'Following'**
+  String get following;
+
+  /// Pending follow request label (private account)
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get requested;
+
+  /// Search results: blended tab
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get searchTabTop;
+
+  /// Search results: accounts tab
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts'**
+  String get searchTabAccounts;
+
+  /// Search results: hashtags tab
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get searchTabTags;
+
+  /// Search results: places tab
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get searchTabPlaces;
+
+  /// Top view: switch to a single-type tab
+  ///
+  /// In en, this message translates to:
+  /// **'See more'**
+  String get searchSeeMore;
+
+  /// Empty search results for a term
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get searchNoResults;
+
+  /// Search first-load error
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t search'**
+  String get searchError;
+
+  /// Retry a failed discovery load
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get discoveryRetry;
+
+  /// Recent searches section title
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get recentTitle;
+
+  /// Clear all recent searches
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get recentClearAll;
+
+  /// Remove one recent search (a11y)
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get recentRemove;
+
+  /// Empty recents state
+  ///
+  /// In en, this message translates to:
+  /// **'No recent searches'**
+  String get recentsEmpty;
+
+  /// Empty explore grid
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to explore yet'**
+  String get exploreEmpty;
+
+  /// Empty explore subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Posts and reels to discover will show up here.'**
+  String get exploreEmptyHint;
+
+  /// Explore first-load error
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load Explore'**
+  String get exploreError;
+
+  /// Explore offline-from-cache indication
+  ///
+  /// In en, this message translates to:
+  /// **'Offline — showing saved content'**
+  String get discoveryOffline;
+
+  /// Suffix for a hashtag/place post count
+  ///
+  /// In en, this message translates to:
+  /// **'posts'**
+  String get postsLabel;
+
+  /// Surface-only follow button on a hashtag page
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get hashtagFollow;
+
+  /// Surface-only follow-hashtag acknowledgement
+  ///
+  /// In en, this message translates to:
+  /// **'Following topics is coming soon.'**
+  String get hashtagFollowAck;
+
+  /// A11y label marking a grid tile as a reel
+  ///
+  /// In en, this message translates to:
+  /// **'Reel'**
+  String get reelTileLabel;
+
+  /// A11y label marking a grid tile as a photo
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get photoTileLabel;
 }
 
 class _AppLocalizationsDelegate
