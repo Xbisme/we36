@@ -33,11 +33,9 @@ abstract class ExploreItem with _$ExploreItem {
   String get id => (isReel ? reel?.id : post?.id) ?? '';
 
   /// The content author.
-  UserSummary get author =>
-      isReel ? reel!.author : post!.author;
+  UserSummary get author => isReel ? reel!.author : post!.author;
 
   /// The tile thumbnail delivery URL (primary post image, or the reel poster),
   /// or null when unavailable (placeholder surface).
-  String? get thumbnailUrl =>
-      isReel ? reel?.posterUrl : post?.primaryImageUrl;
+  String? get thumbnailUrl => isReel ? reel?.posterUrl : post?.primaryImageUrl;
 }

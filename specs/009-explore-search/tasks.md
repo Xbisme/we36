@@ -22,7 +22,7 @@ description: "Task list for #009 Explore & Search (We36 Flutter client)"
 
 - [x] T001 Add discovery endpoint constants (explore, search, hashtagPage, placePage, searchRecents, searchRecent(id)) in `lib/core/constants/api_endpoints.dart` (no inline literals).
 - [x] T002 [P] Add discovery routes (`search`, `hashtag(tag)` → `/hashtags/:tag`, `place(id)` → `/places/:id`) in `lib/core/constants/app_routes.dart`.
-- [ ] T003 [P] Add discovery ARB strings (EN primary + VI) — search/explore/recents/hashtag/place/follow-stub/empty-error copy — in `lib/l10n/arb/app_en.arb` + `lib/l10n/arb/app_vi.arb`.
+- [x] T003 [P] Add discovery ARB strings (EN primary + VI) — search/explore/recents/hashtag/place/follow-stub/empty-error copy — in `lib/l10n/arb/app_en.arb` + `lib/l10n/arb/app_vi.arb`.
 
 ---
 
@@ -53,16 +53,16 @@ description: "Task list for #009 Explore & Search (We36 Flutter client)"
 **Goal**: Type a term → live results across Top/Accounts/Tags/Places → navigate to profile/hashtag/place.
 **Independent test**: Open the search route, type ≥2 chars, switch tabs; verify each type matches, blocked users absent, private findable-by-handle, relationship label shown, tap navigates.
 
-- [ ] T017 [US1] Search use cases (`SearchTop`, `SearchAccounts/Tags/Places` paginated, wraps `DiscoveryRepository`) in `lib/features/explore/domain/usecases/search_usecases.dart`.
-- [ ] T018 [US1] `SearchCubit` (freezed 4-state) — query + ~300 ms debounce + ≥2-char gate + latest-term guard; active tab (top/accounts/tags/places); Top snapshot + per-type cursor pagination — in `lib/features/explore/presentation/cubit/search_cubit.dart` (+ state file).
-- [ ] T019 [US1] `SearchPage` scaffold (SearchBar + results tabs when query ≥2 chars; recents slot reserved for US3) in `lib/features/explore/presentation/search_page.dart`; wire `AppRoutes.search` (nav-less push) in `lib/core/router/app_router.dart`.
-- [ ] T020 [P] [US1] `ResultsTabs` (Top/Accounts/Tags/Places, active underline) widget in `lib/features/explore/presentation/widgets/results_tabs.dart`.
-- [ ] T021 [P] [US1] `AccountResultRow` (avatar+ring, name/handle, read-only Follow/Requested/Following label, tap→profile route) in `lib/features/explore/presentation/widgets/account_result_row.dart`.
-- [ ] T022 [P] [US1] `HashtagResultRow` + `PlaceResultRow` (glyph + name + postCount/coords, tap→page) in `lib/features/explore/presentation/widgets/result_rows.dart`.
-- [ ] T023 [US1] Top view (blended sections + per-type "see more" → switch tab) + single-type paginated lists rendering in `search_page.dart`.
-- [ ] T024 [US1] Empty/loading/error-retry states per tab + latest-term-wins UI behavior in `search_page.dart`.
-- [ ] T025 [P] [US1] `SearchCubit` bloc test — debounce + ≥2-char gate, stale-term ignored, Top snapshot, tab switch + pagination, error — in `test/features/explore/search_cubit_test.dart`.
-- [ ] T026 [P] [US1] `SearchPage` widget test — type→results, tab switch, block/private visibility, tap-navigation intents (fixed `pump(Duration)`, tall `surfaceSize`) — in `test/features/explore/search_page_test.dart`.
+- [x] T017 [US1] Search use cases (`SearchTop`, `SearchAccounts/Tags/Places` paginated, wraps `DiscoveryRepository`) in `lib/features/explore/domain/usecases/search_usecases.dart`.
+- [x] T018 [US1] `SearchCubit` (freezed 4-state) — query + ~300 ms debounce + ≥2-char gate + latest-term guard; active tab (top/accounts/tags/places); Top snapshot + per-type cursor pagination — in `lib/features/explore/presentation/cubit/search_cubit.dart` (+ state file).
+- [x] T019 [US1] `SearchPage` scaffold (SearchBar + results tabs when query ≥2 chars; recents slot reserved for US3) in `lib/features/explore/presentation/search_page.dart`; wire `AppRoutes.search` (nav-less push) in `lib/core/router/app_router.dart`.
+- [x] T020 [P] [US1] `ResultsTabs` (Top/Accounts/Tags/Places, active underline) widget in `lib/features/explore/presentation/widgets/results_tabs.dart`.
+- [x] T021 [P] [US1] `AccountResultRow` (avatar+ring, name/handle, read-only Follow/Requested/Following label, tap→profile route) in `lib/features/explore/presentation/widgets/account_result_row.dart`.
+- [x] T022 [P] [US1] `HashtagResultRow` + `PlaceResultRow` (glyph + name + postCount/coords, tap→page) in `lib/features/explore/presentation/widgets/result_rows.dart`.
+- [x] T023 [US1] Top view (blended sections + per-type "see more" → switch tab) + single-type paginated lists rendering in `search_page.dart`.
+- [x] T024 [US1] Empty/loading/error-retry states per tab + latest-term-wins UI behavior in `search_page.dart`.
+- [x] T025 [P] [US1] `SearchCubit` bloc test — debounce + ≥2-char gate, stale-term ignored, Top snapshot, tab switch + pagination, error — in `test/features/explore/search_cubit_test.dart`.
+- [x] T026 [P] [US1] `SearchPage` widget test — type→results, tab switch, block/private visibility, tap-navigation intents (fixed `pump(Duration)`, tall `surfaceSize`) — in `test/features/explore/search_page_test.dart`.
 
 **Checkpoint**: Search is independently usable end-to-end (MVP).
 
@@ -73,15 +73,15 @@ description: "Task list for #009 Explore & Search (We36 Flutter client)"
 **Goal**: Browse the non-personalized mixed post/reel grid; category chips → hashtag pages; offline-from-cache.
 **Independent test**: Open the Explore tab; grid renders (reels marked, hero tile), scroll-paginates, pull-to-refresh, tile→item, chip→#tag; offline cold-start shows cached grid.
 
-- [ ] T027 [US2] Explore grid use cases (`WatchExplore`, `LoadExploreFirst/Next`, `RefreshExplore`) in `lib/features/explore/domain/usecases/explore_usecases.dart`.
-- [ ] T028 [US2] `ExploreCubit` (freezed 4-state, reactive over `watchExplore()`, load-first/next/refresh, `isOffline` flag) in `lib/features/explore/presentation/cubit/explore_cubit.dart` (+ state file).
-- [ ] T029 [US2] `ExplorePage` (Screen 16 tab body: SearchBar→push search, category chips, grid) replacing the placeholder in `lib/core/router/app_router.dart` / `lib/features/explore/presentation/explore_page.dart`.
-- [ ] T030 [P] [US2] `DiscoveryGridTile` (post/reel thumbnail via `cached_network_image` bounded `cacheWidth`; reel marker; tap→post-detail/reel route) in `lib/features/explore/presentation/widgets/discovery_grid_tile.dart`.
-- [ ] T031 [P] [US2] Quilted grid (3-col + 2×2 hero on phone; responsive `SliverGridDelegateWithMaxCrossAxisExtent` ≥700) helper in `lib/features/explore/presentation/widgets/discovery_grid.dart`.
-- [ ] T032 [P] [US2] `CategoryChips` (static travel/food/design/fitness → `hashtag(tag)` route; no "For you") in `lib/features/explore/presentation/widgets/category_chips.dart`.
-- [ ] T033 [US2] Pull-to-refresh + empty/loading/error-retry + offline-from-cache indication in `explore_page.dart`.
-- [ ] T034 [P] [US2] `ExploreCubit` bloc test — load-first/next/refresh, reactive cache read, offline path, empty/error — in `test/features/explore/explore_cubit_test.dart`.
-- [ ] T035 [P] [US2] `ExplorePage` widget test — mixed tiles + reel marker + hero tile, scroll-paginate, chip→route, offline cached grid — in `test/features/explore/explore_page_test.dart`.
+- [x] T027 [US2] Explore grid use cases (`WatchExplore`, `LoadExploreFirst/Next`, `RefreshExplore`) in `lib/features/explore/domain/usecases/explore_usecases.dart`.
+- [x] T028 [US2] `ExploreCubit` (freezed 4-state, reactive over `watchExplore()`, load-first/next/refresh, `isOffline` flag) in `lib/features/explore/presentation/cubit/explore_cubit.dart` (+ state file).
+- [x] T029 [US2] `ExplorePage` (Screen 16 tab body: SearchBar→push search, category chips, grid) replacing the placeholder in `lib/core/router/app_router.dart` / `lib/features/explore/presentation/explore_page.dart`.
+- [x] T030 [P] [US2] `DiscoveryGridTile` (post/reel thumbnail via `cached_network_image` bounded `cacheWidth`; reel marker; tap→post-detail/reel route) in `lib/features/explore/presentation/widgets/discovery_grid_tile.dart`.
+- [x] T031 [P] [US2] Quilted grid (3-col + 2×2 hero on phone; responsive `SliverGridDelegateWithMaxCrossAxisExtent` ≥700) helper in `lib/features/explore/presentation/widgets/discovery_grid.dart`.
+- [x] T032 [P] [US2] `CategoryChips` (static travel/food/design/fitness → `hashtag(tag)` route; no "For you") in `lib/features/explore/presentation/widgets/category_chips.dart`.
+- [x] T033 [US2] Pull-to-refresh + empty/loading/error-retry + offline-from-cache indication in `explore_page.dart`.
+- [x] T034 [P] [US2] `ExploreCubit` bloc test — load-first/next/refresh, reactive cache read, offline path, empty/error — in `test/features/explore/explore_cubit_test.dart`.
+- [x] T035 [P] [US2] `ExplorePage` widget test — mixed tiles + reel marker + hero tile, scroll-paginate, chip→route, offline cached grid — in `test/features/explore/explore_page_test.dart`.
 
 **Checkpoint**: Explore grid independently usable, incl. offline cold-start.
 
@@ -92,11 +92,11 @@ description: "Task list for #009 Explore & Search (We36 Flutter client)"
 **Goal**: Recents shown on empty query; dedupe-and-promote on record; per-row delete + clear all.
 **Independent test**: Open Search empty → recents listed; submit term / tap result → promoted (no duplicate); delete one; clear all.
 
-- [ ] T036 [US3] Recents use cases (`GetRecents`, `RecordRecent`, `DeleteRecent`, `ClearRecents`) in `lib/features/explore/domain/usecases/recents_usecases.dart`.
-- [ ] T037 [US3] `RecentsCubit` (freezed 4-state; optimistic dedupe-and-promote record, delete, clear) in `lib/features/explore/presentation/cubit/recents_cubit.dart` (+ state file).
-- [ ] T038 [US3] Recents view in `SearchPage` (shown when query < 2 chars) + wire recording on result-tap (US1 rows) and term-submit in `search_page.dart`.
-- [ ] T039 [P] [US3] `RecentRow` (typed: account avatar / tag glyph / place icon / term; per-row `x` delete) + "Clear all" control in `lib/features/explore/presentation/widgets/recent_row.dart`.
-- [ ] T040 [P] [US3] `RecentsCubit` bloc test — record promote-not-duplicate, delete-one, clear-all (optimistic), error revert — in `test/features/explore/recents_cubit_test.dart`.
+- [x] T036 [US3] Recents use cases (`GetRecents`, `RecordRecent`, `DeleteRecent`, `ClearRecents`) in `lib/features/explore/domain/usecases/recents_usecases.dart`.
+- [x] T037 [US3] `RecentsCubit` (freezed 4-state; optimistic dedupe-and-promote record, delete, clear) in `lib/features/explore/presentation/cubit/recents_cubit.dart` (+ state file).
+- [x] T038 [US3] Recents view in `SearchPage` (shown when query < 2 chars) + wire recording on result-tap (US1 rows) and term-submit in `search_page.dart`.
+- [x] T039 [P] [US3] `RecentRow` (typed: account avatar / tag glyph / place icon / term; per-row `x` delete) + "Clear all" control in `lib/features/explore/presentation/widgets/recent_row.dart`.
+- [x] T040 [P] [US3] `RecentsCubit` bloc test — record promote-not-duplicate, delete-one, clear-all (optimistic), error revert — in `test/features/explore/recents_cubit_test.dart`.
 
 **Checkpoint**: Recents work on top of Search.
 
@@ -107,12 +107,12 @@ description: "Task list for #009 Explore & Search (We36 Flutter client)"
 **Goal**: Header + single cursor grid for a tag/place; surface-only Follow; deep-linkable.
 **Independent test**: Open a hashtag page + a place page directly; header + grid render, paginate, empty/error; Follow → toast only.
 
-- [ ] T041 [US4] Hashtag/place use cases (`LoadHashtagPage`/`LoadPlacePage` first+next) in `lib/features/explore/domain/usecases/discovery_page_usecases.dart`.
-- [ ] T042 [US4] `DiscoveryGridCubit` (reuses the `PaginatedListCubit<ExploreItem>` pattern; carries `HashtagPage`/`PlacePage` header meta) in `lib/features/explore/presentation/cubit/discovery_grid_cubit.dart`.
-- [ ] T043 [US4] `HashtagPage` screen (header: tag + postCount + surface-only Follow → toast; grid) in `lib/features/explore/presentation/hashtag_page.dart`; wire `hashtag(tag)` route.
-- [ ] T044 [US4] `PlacePage` screen (header: name/details + postCount; grid) in `lib/features/explore/presentation/place_page.dart`; wire `place(id)` route. Reuse `DiscoveryGridTile` + quilted/responsive grid from US2.
-- [ ] T045 [P] [US4] `DiscoveryGridCubit` bloc test — first/next page, header meta, empty/error — in `test/features/explore/discovery_grid_cubit_test.dart`.
-- [ ] T046 [P] [US4] Hashtag/place page widget test — header + grid + paginate + surface-only Follow toast (no relationship) + direct deep-link — in `test/features/explore/discovery_pages_test.dart`.
+- [x] T041 [US4] Hashtag/place use cases (`LoadHashtagPage`/`LoadPlacePage` first+next) in `lib/features/explore/domain/usecases/discovery_page_usecases.dart`.
+- [x] T042 [US4] `DiscoveryGridCubit` (reuses the `PaginatedListCubit<ExploreItem>` pattern; carries `HashtagPage`/`PlacePage` header meta) in `lib/features/explore/presentation/cubit/discovery_grid_cubit.dart`.
+- [x] T043 [US4] `HashtagPage` screen (header: tag + postCount + surface-only Follow → toast; grid) in `lib/features/explore/presentation/hashtag_page.dart`; wire `hashtag(tag)` route.
+- [x] T044 [US4] `PlacePage` screen (header: name/details + postCount; grid) in `lib/features/explore/presentation/place_page.dart`; wire `place(id)` route. Reuse `DiscoveryGridTile` + quilted/responsive grid from US2.
+- [x] T045 [P] [US4] `DiscoveryGridCubit` bloc test — first/next page, header meta, empty/error — in `test/features/explore/discovery_grid_cubit_test.dart`.
+- [x] T046 [P] [US4] Hashtag/place page widget test — header + grid + paginate + surface-only Follow toast (no relationship) + direct deep-link — in `test/features/explore/discovery_pages_test.dart`.
 
 **Checkpoint**: Hashtag/place destinations complete; search rows + chips now land fully.
 
@@ -122,13 +122,13 @@ description: "Task list for #009 Explore & Search (We36 Flutter client)"
 
 **Purpose**: Accessibility, adaptivity, resilience (US5 P4) + quality gate across all stories.
 
-- [ ] T047 [P] [US5] `Semantics` labels on grid tiles (reel vs photo), account/hashtag/place/recent rows, tabs, and controls (FR-030, SC-007) across explore widgets.
-- [ ] T048 [P] [US5] Adaptive: phone 3-col grid + bottom nav vs ≥700 responsive grid; results tabs + hashtag/place pages reflow to width (FR-031) — verify in pages via `AppBreakpoints`.
-- [ ] T049 [P] [US5] Verify all user messages use `Toast` (no `ScaffoldMessenger.showSnackBar`) across discovery (FR-028).
-- [ ] T050 [P] [US5] Log-redaction test — no `print`/`debugPrint`; no query terms / urls / tokens logged — in `test/features/explore/log_redaction_test.dart`.
-- [ ] T051 [P] [US5] Golden tests: `DiscoveryGridTile` (post + reel), `AccountResultRow` (follow/following), `CategoryChips`, `ResultsTabs` (light + dark) in `test/features/explore/goldens/`.
-- [ ] T052 [P] [US5] a11y + adaptive widget test (screen-reader labels; 2× text scale no overflow; phone 3-col vs tablet responsive grid) in `test/features/explore/a11y_adaptive_test.dart`.
-- [ ] T053 [P] [US5] Drift v6→v7 migration test (`ExploreItems` added, existing rows intact) in `test/core/data/cache/migration_v6_to_v7_test.dart`.
+- [x] T047 [P] [US5] `Semantics` labels on grid tiles (reel vs photo), account/hashtag/place/recent rows, tabs, and controls (FR-030, SC-007) across explore widgets.
+- [x] T048 [P] [US5] Adaptive: phone 3-col grid + bottom nav vs ≥700 responsive grid; results tabs + hashtag/place pages reflow to width (FR-031) — verify in pages via `AppBreakpoints`.
+- [x] T049 [P] [US5] Verify all user messages use `Toast` (no `ScaffoldMessenger.showSnackBar`) across discovery (FR-028).
+- [x] T050 [P] [US5] Log-redaction test — no `print`/`debugPrint`; no query terms / urls / tokens logged — in `test/features/explore/log_redaction_test.dart`.
+- [x] T051 [P] [US5] Golden tests: `DiscoveryGridTile` (post + reel), `AccountResultRow` (follow/following), `CategoryChips`, `ResultsTabs` (light + dark) in `test/features/explore/goldens/`.
+- [x] T052 [P] [US5] a11y + adaptive widget test (screen-reader labels; 2× text scale no overflow; phone 3-col vs tablet responsive grid) in `test/features/explore/a11y_adaptive_test.dart`.
+- [x] T053 [P] [US5] Drift v6→v7 migration test (`ExploreItems` added, existing rows intact) in `test/core/data/cache/migration_v6_to_v7_test.dart`.
 - [ ] T054 [US5] Run pre-commit gate (`dart format .`, `flutter analyze` zero warnings, `flutter test` all pass, `dart run bloc_tools:bloc lint .`) + walk quickstart.md US1–US5. **SC-004 memory ceiling**: automated pagination coverage (T034/T035/T045 — no duplicated/dropped tiles across ≥5 pages) is authoritative here; **on-device long-scroll memory profiling of the discovery grids is deferred to the #015 release gate** (matches #004/#008 — tiles use bounded `cacheWidth`, Principle II).
 
 ---

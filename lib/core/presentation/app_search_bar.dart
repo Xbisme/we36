@@ -11,6 +11,9 @@ class AppSearchBar extends StatelessWidget {
     required this.hint,
     this.onTap,
     this.onChanged,
+    this.onSubmitted,
+    this.controller,
+    this.autofocus = false,
     this.readOnly = false,
     super.key,
   });
@@ -18,6 +21,9 @@ class AppSearchBar extends StatelessWidget {
   final String hint;
   final VoidCallback? onTap;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final TextEditingController? controller;
+  final bool autofocus;
   final bool readOnly;
 
   @override
@@ -50,7 +56,11 @@ class AppSearchBar extends StatelessWidget {
                       ),
                     )
                   : TextField(
+                      controller: controller,
+                      autofocus: autofocus,
                       onChanged: onChanged,
+                      onSubmitted: onSubmitted,
+                      textInputAction: TextInputAction.search,
                       style: AppTypography.body16.copyWith(
                         color: tokens.textPrimary,
                       ),

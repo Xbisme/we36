@@ -25,10 +25,11 @@ class ExploreDao extends DatabaseAccessor<AppDatabase> with _$ExploreDaoMixin {
 
   /// Replace the whole snapshot (first page / pull-to-refresh) — items the server
   /// no longer returns drop from cache.
-  Future<void> replaceAll(List<domain.ExploreItem> items) => transaction(() async {
-    await delete(exploreItems).go();
-    await _insertFrom(items, 0);
-  });
+  Future<void> replaceAll(List<domain.ExploreItem> items) =>
+      transaction(() async {
+        await delete(exploreItems).go();
+        await _insertFrom(items, 0);
+      });
 
   /// Append the next page after [fromIndex] (cursor pagination).
   Future<void> appendAll(

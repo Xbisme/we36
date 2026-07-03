@@ -42,8 +42,10 @@ class RecordSearchRecent {
 
   factory RecordSearchRecent.term(String term) =>
       RecordSearchRecent._(type: SearchRecentType.term, term: term);
-  factory RecordSearchRecent.account(String userId) =>
-      RecordSearchRecent._(type: SearchRecentType.account, targetUserId: userId);
+  factory RecordSearchRecent.account(String userId) => RecordSearchRecent._(
+    type: SearchRecentType.account,
+    targetUserId: userId,
+  );
   factory RecordSearchRecent.hashtag(String tag) =>
       RecordSearchRecent._(type: SearchRecentType.hashtag, tag: tag);
   factory RecordSearchRecent.place(String placeId) =>

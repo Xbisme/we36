@@ -111,6 +111,22 @@ import 'package:we36/features/compose/presentation/cubit/compose_cubit.dart'
     as _i238;
 import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart'
     as _i772;
+import 'package:we36/features/explore/domain/usecases/discovery_page_usecases.dart'
+    as _i619;
+import 'package:we36/features/explore/domain/usecases/explore_usecases.dart'
+    as _i93;
+import 'package:we36/features/explore/domain/usecases/recents_usecases.dart'
+    as _i488;
+import 'package:we36/features/explore/domain/usecases/search_usecases.dart'
+    as _i96;
+import 'package:we36/features/explore/presentation/cubit/discovery_grid_cubit.dart'
+    as _i831;
+import 'package:we36/features/explore/presentation/cubit/explore_cubit.dart'
+    as _i569;
+import 'package:we36/features/explore/presentation/cubit/recents_cubit.dart'
+    as _i812;
+import 'package:we36/features/explore/presentation/cubit/search_cubit.dart'
+    as _i889;
 import 'package:we36/features/feed/domain/usecases/feed_usecases.dart' as _i321;
 import 'package:we36/features/feed/presentation/feed_cubit.dart' as _i992;
 import 'package:we36/features/post/domain/usecases/comment_usecases.dart'
@@ -456,6 +472,45 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i222.IdempotencyKeys>(),
       ),
     );
+    gh.factory<_i619.LoadHashtagPage>(
+      () => _i619.LoadHashtagPage(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i619.LoadPlacePage>(
+      () => _i619.LoadPlacePage(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i93.WatchExplore>(
+      () => _i93.WatchExplore(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i93.LoadExploreFirst>(
+      () => _i93.LoadExploreFirst(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i93.LoadExploreNext>(
+      () => _i93.LoadExploreNext(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i488.GetRecents>(
+      () => _i488.GetRecents(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i488.RecordRecent>(
+      () => _i488.RecordRecent(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i488.DeleteRecent>(
+      () => _i488.DeleteRecent(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i488.ClearRecents>(
+      () => _i488.ClearRecents(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i96.SearchTopQuery>(
+      () => _i96.SearchTopQuery(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i96.SearchAccounts>(
+      () => _i96.SearchAccounts(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i96.SearchTags>(
+      () => _i96.SearchTags(gh<_i550.DiscoveryRepository>()),
+    );
+    gh.factory<_i96.SearchPlaces>(
+      () => _i96.SearchPlaces(gh<_i550.DiscoveryRepository>()),
+    );
     gh.factory<_i140.AddComment>(
       () => _i140.AddComment(
         gh<_i552.CommentsRepository>(),
@@ -493,6 +548,12 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
+    gh.factory<_i831.DiscoveryGridCubit>(
+      () => _i831.DiscoveryGridCubit(
+        gh<_i619.LoadHashtagPage>(),
+        gh<_i619.LoadPlacePage>(),
+      ),
+    );
     gh.factory<_i433.StoryComposeCubit>(
       () => _i433.StoryComposeCubit(
         gh<_i287.PublishStory>(),
@@ -557,6 +618,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i140.WatchPost>(
       () => _i140.WatchPost(gh<_i850.FeedRepository>()),
     );
+    gh.factory<_i812.RecentsCubit>(
+      () => _i812.RecentsCubit(
+        gh<_i488.GetRecents>(),
+        gh<_i488.RecordRecent>(),
+        gh<_i488.DeleteRecent>(),
+        gh<_i488.ClearRecents>(),
+      ),
+    );
     gh.factory<_i915.SignInWithApple>(
       () => _i915.SignInWithApple(
         gh<_i873.OAuthTokenSource>(),
@@ -589,6 +658,21 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i893.DeleteReelComment>(),
         gh<_i140.ReportComment>(),
         gh<_i222.IdempotencyKeys>(),
+      ),
+    );
+    gh.factory<_i889.SearchCubit>(
+      () => _i889.SearchCubit(
+        gh<_i96.SearchTopQuery>(),
+        gh<_i96.SearchAccounts>(),
+        gh<_i96.SearchTags>(),
+        gh<_i96.SearchPlaces>(),
+      ),
+    );
+    gh.factory<_i569.ExploreCubit>(
+      () => _i569.ExploreCubit(
+        gh<_i93.WatchExplore>(),
+        gh<_i93.LoadExploreFirst>(),
+        gh<_i93.LoadExploreNext>(),
       ),
     );
     gh.factory<_i321.WatchFeed>(

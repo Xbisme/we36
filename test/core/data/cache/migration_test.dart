@@ -73,15 +73,18 @@ void main() {
       addTearDown(db.close);
     });
 
-    test('onUpgrade(from<7) additively creates the explore-items table (#009)', () async {
-      final db = AppDatabase.forTesting(NativeDatabase.memory());
-      addTearDown(db.close);
-      // Simulate a v6 DB upgrading to v7: the ExploreItems table is added.
-      await db.migration.onUpgrade(Migrator(db), 6, 7);
-      // A write+read round-trip proves the table exists and is usable.
-      await db.exploreDao.replaceAll(const []);
-      expect(await db.exploreDao.watchExplore().first, isEmpty);
-    });
+    test(
+      'onUpgrade(from<7) additively creates the explore-items table (#009)',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(db.close);
+        // Simulate a v6 DB upgrading to v7: the ExploreItems table is added.
+        await db.migration.onUpgrade(Migrator(db), 6, 7);
+        // A write+read round-trip proves the table exists and is usable.
+        await db.exploreDao.replaceAll(const []);
+        expect(await db.exploreDao.watchExplore().first, isEmpty);
+      },
+    );
 
     test(
       'onUpgrade(from<6) additively adds the post media-urls column',

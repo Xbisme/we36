@@ -36,7 +36,8 @@ class DiscoveryRemoteDataSource {
   Future<Result<CursorPage<AccountResult>>> searchAccounts(
     String q, {
     String? cursor,
-  }) => _searchPage<AccountResult>('accounts', q, cursor, AccountResult.fromJson);
+  }) =>
+      _searchPage<AccountResult>('accounts', q, cursor, AccountResult.fromJson);
 
   Future<Result<CursorPage<HashtagResult>>> searchTags(
     String q, {

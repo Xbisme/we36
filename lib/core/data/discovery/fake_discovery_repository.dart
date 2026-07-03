@@ -158,7 +158,12 @@ class FakeDiscoveryRepository implements DiscoveryRepository {
   ];
 
   static const List<PlaceResult> _places = [
-    PlaceResult(id: 'place-sunset-beach', name: 'Sunset Beach', lat: 21, lng: 105),
+    PlaceResult(
+      id: 'place-sunset-beach',
+      name: 'Sunset Beach',
+      lat: 21,
+      lng: 105,
+    ),
     PlaceResult(id: 'place-sun-valley', name: 'Sun Valley', lat: 43, lng: -114),
     PlaceResult(id: 'place-da-nang', name: 'Da Nang', lat: 16, lng: 108),
   ];
@@ -171,7 +176,9 @@ class FakeDiscoveryRepository implements DiscoveryRepository {
   @override
   Future<Result<CursorPage<ExploreItem>>> loadExploreFirst() async {
     if (_takeFailQuery()) {
-      return const Result<CursorPage<ExploreItem>>.err(AppFailure.networkError());
+      return const Result<CursorPage<ExploreItem>>.err(
+        AppFailure.networkError(),
+      );
     }
     final page = _explorePage(0);
     await _dao.replaceAll(page.items);
@@ -181,7 +188,9 @@ class FakeDiscoveryRepository implements DiscoveryRepository {
   @override
   Future<Result<CursorPage<ExploreItem>>> loadExploreNext(String cursor) async {
     if (_takeFailQuery()) {
-      return const Result<CursorPage<ExploreItem>>.err(AppFailure.networkError());
+      return const Result<CursorPage<ExploreItem>>.err(
+        AppFailure.networkError(),
+      );
     }
     final offset = int.tryParse(cursor) ?? _explore.length;
     final page = _explorePage(offset);

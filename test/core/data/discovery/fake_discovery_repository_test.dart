@@ -20,22 +20,25 @@ void main() {
   tearDown(() => db.close());
 
   group('explore grid', () {
-    test('first page replaces the cache; next appends (reactive read)', () async {
-      final first = await repo.loadExploreFirst();
-      expect(first.isOk, isTrue);
-      expect(first.valueOrNull!.items, hasLength(6));
-      expect(first.valueOrNull!.hasMore, isTrue);
+    test(
+      'first page replaces the cache; next appends (reactive read)',
+      () async {
+        final first = await repo.loadExploreFirst();
+        expect(first.isOk, isTrue);
+        expect(first.valueOrNull!.items, hasLength(6));
+        expect(first.valueOrNull!.hasMore, isTrue);
 
-      // The cache reflects the first page.
-      expect(await repo.watchExplore().first, hasLength(6));
+        // The cache reflects the first page.
+        expect(await repo.watchExplore().first, hasLength(6));
 
-      final next = await repo.loadExploreNext(first.valueOrNull!.nextCursor!);
-      expect(next.isOk, isTrue);
-      // Cache now holds both pages, in order, no duplicates.
-      final cached = await repo.watchExplore().first;
-      expect(cached, hasLength(12));
-      expect(cached.map((e) => e.id).toSet(), hasLength(12));
-    });
+        final next = await repo.loadExploreNext(first.valueOrNull!.nextCursor!);
+        expect(next.isOk, isTrue);
+        // Cache now holds both pages, in order, no duplicates.
+        final cached = await repo.watchExplore().first;
+        expect(cached, hasLength(12));
+        expect(cached.map((e) => e.id).toSet(), hasLength(12));
+      },
+    );
 
     test('grid mixes posts and reels (reel items marked)', () async {
       await repo.loadExploreFirst();
@@ -56,11 +59,14 @@ void main() {
   });
 
   group('search', () {
-    test('accounts match by prefix/substring, case/accent-insensitive', () async {
-      final r = await repo.searchAccounts('ALI'); // uppercase → alice/alicia
-      final names = r.valueOrNull!.items.map((a) => a.user.username).toList();
-      expect(names, containsAll(<String>['alice_travel', 'alicia_makes']));
-    });
+    test(
+      'accounts match by prefix/substring, case/accent-insensitive',
+      () async {
+        final r = await repo.searchAccounts('ALI'); // uppercase → alice/alicia
+        final names = r.valueOrNull!.items.map((a) => a.user.username).toList();
+        expect(names, containsAll(<String>['alice_travel', 'alicia_makes']));
+      },
+    );
 
     test('blocked accounts never appear', () async {
       final r = await repo.searchAccounts('blocked');
@@ -77,7 +83,10 @@ void main() {
       final tags = await repo.searchTags('sun');
       expect(tags.valueOrNull!.items.map((h) => h.tag), contains('sunset'));
       final places = await repo.searchPlaces('sun');
-      expect(places.valueOrNull!.items.map((p) => p.name), contains('Sunset Beach'));
+      expect(
+        places.valueOrNull!.items.map((p) => p.name),
+        contains('Sunset Beach'),
+      );
     });
 
     test('top is a fixed blended snapshot (≤3 per type)', () async {

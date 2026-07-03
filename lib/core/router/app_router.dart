@@ -23,7 +23,13 @@ import 'package:we36/features/compose/presentation/pages/pick_page.dart';
 import 'package:we36/features/dev/presentation/gallery_page.dart';
 import 'package:we36/features/dev/presentation/states_demo_page.dart';
 import 'package:we36/features/dev/presentation/two_pane_demo_page.dart';
+import 'package:we36/features/explore/presentation/cubit/discovery_grid_cubit.dart';
+import 'package:we36/features/explore/presentation/cubit/explore_cubit.dart';
+import 'package:we36/features/explore/presentation/cubit/recents_cubit.dart';
+import 'package:we36/features/explore/presentation/cubit/search_cubit.dart';
+import 'package:we36/features/explore/presentation/discovery_grid_page.dart';
 import 'package:we36/features/explore/presentation/explore_page.dart';
+import 'package:we36/features/explore/presentation/search_page.dart';
 import 'package:we36/features/feed/presentation/feed_cubit.dart';
 import 'package:we36/features/feed/presentation/home_page.dart';
 import 'package:we36/features/messaging/presentation/messages_page.dart';
@@ -81,7 +87,17 @@ class AppRouter {
                 child: const HomePage(),
               ),
             ),
-            _branch(AppRoutes.explore, const ExplorePage()),
+            _branch(
+              AppRoutes.explore,
+              BlocProvider(
+                create: (_) {
+                  final cubit = getIt<ExploreCubit>();
+                  unawaited(cubit.loadInitial());
+                  return cubit;
+                },
+                child: const ExplorePage(),
+              ),
+            ),
             _branch(
               AppRoutes.reels,
               BlocProvider(
@@ -124,7 +140,54 @@ class AppRouter {
           const PlaceholderPage(title: 'Activity'),
         ),
         _flow(AppRoutes.settings, const PlaceholderPage(title: 'Settings')),
-        _flow(AppRoutes.search, const PlaceholderPage(title: 'Search')),
+        // Search (#009 Screens 17+18) — full-screen nav-less; page-scoped
+        // SearchCubit (live results) + RecentsCubit (history, loaded on open).
+        GoRoute(
+          path: AppRoutes.search,
+          builder: (_, _) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => getIt<SearchCubit>()),
+              BlocProvider(
+                create: (_) {
+                  final cubit = getIt<RecentsCubit>();
+                  unawaited(cubit.load());
+                  return cubit;
+                },
+              ),
+            ],
+            child: const CenteredMobile(child: SearchPage()),
+          ),
+        ),
+        // Hashtag & place pages (#009 Screen 19) — full-screen nav-less, deep-
+        // linkable; page-scoped DiscoveryGridCubit.
+        GoRoute(
+          path: AppRoutes.hashtag,
+          builder: (_, state) {
+            final tag = state.pathParameters['tag']!;
+            return BlocProvider(
+              create: (_) {
+                final cubit = getIt<DiscoveryGridCubit>();
+                unawaited(cubit.initHashtag(tag));
+                return cubit;
+              },
+              child: const CenteredMobile(child: DiscoveryGridPage()),
+            );
+          },
+        ),
+        GoRoute(
+          path: AppRoutes.place,
+          builder: (_, state) {
+            final id = state.pathParameters['id']!;
+            return BlocProvider(
+              create: (_) {
+                final cubit = getIt<DiscoveryGridCubit>();
+                unawaited(cubit.initPlace(id));
+                return cubit;
+              },
+              child: const CenteredMobile(child: DiscoveryGridPage()),
+            );
+          },
+        ),
         // Post detail + comments (#006) — full-screen nav-less; the page itself
         // adapts to a two-column split on tablet (US6). Page-scoped CommentsCubit.
         GoRoute(
