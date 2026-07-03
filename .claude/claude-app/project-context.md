@@ -1,6 +1,6 @@
 # We36 — Project Context
 
-> Last updated: 2026-07-02 (#001–#007 all merged; **#006 Post Detail & Comments ✅ MERGED** into `main` via **PR #7** — 46/46 tasks, **349 tests pass**, `dart analyze` clean. Content trio complete. Next: **#008 Reels**.)
+> Last updated: 2026-07-03 (#001–#008 all merged; **#008 Reels ✅ MERGED** into `main` via **PR #8** — 57/57 tasks (polish/gate closed this session), **396 tests pass**, `flutter analyze` clean (2 pre-existing pubspec infos). Next: **#009 Explore & Search**.)
 > **Mục đích**: Snapshot tối thiểu để LLM/người đọc bắt đầu một session làm việc — context hiện tại, focus, links. Không chứa ship history hay alignment decisions.
 >
 > **Đọc file nào khi nào**:
@@ -29,11 +29,11 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 
 ## Current Focus
 
-- **Now**: **Spec #006 Post Detail & Comments ✅ MERGED** into `main` via **PR #7** (`cb3c7f4`) — **46/46 tasks done** (US1–US6 + Polish), full SDD cycle (specify→clarify→plan→tasks→analyze→implement). **349 tests pass**; `dart analyze` clean. Completes the content-creation/engagement **trio** (#005 story / #006 comments / #007 post).
-  - **Built + verified**: `lib/core/data/comments/` (`Comment`/`CommentAuthor`/`CommentEngagement`, `CommentsRepository` real + `FakeCommentsRepository`, remote source) + `lib/features/post/` (`CommentsCubit` 4-state, `comment_usecases`, `PostDetailPage`, `CommentTile`/`CommentText`/`CommentInput`/`QuickEmojiRow`). Post detail from feed (`/post/:id`) + oldest-first paginated comments, one-level replies, quick-emoji, optimistic+idempotent add/reply, optimistic comment-like, delete-own(cascade)/report-other, `@mention`/`#hashtag` styling, commentsDisabled, tablet two-column split. **Canonical `commentCount` consistency** via new `FeedRepository.watchPost`/`applyCommentCountDelta` owned by the add/delete use cases (analyze F1). **No drift schema change, no new dep.**
-  - **▶ Next**: start **#008 Reels** (`git checkout -b 008-reels` + `/speckit.specify`; shares the #007 upload pipeline, needs `video_player`/`chewie`/`visibility_detector`).
-  - **Clarifications locked (#006)**: oldest-first · 2,200-char max · count includes replies (delete cascade −(1+replies)) · quick-emoji inserts into input.
-  - **⚠ Test gotcha (carried, still applies)**: widget tests with real `MemoryImage` + go_router **hang `pumpAndSettle`**. Use fixed `pump(Duration)`, logic-first cubit assertions, synchronous fakes; for post-detail widget tests use a **tall `surfaceSize`** so lazy slivers lay out the comment list. See `test/features/post/`.
+- **Now**: **Spec #008 Reels ✅ MERGED** into `main` via **PR #8** (`7d5634d`) — **57/57 tasks done** (US1–US4 + Polish). PR #8 merged the feature at 52/57 with 5 polish/gate tasks open; those were **closed this session** (2026-07-03). **396 tests pass**; `flutter analyze` clean (2 pre-existing pubspec infos).
+  - **Built + verified**: `lib/features/reels/` (`ReelPlaybackController` disciplined video lifecycle over a `ReelPlayer`/`video_player` seam, `reels`/`reel_compose`/`reel_comments` cubits, `reels_page`/`reel_compose_page`, action rail + comments-sheet + `processing_badge`) + `lib/core/data/reels/` (`Reel` freezed = a `Post kind=reel` projection reusing feed `UserSummary`/`Media`; repository real + `FakeReelsRepository`). Vertical PageView (only visible plays, off-screen pause+dispose, ±1 preload — Constitution II), optimistic like/save, reel comments (reuses #006 seam), create-reel over the #007 upload pipeline with optimistic `ProcessingBadge`→ready reconcile. drift **v4→v5**. New deps `video_player`/`visibility_detector`.
+  - **Polish/gate closed this session**: **T047** iOS silent-switch audio via `ReelAudioSession` method-channel (`we36/reel_audio` → `AVAudioSession.setCategory(.ambient)` in `AppDelegate.swift`, no new package; Android per stream volume; no-op off iOS) · **T048** adaptive reels (`LayoutBuilder`: phones full-bleed, ≥700 centers a 9:16 column) · **T051** reels log-redaction test · **T052** `ReelActionRail`+`ProcessingBadge` goldens (extracted `ProcessingBadge` to its own public widget) · **T055** gate (fixed an in-scope `curly_braces` lint; also regenerated 2 stale #006 post-detail goldens sub-pixel-drifting on `main` pre-session).
+  - **▶ Next**: start **#009 Explore & Search** (`git checkout -b 009-explore-search` + `/speckit.specify`). Depends on #004; Screens 16–19 (explore grid, search, results tabs, hashtag/place). MVP = non-personalized grid.
+  - **⚠ Test gotcha (carried, still applies)**: widget tests with real `MemoryImage` / `video_player` + go_router **hang `pumpAndSettle`**. Use fixed `pump(Duration)`, logic-first cubit assertions, synchronous fakes; tall `surfaceSize` for lazy slivers. See `test/features/post/` + `test/features/reels/`.
 - **Toolchain**: Flutter **3.44.4** / Dart **3.12.2** — the canonical baseline (bumped at #003). ⚠️ At #005 close (2026-07-02) this machine's global SDK at `/Users/ase/Development/flutter` was found stale at **3.41.7** and re-checked-out to 3.44.4 (`git checkout 3.44.4`); this also fixed a `flutter analyze` AOT-snapshot cache crash. The **long-deferred repo-wide golden refresh was executed** — all goldens regenerated under 3.44.4 (incl. the previously-uncommitted `test/features/stories/goldens/` baseline). No fvm/puro; `pubspec` still pins `sdk: ^3.11.5` (3.44.4 satisfies it).
 - **#004 ✅ MERGED into `main`** via PR #4 (64/64 tasks; 206 tests). ⭐ First usable surface. Paginated feed + optimistic like/save + StoriesRail/viewer + drift v2→v3. Remaining trio siblings **#005 Create Story · #006 Post Detail** reuse #007's media pipeline (do after #007).
 - **Done — #002 merged**: `ApiClient` + idempotency/auth/**single-flight refresh**/redacted-logging interceptors + `FailureMapper`; `CursorPage<T>` + 4-state `PaginatedListCubit`; **drift** cache base + reactive `.watch()`; `RealtimeClient` Socket.IO scaffold + fake; repository pattern + fakes (`User` slice). App runs DI `environment: 'fake'`; real impls annotated `env: ['real']` (auth real impls start landing in #003). 103 tests green.
@@ -53,8 +53,8 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 | 005 | Create Story & Tools | ✅ **Merged** (47/47) | `005-create-story` (PR #6) |
 | 006 | Post Detail & Comments | ✅ **Merged** (46/46) | `006-post-comments` (PR #7) |
 | 007 | Create Post (Compose & Upload) | ✅ **Merged** (62/62) | `007-create-post` (PR #5) |
-| 008 | Reels | ⬜ Not started | `008-reels` |
-| 009 | Explore & Search | ⬜ Not started | `009-explore-search` |
+| 008 | Reels | ✅ **Merged** (57/57) | `008-reels` (PR #8) |
+| 009 | Explore & Search | 🟡 **Next** | `009-explore-search` |
 | 010 | Profile & Follow | ⬜ Not started | `010-profile-follow` |
 | 011 | Saved Collections | ⬜ Not started | `011-collections` |
 | 012 | Direct Messages (Realtime) | ⬜ Not started | `012-direct-messages` |

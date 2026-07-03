@@ -13,7 +13,11 @@ class _MockCommentsRepository extends Mock implements CommentsRepository {}
 Comment _comment(String id) => Comment(
   id: id,
   postId: 'reel-000',
-  author: const CommentAuthor(id: 'user-me', username: 'you', isVerified: false),
+  author: const CommentAuthor(
+    id: 'user-me',
+    username: 'you',
+    isVerified: false,
+  ),
   text: 'nice',
   createdAt: DateTime.utc(2026, 7),
   likeCount: 0,
@@ -66,8 +70,9 @@ void main() {
     final before = (await reels.watchReelsFeed().first).firstWhere(
       (r) => r.id == 'reel-000',
     );
-    when(() => comments.deleteComment(any()))
-        .thenAnswer((_) async => const Result.ok(2));
+    when(
+      () => comments.deleteComment(any()),
+    ).thenAnswer((_) async => const Result.ok(2));
 
     final result = await DeleteReelComment(comments, reels).call(
       'c1',

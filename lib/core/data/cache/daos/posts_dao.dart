@@ -41,9 +41,9 @@ class PostsDao extends DatabaseAccessor<AppDatabase> with _$PostsDaoMixin {
   /// Reactive read of one canonical post by id — the post-detail render source
   /// (#006). Emits null while the post is not cached.
   Stream<domain.Post?> watchPost(String id) =>
-      (select(posts)..where((t) => t.id.equals(id)))
-          .watchSingleOrNull()
-          .map((row) => row == null ? null : _toDomain(row));
+      (select(posts)..where((t) => t.id.equals(id))).watchSingleOrNull().map(
+        (row) => row == null ? null : _toDomain(row),
+      );
 
   /// Adjust a cached post's `commentCount` by [delta], clamped at 0 (#006).
   /// No-op if the post is not cached.

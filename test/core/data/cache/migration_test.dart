@@ -73,15 +73,20 @@ void main() {
       addTearDown(db.close);
     });
 
-    test('onUpgrade(from<6) additively adds the post media-urls column', () async {
-      final db = AppDatabase.forTesting(NativeDatabase.memory());
-      await db.postsDao.upsertAll([_post('post-keep')]);
-      await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
-      await db.migration.onUpgrade(Migrator(db), 5, 6);
-      // Column back + the older row survived (non-destructive).
-      expect(await db.postsDao.getById('post-keep'), isNotNull);
-      await db.close();
-    });
+    test(
+      'onUpgrade(from<6) additively adds the post media-urls column',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        await db.postsDao.upsertAll([_post('post-keep')]);
+        await db.customStatement(
+          'ALTER TABLE posts DROP COLUMN media_urls_json',
+        );
+        await db.migration.onUpgrade(Migrator(db), 5, 6);
+        // Column back + the older row survived (non-destructive).
+        expect(await db.postsDao.getById('post-keep'), isNotNull);
+        await db.close();
+      },
+    );
 
     test('onCreate builds a usable v5 schema (all tables)', () async {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -119,7 +124,9 @@ void main() {
         // Simulate a pre-v5 DB: drop the v5 table + v6 column, keep a v4 row.
         await db.postsDao.upsertAll([_post('post-keep')]);
         await db.customStatement('DROP TABLE reels');
-        await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
+        await db.customStatement(
+          'ALTER TABLE posts DROP COLUMN media_urls_json',
+        );
 
         await db.migration.onUpgrade(Migrator(db), 4, 6);
 
@@ -138,7 +145,9 @@ void main() {
         // Simulate a pre-v4 DB: drop the v4 table + v6 column, keep a v3 row.
         await db.postsDao.upsertAll([_post('post-keep')]);
         await db.customStatement('DROP TABLE compose_drafts');
-        await db.customStatement('ALTER TABLE posts DROP COLUMN media_urls_json');
+        await db.customStatement(
+          'ALTER TABLE posts DROP COLUMN media_urls_json',
+        );
 
         await db.migration.onUpgrade(Migrator(db), 3, 6);
 

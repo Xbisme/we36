@@ -140,15 +140,15 @@ Flutter feature-first (Constitution XI): core slice `lib/core/data/reels/`, feat
 
 - [x] T045 [P] Reduce Motion: poster + tap-to-play, no autoplay-loop, across `ReelView`/`ReelPlaybackController` (FR-026, SC-007)
 - [x] T046 [P] `Semantics` labels on action rail, author, and caption; verify screen-reader announcement (FR-027, SC-009) in reels widgets
-- [ ] T047 [P] iOS audio session honoring the silent switch (`ambient` category) — channel-first per research R3 (only add `audio_session` if the channel is fragile); Android per stream volume
-- [ ] T048 [P] Adaptive tablet/iPad reels layout (centered/constrained video column per §Responsive) in `reels_page.dart` (FR-028)
+- [x] T047 [P] iOS audio session honoring the silent switch (`ambient` category) — channel-first per research R3 (only add `audio_session` if the channel is fragile); Android per stream volume — `ReelAudioSession` method-channel seam + iOS `AppDelegate` `we36/reel_audio` handler (`AVAudioSession.setCategory(.ambient)`); no new package. Wired at reels entry (`didChangeDependencies`); no-op off iOS. On-device silent-switch verification → #015 release gate.
+- [x] T048 [P] Adaptive tablet/iPad reels layout (centered/constrained video column per §Responsive) in `reels_page.dart` (FR-028) — `LayoutBuilder`: phones (<700) full-bleed; ≥700 centers a portrait 9:16 column on the dark background instead of stretching.
 - [x] T049 [P] Verify all user messages use `Toast` (no `ScaffoldMessenger.showSnackBar`) across reels (FR-025)
 - [x] T050 [P] Finalize reels ARB strings EN + VI in `lib/l10n/arb/` (counts/relative-time via shared `intl` formatters)
-- [ ] T051 [P] Log-redaction test — no video URLs/tokens logged — in `test/features/reels/log_redaction_test.dart`
-- [ ] T052 [P] Golden tests: `ReelActionRail` + `ProcessingBadge` (light + dark) in `test/features/reels/goldens/`
+- [x] T051 [P] Log-redaction test — no video URLs/tokens logged — in `test/features/reels/log_redaction_test.dart` (source-scan over `lib/features/reels` + `lib/core/data/reels`: no `print`/`debugPrint`; no logger call leaks `videoUrl`/`posterUrl`/tokens/byte refs)
+- [x] T052 [P] Golden tests: `ReelActionRail` + `ProcessingBadge` (light + dark) in `test/features/reels/goldens/` (`goldens_test.dart` + 4 baselines; `_ProcessingBadge` extracted to public `widgets/processing_badge.dart` per T044's intent)
 - [x] T053 [P] Widget test: `ReelsPage` render + swipe + Reduce-Motion poster path (fixed `pump(Duration)`, avoid `pumpAndSettle` with video/router — carried #006 gotcha) in `test/features/reels/reels_page_test.dart`
 - [x] T054 [P] Drift v4→v5 migration test (Reels table added, existing rows intact) in `test/core/data/cache/migration_v4_to_v5_test.dart`
-- [ ] T055 Run pre-commit gate (`dart format .`, `flutter analyze` zero warnings, `flutter test` all pass, `dart run bloc_tools:bloc lint .`) + walk quickstart.md US1–US4
+- [x] T055 Run pre-commit gate (`dart format .`, `flutter analyze` zero warnings, `flutter test` all pass, `dart run bloc_tools:bloc lint .`) + walk quickstart.md US1–US4 — `dart format` clean; `flutter analyze` = 2 pre-existing pubspec-sort infos only (fixed an in-scope `curly_braces` lint in `publish_reel.dart`); **396 tests pass** (incl. the 2 new reels goldens; also regenerated 2 stale #006 post-detail goldens that were sub-pixel-drifting on `main` pre-session). `bloc_tools:bloc lint` still has no runnable local CLI (`bloc_lint` ships none — carried). On-device quickstart US1–US4 walkthrough → #015 release gate (automated fake-mode coverage is authoritative + green).
 
 ---
 

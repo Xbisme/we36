@@ -27,7 +27,9 @@ class ReelComposeCubit extends Cubit<ReelComposeState> {
     emit(const ReelComposeState.loading());
     final perm = await _library.ensurePermission();
     if (perm.valueOrNull == PhotoPermission.denied) {
-      emit(const ReelComposeState.error(failure: AppFailure.permissionDenied()));
+      emit(
+        const ReelComposeState.error(failure: AppFailure.permissionDenied()),
+      );
       return;
     }
     final result = await _library.loadVideos(page: 0, pageSize: 60);
@@ -88,7 +90,9 @@ class ReelComposeCubit extends Cubit<ReelComposeState> {
       if (isClosed) return;
       switch (event) {
         case ReelPublishProgress(:final fraction):
-          emit(ReelComposeState.loadedUploading(draft: draft, fraction: fraction));
+          emit(
+            ReelComposeState.loadedUploading(draft: draft, fraction: fraction),
+          );
         case ReelPublishSucceeded(:final reel):
           emit(ReelComposeState.published(reel));
         case ReelPublishFailed(:final failure):

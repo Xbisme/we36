@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-07-02 (#001–#007 all merged; **#006 Post Detail & Comments ✅ merged** into `main` via PR #7 — 46/46 tasks, 349 tests pass. Content trio complete. Next: **#008 Reels**.)
+> Last updated: 2026-07-03 (#001–#008 all merged; **#008 Reels ✅ merged** into `main` via PR #8 — 57/57 tasks (polish/gate closed), 396 tests pass. Next: **#009 Explore & Search**.)
 
 ---
 
@@ -150,14 +150,14 @@ Create Story     Post Detail &    Create Post      Reels
 - **New packages**: image cropper + filter pkg, video compress (verify at plan).
 - **Out of scope**: reels-specific create (#008).
 
-### Spec #008: Reels  🟡 (next)
+### Spec #008: Reels  ✅ (merged — 57/57, PR #8)
 - **Depends on**: #002, #004, #007 (shares upload).
 - **Design**: Screen 10 (Reels).
-- **Scope**: vertical short-video feed (PageView), **disciplined video lifecycle** (only visible plays; off-screen pause+dispose; small preload window — Constitution II); action rail (like/comment/share/save), follow, caption; create reel.
-- **New packages**: `video_player`(+`chewie`), `visibility_detector` (verify at plan).
+- **Scope**: vertical short-video feed (PageView), **disciplined video lifecycle** (only visible plays; off-screen pause+dispose; small preload window — Constitution II); action rail (like/comment/share/save), follow, caption; create reel. iOS `ambient` audio session (silent-switch, channel-first); adaptive tablet column (FR-028).
+- **New packages**: `video_player`, `visibility_detector`.
 - **Out of scope**: ranked reel recommendation.
 
-### Spec #009: Explore & Search  ⬜
+### Spec #009: Explore & Search  🟡 (next)
 - **Depends on**: #004.
 - **Design**: Screens 16–19 (Explore grid, Search, Results, Hashtag/place).
 - **Scope**: explore grid (quilted, reels markers); search users/hashtags/places with recents + clear; results tabs (Top/Accounts/Tags/Places); hashtag/location pages (follow tag, Top/Recent/Reels). MVP explore = simple non-personalized grid.

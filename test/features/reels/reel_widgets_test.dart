@@ -28,7 +28,11 @@ Reel _reel({bool ready = true}) => Reel(
   caption: 'trail run @maya #dawn',
 );
 
-Widget _host(Widget child, {ThemeMode mode = ThemeMode.light, double scale = 1}) {
+Widget _host(
+  Widget child, {
+  ThemeMode mode = ThemeMode.light,
+  double scale = 1,
+}) {
   return MaterialApp(
     theme: AppTheme.light,
     darkTheme: AppTheme.dark,

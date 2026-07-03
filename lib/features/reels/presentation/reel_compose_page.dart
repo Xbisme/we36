@@ -61,9 +61,10 @@ class ReelComposePage extends StatelessWidget {
               ReelComposeLoading() || ReelComposeInitial() => const Center(
                 child: CircularProgressIndicator(),
               ),
-              ReelComposeError(:final draft) when draft == null => _PermissionOrError(
-                onRetry: cubit.loadInitial,
-              ),
+              ReelComposeError(:final draft) when draft == null =>
+                _PermissionOrError(
+                  onRetry: cubit.loadInitial,
+                ),
               ReelComposeLoadedUploading(:final fraction) => _Uploading(
                 fraction: fraction,
                 onCancel: cubit.cancel,
@@ -227,7 +228,9 @@ class _Uploading extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           SizedBox(
             width: 200,
-            child: LinearProgressIndicator(value: fraction == 0 ? null : fraction),
+            child: LinearProgressIndicator(
+              value: fraction == 0 ? null : fraction,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           TextButton(onPressed: onCancel, child: Text(l10n.reelComposeCancel)),

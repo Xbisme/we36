@@ -25,10 +25,16 @@ abstract interface class ReelsRepository {
 
   /// Toggle like (idempotent). Reconciles the canonical reel with the returned
   /// engagement counts.
-  Future<Result<EngagementState>> toggleLike(String reelId, {required bool like});
+  Future<Result<EngagementState>> toggleLike(
+    String reelId, {
+    required bool like,
+  });
 
   /// Toggle save/bookmark (idempotent).
-  Future<Result<EngagementState>> toggleSave(String reelId, {required bool save});
+  Future<Result<EngagementState>> toggleSave(
+    String reelId, {
+    required bool save,
+  });
 
   /// Publish a reel from an uploaded [videoMediaId] (idempotent via [clientKey]).
   /// The created reel is optimistically inserted at the top of the cached feed;

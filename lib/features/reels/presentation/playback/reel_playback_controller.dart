@@ -99,12 +99,25 @@ class ReelPlaybackController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Pause everything (e.g. leaving the tab / sheet opened over the feed).
+  /// Pause everything (e.g. leaving the tab / app backgrounded / a sheet opened
+  /// over the feed). Reels live in an `IndexedStack` shell, so the page is not
+  /// disposed when another tab is shown — playback must be paused explicitly or
+  /// its audio keeps sounding off-screen.
   Future<void> pauseAll() async {
     for (final player in _players.values) {
       await player.pause();
     }
     _paused = true;
+    notifyListeners();
+  }
+
+  /// Resume the active reel after returning to the tab / foreground. No-op under
+  /// [autoplay] off (Reduce Motion keeps the poster + tap-to-play).
+  Future<void> resumeActive() async {
+    final player = _players[_active];
+    if (player == null || !autoplay) return;
+    await player.play();
+    _paused = false;
     notifyListeners();
   }
 
