@@ -750,4 +750,174 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get photoTileLabel => 'Photo';
+
+  @override
+  String get profileFollow => 'Follow';
+
+  @override
+  String get profileFollowing => 'Following';
+
+  @override
+  String get profileRequested => 'Requested';
+
+  @override
+  String get profileFollowsYou => 'Follows you';
+
+  @override
+  String get profileSettings => 'Settings';
+
+  @override
+  String get profileEditProfile => 'Edit profile';
+
+  @override
+  String get profileShareProfile => 'Share profile';
+
+  @override
+  String get profileShareAck => 'Profile link copied.';
+
+  @override
+  String get profileMessage => 'Message';
+
+  @override
+  String get profileMessageAck => 'Messaging is coming soon.';
+
+  @override
+  String get profileReport => 'Report';
+
+  @override
+  String get profileBlock => 'Block';
+
+  @override
+  String get profileReportAck => 'Thanks — we\'ll review this account.';
+
+  @override
+  String get profileBlockAck => 'Blocking is coming soon.';
+
+  @override
+  String get statPosts => 'posts';
+
+  @override
+  String get statFollowers => 'followers';
+
+  @override
+  String get statFollowing => 'following';
+
+  @override
+  String get profileTabPosts => 'Posts';
+
+  @override
+  String get profileTabTagged => 'Tagged';
+
+  @override
+  String get profilePrivateTitle => 'This account is private';
+
+  @override
+  String get profilePrivateBody =>
+      'Follow this account to see their photos and reels.';
+
+  @override
+  String get profilePrivateListNotice => 'This account is private.';
+
+  @override
+  String get profileEmptyPosts => 'No posts yet';
+
+  @override
+  String get profileEmptyTagged => 'No tagged posts yet';
+
+  @override
+  String get profileEmptyFollowers => 'No followers yet';
+
+  @override
+  String get profileEmptyFollowing => 'Not following anyone yet';
+
+  @override
+  String get profileError => 'Couldn\'t load this profile';
+
+  @override
+  String get profileNotFound => 'This account isn\'t available.';
+
+  @override
+  String get followFailed => 'Couldn\'t update follow. Try again.';
+
+  @override
+  String get followListFollowers => 'Followers';
+
+  @override
+  String get followListFollowing => 'Following';
+
+  @override
+  String get followListSearchHint => 'Search';
+
+  @override
+  String get followListEmptySearch => 'No accounts found';
+
+  @override
+  String get unfollowConfirmTitle => 'Unfollow?';
+
+  @override
+  String unfollowConfirmBody(String username) {
+    return 'Unfollow @$username?';
+  }
+
+  @override
+  String get unfollowConfirmAction => 'Unfollow';
+
+  @override
+  String get withdrawConfirmTitle => 'Withdraw request?';
+
+  @override
+  String withdrawConfirmBody(String username) {
+    return 'Withdraw your follow request to @$username?';
+  }
+
+  @override
+  String get withdrawConfirmAction => 'Withdraw';
+
+  @override
+  String get editName => 'Name';
+
+  @override
+  String get editUsername => 'Username';
+
+  @override
+  String get editPronouns => 'Pronouns';
+
+  @override
+  String get editWebsite => 'Website';
+
+  @override
+  String get editBio => 'Bio';
+
+  @override
+  String get editChangePhoto => 'Change profile photo';
+
+  @override
+  String get editSave => 'Save';
+
+  @override
+  String get editSavedAck => 'Profile updated.';
+
+  @override
+  String get editSaveFailed => 'Couldn\'t save your profile. Try again.';
+
+  @override
+  String get editNameRequired => 'Name can\'t be empty.';
+
+  @override
+  String get editWebsiteInvalid => 'Enter a valid website.';
+
+  @override
+  String get editUsernameTaken => 'That username is taken.';
+
+  @override
+  String get editDiscardTitle => 'Discard changes?';
+
+  @override
+  String get editDiscardBody => 'Your unsaved changes will be lost.';
+
+  @override
+  String get editDiscardAction => 'Discard';
+
+  @override
+  String get commonCancel => 'Cancel';
 }

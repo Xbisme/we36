@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-07-03 (#001–#008 all merged; **#008 Reels ✅ merged** into `main` via PR #8 — 57/57 tasks (polish/gate closed), 396 tests pass. Next: **#009 Explore & Search**.)
+> Last updated: 2026-07-03 (#001–#009 all merged; **#009 Explore & Search ✅ merged** into `main` via PR #9 — 54/54 tasks (gate closed this session: 3 deadlocked explore widget tests + 2 drifted goldens, test-only fix), 446 tests pass. Next: **#010 Profile & Follow**.)
 
 ---
 
@@ -157,13 +157,13 @@ Create Story     Post Detail &    Create Post      Reels
 - **New packages**: `video_player`, `visibility_detector`.
 - **Out of scope**: ranked reel recommendation.
 
-### Spec #009: Explore & Search  🟡 (next)
+### Spec #009: Explore & Search  ✅ (merged — 54/54, PR #9)
 - **Depends on**: #004.
 - **Design**: Screens 16–19 (Explore grid, Search, Results, Hashtag/place).
 - **Scope**: explore grid (quilted, reels markers); search users/hashtags/places with recents + clear; results tabs (Top/Accounts/Tags/Places); hashtag/location pages (follow tag, Top/Recent/Reels). MVP explore = simple non-personalized grid.
 - **Out of scope**: personalized recommendation algorithm (deferred).
 
-### Spec #010: Profile & Follow  ⬜
+### Spec #010: Profile & Follow  🟡 (next)
 - **Depends on**: #004, #006.
 - **Design**: Screens 20–23 (My/Other profile, Followers, Edit profile).
 - **Scope**: my + other profile (stats, bio, grid); **follow/unfollow optimistic**; followers/following lists with search; edit profile; private-account view (request to follow). Share profile link.

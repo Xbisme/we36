@@ -41,6 +41,12 @@ import 'package:we36/core/data/me/fake_me_repository.dart' as _i211;
 import 'package:we36/core/data/me/me_remote_data_source.dart' as _i46;
 import 'package:we36/core/data/me/me_repository.dart' as _i485;
 import 'package:we36/core/data/me/me_repository_impl.dart' as _i858;
+import 'package:we36/core/data/profile/fake_profile_repository.dart' as _i214;
+import 'package:we36/core/data/profile/profile_remote_data_source.dart'
+    as _i765;
+import 'package:we36/core/data/profile/profile_repository.dart' as _i124;
+import 'package:we36/core/data/profile/profile_repository_impl.dart' as _i521;
+import 'package:we36/core/data/profile/relationship_store.dart' as _i1059;
 import 'package:we36/core/data/realtime/fake_realtime_client.dart' as _i261;
 import 'package:we36/core/data/realtime/realtime_client.dart' as _i500;
 import 'package:we36/core/data/reels/fake_reels_repository.dart' as _i713;
@@ -133,6 +139,22 @@ import 'package:we36/features/post/domain/usecases/comment_usecases.dart'
     as _i140;
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart'
     as _i321;
+import 'package:we36/features/profile/domain/usecases/edit_profile_usecases.dart'
+    as _i305;
+import 'package:we36/features/profile/domain/usecases/follow_list_usecases.dart'
+    as _i531;
+import 'package:we36/features/profile/domain/usecases/follow_usecases.dart'
+    as _i631;
+import 'package:we36/features/profile/domain/usecases/profile_usecases.dart'
+    as _i983;
+import 'package:we36/features/profile/presentation/cubit/edit_profile_cubit.dart'
+    as _i391;
+import 'package:we36/features/profile/presentation/cubit/follow_list_cubit.dart'
+    as _i818;
+import 'package:we36/features/profile/presentation/cubit/my_profile_cubit.dart'
+    as _i895;
+import 'package:we36/features/profile/presentation/cubit/profile_cubit.dart'
+    as _i263;
 import 'package:we36/features/reels/domain/usecases/publish_reel.dart' as _i51;
 import 'package:we36/features/reels/domain/usecases/reel_comment_usecases.dart'
     as _i893;
@@ -180,6 +202,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i56.FailureMapper>(() => const _i56.FailureMapper());
     gh.lazySingleton<_i222.IdempotencyKeys>(() => _i222.IdempotencyKeys());
     gh.lazySingleton<_i270.AppDatabase>(() => _i270.AppDatabase());
+    gh.lazySingleton<_i1059.RelationshipStore>(
+      () => _i1059.RelationshipStore(),
+    );
     gh.lazySingleton<_i767.OwnStoryStore>(
       () => _i767.OwnStoryStore.create(),
       dispose: (i) => i.dispose(),
@@ -242,6 +267,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i163.AuthRepository>(
       () => _i548.FakeAuthRepository(gh<_i489.FakeAuthBackend>()),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i124.ProfileRepository>(
+      () => _i214.FakeProfileRepository(gh<_i1059.RelationshipStore>()),
       registerFor: {_fake},
     );
     gh.lazySingleton<_i547.MediaUploadService>(
@@ -336,16 +365,29 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i46.MeRemoteDataSource>(
       () => _i46.MeRemoteDataSource(gh<_i784.ApiClient>()),
     );
+    gh.lazySingleton<_i765.ProfileRemoteDataSource>(
+      () => _i765.ProfileRemoteDataSource(gh<_i784.ApiClient>()),
+    );
     gh.lazySingleton<_i746.ReelsRemoteDataSource>(
       () => _i746.ReelsRemoteDataSource(gh<_i784.ApiClient>()),
     );
     gh.lazySingleton<_i528.UserRemoteDataSource>(
       () => _i528.UserRemoteDataSource(gh<_i784.ApiClient>()),
     );
+    gh.factory<_i305.ChangeAvatar>(
+      () => _i305.ChangeAvatar(gh<_i547.MediaUploadService>()),
+    );
     gh.lazySingleton<_i485.MeRepository>(
       () => _i858.MeRepositoryImpl(
         gh<_i46.MeRemoteDataSource>(),
         gh<_i270.AppDatabase>(),
+      ),
+      registerFor: {_real},
+    );
+    gh.lazySingleton<_i124.ProfileRepository>(
+      () => _i521.ProfileRepositoryImpl(
+        gh<_i765.ProfileRemoteDataSource>(),
+        gh<_i1059.RelationshipStore>(),
       ),
       registerFor: {_real},
     );
@@ -355,16 +397,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i270.AppDatabase>(),
       ),
       registerFor: {_real},
-    );
-    gh.lazySingleton<_i958.SessionController>(
-      () => _i958.SessionController(
-        gh<_i665.TokenStore>(),
-        gh<_i485.MeRepository>(),
-        gh<_i299.LocalFlags>(),
-        gh<_i270.AppDatabase>(),
-        gh<_i767.OwnStoryStore>(),
-        gh<_i242.AuthEventsSink>(),
-      ),
     );
     gh.lazySingleton<_i550.DiscoveryRepository>(
       () => _i943.DiscoveryRepositoryImpl(
@@ -381,6 +413,20 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       registerFor: {_real},
     );
+    gh.lazySingleton<_i631.FollowAction>(
+      () => _i631.FollowAction(
+        gh<_i124.ProfileRepository>(),
+        gh<_i1059.RelationshipStore>(),
+      ),
+    );
+    gh.factory<_i305.LoadEditForm>(
+      () => _i305.LoadEditForm(gh<_i485.MeRepository>()),
+    );
+    gh.factory<_i305.SaveProfile>(
+      () => _i305.SaveProfile(gh<_i485.MeRepository>()),
+    );
+    gh.factory<_i983.WatchMe>(() => _i983.WatchMe(gh<_i485.MeRepository>()));
+    gh.factory<_i983.FetchMe>(() => _i983.FetchMe(gh<_i485.MeRepository>()));
     gh.factory<_i351.LoadStoryReels>(
       () => _i351.LoadStoryReels(gh<_i112.StoriesRepository>()),
     );
@@ -400,12 +446,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i287.PublishStory>(
       () => _i287.PublishStory(gh<_i674.CreateStoryRepository>()),
     );
-    gh.factory<_i902.OnboardingCubit>(
-      () => _i902.OnboardingCubit(gh<_i958.SessionController>()),
-    );
-    gh.lazySingleton<_i485.AppRouter>(
-      () => _i485.AppRouter(gh<_i958.SessionController>()),
-    );
     gh.factory<_i602.PublishPost>(
       () => _i602.PublishPost(
         gh<_i613.PhotoLibraryService>(),
@@ -413,6 +453,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i547.MediaUploadService>(),
         gh<_i1030.CreatePostRepository>(),
       ),
+    );
+    gh.factory<_i531.LoadConnections>(
+      () => _i531.LoadConnections(gh<_i124.ProfileRepository>()),
+    );
+    gh.factory<_i983.LoadProfile>(
+      () => _i983.LoadProfile(gh<_i124.ProfileRepository>()),
+    );
+    gh.factory<_i983.LoadProfileGrid>(
+      () => _i983.LoadProfileGrid(gh<_i124.ProfileRepository>()),
     );
     gh.lazySingleton<_i724.ReelsRepository>(
       () => _i571.ReelsRepositoryImpl(
@@ -432,18 +481,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i235.AuthRepositoryImpl(gh<_i1043.AuthRemoteDataSource>()),
       registerFor: {_real},
     );
-    gh.factory<_i53.SignIn>(
-      () => _i53.SignIn(
-        gh<_i163.AuthRepository>(),
-        gh<_i958.SessionController>(),
-      ),
-    );
-    gh.factory<_i601.SignUp>(
-      () => _i601.SignUp(
-        gh<_i163.AuthRepository>(),
-        gh<_i958.SessionController>(),
-      ),
-    );
     gh.lazySingleton<_i850.FeedRepository>(
       () => _i907.FeedRepositoryImpl(
         gh<_i138.FeedRemoteDataSource>(),
@@ -458,6 +495,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i222.IdempotencyKeys>(),
       ),
     );
+    gh.lazySingleton<_i958.SessionController>(
+      () => _i958.SessionController(
+        gh<_i665.TokenStore>(),
+        gh<_i485.MeRepository>(),
+        gh<_i299.LocalFlags>(),
+        gh<_i270.AppDatabase>(),
+        gh<_i767.OwnStoryStore>(),
+        gh<_i1059.RelationshipStore>(),
+        gh<_i242.AuthEventsSink>(),
+      ),
+    );
     gh.factory<_i51.PublishReel>(
       () => _i51.PublishReel(
         gh<_i613.PhotoLibraryService>(),
@@ -465,11 +513,26 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i724.ReelsRepository>(),
       ),
     );
+    gh.factory<_i263.ProfileCubit>(
+      () => _i263.ProfileCubit(
+        gh<_i983.LoadProfile>(),
+        gh<_i983.LoadProfileGrid>(),
+        gh<_i631.FollowAction>(),
+        gh<_i1059.RelationshipStore>(),
+      ),
+    );
     gh.factory<_i762.ReelComposeCubit>(
       () => _i762.ReelComposeCubit(
         gh<_i613.PhotoLibraryService>(),
         gh<_i51.PublishReel>(),
         gh<_i222.IdempotencyKeys>(),
+      ),
+    );
+    gh.factory<_i818.FollowListCubit>(
+      () => _i818.FollowListCubit(
+        gh<_i531.LoadConnections>(),
+        gh<_i631.FollowAction>(),
+        gh<_i1059.RelationshipStore>(),
       ),
     );
     gh.factory<_i619.LoadHashtagPage>(
@@ -547,7 +610,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i351.LikeStorySegment>(),
       ),
     );
-    gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
     gh.factory<_i831.DiscoveryGridCubit>(
       () => _i831.DiscoveryGridCubit(
         gh<_i619.LoadHashtagPage>(),
@@ -618,6 +680,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i140.WatchPost>(
       () => _i140.WatchPost(gh<_i850.FeedRepository>()),
     );
+    gh.factory<_i895.MyProfileCubit>(
+      () => _i895.MyProfileCubit(
+        gh<_i983.WatchMe>(),
+        gh<_i983.FetchMe>(),
+        gh<_i983.LoadProfile>(),
+        gh<_i983.LoadProfileGrid>(),
+      ),
+    );
     gh.factory<_i812.RecentsCubit>(
       () => _i812.RecentsCubit(
         gh<_i488.GetRecents>(),
@@ -649,6 +719,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i894.ResetPassword>(
       () => _i894.ResetPassword(gh<_i163.AuthRepository>()),
     );
+    gh.factory<_i305.CheckUsername>(
+      () => _i305.CheckUsername(gh<_i163.AuthRepository>()),
+    );
     gh.factory<_i989.ReelCommentsCubit>(
       () => _i989.ReelCommentsCubit(
         gh<_i140.LoadComments>(),
@@ -658,6 +731,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i893.DeleteReelComment>(),
         gh<_i140.ReportComment>(),
         gh<_i222.IdempotencyKeys>(),
+      ),
+    );
+    gh.factory<_i902.OnboardingCubit>(
+      () => _i902.OnboardingCubit(gh<_i958.SessionController>()),
+    );
+    gh.lazySingleton<_i485.AppRouter>(
+      () => _i485.AppRouter(gh<_i958.SessionController>()),
+    );
+    gh.factory<_i391.EditProfileCubit>(
+      () => _i391.EditProfileCubit(
+        gh<_i305.LoadEditForm>(),
+        gh<_i305.CheckUsername>(),
+        gh<_i305.ChangeAvatar>(),
+        gh<_i305.SaveProfile>(),
       ),
     );
     gh.factory<_i889.SearchCubit>(
@@ -690,7 +777,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i321.ToggleSave>(
       () => _i321.ToggleSave(gh<_i850.FeedRepository>()),
     );
-    gh.factory<_i30.SignUpCubit>(() => _i30.SignUpCubit(gh<_i601.SignUp>()));
+    gh.factory<_i53.SignIn>(
+      () => _i53.SignIn(
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i601.SignUp>(
+      () => _i601.SignUp(
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
     gh.factory<_i206.OAuthCubit>(
       () => _i206.OAuthCubit(
         gh<_i594.SignInWithGoogle>(),
@@ -726,12 +824,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i321.ToggleSave>(),
       ),
     );
+    gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
     gh.factory<_i764.ForgotPasswordCubit>(
       () => _i764.ForgotPasswordCubit(
         gh<_i95.RequestPasswordReset>(),
         gh<_i894.ResetPassword>(),
       ),
     );
+    gh.factory<_i30.SignUpCubit>(() => _i30.SignUpCubit(gh<_i601.SignUp>()));
     return this;
   }
 }

@@ -51,7 +51,10 @@ class _SearchPageState extends State<SearchPage> {
 
   void _openAccount(AccountResult a) {
     unawaited(_recents.record(RecordSearchRecent.account(a.user.id)));
-    // Profile-by-handle navigation lands in #010; the intent is recorded here.
+    final username = a.user.username;
+    if (username != null) {
+      unawaited(context.push(AppRoutes.userProfilePath(username)));
+    }
   }
 
   void _openHashtag(String tag) {

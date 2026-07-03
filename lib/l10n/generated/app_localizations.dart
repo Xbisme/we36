@@ -1531,6 +1531,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Photo'**
   String get photoTileLabel;
+
+  /// Follow control — not following
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get profileFollow;
+
+  /// Follow control — following
+  ///
+  /// In en, this message translates to:
+  /// **'Following'**
+  String get profileFollowing;
+
+  /// Follow control — pending request
+  ///
+  /// In en, this message translates to:
+  /// **'Requested'**
+  String get profileRequested;
+
+  /// Indicator that the account follows the viewer
+  ///
+  /// In en, this message translates to:
+  /// **'Follows you'**
+  String get profileFollowsYou;
+
+  /// No description provided for @profileSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get profileSettings;
+
+  /// No description provided for @profileEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileEditProfile;
+
+  /// No description provided for @profileShareProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Share profile'**
+  String get profileShareProfile;
+
+  /// No description provided for @profileShareAck.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile link copied.'**
+  String get profileShareAck;
+
+  /// No description provided for @profileMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get profileMessage;
+
+  /// No description provided for @profileMessageAck.
+  ///
+  /// In en, this message translates to:
+  /// **'Messaging is coming soon.'**
+  String get profileMessageAck;
+
+  /// No description provided for @profileReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get profileReport;
+
+  /// No description provided for @profileBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get profileBlock;
+
+  /// No description provided for @profileReportAck.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks — we\'ll review this account.'**
+  String get profileReportAck;
+
+  /// No description provided for @profileBlockAck.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocking is coming soon.'**
+  String get profileBlockAck;
+
+  /// No description provided for @statPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'posts'**
+  String get statPosts;
+
+  /// No description provided for @statFollowers.
+  ///
+  /// In en, this message translates to:
+  /// **'followers'**
+  String get statFollowers;
+
+  /// No description provided for @statFollowing.
+  ///
+  /// In en, this message translates to:
+  /// **'following'**
+  String get statFollowing;
+
+  /// No description provided for @profileTabPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Posts'**
+  String get profileTabPosts;
+
+  /// No description provided for @profileTabTagged.
+  ///
+  /// In en, this message translates to:
+  /// **'Tagged'**
+  String get profileTabTagged;
+
+  /// No description provided for @profilePrivateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This account is private'**
+  String get profilePrivateTitle;
+
+  /// No description provided for @profilePrivateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow this account to see their photos and reels.'**
+  String get profilePrivateBody;
+
+  /// No description provided for @profilePrivateListNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'This account is private.'**
+  String get profilePrivateListNotice;
+
+  /// No description provided for @profileEmptyPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'No posts yet'**
+  String get profileEmptyPosts;
+
+  /// No description provided for @profileEmptyTagged.
+  ///
+  /// In en, this message translates to:
+  /// **'No tagged posts yet'**
+  String get profileEmptyTagged;
+
+  /// No description provided for @profileEmptyFollowers.
+  ///
+  /// In en, this message translates to:
+  /// **'No followers yet'**
+  String get profileEmptyFollowers;
+
+  /// No description provided for @profileEmptyFollowing.
+  ///
+  /// In en, this message translates to:
+  /// **'Not following anyone yet'**
+  String get profileEmptyFollowing;
+
+  /// No description provided for @profileError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this profile'**
+  String get profileError;
+
+  /// No description provided for @profileNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This account isn\'t available.'**
+  String get profileNotFound;
+
+  /// No description provided for @followFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update follow. Try again.'**
+  String get followFailed;
+
+  /// No description provided for @followListFollowers.
+  ///
+  /// In en, this message translates to:
+  /// **'Followers'**
+  String get followListFollowers;
+
+  /// No description provided for @followListFollowing.
+  ///
+  /// In en, this message translates to:
+  /// **'Following'**
+  String get followListFollowing;
+
+  /// No description provided for @followListSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get followListSearchHint;
+
+  /// No description provided for @followListEmptySearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No accounts found'**
+  String get followListEmptySearch;
+
+  /// No description provided for @unfollowConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfollow?'**
+  String get unfollowConfirmTitle;
+
+  /// No description provided for @unfollowConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfollow @{username}?'**
+  String unfollowConfirmBody(String username);
+
+  /// No description provided for @unfollowConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfollow'**
+  String get unfollowConfirmAction;
+
+  /// No description provided for @withdrawConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw request?'**
+  String get withdrawConfirmTitle;
+
+  /// No description provided for @withdrawConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw your follow request to @{username}?'**
+  String withdrawConfirmBody(String username);
+
+  /// No description provided for @withdrawConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get withdrawConfirmAction;
+
+  /// No description provided for @editName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get editName;
+
+  /// No description provided for @editUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get editUsername;
+
+  /// No description provided for @editPronouns.
+  ///
+  /// In en, this message translates to:
+  /// **'Pronouns'**
+  String get editPronouns;
+
+  /// No description provided for @editWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get editWebsite;
+
+  /// No description provided for @editBio.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio'**
+  String get editBio;
+
+  /// No description provided for @editChangePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Change profile photo'**
+  String get editChangePhoto;
+
+  /// No description provided for @editSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get editSave;
+
+  /// No description provided for @editSavedAck.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated.'**
+  String get editSavedAck;
+
+  /// No description provided for @editSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save your profile. Try again.'**
+  String get editSaveFailed;
+
+  /// No description provided for @editNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name can\'t be empty.'**
+  String get editNameRequired;
+
+  /// No description provided for @editWebsiteInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid website.'**
+  String get editWebsiteInvalid;
+
+  /// No description provided for @editUsernameTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'That username is taken.'**
+  String get editUsernameTaken;
+
+  /// No description provided for @editDiscardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard changes?'**
+  String get editDiscardTitle;
+
+  /// No description provided for @editDiscardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your unsaved changes will be lost.'**
+  String get editDiscardBody;
+
+  /// No description provided for @editDiscardAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get editDiscardAction;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
 }
 
 class _AppLocalizationsDelegate

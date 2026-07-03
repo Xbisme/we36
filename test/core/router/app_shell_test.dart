@@ -9,12 +9,15 @@ import 'package:we36/core/presentation/post_card.dart';
 import 'package:we36/core/presentation/sidebar_rail.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/router/app_router.dart';
+import 'package:we36/features/explore/presentation/cubit/explore_cubit.dart';
+import 'package:we36/features/explore/presentation/cubit/explore_state.dart';
 import 'package:we36/features/explore/presentation/explore_page.dart';
 import 'package:we36/features/feed/presentation/feed_cubit.dart';
 import 'package:we36/features/feed/presentation/feed_state.dart';
 import 'package:we36/features/feed/presentation/home_page.dart';
 import 'package:we36/features/stories/presentation/stories_rail_cubit.dart';
 
+import '../../helpers/explore_test_doubles.dart';
 import '../../helpers/feed_test_doubles.dart';
 import '../../support/auth_test_doubles.dart';
 
@@ -45,6 +48,11 @@ Future<void> _pumpAppAt(WidgetTester tester, Size size) async {
     ..registerFactory<FeedCubit>(
       () => StubFeedCubit(
         FeedState.loaded([_post(1), _post(2)], hasMore: false),
+      ),
+    )
+    ..registerFactory<ExploreCubit>(
+      () => StubExploreCubit(
+        ExploreState.loaded(stubExploreItems(), hasMore: false),
       ),
     )
     ..registerFactory<StoriesRailCubit>(StubStoriesRailCubit.new)

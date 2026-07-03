@@ -23,8 +23,23 @@ abstract final class ApiEndpoints {
   /// First-run profile setup.
   static const String meSetup = '/me/setup';
 
-  /// Public profile by handle (reference slice for #002).
+  /// Partial update of the current user's editable identity (#010, `PATCH /me`).
+  static const String meUpdate = '/me';
+
+  /// Public profile by handle (#002 reference slice; #010 `ProfileView`).
   static String userByUsername(String username) => '/users/$username';
+
+  /// Follow graph (#010, B#010) — idempotent follow (`POST`) / unfollow +
+  /// withdraw-request (`DELETE`); returns the updated relationship + counts.
+  static String userFollow(String userId) => '/users/$userId/follow';
+
+  /// Followers / following lists (#010, cursor + `?q=` server-side search).
+  static String userFollowers(String userId) => '/users/$userId/followers';
+  static String userFollowing(String userId) => '/users/$userId/following';
+
+  /// A user's Posts / Tagged grids (#010, cursor `CursorPage<ExploreItem>`).
+  static String userPosts(String userId) => '/users/$userId/posts';
+  static String userTagged(String userId) => '/users/$userId/tagged';
 
   /// Reverse-chronological feed (cursor) — consumed from #004.
   static const String feed = '/feed';
