@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' show Migrator;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
+import 'package:we36/core/data/collections/saved_collection.dart';
 import 'package:we36/core/data/feed/post.dart';
 import 'package:we36/core/data/me/me_profile.dart';
 import 'package:we36/core/data/reels/reel.dart';
@@ -56,6 +57,13 @@ Reel _reel(String id) => Reel(
   createdAt: DateTime.utc(2026, 7),
 );
 
+SavedCollection _collection(String id) => SavedCollection(
+  id: id,
+  name: 'Board $id',
+  itemCount: 0,
+  updatedAt: DateTime.utc(2026),
+);
+
 MeProfile _me(String id) => MeProfile(
   id: id,
   email: '$id@we36.app',
@@ -67,11 +75,24 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 7', () {
+    test('schemaVersion is 8', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 7);
+      expect(db.schemaVersion, 8);
       addTearDown(db.close);
     });
+
+    test(
+      'onUpgrade(from<8) additively creates the saved-collections table (#011)',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(db.close);
+        // Simulate a v7 DB upgrading to v8: the SavedCollections table is added.
+        await db.migration.onUpgrade(Migrator(db), 7, 8);
+        // A write+read round-trip proves the table exists and is usable.
+        await db.savedCollectionsDao.replaceAll(const []);
+        expect(await db.savedCollectionsDao.getCollections(), isEmpty);
+      },
+    );
 
     test(
       'onUpgrade(from<7) additively creates the explore-items table (#009)',
@@ -201,6 +222,7 @@ void main() {
         await db.storySeenDao.markSeen('seg-x', 'author-x');
         await db.composeDraftDao.save(_draft('draft-x'));
         await db.reelsDao.upsertAll([_reel('reel-x')]);
+        await db.savedCollectionsDao.replaceAll([_collection('col-x')]);
 
         await db.clearUserScoped();
 
@@ -209,6 +231,7 @@ void main() {
         expect(await db.storySeenDao.getSeen(), isEmpty);
         expect(await db.composeDraftDao.current(), isNull);
         expect(await db.reelsDao.getById('reel-x'), isNull);
+        expect(await db.savedCollectionsDao.getCollections(), isEmpty);
         await db.close();
       },
     );

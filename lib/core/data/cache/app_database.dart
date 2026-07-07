@@ -7,6 +7,7 @@ import 'package:we36/core/data/cache/daos/explore_dao.dart';
 import 'package:we36/core/data/cache/daos/me_profile_dao.dart';
 import 'package:we36/core/data/cache/daos/posts_dao.dart';
 import 'package:we36/core/data/cache/daos/reels_dao.dart';
+import 'package:we36/core/data/cache/daos/saved_collections_dao.dart';
 import 'package:we36/core/data/cache/daos/story_seen_dao.dart';
 import 'package:we36/core/data/cache/daos/users_dao.dart';
 import 'package:we36/core/data/cache/tables/compose_draft_table.dart';
@@ -14,6 +15,7 @@ import 'package:we36/core/data/cache/tables/explore_items_table.dart';
 import 'package:we36/core/data/cache/tables/me_profile_table.dart';
 import 'package:we36/core/data/cache/tables/posts_table.dart';
 import 'package:we36/core/data/cache/tables/reels_table.dart';
+import 'package:we36/core/data/cache/tables/saved_collections_table.dart';
 import 'package:we36/core/data/cache/tables/story_seen_table.dart';
 import 'package:we36/core/data/cache/tables/users_table.dart';
 
@@ -34,6 +36,7 @@ part 'app_database.g.dart';
     ComposeDrafts,
     Reels,
     ExploreItems,
+    SavedCollections,
   ],
   daos: [
     UsersDao,
@@ -43,6 +46,7 @@ part 'app_database.g.dart';
     ComposeDraftDao,
     ReelsDao,
     ExploreDao,
+    SavedCollectionsDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -54,7 +58,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -88,6 +92,10 @@ class AppDatabase extends _$AppDatabase {
         // v7 (#009): add the persisted Explore-grid snapshot.
         await m.createTable(exploreItems);
       }
+      if (from < 8) {
+        // v8 (#011): add the persisted Saved-collections list.
+        await m.createTable(savedCollections);
+      }
     },
   );
 
@@ -102,5 +110,6 @@ class AppDatabase extends _$AppDatabase {
     await delete(composeDrafts).go();
     await delete(reels).go();
     await delete(exploreItems).go();
+    await delete(savedCollections).go();
   }
 }

@@ -7,8 +7,9 @@ import 'package:we36/core/data/profile/profile_repository.dart';
 import 'package:we36/core/data/profile/profile_view.dart';
 import 'package:we36/core/domain/result.dart';
 
-/// Which grid a profile is showing (#010 FR-002/003).
-enum ProfileTab { posts, tagged }
+/// Which tab a profile is showing (#010 FR-002/003; #011 adds owner-only
+/// `saved`, whose body is the Saved-collections grid rather than a post grid).
+enum ProfileTab { posts, tagged, saved }
 
 /// Reactive read of the cached current-user identity (header cold-start, FR-005).
 @injectable

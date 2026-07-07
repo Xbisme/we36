@@ -57,6 +57,14 @@ abstract final class AppRoutes {
     String tab = 'followers',
   }) => '/user/$username/connections?tab=$tab';
 
+  // Saved Collections (#011), nav-less full-screen (Screen 24). The Saved tab on
+  // my own profile renders the collections grid; opening a collection (or the
+  // "All saved" view, `id`='all') pushes this route showing its item grid.
+  static const String collection = '/collections/:id';
+
+  /// Build the collection-detail path for [id] (`'all'` = the All-saved view).
+  static String collectionPath(String id) => '/collections/$id';
+
   // Create Post — compose flow (#007), nav-less full-screen (Screens 11–13).
   static const String composePick = '/create/pick';
   static const String composeEdit = '/create/edit';

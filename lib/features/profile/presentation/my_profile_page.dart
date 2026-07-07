@@ -10,6 +10,7 @@ import 'package:we36/core/presentation/app_button.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_icon_button.dart';
 import 'package:we36/core/presentation/max_width_box.dart';
+import 'package:we36/core/presentation/slots/saved_tab_slot.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
@@ -143,26 +144,31 @@ class _LoadedState extends State<_Loaded> {
           const SizedBox(height: AppSpacing.md),
           ProfileTabBar(
             active: state.tab,
+            includeSaved: true,
             onSelect: (t) =>
                 unawaited(context.read<MyProfileCubit>().switchTab(t)),
           ),
           Expanded(
-            child: state.grid.isEmpty
-                ? Center(
-                    child: Text(
-                      state.tab == ProfileTab.posts
-                          ? l10n.profileEmptyPosts
-                          : l10n.profileEmptyTagged,
-                      style: AppTypography.body16.copyWith(
-                        color: context.tokens.textTertiary,
-                      ),
-                    ),
-                  )
-                : ProfileGrid(
-                    items: state.grid,
-                    controller: _scroll,
-                    onTapItem: (item) => _openItem(context, item),
+            child: switch (state.tab) {
+              // The owner-only Saved tab (#011) renders the Saved-collections
+              // view via the core seam (no cross-feature import — Constitution XI).
+              ProfileTab.saved => getIt<SavedTabSlot>().build(context),
+              _ when state.grid.isEmpty => Center(
+                child: Text(
+                  state.tab == ProfileTab.posts
+                      ? l10n.profileEmptyPosts
+                      : l10n.profileEmptyTagged,
+                  style: AppTypography.body16.copyWith(
+                    color: context.tokens.textTertiary,
                   ),
+                ),
+              ),
+              _ => ProfileGrid(
+                items: state.grid,
+                controller: _scroll,
+                onTapItem: (item) => _openItem(context, item),
+              ),
+            },
           ),
         ],
       ),

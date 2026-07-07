@@ -11,12 +11,16 @@ class DiscoveryGrid extends StatelessWidget {
   const DiscoveryGrid({
     required this.items,
     required this.onTapItem,
+    this.onLongPressItem,
     this.footer,
     super.key,
   });
 
   final List<ExploreItem> items;
   final ValueChanged<ExploreItem> onTapItem;
+
+  /// Optional per-item long-press (#011 collection detail).
+  final ValueChanged<ExploreItem>? onLongPressItem;
 
   /// Optional trailing sliver (e.g. a paginating spinner).
   final Widget? footer;
@@ -39,8 +43,13 @@ class DiscoveryGrid extends StatelessWidget {
     );
   }
 
-  Widget _tile(int i) =>
-      DiscoveryGridTile(item: items[i], onTap: () => onTapItem(items[i]));
+  Widget _tile(int i) => DiscoveryGridTile(
+    item: items[i],
+    onTap: () => onTapItem(items[i]),
+    onLongPress: onLongPressItem == null
+        ? null
+        : () => onLongPressItem!(items[i]),
+  );
 
   /// Uniform responsive grid (tablet, or a phone with too few items for a block).
   Widget _responsiveGrid(bool isTablet) => SliverGrid(

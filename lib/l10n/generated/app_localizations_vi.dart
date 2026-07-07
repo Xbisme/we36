@@ -917,4 +917,120 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get commonCancel => 'Hủy';
+
+  @override
+  String get savedTitle => 'Đã lưu';
+
+  @override
+  String get savedAllSaved => 'Tất cả đã lưu';
+
+  @override
+  String get profileTabSaved => 'Đã lưu';
+
+  @override
+  String collectionSavedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mục',
+      one: '1 mục',
+      zero: '0 mục',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get collectionNew => 'Bộ sưu tập mới';
+
+  @override
+  String get saveToCollection => 'Lưu vào bộ sưu tập';
+
+  @override
+  String get saveToCollectionTitle => 'Lưu vào bộ sưu tập';
+
+  @override
+  String get collectionCreateTitle => 'Bộ sưu tập mới';
+
+  @override
+  String get collectionRenameTitle => 'Đổi tên bộ sưu tập';
+
+  @override
+  String get collectionNameHint => 'Tên bộ sưu tập';
+
+  @override
+  String get collectionNameEmpty => 'Tên không được để trống.';
+
+  @override
+  String get collectionNameTooLong => 'Tên quá dài.';
+
+  @override
+  String get collectionCreateAction => 'Tạo';
+
+  @override
+  String get collectionRename => 'Đổi tên';
+
+  @override
+  String get collectionSetCover => 'Đặt ảnh bìa';
+
+  @override
+  String get collectionRemoveItem => 'Xóa khỏi bộ sưu tập';
+
+  @override
+  String get collectionDelete => 'Xóa bộ sưu tập';
+
+  @override
+  String get collectionDeleteTitle => 'Xóa bộ sưu tập?';
+
+  @override
+  String collectionDeleteBody(String name) {
+    return '\"$name\" sẽ bị xóa. Các bài đã lưu vẫn còn trong Tất cả đã lưu.';
+  }
+
+  @override
+  String get collectionDeleteAction => 'Xóa';
+
+  @override
+  String get unsaveConfirmTitle => 'Bỏ lưu?';
+
+  @override
+  String unsaveConfirmBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Thao tác này cũng xóa khỏi $count bộ sưu tập.',
+      one: 'Thao tác này cũng xóa khỏi 1 bộ sưu tập.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unsaveConfirmAction => 'Bỏ lưu';
+
+  @override
+  String get savedEmptyTitle => 'Chưa lưu gì cả';
+
+  @override
+  String get savedEmptyBody => 'Lưu bài viết và reels để tìm lại tại đây.';
+
+  @override
+  String get collectionEmpty => 'Chưa có bài nào trong bộ sưu tập này';
+
+  @override
+  String get savedError => 'Không tải được bộ sưu tập đã lưu';
+
+  @override
+  String get collectionError => 'Không tải được bộ sưu tập này';
+
+  @override
+  String get saveFailed => 'Không lưu được. Thử lại.';
+
+  @override
+  String get collectionCreateFailed => 'Không tạo được bộ sưu tập. Thử lại.';
+
+  @override
+  String get collectionUpdateFailed =>
+      'Không cập nhật được bộ sưu tập. Thử lại.';
+
+  @override
+  String get collectionDeleteFailed => 'Không xóa được bộ sưu tập. Thử lại.';
 }
