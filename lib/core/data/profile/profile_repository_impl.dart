@@ -36,7 +36,11 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }) async {
     final result = await _remote.follow(userId, idempotencyKey: idempotencyKey);
     final value = result.valueOrNull;
-    if (value != null) _relationships.seed(userId, value.relationship);
+    if (value != null) {
+      _relationships
+        ..seed(userId, value.relationship)
+        ..notifyFollowChanged();
+    }
     return result;
   }
 
@@ -47,7 +51,11 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }) async {
     final result = await _remote.unfollow(userId);
     final value = result.valueOrNull;
-    if (value != null) _relationships.seed(userId, value.relationship);
+    if (value != null) {
+      _relationships
+        ..seed(userId, value.relationship)
+        ..notifyFollowChanged();
+    }
     return result;
   }
 

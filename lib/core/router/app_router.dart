@@ -225,13 +225,15 @@ class AppRouter {
         // Edit my profile (#010 Screen 23) — full-screen nav-less.
         GoRoute(
           path: AppRoutes.editProfile,
-          builder: (_, _) => BlocProvider(
+          builder: (_, state) => BlocProvider(
             create: (_) {
               final cubit = getIt<EditProfileCubit>();
               unawaited(cubit.load());
               return cubit;
             },
-            child: const EditProfilePage(),
+            child: EditProfilePage(
+              initialAvatarUrl: state.extra as String?,
+            ),
           ),
         ),
         // Followers / following (#010 Screen 22) — full-screen nav-less.
@@ -239,13 +241,17 @@ class AppRouter {
           path: AppRoutes.userConnections,
           builder: (_, state) {
             final username = state.pathParameters['username']!;
+            // The followers/following endpoints are keyed by user id (UUID); the
+            // opening profile page passes it via `extra` (the path carries the
+            // human-readable username for the title / deep links).
+            final userId = state.extra as String? ?? username;
             final tab = state.uri.queryParameters['tab'] == 'following'
                 ? FollowConnTab.following
                 : FollowConnTab.followers;
             return BlocProvider(
               create: (_) {
                 final cubit = getIt<FollowListCubit>();
-                unawaited(cubit.init(username, tab));
+                unawaited(cubit.init(userId, tab));
                 return cubit;
               },
               child: FollowListPage(username: username),

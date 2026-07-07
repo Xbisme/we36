@@ -69,6 +69,7 @@ void main() {
     FetchMe(me),
     LoadProfile(repo),
     LoadProfileGrid(repo),
+    store,
   );
 
   setUp(() {

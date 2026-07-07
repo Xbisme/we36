@@ -513,6 +513,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i724.ReelsRepository>(),
       ),
     );
+    gh.factory<_i895.MyProfileCubit>(
+      () => _i895.MyProfileCubit(
+        gh<_i983.WatchMe>(),
+        gh<_i983.FetchMe>(),
+        gh<_i983.LoadProfile>(),
+        gh<_i983.LoadProfileGrid>(),
+        gh<_i1059.RelationshipStore>(),
+      ),
+    );
     gh.factory<_i263.ProfileCubit>(
       () => _i263.ProfileCubit(
         gh<_i983.LoadProfile>(),
@@ -679,14 +688,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i140.WatchPost>(
       () => _i140.WatchPost(gh<_i850.FeedRepository>()),
-    );
-    gh.factory<_i895.MyProfileCubit>(
-      () => _i895.MyProfileCubit(
-        gh<_i983.WatchMe>(),
-        gh<_i983.FetchMe>(),
-        gh<_i983.LoadProfile>(),
-        gh<_i983.LoadProfileGrid>(),
-      ),
     );
     gh.factory<_i812.RecentsCubit>(
       () => _i812.RecentsCubit(

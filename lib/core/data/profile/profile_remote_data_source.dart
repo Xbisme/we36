@@ -2,9 +2,11 @@ import 'package:injectable/injectable.dart';
 import 'package:we36/core/constants/api_endpoints.dart';
 import 'package:we36/core/data/api/api_client.dart';
 import 'package:we36/core/data/discovery/explore_item.dart';
+import 'package:we36/core/data/discovery/search_results.dart';
 import 'package:we36/core/data/pagination/cursor_page.dart';
 import 'package:we36/core/data/profile/account_row.dart';
 import 'package:we36/core/data/profile/profile_view.dart';
+import 'package:we36/core/data/user/user.dart';
 import 'package:we36/core/domain/result.dart';
 
 /// Remote source for profile + follow (#010) via the shared [ApiClient]. Decodes
@@ -19,9 +21,37 @@ class ProfileRemoteDataSource {
   Future<Result<ProfileView>> getProfile(String username) =>
       _api.get<ProfileView>(
         ApiEndpoints.userByUsername(username),
-        decode: (data) =>
-            ProfileView.fromJson((data as Map).cast<String, dynamic>()),
+        decode: (data) => _decodeProfile((data as Map).cast<String, dynamic>()),
       );
+
+  /// Maps the backend's flat public-profile projection (`PublicProfileDto`) into
+  /// the client [ProfileView]. The backend returns identity fields at the top
+  /// level (singular `followerCount`/`postCount`) and does **not** send
+  /// `isMe`/`gated`; `isMe` is resolved by the caller (own-profile screen) and
+  /// `gated` follows from privacy + the viewer relationship (private && not an
+  /// approved follower ⇒ following is false).
+  static ProfileView _decodeProfile(Map<String, dynamic> json) {
+    final relationship = ViewerRelationship.fromJson(
+      (json['relationship'] as Map).cast<String, dynamic>(),
+    );
+    final user = User(
+      id: json['id'] as String,
+      username: json['username'] as String? ?? '',
+      displayName: json['displayName'] as String? ?? '',
+      isPrivate: json['isPrivate'] as bool? ?? false,
+      isVerified: json['isVerified'] as bool? ?? false,
+      followersCount: (json['followerCount'] as num?)?.toInt() ?? 0,
+      followingCount: (json['followingCount'] as num?)?.toInt() ?? 0,
+      postsCount: (json['postCount'] as num?)?.toInt() ?? 0,
+      avatarUrl: json['avatarUrl'] as String?,
+      bio: json['bio'] as String?,
+    );
+    return ProfileView(
+      user: user,
+      relationship: relationship,
+      gated: user.isPrivate && !relationship.following,
+    );
+  }
 
   Future<Result<FollowResult>> follow(
     String userId, {

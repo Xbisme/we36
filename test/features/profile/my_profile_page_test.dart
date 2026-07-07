@@ -23,6 +23,8 @@ class StubMyProfileCubit extends Cubit<MyProfileState>
   @override
   Future<void> loadInitial() async {}
   @override
+  Future<void> refresh() async {}
+  @override
   Future<void> switchTab(ProfileTab tab) async {}
   @override
   Future<void> loadMore() async {}

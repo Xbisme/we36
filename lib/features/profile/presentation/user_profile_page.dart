@@ -163,6 +163,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ? () => unawaited(
                       context.push(
                         AppRoutes.userConnectionsPath(widget.username),
+                        extra: view.user.id,
                       ),
                     )
                   : null,
@@ -173,6 +174,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           widget.username,
                           tab: 'following',
                         ),
+                        extra: view.user.id,
                       ),
                     )
                   : null,

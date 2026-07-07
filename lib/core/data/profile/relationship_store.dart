@@ -17,6 +17,18 @@ class RelationshipStore {
   final Map<String, ViewerRelationship> _current = {};
   final Map<String, StreamController<ViewerRelationship>> _controllers = {};
 
+  /// Fires after a **server-confirmed** follow/unfollow (via
+  /// [notifyFollowChanged]) — never on optimistic mutations or population. Lets
+  /// aggregate views (e.g. the signed-in person's `followingCount`) refresh from
+  /// authoritative counts without polling. App-lived (not closed on [clear]).
+  final StreamController<void> _changes = StreamController<void>.broadcast();
+  Stream<void> get changes => _changes.stream;
+
+  /// Signal that a follow/unfollow committed on the backend, so aggregate views
+  /// re-fetch. Called by the repository *after* the API succeeds — not on the
+  /// optimistic [apply], whose count would still be stale.
+  void notifyFollowChanged() => _changes.add(null);
+
   StreamController<ViewerRelationship> _controllerFor(String userId) =>
       _controllers.putIfAbsent(
         userId,

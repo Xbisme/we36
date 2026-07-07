@@ -78,6 +78,13 @@ class _LoadedState extends State<_Loaded> {
     }
   }
 
+  /// Open Edit profile (passing the current avatar so the form can preview it),
+  /// then refresh the header on return so a saved edit shows without a reload.
+  Future<void> _openEdit(String? avatarUrl) async {
+    await context.push(AppRoutes.editProfile, extra: avatarUrl);
+    if (mounted) unawaited(context.read<MyProfileCubit>().refresh());
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -95,7 +102,10 @@ class _LoadedState extends State<_Loaded> {
               view: state.view,
               website: state.website,
               onTapFollowers: () => unawaited(
-                context.push(AppRoutes.userConnectionsPath(user.username)),
+                context.push(
+                  AppRoutes.userConnectionsPath(user.username),
+                  extra: user.id,
+                ),
               ),
               onTapFollowing: () => unawaited(
                 context.push(
@@ -103,6 +113,7 @@ class _LoadedState extends State<_Loaded> {
                     user.username,
                     tab: 'following',
                   ),
+                  extra: user.id,
                 ),
               ),
               actions: Row(
@@ -111,8 +122,7 @@ class _LoadedState extends State<_Loaded> {
                     child: AppButton(
                       label: l10n.profileEditProfile,
                       kind: AppButtonKind.secondary,
-                      onPressed: () =>
-                          unawaited(context.push(AppRoutes.editProfile)),
+                      onPressed: () => unawaited(_openEdit(user.avatarUrl)),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),

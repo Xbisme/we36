@@ -155,7 +155,9 @@ class FakeProfileRepository implements ProfileRepository {
         followersCount: user.followersCount + (user.isPrivate ? 0 : 1),
       );
     }
-    _relationships.seed(userId, _rel[userId]!);
+    _relationships
+      ..seed(userId, _rel[userId]!)
+      ..notifyFollowChanged();
     return Result.ok(
       FollowResult(
         relationship: _rel[userId]!,
@@ -187,7 +189,9 @@ class FakeProfileRepository implements ProfileRepository {
         );
       }
     }
-    _relationships.seed(userId, _rel[userId]!);
+    _relationships
+      ..seed(userId, _rel[userId]!)
+      ..notifyFollowChanged();
     return Result.ok(
       FollowResult(
         relationship: _rel[userId]!,

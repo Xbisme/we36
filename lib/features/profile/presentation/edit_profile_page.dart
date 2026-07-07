@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_text_field.dart';
+import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/services/photo_library_service.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
@@ -15,11 +17,16 @@ import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 import 'package:we36/features/profile/presentation/cubit/edit_profile_cubit.dart';
 import 'package:we36/features/profile/presentation/cubit/edit_profile_state.dart';
+import 'package:we36/features/profile/presentation/widgets/avatar_picker_sheet.dart';
 
 /// Edit my profile (#010 Screen 23): name / username (live availability) /
 /// pronouns / website / bio + change photo, with optimistic save + discard-confirm.
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+  const EditProfilePage({this.initialAvatarUrl, super.key});
+
+  /// The current (server-resolved) avatar URL, shown as the form's initial
+  /// preview until the user picks a new photo. Null when unset/unresolved.
+  final String? initialAvatarUrl;
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -32,6 +39,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _website = TextEditingController();
   final _bio = TextEditingController();
   bool _seeded = false;
+
+  /// Bytes of the just-picked avatar, shown as a local preview until save (the
+  /// server avatar URL is not resolved into the Edit form).
+  Uint8List? _pickedAvatar;
 
   @override
   void dispose() {
@@ -83,14 +94,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Future<void> _changePhoto() async {
     final cubit = context.read<EditProfileCubit>();
     final lib = getIt<PhotoLibraryService>();
-    final perm = await lib.ensurePermission();
-    if (perm.isErr) return;
-    final assets = await lib.loadAssets(page: 0, pageSize: 1);
-    final first = assets.valueOrNull?.assets.firstOrNull;
-    if (first == null) return;
-    final bytes = await lib.originBytes(first);
-    if (bytes.isErr) return;
-    await cubit.changeAvatar(bytes.valueOrNull!);
+    // Present the single-pick photo grid; null = dismissed without choosing.
+    final asset = await showAvatarPickerSheet(context);
+    if (asset == null) return;
+    final bytes = await lib.originBytes(asset);
+    if (!mounted) return;
+    if (bytes.isErr) {
+      getIt<ToastService>().show(context, message: context.l10n.editSaveFailed);
+      return;
+    }
+    setState(() => _pickedAvatar = bytes.valueOrNull);
+    final ok = await cubit.changeAvatar(bytes.valueOrNull!);
+    if (!ok && mounted) {
+      getIt<ToastService>().show(context, message: context.l10n.editSaveFailed);
+    }
   }
 
   String? _usernameError(EditProfileEditing s, AppLocalizations l10n) =>
@@ -159,9 +176,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
       padding: const EdgeInsets.all(AppSpacing.lg),
       children: [
         Center(
-          child: TextButton(
-            onPressed: () => unawaited(_changePhoto()),
-            child: Text(l10n.editChangePhoto),
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Avatar(
+                    size: 88,
+                    image: _pickedAvatar != null
+                        ? MemoryImage(_pickedAvatar!)
+                        : (widget.initialAvatarUrl == null
+                              ? null
+                              : NetworkImage(widget.initialAvatarUrl!)),
+                    semanticLabel: l10n.editChangePhoto,
+                  ),
+                  if (state.avatarUploading)
+                    const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                ],
+              ),
+              TextButton(
+                onPressed: state.avatarUploading
+                    ? null
+                    : () => unawaited(_changePhoto()),
+                child: Text(l10n.editChangePhoto),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: AppSpacing.md),
