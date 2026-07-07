@@ -18,4 +18,17 @@ abstract interface class MeRepository {
     required String displayName,
     String? bio,
   });
+
+  /// Partial update of the editable identity (#010, `PATCH /v1/me`). Only the
+  /// non-null fields are sent; on success the canonical cache is updated so
+  /// `watchMe` repaints every surface. Optimistic save + rollback is owned by
+  /// the edit cubit (the repository persists the reconciled result).
+  Future<Result<MeProfile>> updateProfile({
+    String? displayName,
+    String? username,
+    String? pronouns,
+    String? website,
+    String? bio,
+    String? avatarMediaId,
+  });
 }

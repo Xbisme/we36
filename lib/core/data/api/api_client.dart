@@ -127,6 +127,18 @@ class ApiClient {
     decode,
   );
 
+  /// PATCH → decoded `T`. Partial update of a resource (e.g. `PATCH /me`, #010);
+  /// naturally idempotent (last-write-wins on the sent fields).
+  Future<Result<T>> patch<T>(
+    String path, {
+    Object? body,
+    Map<String, dynamic>? query,
+    T Function(dynamic data)? decode,
+  }) => _request(
+    () => _dio.patch<dynamic>(path, data: body, queryParameters: query),
+    decode,
+  );
+
   /// DELETE → decoded `T`. Used by idempotent remove-toggles (unlike/unsave,
   /// #004; unfollow/unsave-collection later).
   Future<Result<T>> delete<T>(

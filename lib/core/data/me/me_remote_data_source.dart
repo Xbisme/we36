@@ -29,6 +29,26 @@ class MeRemoteDataSource {
     decode: _decode,
   );
 
+  Future<Result<MeProfile>> updateProfile({
+    String? displayName,
+    String? username,
+    String? pronouns,
+    String? website,
+    String? bio,
+    String? avatarMediaId,
+  }) => _api.patch<MeProfile>(
+    ApiEndpoints.meUpdate,
+    body: {
+      'displayName': ?displayName,
+      'username': ?username,
+      'pronouns': ?pronouns,
+      'website': ?website,
+      'bio': ?bio,
+      'avatarMediaId': ?avatarMediaId,
+    },
+    decode: _decode,
+  );
+
   static MeProfile _decode(dynamic data) =>
       MeProfile.fromJson((data as Map).cast<String, dynamic>());
 }

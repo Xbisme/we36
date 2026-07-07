@@ -36,7 +36,15 @@ import 'package:we36/features/messaging/presentation/messages_page.dart';
 import 'package:we36/features/placeholder_page.dart';
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart';
 import 'package:we36/features/post/presentation/post_detail_page.dart';
-import 'package:we36/features/profile/presentation/profile_page.dart';
+import 'package:we36/features/profile/domain/usecases/follow_list_usecases.dart';
+import 'package:we36/features/profile/presentation/cubit/edit_profile_cubit.dart';
+import 'package:we36/features/profile/presentation/cubit/follow_list_cubit.dart';
+import 'package:we36/features/profile/presentation/cubit/my_profile_cubit.dart';
+import 'package:we36/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:we36/features/profile/presentation/edit_profile_page.dart';
+import 'package:we36/features/profile/presentation/follow_list_page.dart';
+import 'package:we36/features/profile/presentation/my_profile_page.dart';
+import 'package:we36/features/profile/presentation/user_profile_page.dart';
 import 'package:we36/features/reels/presentation/cubit/reel_compose_cubit.dart';
 import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart';
 import 'package:we36/features/reels/presentation/reel_compose_page.dart';
@@ -110,7 +118,17 @@ class AppRouter {
               ),
             ),
             _branch(AppRoutes.messages, const MessagesPage()),
-            _branch(AppRoutes.profile, const ProfilePage()),
+            _branch(
+              AppRoutes.profile,
+              BlocProvider(
+                create: (_) {
+                  final cubit = getIt<MyProfileCubit>();
+                  unawaited(cubit.loadInitial());
+                  return cubit;
+                },
+                child: const MyProfilePage(),
+              ),
+            ),
           ],
         ),
         // Pre-auth zone (nav-less, centered-mobile on tablet)
@@ -185,6 +203,58 @@ class AppRouter {
                 return cubit;
               },
               child: const CenteredMobile(child: DiscoveryGridPage()),
+            );
+          },
+        ),
+        // Another person's profile (#010 Screen 21) — full-screen nav-less,
+        // deep-linkable. Page-scoped ProfileCubit.
+        GoRoute(
+          path: AppRoutes.userProfile,
+          builder: (_, state) {
+            final username = state.pathParameters['username']!;
+            return BlocProvider(
+              create: (_) {
+                final cubit = getIt<ProfileCubit>();
+                unawaited(cubit.loadInitial(username));
+                return cubit;
+              },
+              child: UserProfilePage(username: username),
+            );
+          },
+        ),
+        // Edit my profile (#010 Screen 23) — full-screen nav-less.
+        GoRoute(
+          path: AppRoutes.editProfile,
+          builder: (_, state) => BlocProvider(
+            create: (_) {
+              final cubit = getIt<EditProfileCubit>();
+              unawaited(cubit.load());
+              return cubit;
+            },
+            child: EditProfilePage(
+              initialAvatarUrl: state.extra as String?,
+            ),
+          ),
+        ),
+        // Followers / following (#010 Screen 22) — full-screen nav-less.
+        GoRoute(
+          path: AppRoutes.userConnections,
+          builder: (_, state) {
+            final username = state.pathParameters['username']!;
+            // The followers/following endpoints are keyed by user id (UUID); the
+            // opening profile page passes it via `extra` (the path carries the
+            // human-readable username for the title / deep links).
+            final userId = state.extra as String? ?? username;
+            final tab = state.uri.queryParameters['tab'] == 'following'
+                ? FollowConnTab.following
+                : FollowConnTab.followers;
+            return BlocProvider(
+              create: (_) {
+                final cubit = getIt<FollowListCubit>();
+                unawaited(cubit.init(userId, tab));
+                return cubit;
+              },
+              child: FollowListPage(username: username),
             );
           },
         ),

@@ -747,4 +747,174 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get photoTileLabel => 'Ảnh';
+
+  @override
+  String get profileFollow => 'Theo dõi';
+
+  @override
+  String get profileFollowing => 'Đang theo dõi';
+
+  @override
+  String get profileRequested => 'Đã yêu cầu';
+
+  @override
+  String get profileFollowsYou => 'Theo dõi bạn';
+
+  @override
+  String get profileSettings => 'Cài đặt';
+
+  @override
+  String get profileEditProfile => 'Chỉnh sửa trang cá nhân';
+
+  @override
+  String get profileShareProfile => 'Chia sẻ trang cá nhân';
+
+  @override
+  String get profileShareAck => 'Đã sao chép liên kết trang cá nhân.';
+
+  @override
+  String get profileMessage => 'Nhắn tin';
+
+  @override
+  String get profileMessageAck => 'Tính năng nhắn tin sẽ sớm ra mắt.';
+
+  @override
+  String get profileReport => 'Báo cáo';
+
+  @override
+  String get profileBlock => 'Chặn';
+
+  @override
+  String get profileReportAck => 'Cảm ơn — chúng tôi sẽ xem xét tài khoản này.';
+
+  @override
+  String get profileBlockAck => 'Tính năng chặn sẽ sớm ra mắt.';
+
+  @override
+  String get statPosts => 'bài viết';
+
+  @override
+  String get statFollowers => 'người theo dõi';
+
+  @override
+  String get statFollowing => 'đang theo dõi';
+
+  @override
+  String get profileTabPosts => 'Bài viết';
+
+  @override
+  String get profileTabTagged => 'Được gắn thẻ';
+
+  @override
+  String get profilePrivateTitle => 'Tài khoản này ở chế độ riêng tư';
+
+  @override
+  String get profilePrivateBody =>
+      'Theo dõi tài khoản này để xem ảnh và reel của họ.';
+
+  @override
+  String get profilePrivateListNotice => 'Tài khoản này ở chế độ riêng tư.';
+
+  @override
+  String get profileEmptyPosts => 'Chưa có bài viết nào';
+
+  @override
+  String get profileEmptyTagged => 'Chưa có bài được gắn thẻ';
+
+  @override
+  String get profileEmptyFollowers => 'Chưa có người theo dõi';
+
+  @override
+  String get profileEmptyFollowing => 'Chưa theo dõi ai';
+
+  @override
+  String get profileError => 'Không tải được trang cá nhân này';
+
+  @override
+  String get profileNotFound => 'Tài khoản này không khả dụng.';
+
+  @override
+  String get followFailed => 'Không cập nhật được. Thử lại.';
+
+  @override
+  String get followListFollowers => 'Người theo dõi';
+
+  @override
+  String get followListFollowing => 'Đang theo dõi';
+
+  @override
+  String get followListSearchHint => 'Tìm kiếm';
+
+  @override
+  String get followListEmptySearch => 'Không tìm thấy tài khoản';
+
+  @override
+  String get unfollowConfirmTitle => 'Bỏ theo dõi?';
+
+  @override
+  String unfollowConfirmBody(String username) {
+    return 'Bỏ theo dõi @$username?';
+  }
+
+  @override
+  String get unfollowConfirmAction => 'Bỏ theo dõi';
+
+  @override
+  String get withdrawConfirmTitle => 'Rút lại yêu cầu?';
+
+  @override
+  String withdrawConfirmBody(String username) {
+    return 'Rút lại yêu cầu theo dõi @$username?';
+  }
+
+  @override
+  String get withdrawConfirmAction => 'Rút lại';
+
+  @override
+  String get editName => 'Tên';
+
+  @override
+  String get editUsername => 'Tên người dùng';
+
+  @override
+  String get editPronouns => 'Đại từ nhân xưng';
+
+  @override
+  String get editWebsite => 'Trang web';
+
+  @override
+  String get editBio => 'Tiểu sử';
+
+  @override
+  String get editChangePhoto => 'Đổi ảnh đại diện';
+
+  @override
+  String get editSave => 'Lưu';
+
+  @override
+  String get editSavedAck => 'Đã cập nhật trang cá nhân.';
+
+  @override
+  String get editSaveFailed => 'Không lưu được trang cá nhân. Thử lại.';
+
+  @override
+  String get editNameRequired => 'Tên không được để trống.';
+
+  @override
+  String get editWebsiteInvalid => 'Nhập một trang web hợp lệ.';
+
+  @override
+  String get editUsernameTaken => 'Tên người dùng này đã được sử dụng.';
+
+  @override
+  String get editDiscardTitle => 'Hủy thay đổi?';
+
+  @override
+  String get editDiscardBody => 'Các thay đổi chưa lưu sẽ bị mất.';
+
+  @override
+  String get editDiscardAction => 'Hủy bỏ';
+
+  @override
+  String get commonCancel => 'Hủy';
 }

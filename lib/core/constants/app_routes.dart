@@ -41,6 +41,22 @@ abstract final class AppRoutes {
   /// Build the concrete place-page path for [placeId].
   static String placePath(String placeId) => '/places/$placeId';
 
+  // Profile & Follow (#010). The Profile tab (`profile`, declared above) is my
+  // own profile; other users + connections + edit are nav-less pushed routes
+  // (Screens 21–23).
+  static const String userProfile = '/user/:username';
+  static const String userConnections = '/user/:username/connections';
+  static const String editProfile = '/profile/edit';
+
+  /// Build the concrete other-user profile path for [username].
+  static String userProfilePath(String username) => '/user/$username';
+
+  /// Build the followers/following path for [username] (`tab` = followers|following).
+  static String userConnectionsPath(
+    String username, {
+    String tab = 'followers',
+  }) => '/user/$username/connections?tab=$tab';
+
   // Create Post — compose flow (#007), nav-less full-screen (Screens 11–13).
   static const String composePick = '/create/pick';
   static const String composeEdit = '/create/edit';

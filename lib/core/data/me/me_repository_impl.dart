@@ -48,4 +48,25 @@ class MeRepositoryImpl implements MeRepository {
     if (remote.isOk) await _dao.upsert(remote.valueOrNull!);
     return remote;
   }
+
+  @override
+  Future<Result<MeProfile>> updateProfile({
+    String? displayName,
+    String? username,
+    String? pronouns,
+    String? website,
+    String? bio,
+    String? avatarMediaId,
+  }) async {
+    final remote = await _remote.updateProfile(
+      displayName: displayName,
+      username: username,
+      pronouns: pronouns,
+      website: website,
+      bio: bio,
+      avatarMediaId: avatarMediaId,
+    );
+    if (remote.isOk) await _dao.upsert(remote.valueOrNull!);
+    return remote;
+  }
 }
