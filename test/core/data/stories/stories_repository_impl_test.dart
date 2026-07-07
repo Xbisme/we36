@@ -82,7 +82,10 @@ void main() {
   setUp(() {
     db = AppDatabase.forTesting(NativeDatabase.memory());
     api = _MockApi();
-    ownStore = OwnStoryStore();
+    // Freeze the clock just after the seeded segment (2026-07-02 11:00Z) so the
+    // 24h TTL keeps the own "Your story" reel active regardless of wall-clock —
+    // otherwise this rots the moment real time passes seed + kStoryTtl.
+    ownStore = OwnStoryStore(clock: () => DateTime.utc(2026, 7, 2, 12));
     repo = StoriesRepositoryImpl(db, api, ownStore);
   });
   tearDown(() => db.close());

@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-07-03 (#001–#009 all merged; **#009 Explore & Search ✅ merged** into `main` via PR #9 — 54/54 tasks (gate closed this session: 3 deadlocked explore widget tests + 2 drifted goldens, test-only fix), 446 tests pass. Next: **#010 Profile & Follow**.)
+> Last updated: 2026-07-07 (#001–#010 all merged; **#010 Profile & Follow ✅ merged** into `main` via PR #10 (`f2e28b1`) — 57/57 tasks (US1–US6: profile surface + optimistic follow graph + followers/following lists + viewer-side private accounts + edit profile/avatar). Next: **#011 Saved Collections**.)
 
 ---
 
@@ -163,13 +163,13 @@ Create Story     Post Detail &    Create Post      Reels
 - **Scope**: explore grid (quilted, reels markers); search users/hashtags/places with recents + clear; results tabs (Top/Accounts/Tags/Places); hashtag/location pages (follow tag, Top/Recent/Reels). MVP explore = simple non-personalized grid.
 - **Out of scope**: personalized recommendation algorithm (deferred).
 
-### Spec #010: Profile & Follow  🟡 (next)
+### Spec #010: Profile & Follow  ✅ (merged — 57/57, PR #10)
 - **Depends on**: #004, #006.
 - **Design**: Screens 20–23 (My/Other profile, Followers, Edit profile).
-- **Scope**: my + other profile (stats, bio, grid); **follow/unfollow optimistic**; followers/following lists with search; edit profile; private-account view (request to follow). Share profile link.
-- **Out of scope**: collections (#011).
+- **Scope**: my + other profile (stats, bio, Posts+Tagged grid); **follow/unfollow optimistic** (confirm-on-unfollow) with canonical relationship + own-following-count update; followers/following lists with search; edit profile + **change avatar** (pick→crop→upload via #007, writes `avatarMediaId` — completes the avatar #003 deferred); viewer-side private-account view (Follow → Requested, counts shown + lists/grid gated). Contract-driven on shipped B#010; no drift schema change (relationship = in-memory store).
+- **Out of scope**: collections (#011); approving incoming follow requests (deferred to #013/#014); professional/category/contact fields.
 
-### Spec #011: Saved Collections  ⬜
+### Spec #011: Saved Collections  🟡 (next)
 - **Depends on**: #006 (save action), #010.
 - **Design**: Screen 24 (Saved collections).
 - **Scope**: save posts into named collections; collections grid; add/remove; the profile "saved" tab.
