@@ -1,6 +1,22 @@
 # Collections API Contract (client-consumed subset of B#011)
 
-> **Derived, not authoritative.** These shapes are inferred from the We36 backend conventions already in use (#002–#010): base `/v1`, success envelope `{ "data": … }` (+ `meta` for cursors), error envelope `{ "error": { "code", "message", "details? } }` mapped by `FailureMapper` → `AppFailure`, cursor pagination via `?cursor=&limit=` → `CursorPage<T>` (`{ data:[…], meta:{ nextCursor } }`), and idempotent mutations via a client `Idempotency-Key` header. **Reconcile every path/field below against the shipped B#011 contract before implementation.** No spec requirement depends on a specific path — only on the capability.
+> **✅ RECONCILED with the shipped backend (2026-07-07).** The client (`api_endpoints.dart`, `collections_remote_data_source.dart`, `collections_repository_impl.dart`) was aligned to the actual B#011 controller after end-to-end testing. Success responses are **not** wrapped (`{ items, nextCursor, hasMore }` at top level; single objects returned bare). **Actual endpoints** (all under `/v1`):
+> | Capability | Actual route | Notes |
+> |---|---|---|
+> | Saved pile ("All saved") | `GET /me/saved` | `CursorPage<SavedItemDto>`; `SavedItemDto == ExploreItem` shape |
+> | List collections | `GET /me/collections` | `CursorPage<CollectionDto>` |
+> | Create | `POST /me/collections` `{name}` | 201 → `CollectionDto` |
+> | Get / rename / delete | `GET`/`PATCH`/`DELETE /collections/:id` | **not** under `/me`; delete → 204 |
+> | Collection items | `GET /collections/:id/items` | `CursorPage<SavedItemDto>` |
+> | Add item | `POST /collections/:id/items` `{postId}` | **204** (auto-saves the post) |
+> | Remove item | `DELETE /collections/:id/items/:postId` | 204 (does not unsave) |
+> | Full unsave | `DELETE /posts/:id/save` (#004) | cascades to all collections |
+>
+> **`CollectionDto`** = `{ id, name, itemCount, cover: MediaDto|null, createdAt, updatedAt }` — cover is a single server-**derived** `MediaDto` (mapped to one client cover ref); no `isDefault` on the wire (named collections only; "All saved" is a client-side virtual view).
+>
+> **Three deviations from this spec** (backend wins — update the spec at leisure): (1) collection **names ARE unique per owner** (case-insensitive) — create/rename on a dup → `409`/validation, not silently allowed; (2) **no set-cover endpoint** — cover is auto-derived from the newest visible item, so the "Set as cover" UI was dropped; (3) **no per-post membership endpoint** — the Save-to-collection sheet files **additively** (checkmarks don't reflect existing membership). Per-collection cap + name length come from server config.
+>
+> The rest of this file is the original **derived** draft, kept for history. **The table above is authoritative.**
 
 Shared DTO fragments (already shipped): `ExploreItemDto` → `ExploreItem` (`{ kind:"post"|"reel", post?/reel? }`), `MediaDto` → `Media`. The canonical **save toggle** (`POST`/`DELETE /posts/{id}/save`) is the shipped #004 endpoint reused as-is.
 
