@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:we36/core/constants/app_routes.dart';
+import 'package:we36/core/data/collections/saved_collection.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/router/adaptive_shell.dart';
 import 'package:we36/core/router/centered_mobile.dart';
@@ -15,6 +16,7 @@ import 'package:we36/features/auth/presentation/profile_setup/profile_setup_page
 import 'package:we36/features/auth/presentation/sign_in/sign_in_page.dart';
 import 'package:we36/features/auth/presentation/sign_up/sign_up_page.dart';
 import 'package:we36/features/auth/presentation/splash/splash_page.dart';
+import 'package:we36/features/collections/presentation/collection_detail_page.dart';
 import 'package:we36/features/compose/presentation/cubit/compose_cubit.dart';
 import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart';
 import 'package:we36/features/compose/presentation/pages/caption_page.dart';
@@ -257,6 +259,17 @@ class AppRouter {
               child: FollowListPage(username: username),
             );
           },
+        ),
+        // Saved collection detail (#011 US3) — full-screen nav-less item grid.
+        // The tapped `SavedCollection` is passed via `extra` for the title;
+        // `id == kAllSavedCollectionId` is the virtual "All saved" view. The page
+        // provides its own `CollectionDetailCubit`.
+        GoRoute(
+          path: AppRoutes.collection,
+          builder: (_, state) => CollectionDetailPage(
+            collectionId: state.pathParameters['id']!,
+            collection: state.extra as SavedCollection?,
+          ),
         ),
         // Post detail + comments (#006) — full-screen nav-less; the page itself
         // adapts to a two-column split on tablet (US6). Page-scoped CommentsCubit.

@@ -27,6 +27,7 @@ class PostCard extends StatelessWidget {
     this.onComment,
     this.onShare,
     this.onSave,
+    this.onSaveLongPress,
     this.onMore,
     super.key,
   });
@@ -50,6 +51,10 @@ class PostCard extends StatelessWidget {
   final VoidCallback? onComment;
   final VoidCallback? onShare;
   final VoidCallback? onSave;
+
+  /// Long-press the save/bookmark → "Save to collection" (#011). Optional; when
+  /// null the bookmark is tap-only (back-compatible with #004/#006).
+  final VoidCallback? onSaveLongPress;
   final VoidCallback? onMore;
 
   @override
@@ -133,11 +138,14 @@ class PostCard extends StatelessWidget {
                   onPressed: onShare,
                 ),
                 const Spacer(),
-                AppIconButton(
-                  icon: AppIcons.save,
-                  semanticLabel: 'Save',
-                  active: saved,
-                  onPressed: onSave,
+                GestureDetector(
+                  onLongPress: onSaveLongPress,
+                  child: AppIconButton(
+                    icon: AppIcons.save,
+                    semanticLabel: 'Save',
+                    active: saved,
+                    onPressed: onSave,
+                  ),
                 ),
               ],
             ),

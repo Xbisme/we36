@@ -15,6 +15,7 @@ import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_icon_button.dart';
 import 'package:we36/core/presentation/max_width_box.dart';
 import 'package:we36/core/presentation/post_card.dart';
+import 'package:we36/core/presentation/slots/save_to_collection_launcher.dart';
 import 'package:we36/core/presentation/stories_rail.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/presentation/wordmark.dart';
@@ -355,6 +356,9 @@ class _PostTile extends StatelessWidget {
             _onMutation(context, cubit.toggleLike(post), l10n.feedLikeFailed),
         onSave: () =>
             _onMutation(context, cubit.toggleSave(post), l10n.feedSaveFailed),
+        onSaveLongPress: () => unawaited(
+          getIt<SaveToCollectionLauncher>().open(context, post.id),
+        ),
         onComment: () => context.push(AppRoutes.postDetailPath(post.id)),
       ),
     );

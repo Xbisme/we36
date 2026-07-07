@@ -920,4 +920,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonCancel => 'Cancel';
+
+  @override
+  String get savedTitle => 'Saved';
+
+  @override
+  String get savedAllSaved => 'All saved';
+
+  @override
+  String get profileTabSaved => 'Saved';
+
+  @override
+  String collectionSavedCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count saved',
+      one: '1 saved',
+      zero: '0 saved',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get collectionNew => 'New collection';
+
+  @override
+  String get saveToCollection => 'Save to collection';
+
+  @override
+  String get saveToCollectionTitle => 'Save to collection';
+
+  @override
+  String get collectionCreateTitle => 'New collection';
+
+  @override
+  String get collectionRenameTitle => 'Rename collection';
+
+  @override
+  String get collectionNameHint => 'Collection name';
+
+  @override
+  String get collectionNameEmpty => 'Name can\'t be empty.';
+
+  @override
+  String get collectionNameTooLong => 'Name is too long.';
+
+  @override
+  String get collectionCreateAction => 'Create';
+
+  @override
+  String get collectionRename => 'Rename';
+
+  @override
+  String get collectionSetCover => 'Set cover';
+
+  @override
+  String get collectionRemoveItem => 'Remove from collection';
+
+  @override
+  String get collectionDelete => 'Delete collection';
+
+  @override
+  String get collectionDeleteTitle => 'Delete collection?';
+
+  @override
+  String collectionDeleteBody(String name) {
+    return '\"$name\" will be deleted. Your saved posts stay in All saved.';
+  }
+
+  @override
+  String get collectionDeleteAction => 'Delete';
+
+  @override
+  String get unsaveConfirmTitle => 'Remove from Saved?';
+
+  @override
+  String unsaveConfirmBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'This will also remove it from $count collections.',
+      one: 'This will also remove it from 1 collection.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get unsaveConfirmAction => 'Remove';
+
+  @override
+  String get savedEmptyTitle => 'Nothing saved yet';
+
+  @override
+  String get savedEmptyBody => 'Save posts and reels to find them here.';
+
+  @override
+  String get collectionEmpty => 'No posts in this collection yet';
+
+  @override
+  String get savedError => 'Couldn\'t load your saved collections';
+
+  @override
+  String get collectionError => 'Couldn\'t load this collection';
+
+  @override
+  String get saveFailed => 'Couldn\'t save. Try again.';
+
+  @override
+  String get collectionCreateFailed =>
+      'Couldn\'t create the collection. Try again.';
+
+  @override
+  String get collectionUpdateFailed =>
+      'Couldn\'t update the collection. Try again.';
+
+  @override
+  String get collectionDeleteFailed =>
+      'Couldn\'t delete the collection. Try again.';
 }

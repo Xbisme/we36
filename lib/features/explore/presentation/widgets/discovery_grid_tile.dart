@@ -9,10 +9,18 @@ import 'package:we36/core/utils/l10n_extension.dart';
 /// overlay for reels. Images decode at a bounded resolution (Constitution II).
 /// Tapping opens the item (handled by the page).
 class DiscoveryGridTile extends StatelessWidget {
-  const DiscoveryGridTile({required this.item, required this.onTap, super.key});
+  const DiscoveryGridTile({
+    required this.item,
+    required this.onTap,
+    this.onLongPress,
+    super.key,
+  });
 
   final ExploreItem item;
   final VoidCallback onTap;
+
+  /// Optional long-press (#011 collection detail: remove / unsave affordance).
+  final VoidCallback? onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +35,7 @@ class DiscoveryGridTile extends StatelessWidget {
       excludeSemantics: true,
       child: GestureDetector(
         onTap: onTap,
+        onLongPress: onLongPress,
         child: ColoredBox(
           color: tokens.surface2,
           child: Stack(

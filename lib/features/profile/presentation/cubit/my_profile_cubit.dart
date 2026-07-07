@@ -105,6 +105,13 @@ class MyProfileCubit extends Cubit<MyProfileState> {
     if (tab == _tab) return;
     final s = state;
     if (s is! MyProfileLoaded || _userId == null) return;
+    // The Saved tab (#011) has no profile grid — its body is the Saved-
+    // collections view (own `SavedTabSlot`/cubit), so just switch the tab.
+    if (tab == ProfileTab.saved) {
+      _tab = tab;
+      emit(s.copyWith(tab: tab));
+      return;
+    }
     _tab = tab;
     _cursor = null;
     _hasMore = true;

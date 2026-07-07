@@ -11,11 +11,15 @@ class ProfileTabBar extends StatelessWidget {
   const ProfileTabBar({
     required this.active,
     required this.onSelect,
+    this.includeSaved = false,
     super.key,
   });
 
   final ProfileTab active;
   final ValueChanged<ProfileTab> onSelect;
+
+  /// Show the owner-only **Saved** tab (#011) — only on my own profile.
+  final bool includeSaved;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,12 @@ class ProfileTabBar extends StatelessWidget {
           selected: active == ProfileTab.posts,
           onTap: () => onSelect(ProfileTab.posts),
         ),
+        if (includeSaved)
+          _Tab(
+            label: l10n.profileTabSaved,
+            selected: active == ProfileTab.saved,
+            onTap: () => onSelect(ProfileTab.saved),
+          ),
         _Tab(
           label: l10n.profileTabTagged,
           selected: active == ProfileTab.tagged,

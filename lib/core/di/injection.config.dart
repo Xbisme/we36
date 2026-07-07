@@ -21,6 +21,14 @@ import 'package:we36/core/data/auth/auth_repository_impl.dart' as _i235;
 import 'package:we36/core/data/auth/fake_auth_backend.dart' as _i489;
 import 'package:we36/core/data/auth/fake_auth_repository.dart' as _i548;
 import 'package:we36/core/data/cache/app_database.dart' as _i270;
+import 'package:we36/core/data/collections/collections_remote_data_source.dart'
+    as _i768;
+import 'package:we36/core/data/collections/collections_repository.dart'
+    as _i603;
+import 'package:we36/core/data/collections/collections_repository_impl.dart'
+    as _i776;
+import 'package:we36/core/data/collections/fake_collections_repository.dart'
+    as _i617;
 import 'package:we36/core/data/comments/comments_remote_data_source.dart'
     as _i814;
 import 'package:we36/core/data/comments/comments_repository.dart' as _i552;
@@ -61,6 +69,9 @@ import 'package:we36/core/data/user/fake_user_repository.dart' as _i156;
 import 'package:we36/core/data/user/user_remote_data_source.dart' as _i528;
 import 'package:we36/core/data/user/user_repository.dart' as _i247;
 import 'package:we36/core/data/user/user_repository_impl.dart' as _i514;
+import 'package:we36/core/presentation/slots/save_to_collection_launcher.dart'
+    as _i943;
+import 'package:we36/core/presentation/slots/saved_tab_slot.dart' as _i860;
 import 'package:we36/core/presentation/toast.dart' as _i857;
 import 'package:we36/core/router/app_router.dart' as _i485;
 import 'package:we36/core/services/image_processing_service.dart' as _i12;
@@ -104,6 +115,26 @@ import 'package:we36/features/auth/presentation/sign_in/sign_in_cubit.dart'
     as _i942;
 import 'package:we36/features/auth/presentation/sign_up/sign_up_cubit.dart'
     as _i30;
+import 'package:we36/features/collections/domain/usecases/collection_items_usecases.dart'
+    as _i706;
+import 'package:we36/features/collections/domain/usecases/collections_usecases.dart'
+    as _i1008;
+import 'package:we36/features/collections/domain/usecases/manage_collection_usecases.dart'
+    as _i416;
+import 'package:we36/features/collections/domain/usecases/save_to_collection_usecases.dart'
+    as _i451;
+import 'package:we36/features/collections/presentation/cubit/collection_detail_cubit.dart'
+    as _i192;
+import 'package:we36/features/collections/presentation/cubit/collection_edit_cubit.dart'
+    as _i142;
+import 'package:we36/features/collections/presentation/cubit/collections_cubit.dart'
+    as _i556;
+import 'package:we36/features/collections/presentation/cubit/save_to_collection_cubit.dart'
+    as _i1059;
+import 'package:we36/features/collections/presentation/save_to_collection_launcher_impl.dart'
+    as _i805;
+import 'package:we36/features/collections/presentation/saved_tab_slot_impl.dart'
+    as _i1008;
 import 'package:we36/features/compose/data/compose_draft_store.dart' as _i988;
 import 'package:we36/features/compose/data/create_post_repository_fake.dart'
     as _i792;
@@ -238,6 +269,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i988.ComposeDraftStore>(
       () => _i988.ComposeDraftStore(gh<_i270.AppDatabase>()),
     );
+    gh.lazySingleton<_i943.SaveToCollectionLauncher>(
+      () => const _i805.SaveToCollectionLauncherImpl(),
+    );
     gh.lazySingleton<_i299.LocalFlags>(() => _i299.LocalFlagsImpl());
     gh.factory<_i772.GalleryCubit>(
       () => _i772.GalleryCubit(gh<_i613.PhotoLibraryService>()),
@@ -246,6 +280,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i858.StoryGalleryCubit(gh<_i613.PhotoLibraryService>()),
     );
     gh.lazySingleton<_i242.AuthEventsSink>(() => _i242.AuthEvents());
+    gh.lazySingleton<_i860.SavedTabSlot>(() => const _i1008.SavedTabSlotImpl());
     gh.factory<_i897.WatchOwnStoryChanges>(
       () => _i897.WatchOwnStoryChanges(gh<_i767.OwnStoryStore>()),
     );
@@ -271,6 +306,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i124.ProfileRepository>(
       () => _i214.FakeProfileRepository(gh<_i1059.RelationshipStore>()),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i603.CollectionsRepository>(
+      () => _i617.FakeCollectionsRepository(),
       registerFor: {_fake},
     );
     gh.lazySingleton<_i547.MediaUploadService>(
@@ -352,6 +391,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i1043.AuthRemoteDataSource>(
       () => _i1043.AuthRemoteDataSource(gh<_i784.ApiClient>()),
+    );
+    gh.lazySingleton<_i768.CollectionsRemoteDataSource>(
+      () => _i768.CollectionsRemoteDataSource(gh<_i784.ApiClient>()),
     );
     gh.lazySingleton<_i814.CommentsRemoteDataSource>(
       () => _i814.CommentsRemoteDataSource(gh<_i784.ApiClient>()),
@@ -689,6 +731,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i140.WatchPost>(
       () => _i140.WatchPost(gh<_i850.FeedRepository>()),
     );
+    gh.lazySingleton<_i603.CollectionsRepository>(
+      () => _i776.CollectionsRepositoryImpl(
+        gh<_i768.CollectionsRemoteDataSource>(),
+        gh<_i270.AppDatabase>(),
+        gh<_i850.FeedRepository>(),
+      ),
+      registerFor: {_real},
+    );
     gh.factory<_i812.RecentsCubit>(
       () => _i812.RecentsCubit(
         gh<_i488.GetRecents>(),
@@ -826,10 +876,72 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
+    gh.factory<_i706.LoadCollectionItems>(
+      () => _i706.LoadCollectionItems(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i706.FullUnsave>(
+      () => _i706.FullUnsave(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i1008.WatchCollections>(
+      () => _i1008.WatchCollections(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i1008.LoadCollections>(
+      () => _i1008.LoadCollections(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i416.CreateCollection>(
+      () => _i416.CreateCollection(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i416.RenameCollection>(
+      () => _i416.RenameCollection(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i416.DeleteCollection>(
+      () => _i416.DeleteCollection(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i416.SetCollectionCover>(
+      () => _i416.SetCollectionCover(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i451.LoadPicker>(
+      () => _i451.LoadPicker(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i451.FileIntoCollection>(
+      () => _i451.FileIntoCollection(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i451.UnfileFromCollection>(
+      () => _i451.UnfileFromCollection(gh<_i603.CollectionsRepository>()),
+    );
+    gh.factory<_i1059.SaveToCollectionCubit>(
+      () => _i1059.SaveToCollectionCubit(
+        gh<_i451.LoadPicker>(),
+        gh<_i451.FileIntoCollection>(),
+        gh<_i451.UnfileFromCollection>(),
+        gh<_i416.CreateCollection>(),
+      ),
+    );
     gh.factory<_i764.ForgotPasswordCubit>(
       () => _i764.ForgotPasswordCubit(
         gh<_i95.RequestPasswordReset>(),
         gh<_i894.ResetPassword>(),
+      ),
+    );
+    gh.factory<_i556.CollectionsCubit>(
+      () => _i556.CollectionsCubit(
+        gh<_i1008.WatchCollections>(),
+        gh<_i1008.LoadCollections>(),
+      ),
+    );
+    gh.factory<_i192.CollectionDetailCubit>(
+      () => _i192.CollectionDetailCubit(
+        gh<_i706.LoadCollectionItems>(),
+        gh<_i451.UnfileFromCollection>(),
+        gh<_i706.FullUnsave>(),
+      ),
+    );
+    gh.factory<_i142.CollectionEditCubit>(
+      () => _i142.CollectionEditCubit(
+        gh<_i416.CreateCollection>(),
+        gh<_i416.RenameCollection>(),
+        gh<_i416.DeleteCollection>(),
+        gh<_i416.SetCollectionCover>(),
       ),
     );
     gh.factory<_i30.SignUpCubit>(() => _i30.SignUpCubit(gh<_i601.SignUp>()));

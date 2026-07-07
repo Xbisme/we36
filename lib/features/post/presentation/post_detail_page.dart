@@ -14,6 +14,7 @@ import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/presentation/post_card.dart';
+import 'package:we36/core/presentation/slots/save_to_collection_launcher.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/presentation/top_bar.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
@@ -389,6 +390,9 @@ class _PostHeader extends StatelessWidget {
         ),
         onSave: () => unawaited(
           _run(context, cubit.togglePostSave, l10n.commentLikeFailed),
+        ),
+        onSaveLongPress: () => unawaited(
+          getIt<SaveToCollectionLauncher>().open(context, post.id),
         ),
         onShare: () => getIt<ToastService>().show(
           context,

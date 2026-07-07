@@ -105,4 +105,19 @@ abstract final class ApiEndpoints {
   static String placePage(String id) => '/places/$id';
   static const String searchRecents = '/me/search-recents';
   static String searchRecent(String id) => '/me/search-recents/$id';
+
+  /// Saved Collections (#011, B#011 — reconciled with the shipped backend). The
+  /// saved pile (`GET /me/saved`) + collections list/create (`GET`/`POST
+  /// /me/collections`) are user-scoped; a single collection + its items are
+  /// **not** under `/me` (`GET`/`PATCH`/`DELETE /collections/:id`, `GET`/`POST
+  /// /collections/:id/items`, `DELETE /collections/:id/items/:postId`). Add-item
+  /// takes `{postId}` in the body (auto-saves). Cover is server-derived (no
+  /// set-cover endpoint); there is no per-post membership endpoint. Full unsave
+  /// reuses [postSave] (#004).
+  static const String meSaved = '/me/saved';
+  static const String meCollections = '/me/collections';
+  static String collection(String id) => '/collections/$id';
+  static String collectionItems(String id) => '/collections/$id/items';
+  static String collectionItem(String id, String postId) =>
+      '/collections/$id/items/$postId';
 }

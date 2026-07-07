@@ -1861,6 +1861,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get commonCancel;
+
+  /// No description provided for @savedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get savedTitle;
+
+  /// No description provided for @savedAllSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'All saved'**
+  String get savedAllSaved;
+
+  /// No description provided for @profileTabSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get profileTabSaved;
+
+  /// No description provided for @collectionSavedCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{0 saved} =1{1 saved} other{{count} saved}}'**
+  String collectionSavedCount(int count);
+
+  /// No description provided for @collectionNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New collection'**
+  String get collectionNew;
+
+  /// No description provided for @saveToCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to collection'**
+  String get saveToCollection;
+
+  /// No description provided for @saveToCollectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to collection'**
+  String get saveToCollectionTitle;
+
+  /// No description provided for @collectionCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New collection'**
+  String get collectionCreateTitle;
+
+  /// No description provided for @collectionRenameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename collection'**
+  String get collectionRenameTitle;
+
+  /// No description provided for @collectionNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Collection name'**
+  String get collectionNameHint;
+
+  /// No description provided for @collectionNameEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Name can\'t be empty.'**
+  String get collectionNameEmpty;
+
+  /// No description provided for @collectionNameTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is too long.'**
+  String get collectionNameTooLong;
+
+  /// No description provided for @collectionCreateAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get collectionCreateAction;
+
+  /// No description provided for @collectionRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get collectionRename;
+
+  /// No description provided for @collectionSetCover.
+  ///
+  /// In en, this message translates to:
+  /// **'Set cover'**
+  String get collectionSetCover;
+
+  /// No description provided for @collectionRemoveItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from collection'**
+  String get collectionRemoveItem;
+
+  /// No description provided for @collectionDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete collection'**
+  String get collectionDelete;
+
+  /// No description provided for @collectionDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete collection?'**
+  String get collectionDeleteTitle;
+
+  /// No description provided for @collectionDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{name}\" will be deleted. Your saved posts stay in All saved.'**
+  String collectionDeleteBody(String name);
+
+  /// No description provided for @collectionDeleteAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get collectionDeleteAction;
+
+  /// No description provided for @unsaveConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from Saved?'**
+  String get unsaveConfirmTitle;
+
+  /// No description provided for @unsaveConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{This will also remove it from 1 collection.} other{This will also remove it from {count} collections.}}'**
+  String unsaveConfirmBody(int count);
+
+  /// No description provided for @unsaveConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get unsaveConfirmAction;
+
+  /// No description provided for @savedEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing saved yet'**
+  String get savedEmptyTitle;
+
+  /// No description provided for @savedEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Save posts and reels to find them here.'**
+  String get savedEmptyBody;
+
+  /// No description provided for @collectionEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No posts in this collection yet'**
+  String get collectionEmpty;
+
+  /// No description provided for @savedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your saved collections'**
+  String get savedError;
+
+  /// No description provided for @collectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this collection'**
+  String get collectionError;
+
+  /// No description provided for @saveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t save. Try again.'**
+  String get saveFailed;
+
+  /// No description provided for @collectionCreateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t create the collection. Try again.'**
+  String get collectionCreateFailed;
+
+  /// No description provided for @collectionUpdateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update the collection. Try again.'**
+  String get collectionUpdateFailed;
+
+  /// No description provided for @collectionDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t delete the collection. Try again.'**
+  String get collectionDeleteFailed;
 }
 
 class _AppLocalizationsDelegate
