@@ -77,6 +77,18 @@ abstract final class AppRoutes {
   // Create Reel — compose flow (#008), nav-less full-screen (contextual Create).
   static const String reelCompose = '/create/reel';
 
+  // Direct Messages (#012), Screens 25–28. The Messages tab (`messages`, declared
+  // above) shows the conversation list; a conversation opens as a nav-less pushed
+  // thread on phone (a swapped detail pane on tablet — same route/state). New
+  // message is a pushed compose route. NOTE: register `newMessage` BEFORE
+  // `messageThread` in the router so `/messages/new` is not captured by `:id`.
+  static const String newMessage = '/messages/new';
+  static const String messageThread = '/messages/:id';
+
+  /// Build the chat-thread path for [conversationId] (deep-linkable `we36://`).
+  static String messageThreadPath(String conversationId) =>
+      '/messages/$conversationId';
+
   // Dev harness (dev flavor only)
   static const String devGallery = '/dev/gallery';
   static const String devStates = '/dev/states';

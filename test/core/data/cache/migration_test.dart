@@ -75,11 +75,25 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 8', () {
+    test('schemaVersion is 9', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 8);
+      expect(db.schemaVersion, 9);
       addTearDown(db.close);
     });
+
+    test(
+      'onUpgrade(from<9) additively creates the messaging tables (#012)',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(db.close);
+        // Simulate a v8 DB upgrading to v9: Conversations + Messages are added.
+        await db.migration.onUpgrade(Migrator(db), 8, 9);
+        // Write+read round-trips prove the tables exist and are usable.
+        await db.messagingDao.markConversationRead('none');
+        expect(await db.messagingDao.getConversations(), isEmpty);
+        expect(await db.messagingDao.getThread('none'), isEmpty);
+      },
+    );
 
     test(
       'onUpgrade(from<8) additively creates the saved-collections table (#011)',

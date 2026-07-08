@@ -1,0 +1,216 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:we36/core/constants/app_routes.dart';
+import 'package:we36/core/data/feed/post.dart' show UserSummary;
+import 'package:we36/core/data/messaging/message.dart' show PostRef;
+import 'package:we36/core/di/injection.dart';
+import 'package:we36/core/presentation/app_icon.dart';
+import 'package:we36/core/presentation/app_icon_button.dart';
+import 'package:we36/core/presentation/app_search_bar.dart';
+import 'package:we36/core/presentation/avatar.dart';
+import 'package:we36/core/theme/app_colors_x.dart';
+import 'package:we36/core/theme/app_dimens.dart';
+import 'package:we36/core/theme/app_typography.dart';
+import 'package:we36/core/utils/l10n_extension.dart';
+import 'package:we36/features/messaging/presentation/cubit/new_message_cubit.dart';
+import 'package:we36/features/messaging/presentation/cubit/new_message_state.dart';
+
+/// The new-message composer (#012 US4, Screen 27): a "To:" people search over
+/// follows/recents; selecting a person opens the existing conversation or starts
+/// a new one (no duplicate, SC-007).
+class NewMessagePage extends StatelessWidget {
+  const NewMessagePage({this.pendingShare, super.key});
+
+  /// When set (share-to-DM), the post is filed into the conversation on select.
+  final PostRef? pendingShare;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) {
+        final cubit = getIt<NewMessageCubit>();
+        unawaited(cubit.load());
+        return cubit;
+      },
+      child: _NewMessageView(pendingShare: pendingShare),
+    );
+  }
+}
+
+class _NewMessageView extends StatelessWidget {
+  const _NewMessageView({this.pendingShare});
+
+  final PostRef? pendingShare;
+
+  Future<void> _select(BuildContext context, UserSummary user) async {
+    final cubit = context.read<NewMessageCubit>();
+    final res = await cubit.openConversation(
+      user.id,
+      pendingShare: pendingShare,
+    );
+    final convo = res.valueOrNull;
+    if (convo == null || !context.mounted) return;
+    // Replace the compose route with the opened thread.
+    context.pushReplacement(
+      AppRoutes.messageThreadPath(convo.id),
+      extra: convo,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final tokens = context.tokens;
+
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                AppIconButton(
+                  icon: AppIcons.close,
+                  semanticLabel: MaterialLocalizations.of(
+                    context,
+                  ).closeButtonTooltip,
+                  onPressed: () => Navigator.of(context).maybePop(),
+                ),
+                Expanded(
+                  child: Text(
+                    l10n.dmNewMessage,
+                    style: AppTypography.label.copyWith(
+                      color: tokens.textPrimary,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 48),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.sm,
+              ),
+              child: AppSearchBar(
+                hint: l10n.dmTo,
+                autofocus: true,
+                onChanged: (q) => context.read<NewMessageCubit>().search(q),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  l10n.dmSuggested,
+                  style: AppTypography.caption.copyWith(
+                    color: tokens.textSecondary,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: BlocBuilder<NewMessageCubit, NewMessageState>(
+                builder: (context, state) {
+                  return switch (state) {
+                    NewMessageInitial() || NewMessageLoading() => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    NewMessageError() => Center(
+                      child: Text(
+                        l10n.dmSearchEmpty,
+                        style: AppTypography.body16.copyWith(
+                          color: tokens.textSecondary,
+                        ),
+                      ),
+                    ),
+                    NewMessageLoaded(:final people) =>
+                      people.isEmpty
+                          ? Center(
+                              child: Text(
+                                l10n.dmSearchEmpty,
+                                style: AppTypography.body16.copyWith(
+                                  color: tokens.textSecondary,
+                                ),
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: people.length,
+                              itemBuilder: (context, i) {
+                                final u = people[i];
+                                return _PersonRow(
+                                  user: u,
+                                  onTap: () => _select(context, u),
+                                );
+                              },
+                            ),
+                  };
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PersonRow extends StatelessWidget {
+  const _PersonRow({required this.user, required this.onTap});
+
+  final UserSummary user;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = context.tokens;
+    final name = user.displayName ?? user.username ?? '';
+    final avatarUrl = user.avatarUrl;
+    return Semantics(
+      button: true,
+      label: name,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.sm,
+          ),
+          child: Row(
+            children: [
+              Avatar(
+                size: 44,
+                image: avatarUrl == null ? null : NetworkImage(avatarUrl),
+                semanticLabel: name,
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: AppTypography.label.copyWith(
+                        color: tokens.textPrimary,
+                      ),
+                    ),
+                    if (user.username != null)
+                      Text(
+                        '@${user.username}',
+                        style: AppTypography.caption.copyWith(
+                          color: tokens.textTertiary,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

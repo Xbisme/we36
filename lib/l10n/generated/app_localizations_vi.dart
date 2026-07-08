@@ -1033,4 +1033,86 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get collectionDeleteFailed => 'Không xóa được bộ sưu tập. Thử lại.';
+
+  @override
+  String get dmTitle => 'Tin nhắn';
+
+  @override
+  String get dmNewMessage => 'Tin nhắn mới';
+
+  @override
+  String get dmActiveNow => 'Đang hoạt động';
+
+  @override
+  String get dmTyping => 'đang nhập…';
+
+  @override
+  String get dmMessageHint => 'Nhắn tin…';
+
+  @override
+  String get dmTo => 'Đến:';
+
+  @override
+  String get dmSuggested => 'Gợi ý';
+
+  @override
+  String get dmSearchConversations => 'Tìm kiếm';
+
+  @override
+  String get dmSending => 'Đang gửi';
+
+  @override
+  String get dmSent => 'Đã gửi';
+
+  @override
+  String get dmDelivered => 'Đã nhận';
+
+  @override
+  String get dmSeen => 'Đã xem';
+
+  @override
+  String get dmFailed => 'Chưa gửi được';
+
+  @override
+  String get dmRetry => 'Thử lại';
+
+  @override
+  String get dmPhoto => 'Ảnh';
+
+  @override
+  String get dmSticker => 'Nhãn dán';
+
+  @override
+  String get dmSharedPost => 'Đã chia sẻ một bài viết';
+
+  @override
+  String get dmSharedUnavailable => 'Nội dung không khả dụng';
+
+  @override
+  String get dmEmptyTitle => 'Chưa có tin nhắn';
+
+  @override
+  String get dmEmptyBody =>
+      'Bắt đầu trò chuyện từ trang cá nhân của ai đó hoặc nhấn + để gửi tin nhắn mới.';
+
+  @override
+  String get dmThreadEmpty => 'Chào một câu nào 👋';
+
+  @override
+  String get dmSearchEmpty => 'Không tìm thấy ai';
+
+  @override
+  String get dmError => 'Không tải được tin nhắn';
+
+  @override
+  String get dmThreadError => 'Không tải được cuộc trò chuyện này';
+
+  @override
+  String get dmOffline => 'Đang kết nối…';
+
+  @override
+  String get dmSendFailed => 'Không gửi được. Nhấn để thử lại.';
+
+  @override
+  String get dmBlocked => 'Bạn không thể nhắn tin cho tài khoản này.';
 }

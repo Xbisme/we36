@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:we36/core/constants/app_breakpoints.dart';
 import 'package:we36/core/data/comments/comment.dart';
 import 'package:we36/core/data/feed/post.dart';
+import 'package:we36/core/data/messaging/message.dart' show PostKind, PostRef;
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/domain/app_failure.dart';
 import 'package:we36/core/presentation/action_sheet.dart';
@@ -14,6 +15,7 @@ import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/presentation/post_card.dart';
+import 'package:we36/core/presentation/slots/messaging_launcher.dart';
 import 'package:we36/core/presentation/slots/save_to_collection_launcher.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/presentation/top_bar.dart';
@@ -394,9 +396,13 @@ class _PostHeader extends StatelessWidget {
         onSaveLongPress: () => unawaited(
           getIt<SaveToCollectionLauncher>().open(context, post.id),
         ),
-        onShare: () => getIt<ToastService>().show(
+        onShare: () => getIt<MessagingLauncher>().shareToDm(
           context,
-          message: l10n.reelShareAck,
+          PostRef(
+            id: post.id,
+            kind: PostKind.post,
+            authorName: post.author.username,
+          ),
         ),
       ),
     );
