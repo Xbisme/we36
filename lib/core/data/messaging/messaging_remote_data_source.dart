@@ -19,21 +19,25 @@ class MessagingRemoteDataSource {
 
   final ApiClient _api;
 
+  /// [filter] partitions the inbox: `primary` (default, accepted) or `requests`
+  /// (pending — messages from people you don't follow). The client lists both
+  /// (no separate requests-inbox in v1.0).
   Future<Result<CursorPage<Conversation>>> listConversations({
     String? cursor,
+    String filter = 'primary',
   }) => _api.get<CursorPage<Conversation>>(
-    ApiEndpoints.meConversations,
-    query: _pageQuery(cursor),
+    ApiEndpoints.conversations,
+    query: {'filter': filter, ...?_pageQuery(cursor)},
     decode: (data) => CursorPage<Conversation>.fromJson(
       (data as Map).cast<String, dynamic>(),
       conversationFromWire,
     ),
   );
 
-  Future<Result<Conversation>> openOrStart(String participantUserId) =>
+  Future<Result<Conversation>> openOrStart(String userId) =>
       _api.post<Conversation>(
         ApiEndpoints.conversations,
-        body: {'participantUserId': participantUserId},
+        body: {'userId': userId},
         idempotent: true,
         decode: (data) =>
             conversationFromWire((data as Map).cast<String, dynamic>()),
@@ -41,6 +45,7 @@ class MessagingRemoteDataSource {
 
   Future<Result<CursorPage<Message>>> history(
     String conversationId, {
+    required String currentUserId,
     String? cursor,
   }) => _api.get<CursorPage<Message>>(
     ApiEndpoints.conversationMessages(conversationId),
@@ -49,14 +54,16 @@ class MessagingRemoteDataSource {
       (data as Map).cast<String, dynamic>(),
       (item) => messageFromWire(
         item,
-        isMine: item['isMine'] as bool? ?? false,
+        isMine: item['senderId'] == currentUserId,
         conversationId: conversationId,
       ),
     ),
   );
 
-  /// Send a message. [content] is the kind-specific body (`{body}` / `{mediaId}`
-  /// / `{postId,postKind}` / `{glyphId}`). Returns the persisted message.
+  /// Send a message. [content] is the flat kind-specific body (`{body}` /
+  /// `{mediaId}` / `{sharedPostId}` / `{stickerId}`). Idempotency rides the
+  /// `Idempotency-Key` header (the client key); the wire body carries no key.
+  /// Returns the persisted message.
   Future<Result<Message>> send(
     String conversationId, {
     required String clientKey,
@@ -64,7 +71,7 @@ class MessagingRemoteDataSource {
     required Map<String, dynamic> content,
   }) => _api.post<Message>(
     ApiEndpoints.conversationMessages(conversationId),
-    body: {'clientKey': clientKey, 'kind': kind.name, 'content': content},
+    body: {'kind': kindToWire(kind), ...content},
     idempotencyKey: clientKey,
     decode: (data) => messageFromWire(
       (data as Map).cast<String, dynamic>(),

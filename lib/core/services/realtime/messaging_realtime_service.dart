@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/cache/daos/messaging_dao.dart';
+import 'package:we36/core/data/messaging/conversation.dart';
 import 'package:we36/core/data/messaging/message.dart';
 import 'package:we36/core/data/messaging/messaging_dto.dart';
 import 'package:we36/core/data/realtime/realtime_client.dart';
@@ -64,17 +65,17 @@ class MessagingRealtimeService {
         case MessageNew(:final conversationId, :final message):
           await _onMessageNew(conversationId, message);
         case MessageDelivered(:final messageId):
+          // Not emitted by B#012 (sent → read only); handled for forward-compat.
           await _dao.advanceDelivery(
             serverId: messageId,
             state: DeliveryState.delivered,
           );
-        case MessageReadEvent(:final messageId):
-          await _dao.advanceDelivery(
-            serverId: messageId,
-            state: DeliveryState.read,
-          );
-        case TypingInbound(:final conversationId):
-          _onTyping(conversationId);
+        case MessageReadEvent(:final conversationId):
+          // The peer read the thread → mark my sent messages read (the receipt
+          // payload is `upToMessageId`; we mark the whole thread read for me).
+          await _dao.markMineRead(conversationId);
+        case TypingInbound(:final conversationId, :final isTyping):
+          _onTyping(conversationId, isTyping: isTyping);
         case PresenceUpdate(:final userId, :final online):
           _onPresence(userId, online: online);
         case UnknownInbound() || NotificationNew():
@@ -101,38 +102,58 @@ class MessagingRealtimeService {
     // Dedupe by server id (reconnect replay → exactly once, SC-004).
     if (await _dao.hasServerMessage(serverId)) return;
 
+    // Skip the server's echo of my own send — the REST send path already holds
+    // it (keyed by its client key); re-inserting here would duplicate it and
+    // (with isMine=false) render it on the wrong side.
+    final me = await _db.meProfileDao.get();
+    if (me != null && raw['senderId'] == me.id) return;
+
     final incoming = messageFromWire(
       raw,
       isMine: false,
       conversationId: conversationId,
     );
-
-    // If this echoes my own optimistic send (same clientKey already cached),
-    // reconcile that row to `sent` instead of inserting a second bubble.
-    final clientKey = raw['clientKey'] as String?;
-    if (clientKey != null && await _dao.getByClientKey(clientKey) != null) {
-      await _dao.advanceDelivery(
-        clientKey: clientKey,
-        state: DeliveryState.sent,
-      );
-      return;
-    }
-
     await _dao.upsertMessage(
       incoming.copyWith(deliveryState: DeliveryState.read),
     );
-    // Bump the conversation (preview + activity + unread) if it is cached.
-    await _dao.bumpForInbound(
-      conversationId,
-      at: incoming.createdAt,
-      preview: incoming.previewBody,
-    );
+
+    final convo = await _dao.getConversation(conversationId);
+    if (convo != null) {
+      // Bump the cached conversation (preview + activity + unread).
+      await _dao.bumpForInbound(
+        conversationId,
+        at: incoming.createdAt,
+        preview: incoming.previewBody,
+      );
+    } else {
+      // A first message from a not-yet-cached peer (e.g. a new request) — create
+      // the conversation row from the message's sender so it appears live in the
+      // list without a manual refresh.
+      final sender = (raw['sender'] as Map?)?.cast<String, dynamic>();
+      if (sender != null) {
+        await _dao.upsertConversation(
+          Conversation(
+            id: conversationId,
+            participant: userSummaryFromDto(sender),
+            lastActivityAt: incoming.createdAt,
+            unreadCount: 1,
+            lastMessagePreview: incoming.previewBody,
+          ),
+        );
+      }
+    }
   }
 
-  void _onTyping(String conversationId) {
+  void _onTyping(String conversationId, {required bool isTyping}) {
+    _typingTimers[conversationId]?.cancel();
+    if (!isTyping) {
+      // Honor an explicit typing.stop — clear immediately.
+      _typingConversationIds.remove(conversationId);
+      if (!_typing.isClosed) _typing.add(Set.of(_typingConversationIds));
+      return;
+    }
     _typingConversationIds.add(conversationId);
     if (!_typing.isClosed) _typing.add(Set.of(_typingConversationIds));
-    _typingTimers[conversationId]?.cancel();
     _typingTimers[conversationId] = Timer(_typingTtl, () {
       _typingConversationIds.remove(conversationId);
       if (!_typing.isClosed) _typing.add(Set.of(_typingConversationIds));

@@ -105,25 +105,50 @@ class MessagingDao extends DatabaseAccessor<AppDatabase>
     return (await query.get()).map(_toMessage).toList();
   }
 
-  /// Upsert a single message (optimistic insert / reconcile / inbound) — dedupe
-  /// by [Message.clientKey].
-  Future<void> upsertMessage(Message m) =>
-      into(messages).insertOnConflictUpdate(_messageCompanion(m));
+  /// Upsert a single message. Deduped by **server id when present** (a server
+  /// echo / history reload of an optimistic send carries the same `serverId` but
+  /// a different `clientKey` — reuse the existing row's `clientKey` so it merges
+  /// in place instead of duplicating), else by [Message.clientKey].
+  Future<void> upsertMessage(Message m) async {
+    final serverId = m.serverId;
+    if (serverId != null) {
+      // Use get() (not getSingleOrNull) — a device that accumulated duplicates
+      // before this dedup landed can have >1 row per serverId; collapse them.
+      final existing = await (select(
+        messages,
+      )..where((t) => t.serverId.equals(serverId))).get();
+      if (existing.isNotEmpty) {
+        final keep = existing.first.clientKey;
+        if (existing.length > 1) {
+          await (delete(messages)..where(
+                (t) =>
+                    t.serverId.equals(serverId) &
+                    t.clientKey.equals(keep).not(),
+              ))
+              .go();
+        }
+        await into(messages).insertOnConflictUpdate(
+          _messageCompanion(m.copyWith(clientKey: keep)),
+        );
+        return;
+      }
+    }
+    await into(messages).insertOnConflictUpdate(_messageCompanion(m));
+  }
 
-  /// Upsert many messages (history page reconcile).
-  Future<void> upsertMessages(List<Message> list) => batch(
-    (b) => b.insertAllOnConflictUpdate(
-      messages,
-      list.map(_messageCompanion).toList(),
-    ),
-  );
+  /// Upsert many messages (history page reconcile) — each server-id-deduped.
+  Future<void> upsertMessages(List<Message> list) async {
+    for (final m in list) {
+      await upsertMessage(m);
+    }
+  }
 
   /// Whether a message with [serverId] is already cached (inbound dedupe).
   Future<bool> hasServerMessage(String serverId) async {
-    final row = await (select(
+    final rows = await (select(
       messages,
-    )..where((t) => t.serverId.equals(serverId))).getSingleOrNull();
-    return row != null;
+    )..where((t) => t.serverId.equals(serverId))).get();
+    return rows.isNotEmpty;
   }
 
   /// One-shot message read by client key (echo reconcile / retry).
@@ -151,6 +176,16 @@ class MessagingDao extends DatabaseAccessor<AppDatabase>
       MessagesCompanion(deliveryState: Value(state.name)),
     );
   }
+
+  /// Mark my own sent messages in a conversation as `read` — the peer's read
+  /// receipt (`message.read` carries an `upToMessageId`; we read the whole
+  /// thread for simplicity). Only touches delivered/sent rows.
+  Future<void> markMineRead(String conversationId) =>
+      (update(messages)..where(
+            (t) =>
+                t.conversationId.equals(conversationId) & t.isMine.equals(true),
+          ))
+          .write(const MessagesCompanion(deliveryState: Value('read')));
 
   /// The offline outbox — messages still `sending` or `failed`, oldest first,
   /// flushed on reconnect (R4/SC-006).

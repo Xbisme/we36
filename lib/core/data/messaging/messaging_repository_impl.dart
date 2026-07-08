@@ -45,11 +45,17 @@ class MessagingRepositoryImpl implements MessagingRepository {
 
   @override
   Future<Result<void>> refreshConversations() async {
-    final res = await _remote.listConversations();
-    return res.fold((page) async {
-      await _dao.upsertConversations(page.items);
-      return const Result<void>.ok(null);
-    }, (f) => Future.value(Result<void>.err(f)));
+    // List both the accepted inbox and pending requests — v1.0 surfaces both in
+    // one list (no separate requests-inbox, clarified).
+    final primary = await _remote.listConversations();
+    if (primary.isErr) return Result<void>.err(primary.failureOrNull!);
+    await _dao.upsertConversations(primary.valueOrNull!.items);
+    final requests = await _remote.listConversations(filter: 'requests');
+    // A failure listing requests must not blank the primary list — best-effort.
+    if (requests.isOk) {
+      await _dao.upsertConversations(requests.valueOrNull!.items);
+    }
+    return const Result<void>.ok(null);
   }
 
   @override
@@ -61,7 +67,11 @@ class MessagingRepositoryImpl implements MessagingRepository {
     String conversationId, {
     String? cursor,
   }) async {
-    final res = await _remote.history(conversationId, cursor: cursor);
+    final res = await _remote.history(
+      conversationId,
+      currentUserId: _myId,
+      cursor: cursor,
+    );
     return res.fold((page) async {
       await _dao.upsertMessages(page.items);
       return Result<CursorPage<Message>>.ok(page);
@@ -91,7 +101,7 @@ class MessagingRepositoryImpl implements MessagingRepository {
         conversationId,
         MessageKind.sharedPost,
         MessageContent.sharedPost(ref: ref),
-        {'postId': ref.id, 'postKind': ref.kind.name},
+        {'sharedPostId': ref.id},
       );
 
   @override
@@ -100,7 +110,7 @@ class MessagingRepositoryImpl implements MessagingRepository {
         conversationId,
         MessageKind.sticker,
         MessageContent.sticker(glyphId: glyphId),
-        {'glyphId': glyphId},
+        {'stickerId': glyphId},
       );
 
   Future<Result<Message>> _send(
@@ -213,11 +223,8 @@ class MessagingRepositoryImpl implements MessagingRepository {
       switch (content) {
         TextContent(:final body) => {'body': body},
         PhotoContent(:final mediaId) => {'mediaId': mediaId},
-        SharedPostContent(:final ref) => {
-          'postId': ref.id,
-          'postKind': ref.kind.name,
-        },
-        StickerContent(:final glyphId) => {'glyphId': glyphId},
+        SharedPostContent(:final ref) => {'sharedPostId': ref.id},
+        StickerContent(:final glyphId) => {'stickerId': glyphId},
       };
 
   /// Tear down the connection-state subscription (app lifetime otherwise).

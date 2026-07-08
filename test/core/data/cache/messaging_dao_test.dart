@@ -78,6 +78,29 @@ void main() {
     expect(thread.single.serverId, 'srv-1');
   });
 
+  test(
+    'a server echo/reload with the same serverId merges the optimistic row '
+    '(no duplicate own-send)',
+    () async {
+      final dao = db.messagingDao;
+      // Optimistic send keyed by a client UUID, then the server version of the
+      // SAME message (keyed by its server id) — must not create a 2nd row.
+      await dao.upsertMessage(
+        msg('client-uuid', 'a', serverId: 'srv-9'),
+      );
+      await dao.upsertMessage(
+        msg(
+          'srv-9',
+          'a',
+          serverId: 'srv-9',
+        ), // history/echo: clientKey==serverId
+      );
+      final thread = await dao.getThread('a');
+      expect(thread.length, 1);
+      expect(thread.single.clientKey, 'client-uuid'); // original row preserved
+    },
+  );
+
   test('advanceDelivery by serverId advances state', () async {
     final dao = db.messagingDao;
     await dao.upsertMessage(msg('m1', 'a', serverId: 'srv-1'));

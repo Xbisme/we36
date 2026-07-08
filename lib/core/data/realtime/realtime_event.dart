@@ -103,25 +103,32 @@ sealed class InboundEvent {
   static InboundEvent parse(String name, Map<String, dynamic> data) {
     switch (name) {
       case SocketEvents.messageNew:
+        // The gateway emits the message either nested (`{conversationId, message}`)
+        // or as the flat `MessageDto` itself (B#012) — accept both.
+        final msg = (data['message'] as Map?)?.cast<String, dynamic>() ?? data;
         return MessageNew(
-          conversationId: data['conversationId'] as String? ?? '',
-          message:
-              (data['message'] as Map?)?.cast<String, dynamic>() ?? const {},
+          conversationId:
+              (data['conversationId'] ?? msg['conversationId']) as String? ??
+              '',
+          message: msg,
         );
       case SocketEvents.messageDelivered:
         return MessageDelivered(
           conversationId: data['conversationId'] as String? ?? '',
-          messageId: data['messageId'] as String? ?? '',
+          messageId: (data['messageId'] ?? data['id']) as String? ?? '',
         );
       case SocketEvents.messageRead:
+        // B#012 read receipt: `{conversationId, userId, upToMessageId, readAt}`.
         return MessageReadEvent(
           conversationId: data['conversationId'] as String? ?? '',
-          messageId: data['messageId'] as String? ?? '',
+          userId: data['userId'] as String? ?? '',
+          upToMessageId: data['upToMessageId'] as String? ?? '',
         );
       case SocketEvents.typing:
         return TypingInbound(
           conversationId: data['conversationId'] as String? ?? '',
           userId: data['userId'] as String? ?? '',
+          isTyping: data['isTyping'] as bool? ?? true,
         );
       case SocketEvents.presenceUpdate:
         return PresenceUpdate(
@@ -156,16 +163,27 @@ class MessageDelivered extends InboundEvent {
 class MessageReadEvent extends InboundEvent {
   const MessageReadEvent({
     required this.conversationId,
-    required this.messageId,
+    required this.userId,
+    required this.upToMessageId,
   });
   final String conversationId;
-  final String messageId;
+
+  /// The user who read the thread (the peer, for my own sent messages).
+  final String userId;
+
+  /// Messages up to and including this id are now read.
+  final String upToMessageId;
 }
 
 class TypingInbound extends InboundEvent {
-  const TypingInbound({required this.conversationId, required this.userId});
+  const TypingInbound({
+    required this.conversationId,
+    required this.userId,
+    this.isTyping = true,
+  });
   final String conversationId;
   final String userId;
+  final bool isTyping;
 }
 
 class PresenceUpdate extends InboundEvent {

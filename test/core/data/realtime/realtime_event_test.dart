@@ -27,10 +27,23 @@ void main() {
   });
 
   group('Inbound parsing (US5)', () {
-    test('message.new → MessageNew', () {
+    test('message.new → MessageNew (nested shape)', () {
       final e = InboundEvent.parse(SocketEvents.messageNew, {
         'conversationId': 'c1',
         'message': {'id': 'm1', 'body': 'hello'},
+      });
+      expect(e, isA<MessageNew>());
+      expect((e as MessageNew).conversationId, 'c1');
+      expect(e.message['id'], 'm1');
+    });
+
+    test('message.new → MessageNew (flat MessageDto payload, B#012)', () {
+      final e = InboundEvent.parse(SocketEvents.messageNew, {
+        'id': 'm1',
+        'conversationId': 'c1',
+        'senderId': 'u2',
+        'kind': 'text',
+        'body': 'hello',
       });
       expect(e, isA<MessageNew>());
       expect((e as MessageNew).conversationId, 'c1');

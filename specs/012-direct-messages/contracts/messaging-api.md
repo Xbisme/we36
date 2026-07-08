@@ -1,6 +1,22 @@
-# Messaging API Contract (client-consumed subset of B#012 — DERIVED)
+# Messaging API Contract (client-consumed subset of B#012)
 
-> ⚠️ **DERIVED draft — reconcile with the shipped backend B#012 at dev-backend cutover** (like #011's contract was reconciled). The app runs `env:['fake']` until then; `messaging_remote_data_source.dart` + `messaging_repository_impl.dart` target these shapes and are corrected against the real controller after end-to-end testing. Endpoint paths, query keys, and event names live in `core/constants/{api_endpoints,socket_events}.dart` — never inline literals.
+> ✅ **RECONCILED with the shipped dev backend (2026-07-08** via `GET /docs-json`). The client (`api_endpoints.dart`, `messaging_remote_data_source.dart`, `messaging_dto.dart`) was aligned to the actual controller. **Actual routes** (under `/v1`):
+> | Capability | Actual route | Notes |
+> |---|---|---|
+> | Conversation **list** | `GET /conversations` | `ConversationPageDto` (**not** `/me/conversations`) |
+> | **Open-or-start** | `POST /conversations` `{userId}` | idempotent → existing thread; body key is `userId` (not `participantUserId`) |
+> | Get / delete conversation | `GET`/`DELETE /conversations/:id` | |
+> | Message history | `GET /conversations/:id/messages` | `MessagePageDto` |
+> | **Send** | `POST /conversations/:id/messages` `{kind, body?, mediaId?, sharedPostId?, stickerId?}` | **flat** body, **no `clientKey`** (idempotency via the `Idempotency-Key` header); returns `MessageDto` |
+> | Mark read | `POST /conversations/:id/read` | |
+> | Delete a message | `DELETE /messages/:id` | not used in v1.0 |
+> | Message requests | `POST /conversations/:id/accept` \| `/decline` | backend has a requests concept; **not used in v1.0** (clarified — no requests-inbox) |
+>
+> **Four deviations from the derived draft (backend wins)**: (1) list is `GET /conversations`, not `/me/conversations`; (2) the message wire is **flat** — `senderId`/`body`/`media`/`sharedPost`/`stickerId` are top-level, **not** nested under `content`; (3) the message `kind` enum is **`text|media|sharedPost|sticker`** — the client `MessageKind.photo` maps to wire **`media`**; (4) `ConversationDto` carries **`otherUser`** (not `participant`) + `lastMessage`/`isRequest`/`muted`/`otherUserPresence`, and the send body carries **no client key** (idempotency is header-only). The realtime `message.new` payload is the same flat `MessageDto` (no `clientKey` echo → inbound dedup is by **`serverId`**).
+>
+> The rest of this file is the original **derived** draft, kept for history. **The table above is authoritative.**
+
+> ⚠️ (historical, superseded) DERIVED draft. The app runs `env:['fake']` for hermetic tests; endpoint paths, query keys, and event names live in `core/constants/{api_endpoints,socket_events}.dart` — never inline literals.
 
 All routes under `/v1`. Auth via the shipped bearer interceptor; mutations carry an **Idempotency-Key** (the message `clientKey`). Cursor envelope = the shipped `CursorPage<T>` (`{ items, nextCursor, hasMore }`). Success bodies are returned bare (matching the reconciled #011 convention — no `{data:…}` wrapper). Errors use the shipped envelope `{error:{code,message,details}}` → `FailureMapper` → `AppFailure`.
 

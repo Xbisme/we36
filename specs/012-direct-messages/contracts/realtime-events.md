@@ -1,6 +1,14 @@
-# Realtime Events Contract (Socket.IO — #012 usage of the shipped catalog)
+# Realtime Events Contract (Socket.IO — #012)
 
-> The event **names** already exist in `lib/core/constants/socket_events.dart` and the typed events in `lib/core/data/realtime/realtime_event.dart` (shipped inert at #002). #012 is the **first consumer** — this file documents which events the client sends/consumes and their payload shapes. Reconcile payload keys with B#012 at cutover. One connection only (`RealtimeClient`), owned by `RealtimeConnectionManager`; the sole subscriber is `MessagingRealtimeService` (Constitution VIII — Cubits never touch the socket).
+> ✅ **VERIFIED against the backend source (2026-07-08)** — `backend/src/modules/messaging/{messaging.gateway.ts,ws/events.ts,messaging.service.ts}`. Authoritative facts:
+> - **`message.new` payload = the flat `MessageDto` itself** (no `{conversationId, message}` wrapper). Emitted to **both** participants (`emitToUsers([self, other], …)`) — so the sender **receives an echo of their own send**; the client dedups by `serverId` and skips echoes whose `senderId == me`.
+> - **No `message.delivered` event** — delivery is `sent` (POST/ack) → `read` only.
+> - **`message.read`** payload = `{conversationId, userId, upToMessageId, readAt}` (emitted to the *other* user); the client marks its own sent messages in that thread `read`.
+> - **`typing`** payload = `{conversationId, userId, isTyping}` (honor the `isTyping` flag — stop clears immediately).
+> - **`presence.update`** = `{userId, online, lastActiveAt}`. Backend also emits `message.deleted` + `conversation.request` (message-requests) + `error` — **not consumed in v1.0**.
+> - Client→server names + payloads (`message.send`/`typing.start|stop`/`conversation.read`/`presence.ping`) match the client `SocketEvents`/`OutboundEvent` exactly. (v1.0 sends via REST, not `message.send`.)
+>
+> One connection (`RealtimeClient`), owned by `RealtimeConnectionManager`; the sole subscriber is `MessagingRealtimeService` (Constitution VIII — Cubits never touch the socket). The rest of this file is the earlier derived draft, kept for history.
 
 ## Connection
 

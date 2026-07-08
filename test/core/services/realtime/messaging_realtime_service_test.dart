@@ -2,6 +2,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/feed/post.dart' show UserSummary;
+import 'package:we36/core/data/me/me_profile.dart';
 import 'package:we36/core/data/messaging/conversation.dart';
 import 'package:we36/core/data/messaging/message.dart';
 import 'package:we36/core/data/realtime/fake_realtime_client.dart';
@@ -31,13 +32,13 @@ void main() {
   Future<void> settle() =>
       Future<void>.delayed(const Duration(milliseconds: 50));
 
+  // Flat B#012 MessageDto shape (senderId + top-level body).
   Map<String, dynamic> wireMessage(String id, {String body = 'hi'}) => {
     'id': id,
-    'authorId': 'peer',
+    'senderId': 'peer',
     'kind': 'text',
-    'content': {'body': body},
+    'body': body,
     'createdAt': DateTime.utc(2026).toIso8601String(),
-    'deliveryState': 'sent',
   };
 
   Future<void> seedConvo(String id) => db.messagingDao.upsertConversation(
@@ -59,6 +60,61 @@ void main() {
     final convo = await db.messagingDao.getConversation('c1');
     expect(convo!.unreadCount, 1);
     expect(convo.lastMessagePreview, 'hi');
+  });
+
+  test(
+    'the server echo of my own send is skipped (no duplicate, no wrong-side)',
+    () async {
+      await db.meProfileDao.upsert(
+        MeProfile(
+          id: 'me',
+          email: 'me@we36.app',
+          isPrivate: false,
+          isVerified: false,
+          profileCompleted: true,
+          createdAt: DateTime.utc(2026),
+        ),
+      );
+      await seedConvo('c1');
+      // A message.new whose senderId is me = the backend echoing my own send.
+      client.emitInbound(
+        MessageNew(
+          conversationId: 'c1',
+          message: {
+            'id': 'srv-mine',
+            'senderId': 'me',
+            'kind': 'text',
+            'body': 'hi say',
+            'createdAt': DateTime.utc(2026).toIso8601String(),
+          },
+        ),
+      );
+      await settle();
+      expect(await db.messagingDao.getThread('c1'), isEmpty);
+    },
+  );
+
+  test('message.new from a new peer creates the conversation live', () async {
+    // No conversation seeded — a first message (e.g. a request) from a new peer.
+    client.emitInbound(
+      MessageNew(
+        conversationId: 'c_new',
+        message: {
+          'id': 'srv-new',
+          'senderId': 'u_ava',
+          'sender': {'id': 'u_ava', 'username': 'ava', 'isVerified': false},
+          'kind': 'text',
+          'body': 'hey!',
+          'createdAt': DateTime.utc(2026).toIso8601String(),
+        },
+      ),
+    );
+    await settle();
+    final convo = await db.messagingDao.getConversation('c_new');
+    expect(convo, isNotNull);
+    expect(convo!.participant.username, 'ava');
+    expect(convo.unreadCount, 1);
+    expect((await db.messagingDao.getThread('c_new')).length, 1);
   });
 
   test('a replayed message.new appears exactly once (SC-004)', () async {
@@ -94,7 +150,11 @@ void main() {
       DeliveryState.delivered,
     );
     client.emitInbound(
-      const MessageReadEvent(conversationId: 'c1', messageId: 'srv-1'),
+      const MessageReadEvent(
+        conversationId: 'c1',
+        userId: 'peer',
+        upToMessageId: 'srv-1',
+      ),
     );
     await settle();
     expect(
