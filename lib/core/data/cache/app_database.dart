@@ -6,6 +6,7 @@ import 'package:we36/core/data/cache/daos/compose_draft_dao.dart';
 import 'package:we36/core/data/cache/daos/explore_dao.dart';
 import 'package:we36/core/data/cache/daos/me_profile_dao.dart';
 import 'package:we36/core/data/cache/daos/messaging_dao.dart';
+import 'package:we36/core/data/cache/daos/notifications_dao.dart';
 import 'package:we36/core/data/cache/daos/posts_dao.dart';
 import 'package:we36/core/data/cache/daos/reels_dao.dart';
 import 'package:we36/core/data/cache/daos/saved_collections_dao.dart';
@@ -16,6 +17,7 @@ import 'package:we36/core/data/cache/tables/conversations_table.dart';
 import 'package:we36/core/data/cache/tables/explore_items_table.dart';
 import 'package:we36/core/data/cache/tables/me_profile_table.dart';
 import 'package:we36/core/data/cache/tables/messages_table.dart';
+import 'package:we36/core/data/cache/tables/notifications_table.dart';
 import 'package:we36/core/data/cache/tables/posts_table.dart';
 import 'package:we36/core/data/cache/tables/reels_table.dart';
 import 'package:we36/core/data/cache/tables/saved_collections_table.dart';
@@ -42,6 +44,7 @@ part 'app_database.g.dart';
     SavedCollections,
     Conversations,
     Messages,
+    Notifications,
   ],
   daos: [
     UsersDao,
@@ -53,6 +56,7 @@ part 'app_database.g.dart';
     ExploreDao,
     SavedCollectionsDao,
     MessagingDao,
+    NotificationsDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -64,7 +68,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 9;
+  int get schemaVersion => 10;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -108,6 +112,10 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(conversations);
         await m.createTable(messages);
       }
+      if (from < 10) {
+        // v10 (#013): add the persisted Activity (notifications) feed cache.
+        await m.createTable(notifications);
+      }
     },
   );
 
@@ -124,5 +132,6 @@ class AppDatabase extends _$AppDatabase {
     await delete(exploreItems).go();
     await delete(savedCollections).go();
     await messagingDao.clearUserScoped();
+    await notificationsDao.clearUserScoped();
   }
 }

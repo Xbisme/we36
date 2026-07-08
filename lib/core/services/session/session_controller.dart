@@ -8,6 +8,7 @@ import 'package:we36/core/data/me/me_profile.dart';
 import 'package:we36/core/data/me/me_repository.dart';
 import 'package:we36/core/data/profile/relationship_store.dart';
 import 'package:we36/core/data/stories/own_story_store.dart';
+import 'package:we36/core/services/push/push_registration_service.dart';
 import 'package:we36/core/services/realtime/realtime_connection_manager.dart';
 import 'package:we36/core/services/session/auth_events.dart';
 import 'package:we36/core/services/session/local_flags.dart';
@@ -32,6 +33,7 @@ class SessionController extends ChangeNotifier {
     this._ownStories,
     this._relationships,
     this._realtime,
+    this._pushRegistration,
     AuthEventsSink authEvents,
   ) {
     _unauthSub = authEvents.unauthenticated.listen((_) => _forceSignOut());
@@ -44,6 +46,7 @@ class SessionController extends ChangeNotifier {
   final OwnStoryStore _ownStories;
   final RelationshipStore _relationships;
   final RealtimeConnectionManager _realtime;
+  final PushRegistrationService _pushRegistration;
   late final StreamSubscription<void> _unauthSub;
 
   AuthStatus _status = AuthStatus.unknown;
@@ -144,6 +147,8 @@ class SessionController extends ChangeNotifier {
     notifyListeners();
     // Tear the realtime channel down so no events leak to the next account (#012).
     await _realtime.disconnect();
+    // Unregister this device's push token so pushes stop for this account (#013).
+    await _pushRegistration.unregister();
     await _tokenStore.clear();
     await _db.clearUserScoped();
     _ownStories.clear();

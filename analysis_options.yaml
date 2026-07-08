@@ -10,6 +10,9 @@ analyzer:
     - "**/*.freezed.dart"
     - "**/*.config.dart"
     - "lib/l10n/generated/**"
+    # Build outputs (e.g. iOS SPM checkouts of plugins like firebase_messaging
+    # under build/ios/SourcePackages ship their own Dart test/mocks — not ours).
+    - "build/**"
   errors:
     # No raw print/debugPrint anywhere (Constitution: AppLogger only).
     avoid_print: error

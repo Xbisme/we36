@@ -12,6 +12,7 @@ import 'package:we36/core/presentation/sidebar_rail.dart';
 import 'package:we36/core/router/adaptive_layout_mode.dart';
 import 'package:we36/core/router/nav_destination.dart';
 import 'package:we36/core/services/messaging/messaging_badge.dart';
+import 'package:we36/core/services/notifications/notifications_badge.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
@@ -40,14 +41,22 @@ class AdaptiveShell extends StatelessWidget {
     final badge = getIt.isRegistered<MessagingBadge>()
         ? getIt<MessagingBadge>()
         : null;
+    final notifBadge = getIt.isRegistered<NotificationsBadge>()
+        ? getIt<NotificationsBadge>()
+        : null;
     return StreamBuilder<int>(
       stream: badge?.unreadConversationCount,
       initialData: 0,
-      builder: (context, snap) => _buildShell(context, snap.data ?? 0),
+      builder: (context, msgSnap) => StreamBuilder<int>(
+        stream: notifBadge?.unreadCount,
+        initialData: 0,
+        builder: (context, notifSnap) =>
+            _buildShell(context, msgSnap.data ?? 0, notifSnap.data ?? 0),
+      ),
     );
   }
 
-  Widget _buildShell(BuildContext context, int unread) {
+  Widget _buildShell(BuildContext context, int unread, int notifUnread) {
     final l10n = context.l10n;
     final mode = AdaptiveLayoutMode.fromWidth(MediaQuery.sizeOf(context).width);
 
@@ -76,7 +85,11 @@ class AdaptiveShell extends StatelessWidget {
     // Tablet: rail + content (+ optional right rail on Home).
     final railItems = [
       ...destItems,
-      NavItemData(icon: AppIcons.notification, label: l10n.navNotifications),
+      NavItemData(
+        icon: AppIcons.notification,
+        label: l10n.navNotifications,
+        badgeCount: notifUnread > 0 ? notifUnread : null,
+      ),
       NavItemData(icon: AppIcons.plus, label: l10n.navCreate),
     ];
 

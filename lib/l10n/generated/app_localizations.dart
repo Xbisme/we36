@@ -2215,6 +2215,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You can\'t message this account.'**
   String get dmBlocked;
+
+  /// Activity (Notifications) screen title, #013
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get activityTitle;
+
+  /// No description provided for @activitySectionNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get activitySectionNew;
+
+  /// No description provided for @activitySectionThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get activitySectionThisWeek;
+
+  /// No description provided for @activitySectionEarlier.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier'**
+  String get activitySectionEarlier;
+
+  /// No description provided for @activityEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No activity yet'**
+  String get activityEmptyTitle;
+
+  /// No description provided for @activityEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'When people like, comment on, or follow you, you\'ll see it here.'**
+  String get activityEmptyBody;
+
+  /// No description provided for @activityError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your activity'**
+  String get activityError;
+
+  /// No description provided for @activityRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get activityRetry;
+
+  /// No description provided for @notifActionLike.
+  ///
+  /// In en, this message translates to:
+  /// **'liked your post'**
+  String get notifActionLike;
+
+  /// No description provided for @notifActionComment.
+  ///
+  /// In en, this message translates to:
+  /// **'commented on your post'**
+  String get notifActionComment;
+
+  /// No description provided for @notifActionReply.
+  ///
+  /// In en, this message translates to:
+  /// **'replied to your comment'**
+  String get notifActionReply;
+
+  /// No description provided for @notifActionMention.
+  ///
+  /// In en, this message translates to:
+  /// **'mentioned you in a comment'**
+  String get notifActionMention;
+
+  /// No description provided for @notifActionFollow.
+  ///
+  /// In en, this message translates to:
+  /// **'started following you'**
+  String get notifActionFollow;
+
+  /// No description provided for @notifActionFollowRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'requested to follow you'**
+  String get notifActionFollowRequest;
+
+  /// No description provided for @notifActionFollowAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'accepted your follow request'**
+  String get notifActionFollowAccepted;
+
+  /// No description provided for @notifActionGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'sent you a notification'**
+  String get notifActionGeneric;
+
+  /// No description provided for @notifAndOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'and {count} others'**
+  String notifAndOthers(String count);
+
+  /// No description provided for @notifTargetUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This content is unavailable'**
+  String get notifTargetUnavailable;
+
+  /// No description provided for @notifFollowBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow back'**
+  String get notifFollowBack;
+
+  /// No description provided for @pushPromptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on notifications'**
+  String get pushPromptTitle;
+
+  /// No description provided for @pushPromptBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified when people like, comment on, or follow you.'**
+  String get pushPromptBody;
+
+  /// No description provided for @pushPromptAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get pushPromptAllow;
+
+  /// No description provided for @pushPromptDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get pushPromptDismiss;
+
+  /// No description provided for @pushEnableAffordance.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on notifications'**
+  String get pushEnableAffordance;
 }
 
 class _AppLocalizationsDelegate

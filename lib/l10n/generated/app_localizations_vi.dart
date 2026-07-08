@@ -1115,4 +1115,81 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get dmBlocked => 'Bạn không thể nhắn tin cho tài khoản này.';
+
+  @override
+  String get activityTitle => 'Hoạt động';
+
+  @override
+  String get activitySectionNew => 'Mới';
+
+  @override
+  String get activitySectionThisWeek => 'Tuần này';
+
+  @override
+  String get activitySectionEarlier => 'Trước đó';
+
+  @override
+  String get activityEmptyTitle => 'Chưa có hoạt động';
+
+  @override
+  String get activityEmptyBody =>
+      'Khi có người thích, bình luận hoặc theo dõi bạn, nó sẽ hiện ở đây.';
+
+  @override
+  String get activityError => 'Không tải được hoạt động';
+
+  @override
+  String get activityRetry => 'Thử lại';
+
+  @override
+  String get notifActionLike => 'đã thích bài viết của bạn';
+
+  @override
+  String get notifActionComment => 'đã bình luận bài viết của bạn';
+
+  @override
+  String get notifActionReply => 'đã trả lời bình luận của bạn';
+
+  @override
+  String get notifActionMention => 'đã nhắc đến bạn trong một bình luận';
+
+  @override
+  String get notifActionFollow => 'đã bắt đầu theo dõi bạn';
+
+  @override
+  String get notifActionFollowRequest => 'đã yêu cầu theo dõi bạn';
+
+  @override
+  String get notifActionFollowAccepted =>
+      'đã chấp nhận yêu cầu theo dõi của bạn';
+
+  @override
+  String get notifActionGeneric => 'đã gửi cho bạn một thông báo';
+
+  @override
+  String notifAndOthers(String count) {
+    return 'và $count người khác';
+  }
+
+  @override
+  String get notifTargetUnavailable => 'Nội dung này không khả dụng';
+
+  @override
+  String get notifFollowBack => 'Theo dõi lại';
+
+  @override
+  String get pushPromptTitle => 'Bật thông báo';
+
+  @override
+  String get pushPromptBody =>
+      'Nhận thông báo khi có người thích, bình luận hoặc theo dõi bạn.';
+
+  @override
+  String get pushPromptAllow => 'Bật';
+
+  @override
+  String get pushPromptDismiss => 'Để sau';
+
+  @override
+  String get pushEnableAffordance => 'Bật thông báo';
 }

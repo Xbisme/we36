@@ -42,8 +42,8 @@ void main() {
     deliveryState: state,
   );
 
-  test('database is at schema v9 (v8→v9 adds Conversations + Messages)', () {
-    expect(db.schemaVersion, 9);
+  test('database is at schema v10 (v8→v9 adds Conversations + Messages)', () {
+    expect(db.schemaVersion, 10);
   });
 
   test('conversations watch emits newest-activity first', () async {
