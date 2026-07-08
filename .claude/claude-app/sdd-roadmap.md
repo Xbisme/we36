@@ -4,7 +4,7 @@
 >
 > **Vai trò file này**: pure planning — dependency graph, scope per spec, timeline, optimal order. Current status của các spec sống ở [`project-context.md`](project-context.md). Ship history sống ở [`changelog.md`](changelog.md). Alignment decisions sống ở [`decisions/`](decisions/). **Giao diện** (screens, tokens, components, navigation IA) sống ở [`ui-design-context.md`](ui-design-context.md) — đọc trước mọi phần UI/UX của spec.
 >
-> Last updated: 2026-07-08 (#001–#011 merged; **#012 Direct Messages (Realtime) 🔵 implemented** on branch `012-direct-messages` (commit `4a8a69d`) — 59/59 tasks, 625 tests green, analyze clean; **pending PR/merge to `main`**. Full realtime DM (US1–US6): list + 1-1 chat (optimistic/idempotent, delivery/typing/presence) + rich content + new-message + tablet two-pane; first live wiring of the #002 `RealtimeClient`; drift v8→v9. Next: **#013 Notifications & Push**.)
+> Last updated: 2026-07-08 (#001–#012 all merged to `main`; **#012 Direct Messages (Realtime) ✅ merged** via PR #12 (merge `89c804a`) — 59/59 tasks, 625 tests green, analyze clean. Full realtime DM (US1–US6): list + 1-1 chat (optimistic/idempotent, delivery/typing/presence) + rich content + new-message + tablet two-pane; first live wiring of the #002 `RealtimeClient`; B#012 source-reconciled; drift v8→v9. Next: **#013 Notifications & Push**.)
 
 ---
 
@@ -174,7 +174,7 @@ Create Story     Post Detail &    Create Post      Reels
 - **Design**: Screen 24 (Saved collections).
 - **Scope**: save posts into named collections; collections grid; add/remove; the profile "saved" tab. Shipped US1–US5: Saved tab + collections grid ("All saved" first), optimistic/idempotent save-to-collection, open & curate (remove + full-unsave confirm), manage (rename/delete/set-cover, default unmanaged), inclusive/adaptive. drift **v7→v8** (additive `SavedCollections`); no new pub dependency. Backend B#011 deviations recorded for cutover (unique names · no set-cover endpoint · no membership endpoint).
 
-### Spec #012: Direct Messages (Realtime)  🔵 (implemented — 59/59, 625 tests; branch `012-direct-messages` commit `4a8a69d`, pending PR/merge)
+### Spec #012: Direct Messages (Realtime)  ✅ (merged — 59/59, 625 tests, PR #12)
 - **Depends on**: #002 (realtime), #010.
 - **Design**: Screens 25–28 (DM list, Chat, New message, Sticker picker); tablet = **split view** (conversation list + chat pane).
 - **Scope**: conversation list (unread, presence, typing preview); 1-1 chat over the **Socket.IO** channel (text, photo, **shared post**, stickers); typing/presence; optimistic send + idempotency + delivery state; new-message compose. Tablet **master/detail two-pane** (select swaps the pane, no push); phone push. **Shipped US1–US6**: first live wiring of the #002 `RealtimeClient` (`RealtimeConnectionManager` + `MessagingRealtimeService`); **REST-send + inbound-authoritative socket** (idempotent via `clientKey`); drift **v8→v9** (`Conversations` + `Messages`/outbox); `MessagingLauncher` cross-feature seam (profile "Message" + post "share to DM"); coarse presence, no requests-inbox (clarified). Backend B#012 shapes DERIVED (reconcile at cutover). No new pub dependency.
