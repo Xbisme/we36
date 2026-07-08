@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/data/collections/saved_collection.dart';
+import 'package:we36/core/data/messaging/conversation.dart';
+import 'package:we36/core/data/messaging/message.dart' show PostRef;
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/router/adaptive_shell.dart';
 import 'package:we36/core/router/centered_mobile.dart';
@@ -34,7 +36,9 @@ import 'package:we36/features/explore/presentation/explore_page.dart';
 import 'package:we36/features/explore/presentation/search_page.dart';
 import 'package:we36/features/feed/presentation/feed_cubit.dart';
 import 'package:we36/features/feed/presentation/home_page.dart';
+import 'package:we36/features/messaging/presentation/chat_page.dart';
 import 'package:we36/features/messaging/presentation/messages_page.dart';
+import 'package:we36/features/messaging/presentation/new_message_page.dart';
 import 'package:we36/features/placeholder_page.dart';
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart';
 import 'package:we36/features/post/presentation/post_detail_page.dart';
@@ -269,6 +273,20 @@ class AppRouter {
           builder: (_, state) => CollectionDetailPage(
             collectionId: state.pathParameters['id']!,
             collection: state.extra as SavedCollection?,
+          ),
+        ),
+        // Direct Messages (#012) — nav-less full-screen. `newMessage` is declared
+        // BEFORE the `:id` route so `/messages/new` is not captured by `:id`.
+        GoRoute(
+          path: AppRoutes.newMessage,
+          builder: (_, state) =>
+              NewMessagePage(pendingShare: state.extra as PostRef?),
+        ),
+        GoRoute(
+          path: AppRoutes.messageThread,
+          builder: (_, state) => ChatPage(
+            conversationId: state.pathParameters['id']!,
+            conversation: state.extra as Conversation?,
           ),
         ),
         // Post detail + comments (#006) — full-screen nav-less; the page itself

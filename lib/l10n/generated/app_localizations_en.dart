@@ -1038,4 +1038,86 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get collectionDeleteFailed =>
       'Couldn\'t delete the collection. Try again.';
+
+  @override
+  String get dmTitle => 'Messages';
+
+  @override
+  String get dmNewMessage => 'New message';
+
+  @override
+  String get dmActiveNow => 'Active now';
+
+  @override
+  String get dmTyping => 'typing…';
+
+  @override
+  String get dmMessageHint => 'Message…';
+
+  @override
+  String get dmTo => 'To:';
+
+  @override
+  String get dmSuggested => 'Suggested';
+
+  @override
+  String get dmSearchConversations => 'Search';
+
+  @override
+  String get dmSending => 'Sending';
+
+  @override
+  String get dmSent => 'Sent';
+
+  @override
+  String get dmDelivered => 'Delivered';
+
+  @override
+  String get dmSeen => 'Seen';
+
+  @override
+  String get dmFailed => 'Not delivered';
+
+  @override
+  String get dmRetry => 'Retry';
+
+  @override
+  String get dmPhoto => 'Photo';
+
+  @override
+  String get dmSticker => 'Sticker';
+
+  @override
+  String get dmSharedPost => 'Shared a post';
+
+  @override
+  String get dmSharedUnavailable => 'This content is unavailable';
+
+  @override
+  String get dmEmptyTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyBody =>
+      'Start a conversation from someone\'s profile or tap + to send a new message.';
+
+  @override
+  String get dmThreadEmpty => 'Say hi 👋';
+
+  @override
+  String get dmSearchEmpty => 'No people found';
+
+  @override
+  String get dmError => 'Couldn\'t load your messages';
+
+  @override
+  String get dmThreadError => 'Couldn\'t load this conversation';
+
+  @override
+  String get dmOffline => 'Connecting…';
+
+  @override
+  String get dmSendFailed => 'Couldn\'t send. Tap to retry.';
+
+  @override
+  String get dmBlocked => 'You can\'t message this account.';
 }

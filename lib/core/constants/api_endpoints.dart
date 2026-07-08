@@ -120,4 +120,24 @@ abstract final class ApiEndpoints {
   static String collectionItems(String id) => '/collections/$id/items';
   static String collectionItem(String id, String postId) =>
       '/collections/$id/items/$postId';
+
+  /// Direct Messages (#012, B#012 — reconciled with the shipped dev backend
+  /// 2026-07-08). Conversation **list** (`GET /conversations`, cursor,
+  /// newest-activity first) + **open-or-start** a 1-1 conversation
+  /// (`POST /conversations` `{userId}`, idempotent → returns the existing thread
+  /// if any, SC-007) share the [conversations] path. One conversation
+  /// (`GET`/`DELETE /conversations/:id`). Message history
+  /// (`GET /conversations/:id/messages`, cursor) + send
+  /// (`POST /conversations/:id/messages` `{kind, body|mediaId|sharedPostId|
+  /// stickerId}`, idempotent via the `Idempotency-Key` header — the wire body
+  /// carries no client key). Mark read (`POST /conversations/:id/read`). Realtime
+  /// typing/presence/receipts ride the socket (see `SocketEvents`); compose
+  /// people-search reuses [search] + [userFollowing]. (Backend also exposes
+  /// accept/decline for message requests + `DELETE /messages/:id` — not used in
+  /// v1.0.)
+  static const String conversations = '/conversations';
+  static String conversation(String id) => '/conversations/$id';
+  static String conversationMessages(String id) =>
+      '/conversations/$id/messages';
+  static String conversationRead(String id) => '/conversations/$id/read';
 }

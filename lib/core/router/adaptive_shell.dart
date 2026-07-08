@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:we36/core/constants/app_routes.dart';
+import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_search_bar.dart';
 import 'package:we36/core/presentation/bottom_nav.dart';
@@ -10,13 +11,11 @@ import 'package:we36/core/presentation/nav_item.dart';
 import 'package:we36/core/presentation/sidebar_rail.dart';
 import 'package:we36/core/router/adaptive_layout_mode.dart';
 import 'package:we36/core/router/nav_destination.dart';
+import 'package:we36/core/services/messaging/messaging_badge.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
-
-/// Mock unread count for the Messages badge (#001 has no data layer).
-const int _mockUnread = 3;
 
 /// One adaptive shell around the 5-tab StatefulShellRoute. Width `<700` →
 /// bottom nav; `≥700` → sidebar rail (compact `<980` / full); `≥1100` → Home
@@ -36,6 +35,19 @@ class AdaptiveShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The Messages-tab unread badge streams from the core badge seam (#012,
+    // Constitution XI — a core→core read; guarded so a minimal DI still renders).
+    final badge = getIt.isRegistered<MessagingBadge>()
+        ? getIt<MessagingBadge>()
+        : null;
+    return StreamBuilder<int>(
+      stream: badge?.unreadConversationCount,
+      initialData: 0,
+      builder: (context, snap) => _buildShell(context, snap.data ?? 0),
+    );
+  }
+
+  Widget _buildShell(BuildContext context, int unread) {
     final l10n = context.l10n;
     final mode = AdaptiveLayoutMode.fromWidth(MediaQuery.sizeOf(context).width);
 
@@ -44,7 +56,9 @@ class AdaptiveShell extends StatelessWidget {
         NavItemData(
           icon: d.icon,
           label: d.label(l10n),
-          badgeCount: d == NavDestination.messages ? _mockUnread : null,
+          badgeCount: d == NavDestination.messages && unread > 0
+              ? unread
+              : null,
         ),
     ];
 

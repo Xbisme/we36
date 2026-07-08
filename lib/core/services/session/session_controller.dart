@@ -8,6 +8,7 @@ import 'package:we36/core/data/me/me_profile.dart';
 import 'package:we36/core/data/me/me_repository.dart';
 import 'package:we36/core/data/profile/relationship_store.dart';
 import 'package:we36/core/data/stories/own_story_store.dart';
+import 'package:we36/core/services/realtime/realtime_connection_manager.dart';
 import 'package:we36/core/services/session/auth_events.dart';
 import 'package:we36/core/services/session/local_flags.dart';
 import 'package:we36/core/services/session/token_store.dart';
@@ -30,6 +31,7 @@ class SessionController extends ChangeNotifier {
     this._db,
     this._ownStories,
     this._relationships,
+    this._realtime,
     AuthEventsSink authEvents,
   ) {
     _unauthSub = authEvents.unauthenticated.listen((_) => _forceSignOut());
@@ -41,6 +43,7 @@ class SessionController extends ChangeNotifier {
   final AppDatabase _db;
   final OwnStoryStore _ownStories;
   final RelationshipStore _relationships;
+  final RealtimeConnectionManager _realtime;
   late final StreamSubscription<void> _unauthSub;
 
   AuthStatus _status = AuthStatus.unknown;
@@ -76,6 +79,8 @@ class SessionController extends ChangeNotifier {
         : AuthStatus.authenticated;
     notifyListeners();
     if (token == null) return;
+    // Bring the realtime channel up for the restored session (#012).
+    _realtime.connect();
 
     // Background reconcile (a plain network failure does NOT sign out; only the
     // refresh-failure signal forces sign-out).
@@ -92,6 +97,8 @@ class SessionController extends ChangeNotifier {
       refreshToken: session.refreshToken,
     );
     _status = AuthStatus.authenticated;
+    // Bring the realtime channel up for the new session (#012).
+    _realtime.connect();
     final result = await _me.getMe();
     final me = result.valueOrNull;
     if (me != null) {
@@ -135,6 +142,8 @@ class SessionController extends ChangeNotifier {
     _profile = null;
     _profileCompleted = false;
     notifyListeners();
+    // Tear the realtime channel down so no events leak to the next account (#012).
+    await _realtime.disconnect();
     await _tokenStore.clear();
     await _db.clearUserScoped();
     _ownStories.clear();

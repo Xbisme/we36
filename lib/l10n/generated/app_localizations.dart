@@ -2053,6 +2053,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t delete the collection. Try again.'**
   String get collectionDeleteFailed;
+
+  /// No description provided for @dmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get dmTitle;
+
+  /// No description provided for @dmNewMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'New message'**
+  String get dmNewMessage;
+
+  /// No description provided for @dmActiveNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Active now'**
+  String get dmActiveNow;
+
+  /// No description provided for @dmTyping.
+  ///
+  /// In en, this message translates to:
+  /// **'typing…'**
+  String get dmTyping;
+
+  /// No description provided for @dmMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Message…'**
+  String get dmMessageHint;
+
+  /// No description provided for @dmTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To:'**
+  String get dmTo;
+
+  /// No description provided for @dmSuggested.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested'**
+  String get dmSuggested;
+
+  /// No description provided for @dmSearchConversations.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get dmSearchConversations;
+
+  /// No description provided for @dmSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending'**
+  String get dmSending;
+
+  /// No description provided for @dmSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get dmSent;
+
+  /// No description provided for @dmDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get dmDelivered;
+
+  /// No description provided for @dmSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen'**
+  String get dmSeen;
+
+  /// No description provided for @dmFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not delivered'**
+  String get dmFailed;
+
+  /// No description provided for @dmRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get dmRetry;
+
+  /// No description provided for @dmPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo'**
+  String get dmPhoto;
+
+  /// No description provided for @dmSticker.
+  ///
+  /// In en, this message translates to:
+  /// **'Sticker'**
+  String get dmSticker;
+
+  /// No description provided for @dmSharedPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared a post'**
+  String get dmSharedPost;
+
+  /// No description provided for @dmSharedUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This content is unavailable'**
+  String get dmSharedUnavailable;
+
+  /// No description provided for @dmEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get dmEmptyTitle;
+
+  /// No description provided for @dmEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a conversation from someone\'s profile or tap + to send a new message.'**
+  String get dmEmptyBody;
+
+  /// No description provided for @dmThreadEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Say hi 👋'**
+  String get dmThreadEmpty;
+
+  /// No description provided for @dmSearchEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No people found'**
+  String get dmSearchEmpty;
+
+  /// No description provided for @dmError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your messages'**
+  String get dmError;
+
+  /// No description provided for @dmThreadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this conversation'**
+  String get dmThreadError;
+
+  /// No description provided for @dmOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting…'**
+  String get dmOffline;
+
+  /// No description provided for @dmSendFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t send. Tap to retry.'**
+  String get dmSendFailed;
+
+  /// No description provided for @dmBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t message this account.'**
+  String get dmBlocked;
 }
 
 class _AppLocalizationsDelegate

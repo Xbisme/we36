@@ -49,6 +49,13 @@ import 'package:we36/core/data/me/fake_me_repository.dart' as _i211;
 import 'package:we36/core/data/me/me_remote_data_source.dart' as _i46;
 import 'package:we36/core/data/me/me_repository.dart' as _i485;
 import 'package:we36/core/data/me/me_repository_impl.dart' as _i858;
+import 'package:we36/core/data/messaging/fake_messaging_repository.dart'
+    as _i900;
+import 'package:we36/core/data/messaging/messaging_remote_data_source.dart'
+    as _i962;
+import 'package:we36/core/data/messaging/messaging_repository.dart' as _i1044;
+import 'package:we36/core/data/messaging/messaging_repository_impl.dart'
+    as _i948;
 import 'package:we36/core/data/profile/fake_profile_repository.dart' as _i214;
 import 'package:we36/core/data/profile/profile_remote_data_source.dart'
     as _i765;
@@ -69,6 +76,7 @@ import 'package:we36/core/data/user/fake_user_repository.dart' as _i156;
 import 'package:we36/core/data/user/user_remote_data_source.dart' as _i528;
 import 'package:we36/core/data/user/user_repository.dart' as _i247;
 import 'package:we36/core/data/user/user_repository_impl.dart' as _i514;
+import 'package:we36/core/presentation/slots/messaging_launcher.dart' as _i779;
 import 'package:we36/core/presentation/slots/save_to_collection_launcher.dart'
     as _i943;
 import 'package:we36/core/presentation/slots/saved_tab_slot.dart' as _i860;
@@ -77,7 +85,12 @@ import 'package:we36/core/router/app_router.dart' as _i485;
 import 'package:we36/core/services/image_processing_service.dart' as _i12;
 import 'package:we36/core/services/media_upload_service.dart' as _i547;
 import 'package:we36/core/services/media_upload_service_fake.dart' as _i727;
+import 'package:we36/core/services/messaging/messaging_badge.dart' as _i1004;
 import 'package:we36/core/services/photo_library_service.dart' as _i613;
+import 'package:we36/core/services/realtime/messaging_realtime_service.dart'
+    as _i951;
+import 'package:we36/core/services/realtime/realtime_connection_manager.dart'
+    as _i35;
 import 'package:we36/core/services/session/auth_events.dart' as _i242;
 import 'package:we36/core/services/session/local_flags.dart' as _i299;
 import 'package:we36/core/services/session/real_token_refresher.dart' as _i266;
@@ -166,6 +179,22 @@ import 'package:we36/features/explore/presentation/cubit/search_cubit.dart'
     as _i889;
 import 'package:we36/features/feed/domain/usecases/feed_usecases.dart' as _i321;
 import 'package:we36/features/feed/presentation/feed_cubit.dart' as _i992;
+import 'package:we36/features/messaging/domain/usecases/chat_usecases.dart'
+    as _i973;
+import 'package:we36/features/messaging/domain/usecases/conversations_usecases.dart'
+    as _i534;
+import 'package:we36/features/messaging/domain/usecases/new_message_usecases.dart'
+    as _i587;
+import 'package:we36/features/messaging/presentation/cubit/chat_cubit.dart'
+    as _i966;
+import 'package:we36/features/messaging/presentation/cubit/conversations_cubit.dart'
+    as _i385;
+import 'package:we36/features/messaging/presentation/cubit/messaging_shell_cubit.dart'
+    as _i123;
+import 'package:we36/features/messaging/presentation/cubit/new_message_cubit.dart'
+    as _i550;
+import 'package:we36/features/messaging/presentation/messaging_launcher_impl.dart'
+    as _i297;
 import 'package:we36/features/post/domain/usecases/comment_usecases.dart'
     as _i140;
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart'
@@ -230,6 +259,7 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.factory<_i123.MessagingShellCubit>(() => _i123.MessagingShellCubit());
     gh.lazySingleton<_i56.FailureMapper>(() => const _i56.FailureMapper());
     gh.lazySingleton<_i222.IdempotencyKeys>(() => _i222.IdempotencyKeys());
     gh.lazySingleton<_i270.AppDatabase>(() => _i270.AppDatabase());
@@ -308,6 +338,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i214.FakeProfileRepository(gh<_i1059.RelationshipStore>()),
       registerFor: {_fake},
     );
+    gh.lazySingleton<_i1044.MessagingRepository>(
+      () => _i900.FakeMessagingRepository(),
+      registerFor: {_fake},
+    );
     gh.lazySingleton<_i603.CollectionsRepository>(
       () => _i617.FakeCollectionsRepository(),
       registerFor: {_fake},
@@ -359,6 +393,13 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       registerFor: {_fake},
     );
+    gh.lazySingleton<_i951.MessagingRealtimeService>(
+      () => _i951.MessagingRealtimeService(
+        gh<_i500.RealtimeClient>(),
+        gh<_i270.AppDatabase>(),
+        gh<_i433.AppLogger>(),
+      ),
+    );
     gh.lazySingleton<_i485.MeRepository>(
       () => _i211.FakeMeRepository(
         gh<_i489.FakeAuthBackend>(),
@@ -375,6 +416,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i433.AppLogger>(),
         gh<_i56.FailureMapper>(),
         gh<_i222.IdempotencyKeys>(),
+      ),
+    );
+    gh.lazySingleton<_i35.RealtimeConnectionManager>(
+      () => _i35.RealtimeConnectionManager(
+        gh<_i500.RealtimeClient>(),
+        gh<_i665.TokenStore>(),
+        gh<_i951.MessagingRealtimeService>(),
       ),
     );
     gh.lazySingleton<_i112.StoriesRepository>(
@@ -406,6 +454,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i46.MeRemoteDataSource>(
       () => _i46.MeRemoteDataSource(gh<_i784.ApiClient>()),
+    );
+    gh.lazySingleton<_i962.MessagingRemoteDataSource>(
+      () => _i962.MessagingRemoteDataSource(gh<_i784.ApiClient>()),
     );
     gh.lazySingleton<_i765.ProfileRemoteDataSource>(
       () => _i765.ProfileRemoteDataSource(gh<_i784.ApiClient>()),
@@ -537,17 +588,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i222.IdempotencyKeys>(),
       ),
     );
-    gh.lazySingleton<_i958.SessionController>(
-      () => _i958.SessionController(
-        gh<_i665.TokenStore>(),
-        gh<_i485.MeRepository>(),
-        gh<_i299.LocalFlags>(),
-        gh<_i270.AppDatabase>(),
-        gh<_i767.OwnStoryStore>(),
-        gh<_i1059.RelationshipStore>(),
-        gh<_i242.AuthEventsSink>(),
-      ),
-    );
     gh.factory<_i51.PublishReel>(
       () => _i51.PublishReel(
         gh<_i613.PhotoLibraryService>(),
@@ -570,6 +610,18 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i983.LoadProfileGrid>(),
         gh<_i631.FollowAction>(),
         gh<_i1059.RelationshipStore>(),
+      ),
+    );
+    gh.lazySingleton<_i958.SessionController>(
+      () => _i958.SessionController(
+        gh<_i665.TokenStore>(),
+        gh<_i485.MeRepository>(),
+        gh<_i299.LocalFlags>(),
+        gh<_i270.AppDatabase>(),
+        gh<_i767.OwnStoryStore>(),
+        gh<_i1059.RelationshipStore>(),
+        gh<_i35.RealtimeConnectionManager>(),
+        gh<_i242.AuthEventsSink>(),
       ),
     );
     gh.factory<_i762.ReelComposeCubit>(
@@ -694,6 +746,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i958.SessionController>(),
       ),
     );
+    gh.lazySingleton<_i1044.MessagingRepository>(
+      () => _i948.MessagingRepositoryImpl(
+        gh<_i962.MessagingRemoteDataSource>(),
+        gh<_i270.AppDatabase>(),
+        gh<_i500.RealtimeClient>(),
+        gh<_i958.SessionController>(),
+      ),
+      registerFor: {_real},
+    );
     gh.factory<_i140.LoadComments>(
       () => _i140.LoadComments(gh<_i552.CommentsRepository>()),
     );
@@ -747,6 +808,45 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i488.ClearRecents>(),
       ),
     );
+    gh.factory<_i973.WatchThread>(
+      () => _i973.WatchThread(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i973.LoadHistory>(
+      () => _i973.LoadHistory(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i973.SendText>(
+      () => _i973.SendText(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i973.SendPhoto>(
+      () => _i973.SendPhoto(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i973.SendSharedPost>(
+      () => _i973.SendSharedPost(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i973.SendSticker>(
+      () => _i973.SendSticker(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i973.RetrySend>(
+      () => _i973.RetrySend(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i973.MarkRead>(
+      () => _i973.MarkRead(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i973.EmitTyping>(
+      () => _i973.EmitTyping(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i534.WatchConversations>(
+      () => _i534.WatchConversations(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i534.LoadConversations>(
+      () => _i534.LoadConversations(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i587.SearchPeople>(
+      () => _i587.SearchPeople(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i587.OpenOrStartConversation>(
+      () => _i587.OpenOrStartConversation(gh<_i1044.MessagingRepository>()),
+    );
     gh.factory<_i915.SignInWithApple>(
       () => _i915.SignInWithApple(
         gh<_i873.OAuthTokenSource>(),
@@ -790,6 +890,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i485.AppRouter>(
       () => _i485.AppRouter(gh<_i958.SessionController>()),
     );
+    gh.lazySingleton<_i779.MessagingLauncher>(
+      () => _i297.MessagingLauncherImpl(gh<_i1044.MessagingRepository>()),
+    );
     gh.factory<_i391.EditProfileCubit>(
       () => _i391.EditProfileCubit(
         gh<_i305.LoadEditForm>(),
@@ -811,6 +914,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i93.WatchExplore>(),
         gh<_i93.LoadExploreFirst>(),
         gh<_i93.LoadExploreNext>(),
+      ),
+    );
+    gh.factory<_i966.ChatCubit>(
+      () => _i966.ChatCubit(
+        gh<_i973.WatchThread>(),
+        gh<_i973.LoadHistory>(),
+        gh<_i973.SendText>(),
+        gh<_i973.SendPhoto>(),
+        gh<_i973.SendSharedPost>(),
+        gh<_i973.SendSticker>(),
+        gh<_i973.RetrySend>(),
+        gh<_i973.MarkRead>(),
+        gh<_i973.EmitTyping>(),
+        gh<_i951.MessagingRealtimeService>(),
       ),
     );
     gh.factory<_i321.WatchFeed>(
@@ -838,6 +955,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i601.SignUp(
         gh<_i163.AuthRepository>(),
         gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i550.NewMessageCubit>(
+      () => _i550.NewMessageCubit(
+        gh<_i587.SearchPeople>(),
+        gh<_i587.OpenOrStartConversation>(),
+        gh<_i973.SendSharedPost>(),
       ),
     );
     gh.factory<_i206.OAuthCubit>(
@@ -876,6 +1000,16 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
+    gh.factory<_i385.ConversationsCubit>(
+      () => _i385.ConversationsCubit(
+        gh<_i534.WatchConversations>(),
+        gh<_i534.LoadConversations>(),
+        gh<_i951.MessagingRealtimeService>(),
+      ),
+    );
+    gh.lazySingleton<_i1004.MessagingBadge>(
+      () => _i1004.MessagingBadge(gh<_i1044.MessagingRepository>()),
+    );
     gh.factory<_i706.LoadCollectionItems>(
       () => _i706.LoadCollectionItems(gh<_i603.CollectionsRepository>()),
     );

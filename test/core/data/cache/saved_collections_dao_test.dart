@@ -27,9 +27,9 @@ void main() {
   );
 
   test(
-    'the database is at schema v8 (v7→v8 migration adds SavedCollections)',
+    'the database is at schema v9 (SavedCollections present since v8)',
     () {
-      expect(db.schemaVersion, 8);
+      expect(db.schemaVersion, 9);
     },
   );
 

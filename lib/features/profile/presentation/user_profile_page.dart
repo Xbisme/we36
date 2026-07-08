@@ -11,6 +11,7 @@ import 'package:we36/core/presentation/app_button.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_icon_button.dart';
 import 'package:we36/core/presentation/max_width_box.dart';
+import 'package:we36/core/presentation/slots/messaging_launcher.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
@@ -203,9 +204,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         child: AppButton(
                           label: l10n.profileMessage,
                           kind: AppButtonKind.secondary,
-                          onPressed: () => getIt<ToastService>().show(
-                            context,
-                            message: l10n.profileMessageAck,
+                          onPressed: () => unawaited(
+                            getIt<MessagingLauncher>().openConversationWith(
+                              context,
+                              view.user.id,
+                            ),
                           ),
                         ),
                       ),

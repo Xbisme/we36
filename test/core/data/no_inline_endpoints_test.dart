@@ -23,7 +23,14 @@ void main() {
           entity.path.endsWith('.freezed.dart')) {
         continue;
       }
-      final content = entity.readAsStringSync();
+      // Skip `part '…freezed.dart';` / `part '…g.dart';` directives — a file
+      // whose basename collides with the event vocabulary (message/conversation)
+      // would otherwise false-match its own part directive.
+      final content = entity
+          .readAsStringSync()
+          .split('\n')
+          .where((l) => !l.trimLeft().startsWith("part '"))
+          .join('\n');
       for (final pattern in forbidden) {
         if (pattern.hasMatch(content)) {
           offenders.add('${entity.path} matches ${pattern.pattern}');
