@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:we36/app/app.dart';
 import 'package:we36/core/config/app_config.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/router/app_router.dart';
+import 'package:we36/core/services/push/push_service.dart';
 import 'package:we36/core/utils/app_logger.dart';
+import 'package:we36/features/notifications/domain/usecases/push_usecases.dart';
 
 /// Pre-runApp setup (Constitution XI): register the flavor config, wire DI, hook
 /// sync + async errors into the logger, then start the app.
@@ -33,5 +37,25 @@ Future<void> bootstrap(AppConfig config) async {
     return true;
   };
 
-  runApp(We36App(router: getIt<AppRouter>().router));
+  final router = getIt<AppRouter>();
+  _wirePushDeepLinks(router, getIt<PushService>());
+  runApp(We36App(router: router.router));
+}
+
+/// Route a tapped push to its coarse destination (#013 US2/US5): a DM push →
+/// Messages, any feed-activity push → Activity. A no-op in fake mode (the fake
+/// push service emits nothing). Foreground/background taps route immediately; a
+/// cold-start tap routes once the first frame is up. Auth-gating is handled by
+/// the router redirect.
+void _wirePushDeepLinks(AppRouter router, PushService push) {
+  push.onNotificationTap.listen((tap) => router.router.go(pushTapRoute(tap)));
+  unawaited(
+    push.initialTap().then((tap) {
+      if (tap != null) {
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) => router.router.go(pushTapRoute(tap)),
+        );
+      }
+    }),
+  );
 }
