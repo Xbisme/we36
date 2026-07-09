@@ -38,7 +38,10 @@ Future<void> bootstrap(AppConfig config) async {
   };
 
   final router = getIt<AppRouter>();
-  _wirePushDeepLinks(router, getIt<PushService>());
+  final push = getIt<PushService>();
+  // Startup push init (real: Firebase + background handler; no-op in fake mode).
+  await push.initialize();
+  _wirePushDeepLinks(router, push);
   runApp(We36App(router: router.router));
 }
 

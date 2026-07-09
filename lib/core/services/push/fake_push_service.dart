@@ -27,6 +27,9 @@ class FakePushService implements PushService {
   PushTapData? initialTapValue;
 
   @override
+  Future<void> initialize() async {}
+
+  @override
   Future<PushPermissionStatus> requestPermission() async {
     requestCount++;
     return scriptedStatus;

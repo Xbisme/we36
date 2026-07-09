@@ -7,6 +7,11 @@ import 'package:we36/core/services/push/push_models.dart';
 /// go through use cases over this seam. Device register/unregister is REST (the
 /// repository), driven by [tokenStream] + logout — not this service.
 abstract interface class PushService {
+  /// One-time startup init (real: bring Firebase up + register the background
+  /// message handler so a killed/backgrounded app still receives pushes). Called
+  /// from `bootstrap` before `runApp`; a no-op in fake mode / when unconfigured.
+  Future<void> initialize();
+
   /// Request OS notification permission (contextual — first Activity open).
   Future<PushPermissionStatus> requestPermission();
 

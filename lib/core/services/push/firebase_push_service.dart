@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
+import 'package:we36/core/services/push/push_background_handler.dart';
 import 'package:we36/core/services/push/push_models.dart';
 import 'package:we36/core/services/push/push_service.dart';
 import 'package:we36/core/utils/app_logger.dart';
@@ -31,6 +32,15 @@ class FirebasePushService implements PushService {
   FirebaseMessaging? _fm;
   bool _initFailed = false;
   bool _wired = false;
+
+  @override
+  Future<void> initialize() async {
+    // Eagerly bring Firebase up + register the background handler at startup so a
+    // killed/backgrounded app receives pushes. Guarded — a no-op when unconfigured.
+    final fm = await _messaging();
+    if (fm == null) return;
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  }
 
   /// Lazily bring Firebase up (guarded). Returns null when unconfigured.
   Future<FirebaseMessaging?> _messaging() async {
