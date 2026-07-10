@@ -43,20 +43,29 @@ void main() {
   });
 
   group('PushRegistrationService (US2 lifecycle)', () {
-    test('registers each token; unregisters on logout (idempotent)', () async {
+    test('registers only once authenticated; unregisters on logout', () async {
       final push = FakePushService();
       final repo = FakeNotificationsRepository();
       final service = PushRegistrationService(push, repo);
       addTearDown(service.dispose);
 
+      // A token before auth is cached but NOT posted (avoids a 401 at cold start).
       push.emitToken('tok-1');
       await Future<void>.delayed(Duration.zero);
+      expect(repo.registeredTokens, isEmpty);
+
+      // Auth (session token hydrated) → the cached token registers.
+      await service.register();
       expect(repo.registeredTokens, contains('tok-1'));
 
-      await service.unregister();
-      expect(repo.unregisteredTokens, contains('tok-1'));
+      // A token refresh while authenticated registers immediately.
+      push.emitToken('tok-2');
+      await Future<void>.delayed(Duration.zero);
+      expect(repo.registeredTokens, contains('tok-2'));
 
-      // Idempotent — a second unregister is a no-op.
+      // Logout → unregister the current token (idempotent).
+      await service.unregister();
+      expect(repo.unregisteredTokens, contains('tok-2'));
       await service.unregister();
       expect(repo.unregisteredTokens, hasLength(1));
     });

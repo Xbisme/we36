@@ -40,6 +40,16 @@ class FirebasePushService implements PushService {
     final fm = await _messaging();
     if (fm == null) return;
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    // If permission was already granted (a prior session), fetch + emit the token
+    // now so the device re-registers on every launch (`POST /devices` upserts).
+    // A first-time grant goes through [requestPermission]. Without this, a device
+    // that granted once would never (re-)register its token.
+    final settings = await fm.getNotificationSettings();
+    if (_mapAuth(settings.authorizationStatus) ==
+        PushPermissionStatus.granted) {
+      final token = await fm.getToken();
+      if (token != null) _tokens.add(token);
+    }
   }
 
   /// Lazily bring Firebase up (guarded). Returns null when unconfigured.

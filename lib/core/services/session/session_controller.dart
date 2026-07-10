@@ -84,6 +84,9 @@ class SessionController extends ChangeNotifier {
     if (token == null) return;
     // Bring the realtime channel up for the restored session (#012).
     _realtime.connect();
+    // Register the push token now that the session token is hydrated (#013) —
+    // POST /devices needs a Bearer, so this must not run at cold-start bootstrap.
+    unawaited(_pushRegistration.register());
 
     // Background reconcile (a plain network failure does NOT sign out; only the
     // refresh-failure signal forces sign-out).
@@ -102,6 +105,8 @@ class SessionController extends ChangeNotifier {
     _status = AuthStatus.authenticated;
     // Bring the realtime channel up for the new session (#012).
     _realtime.connect();
+    // Register the device push token for the new session (#013).
+    unawaited(_pushRegistration.register());
     final result = await _me.getMe();
     final me = result.valueOrNull;
     if (me != null) {
