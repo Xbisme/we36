@@ -63,6 +63,15 @@ dependencies:
   # Reels — vertical short-video feed (#008)
   video_player: ^2.11.1 # inline video (flutter.dev Flutter Favorite); iOS 13 / Android minSdk 24 (met)
 
+  # Notifications & Push (#013) — FCM/APNs transport + foreground/local presentation.
+  # Native gates: iOS deployment target 15 (Firebase 4.x/16.x drops 13/14); Android
+  # compileSdk 35 / Java 17 / AGP 8.11.1+ (flutter_local_notifications 22.x). Real
+  # push receipt + credentials (GoogleService-Info.plist / google-services.json / APNs
+  # key) deferred to cutover/#015; the app runs env:'fake' (FakePushService) with no Firebase.
+  firebase_core: ^4.11.0
+  firebase_messaging: ^16.4.1
+  flutter_local_notifications: ^22.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

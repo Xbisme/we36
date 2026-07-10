@@ -140,4 +140,20 @@ abstract final class ApiEndpoints {
   static String conversationMessages(String id) =>
       '/conversations/$id/messages';
   static String conversationRead(String id) => '/conversations/$id/read';
+
+  /// Notifications & Push (#013, B#013 — source-verified against
+  /// `backend/src/modules/notifications`). The grouped **activity feed**
+  /// (`GET /notifications`, cursor, newest-activity first), the **unread count**
+  /// (`GET /notifications/unread-count` → `{count}`, drives the badge), and
+  /// **mark-all-read** (`POST /notifications/read` → 204; advances one server
+  /// `lastReadAt` marker — no per-notification read, no get-by-id). Push **device
+  /// registry**: register/refresh a token (`POST /devices` `{platform, token}` →
+  /// `{id, platform, createdAt}`, token never echoed) / unregister
+  /// (`DELETE /devices/:token`, idempotent). Live `notification.new` rides the
+  /// socket (see `SocketEvents`).
+  static const String notifications = '/notifications';
+  static const String notificationsUnreadCount = '/notifications/unread-count';
+  static const String notificationsRead = '/notifications/read';
+  static const String devices = '/devices';
+  static String device(String token) => '/devices/$token';
 }

@@ -1120,4 +1120,80 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dmBlocked => 'You can\'t message this account.';
+
+  @override
+  String get activityTitle => 'Activity';
+
+  @override
+  String get activitySectionNew => 'New';
+
+  @override
+  String get activitySectionThisWeek => 'This week';
+
+  @override
+  String get activitySectionEarlier => 'Earlier';
+
+  @override
+  String get activityEmptyTitle => 'No activity yet';
+
+  @override
+  String get activityEmptyBody =>
+      'When people like, comment on, or follow you, you\'ll see it here.';
+
+  @override
+  String get activityError => 'Couldn\'t load your activity';
+
+  @override
+  String get activityRetry => 'Try again';
+
+  @override
+  String get notifActionLike => 'liked your post';
+
+  @override
+  String get notifActionComment => 'commented on your post';
+
+  @override
+  String get notifActionReply => 'replied to your comment';
+
+  @override
+  String get notifActionMention => 'mentioned you in a comment';
+
+  @override
+  String get notifActionFollow => 'started following you';
+
+  @override
+  String get notifActionFollowRequest => 'requested to follow you';
+
+  @override
+  String get notifActionFollowAccepted => 'accepted your follow request';
+
+  @override
+  String get notifActionGeneric => 'sent you a notification';
+
+  @override
+  String notifAndOthers(String count) {
+    return 'and $count others';
+  }
+
+  @override
+  String get notifTargetUnavailable => 'This content is unavailable';
+
+  @override
+  String get notifFollowBack => 'Follow back';
+
+  @override
+  String get pushPromptTitle => 'Turn on notifications';
+
+  @override
+  String get pushPromptBody =>
+      'Get notified when people like, comment on, or follow you.';
+
+  @override
+  String get pushPromptAllow => 'Turn on';
+
+  @override
+  String get pushPromptDismiss => 'Not now';
+
+  @override
+  String get pushEnableAffordance => 'Turn on notifications';
 }

@@ -136,8 +136,11 @@ sealed class InboundEvent {
           online: data['online'] as bool? ?? false,
         );
       case SocketEvents.notificationNew:
+        // B#013 payload is `{entry, unreadCount}` (source-verified) — NOT a
+        // `notification` wrapper the #002 scaffold assumed.
         return NotificationNew(
-          (data['notification'] as Map?)?.cast<String, dynamic>() ?? const {},
+          entry: (data['entry'] as Map?)?.cast<String, dynamic>() ?? const {},
+          unreadCount: (data['unreadCount'] as num?)?.toInt() ?? 0,
         );
       default:
         return UnknownInbound(name, data);
@@ -193,8 +196,13 @@ class PresenceUpdate extends InboundEvent {
 }
 
 class NotificationNew extends InboundEvent {
-  const NotificationNew(this.notification);
-  final Map<String, dynamic> notification;
+  const NotificationNew({required this.entry, required this.unreadCount});
+
+  /// The full grouped `NotificationEntryDto` (parsed by the notifications service).
+  final Map<String, dynamic> entry;
+
+  /// The recipient's current unread count (drives the badge, #013).
+  final int unreadCount;
 }
 
 class UnknownInbound extends InboundEvent {

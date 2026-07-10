@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "174546944205",
+    "project_id": "we36-ed5a4",
+    "storage_bucket": "we36-ed5a4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174546944205:android:b451198b836556042a2984",
+        "android_client_info": {
+          "package_name": "app.we36.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTckaFCdrNB7zNMRw5-ZQdhBDyv0vCYYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

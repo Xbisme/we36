@@ -19,6 +19,7 @@ import 'package:we36/core/presentation/slots/save_to_collection_launcher.dart';
 import 'package:we36/core/presentation/stories_rail.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/presentation/wordmark.dart';
+import 'package:we36/core/services/notifications/notifications_badge.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/utils/count_formatter.dart';
@@ -136,13 +137,27 @@ class _Header extends StatelessWidget {
               semanticLabel: l10n.navCreate,
               onPressed: () => unawaited(_showCreateMenu(context)),
             ),
-            // Activity + Messages are inert placeholders in #004 — they light up
-            // with Notifications (#013) and Messages (#012). Unseen dot is fake.
-            AppIconButton(
-              icon: AppIcons.notification,
-              semanticLabel: l10n.feedActivity,
-              badgeCount: 2,
+            // Activity (Notifications, #013) — opens the Activity screen; the
+            // unread badge streams from the core `NotificationsBadge` seam
+            // (core→core, no features import; guarded for a minimal DI).
+            StreamBuilder<int>(
+              stream: getIt.isRegistered<NotificationsBadge>()
+                  ? getIt<NotificationsBadge>().unreadCount
+                  : null,
+              initialData: 0,
+              builder: (context, snap) {
+                final unread = snap.data ?? 0;
+                return AppIconButton(
+                  icon: AppIcons.notification,
+                  semanticLabel: l10n.feedActivity,
+                  badgeCount: unread > 0 ? unread : null,
+                  onPressed: () =>
+                      unawaited(context.push(AppRoutes.notifications)),
+                );
+              },
             ),
+            // Messages stays an inert placeholder here — the real Messages tab
+            // (#012) owns the conversation surface + its own badge.
             AppIconButton(
               icon: AppIcons.messages,
               semanticLabel: l10n.feedMessages,

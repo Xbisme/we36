@@ -39,6 +39,9 @@ import 'package:we36/features/feed/presentation/home_page.dart';
 import 'package:we36/features/messaging/presentation/chat_page.dart';
 import 'package:we36/features/messaging/presentation/messages_page.dart';
 import 'package:we36/features/messaging/presentation/new_message_page.dart';
+import 'package:we36/features/notifications/presentation/cubit/notifications_cubit.dart';
+import 'package:we36/features/notifications/presentation/cubit/push_permission_cubit.dart';
+import 'package:we36/features/notifications/presentation/notifications_page.dart';
 import 'package:we36/features/placeholder_page.dart';
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart';
 import 'package:we36/features/post/presentation/post_detail_page.dart';
@@ -161,7 +164,13 @@ class AppRouter {
         ),
         _flow(
           AppRoutes.notifications,
-          const PlaceholderPage(title: 'Activity'),
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => getIt<NotificationsCubit>()),
+              BlocProvider(create: (_) => getIt<PushPermissionCubit>()),
+            ],
+            child: const NotificationsPage(),
+          ),
         ),
         _flow(AppRoutes.settings, const PlaceholderPage(title: 'Settings')),
         // Search (#009 Screens 17+18) — full-screen nav-less; page-scoped

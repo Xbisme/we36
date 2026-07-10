@@ -4,10 +4,15 @@ import 'package:drift/native.dart';
 import 'package:we36/core/data/auth/fake_auth_backend.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/me/fake_me_repository.dart';
+import 'package:we36/core/data/notifications/fake_notifications_repository.dart';
 import 'package:we36/core/data/profile/relationship_store.dart';
 import 'package:we36/core/data/realtime/fake_realtime_client.dart';
 import 'package:we36/core/data/stories/own_story_store.dart';
+import 'package:we36/core/services/notifications/notifications_badge.dart';
+import 'package:we36/core/services/push/fake_push_service.dart';
+import 'package:we36/core/services/push/push_registration_service.dart';
 import 'package:we36/core/services/realtime/messaging_realtime_service.dart';
+import 'package:we36/core/services/realtime/notifications_realtime_service.dart';
 import 'package:we36/core/services/realtime/realtime_connection_manager.dart';
 import 'package:we36/core/services/session/auth_events.dart';
 import 'package:we36/core/services/session/local_flags.dart';
@@ -78,7 +83,14 @@ class SessionHarness {
         realtimeClient,
         tokenStore,
         MessagingRealtimeService(realtimeClient, db, const AppLogger()),
+        NotificationsRealtimeService(
+          realtimeClient,
+          FakeNotificationsRepository(),
+          NotificationsBadge(),
+          const AppLogger(),
+        ),
       ),
+      PushRegistrationService(FakePushService(), FakeNotificationsRepository()),
       authEvents,
     );
   }

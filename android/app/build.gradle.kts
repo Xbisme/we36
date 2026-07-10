@@ -3,6 +3,9 @@ plugins {
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+    // Firebase Cloud Messaging (#013). Requires a google-services.json for the
+    // built flavor (dev shipped; prod added at prod cutover).
+    id("com.google.gms.google-services")
 }
 
 android {

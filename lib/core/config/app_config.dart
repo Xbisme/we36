@@ -27,11 +27,11 @@ class AppConfig {
       bundleId = 'app.we36.dev',
       apiBaseUrl = const String.fromEnvironment(
         'API_BASE_URL',
-        defaultValue: 'http://localhost:3000/v1',
+        defaultValue: 'http://192.168.1.138:3000/v1',
       ),
       realtimeUrl = const String.fromEnvironment(
         'REALTIME_URL',
-        defaultValue: 'http://localhost:3000',
+        defaultValue: 'http://192.168.1.138:3000',
       ),
       diEnvironment = const String.fromEnvironment(
         'DI_ENV',

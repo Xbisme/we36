@@ -8,6 +8,7 @@ import 'package:we36/core/data/me/me_profile.dart';
 import 'package:we36/core/data/me/me_repository.dart';
 import 'package:we36/core/data/profile/relationship_store.dart';
 import 'package:we36/core/data/stories/own_story_store.dart';
+import 'package:we36/core/services/push/push_registration_service.dart';
 import 'package:we36/core/services/realtime/realtime_connection_manager.dart';
 import 'package:we36/core/services/session/auth_events.dart';
 import 'package:we36/core/services/session/local_flags.dart';
@@ -32,6 +33,7 @@ class SessionController extends ChangeNotifier {
     this._ownStories,
     this._relationships,
     this._realtime,
+    this._pushRegistration,
     AuthEventsSink authEvents,
   ) {
     _unauthSub = authEvents.unauthenticated.listen((_) => _forceSignOut());
@@ -44,6 +46,7 @@ class SessionController extends ChangeNotifier {
   final OwnStoryStore _ownStories;
   final RelationshipStore _relationships;
   final RealtimeConnectionManager _realtime;
+  final PushRegistrationService _pushRegistration;
   late final StreamSubscription<void> _unauthSub;
 
   AuthStatus _status = AuthStatus.unknown;
@@ -81,6 +84,9 @@ class SessionController extends ChangeNotifier {
     if (token == null) return;
     // Bring the realtime channel up for the restored session (#012).
     _realtime.connect();
+    // Register the push token now that the session token is hydrated (#013) —
+    // POST /devices needs a Bearer, so this must not run at cold-start bootstrap.
+    unawaited(_pushRegistration.register());
 
     // Background reconcile (a plain network failure does NOT sign out; only the
     // refresh-failure signal forces sign-out).
@@ -99,6 +105,8 @@ class SessionController extends ChangeNotifier {
     _status = AuthStatus.authenticated;
     // Bring the realtime channel up for the new session (#012).
     _realtime.connect();
+    // Register the device push token for the new session (#013).
+    unawaited(_pushRegistration.register());
     final result = await _me.getMe();
     final me = result.valueOrNull;
     if (me != null) {
@@ -144,6 +152,8 @@ class SessionController extends ChangeNotifier {
     notifyListeners();
     // Tear the realtime channel down so no events leak to the next account (#012).
     await _realtime.disconnect();
+    // Unregister this device's push token so pushes stop for this account (#013).
+    await _pushRegistration.unregister();
     await _tokenStore.clear();
     await _db.clearUserScoped();
     _ownStories.clear();

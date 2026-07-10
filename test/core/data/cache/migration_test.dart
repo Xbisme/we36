@@ -75,9 +75,9 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 9', () {
+    test('schemaVersion is 10', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 9);
+      expect(db.schemaVersion, 10);
       addTearDown(db.close);
     });
 
@@ -92,6 +92,19 @@ void main() {
         await db.messagingDao.markConversationRead('none');
         expect(await db.messagingDao.getConversations(), isEmpty);
         expect(await db.messagingDao.getThread('none'), isEmpty);
+      },
+    );
+
+    test(
+      'onUpgrade(from<10) additively creates the notifications table (#013)',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(db.close);
+        // Simulate a v9 DB upgrading to v10: the Notifications table is added.
+        await db.migration.onUpgrade(Migrator(db), 9, 10);
+        // A write+read round-trip proves the table exists and is usable.
+        expect(await db.notificationsDao.watchFeed().first, isEmpty);
+        expect(await db.notificationsDao.page(), isEmpty);
       },
     );
 
