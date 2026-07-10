@@ -9,6 +9,7 @@ import 'package:we36/core/data/messaging/message.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/avatar.dart';
+import 'package:we36/core/presentation/block_report_actions.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
@@ -147,6 +148,18 @@ class _ChatHeader extends StatelessWidget {
               ],
             ),
           ),
+          if (peer != null)
+            IconButton(
+              onPressed: () => unawaited(
+                showBlockReportActions(
+                  context,
+                  userId: peer.id,
+                  username: peer.username ?? peer.id,
+                ),
+              ),
+              icon: AppIcon(AppIcons.more, color: tokens.textPrimary),
+              tooltip: l10n.reportTitle,
+            ),
         ],
       ),
     );

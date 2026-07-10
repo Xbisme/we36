@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:we36/core/data/moderation/report.dart';
 import 'package:we36/core/data/stories/story.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/avatar.dart';
+import 'package:we36/core/presentation/block_report_actions.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
@@ -295,6 +297,22 @@ class _ViewerHeader extends StatelessWidget {
           ),
         ],
         const Spacer(),
+        Semantics(
+          button: true,
+          label: l10n.reportTitle,
+          child: IconButton(
+            icon: const AppIcon(AppIcons.more, color: Colors.white),
+            onPressed: () => unawaited(
+              showBlockReportActions(
+                context,
+                userId: reel.authorId,
+                username: reel.username,
+                reportTargetType: ReportTargetType.story,
+                reportTargetId: segment.id,
+              ),
+            ),
+          ),
+        ),
         Semantics(
           button: true,
           label: l10n.storyClose,

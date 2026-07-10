@@ -2,7 +2,9 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/messaging/fake_messaging_repository.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/core/data/realtime/fake_realtime_client.dart';
+import 'package:we36/core/services/preferences/presence_visibility.dart';
 import 'package:we36/core/services/realtime/messaging_realtime_service.dart';
 import 'package:we36/core/utils/app_logger.dart';
 import 'package:we36/features/messaging/domain/usecases/conversations_usecases.dart';
@@ -23,9 +25,14 @@ void main() {
     repo = FakeMessagingRepository();
     db = AppDatabase.forTesting(NativeDatabase.memory());
     client = FakeRealtimeClient();
-    service = MessagingRealtimeService(client, db, const AppLogger());
+    service = MessagingRealtimeService(
+      client,
+      db,
+      const AppLogger(),
+      PresenceVisibility(),
+    );
     cubit = ConversationsCubit(
-      WatchConversations(repo),
+      WatchConversations(repo, BlockedUsersStore()),
       LoadConversations(repo),
       service,
     );

@@ -8,6 +8,7 @@ import 'package:we36/core/data/messaging/message.dart';
 import 'package:we36/core/data/messaging/messaging_dto.dart';
 import 'package:we36/core/data/realtime/realtime_client.dart';
 import 'package:we36/core/data/realtime/realtime_event.dart';
+import 'package:we36/core/services/preferences/presence_visibility.dart';
 import 'package:we36/core/utils/app_logger.dart';
 
 /// The single subscriber to the realtime socket for Direct Messages (#012,
@@ -20,13 +21,19 @@ import 'package:we36/core/utils/app_logger.dart';
 /// IX) — one bad message never crashes the thread.
 @lazySingleton
 class MessagingRealtimeService {
-  MessagingRealtimeService(this._client, this._db, this._logger) {
+  MessagingRealtimeService(
+    this._client,
+    this._db,
+    this._logger,
+    this._presenceVisibility,
+  ) {
     _sub = _client.events.listen(_onEvent);
   }
 
   final RealtimeClient _client;
   final AppDatabase _db;
   final AppLogger _logger;
+  final PresenceVisibility _presenceVisibility;
 
   late final StreamSubscription<InboundEvent> _sub;
 
@@ -48,15 +55,19 @@ class MessagingRealtimeService {
   /// conversation rows + chat headers; not persisted.
   Stream<Map<String, bool>> get presence => _presence.stream;
 
-  /// Whether [userId] is currently online (last known).
-  bool isOnline(String userId) => _online[userId] ?? false;
+  /// Whether [userId] is currently online (last known). Reciprocally hidden when
+  /// the user has turned activity status off (#014, FR-028).
+  bool isOnline(String userId) =>
+      _presenceVisibility.visible && (_online[userId] ?? false);
 
   /// Transient typing stream: the set of conversation ids with a live typing
   /// signal.
   Stream<Set<String>> get typing => _typing.stream;
 
-  /// Whether [conversationId] currently has a live typing signal.
+  /// Whether [conversationId] currently has a live typing signal. Reciprocally
+  /// hidden when the user has turned activity status off (#014, FR-028).
   bool isTyping(String conversationId) =>
+      _presenceVisibility.visible &&
       _typingConversationIds.contains(conversationId);
 
   Future<void> _onEvent(InboundEvent event) async {

@@ -21,6 +21,12 @@ import 'package:we36/core/data/auth/auth_repository_impl.dart' as _i235;
 import 'package:we36/core/data/auth/fake_auth_backend.dart' as _i489;
 import 'package:we36/core/data/auth/fake_auth_repository.dart' as _i548;
 import 'package:we36/core/data/cache/app_database.dart' as _i270;
+import 'package:we36/core/data/close_friends/close_friends_repository.dart'
+    as _i42;
+import 'package:we36/core/data/close_friends/close_friends_repository_impl.dart'
+    as _i753;
+import 'package:we36/core/data/close_friends/fake_close_friends_repository.dart'
+    as _i1068;
 import 'package:we36/core/data/collections/collections_remote_data_source.dart'
     as _i768;
 import 'package:we36/core/data/collections/collections_repository.dart'
@@ -56,6 +62,12 @@ import 'package:we36/core/data/messaging/messaging_remote_data_source.dart'
 import 'package:we36/core/data/messaging/messaging_repository.dart' as _i1044;
 import 'package:we36/core/data/messaging/messaging_repository_impl.dart'
     as _i948;
+import 'package:we36/core/data/moderation/block_actions.dart' as _i111;
+import 'package:we36/core/data/moderation/block_repository.dart' as _i524;
+import 'package:we36/core/data/moderation/block_repository_impl.dart' as _i221;
+import 'package:we36/core/data/moderation/blocked_users_store.dart' as _i18;
+import 'package:we36/core/data/moderation/fake_block_repository.dart' as _i617;
+import 'package:we36/core/data/moderation/report_repository.dart' as _i172;
 import 'package:we36/core/data/notifications/fake_notifications_repository.dart'
     as _i200;
 import 'package:we36/core/data/notifications/notifications_remote_data_source.dart'
@@ -76,6 +88,18 @@ import 'package:we36/core/data/reels/fake_reels_repository.dart' as _i713;
 import 'package:we36/core/data/reels/reels_remote_data_source.dart' as _i746;
 import 'package:we36/core/data/reels/reels_repository.dart' as _i724;
 import 'package:we36/core/data/reels/reels_repository_impl.dart' as _i571;
+import 'package:we36/core/data/settings/fake_settings_repository.dart' as _i143;
+import 'package:we36/core/data/settings/settings_remote_data_source.dart'
+    as _i710;
+import 'package:we36/core/data/settings/settings_repository.dart' as _i1043;
+import 'package:we36/core/data/settings/settings_repository_impl.dart' as _i996;
+import 'package:we36/core/data/social/fake_follow_requests_repository.dart'
+    as _i426;
+import 'package:we36/core/data/social/follow_requests_remote_data_source.dart'
+    as _i625;
+import 'package:we36/core/data/social/follow_requests_repository.dart' as _i323;
+import 'package:we36/core/data/social/follow_requests_repository_impl.dart'
+    as _i426;
 import 'package:we36/core/data/stories/fake_stories_repository.dart' as _i154;
 import 'package:we36/core/data/stories/own_story_store.dart' as _i767;
 import 'package:we36/core/data/stories/stories_repository.dart' as _i112;
@@ -97,6 +121,9 @@ import 'package:we36/core/services/messaging/messaging_badge.dart' as _i1004;
 import 'package:we36/core/services/notifications/notifications_badge.dart'
     as _i417;
 import 'package:we36/core/services/photo_library_service.dart' as _i613;
+import 'package:we36/core/services/preferences/app_preferences.dart' as _i316;
+import 'package:we36/core/services/preferences/presence_visibility.dart'
+    as _i861;
 import 'package:we36/core/services/push/fake_push_service.dart' as _i965;
 import 'package:we36/core/services/push/firebase_push_service.dart' as _i749;
 import 'package:we36/core/services/push/push_registration_service.dart'
@@ -251,6 +278,16 @@ import 'package:we36/features/reels/presentation/cubit/reel_compose_cubit.dart'
     as _i762;
 import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart'
     as _i846;
+import 'package:we36/features/settings/presentation/cubit/app_settings_cubit.dart'
+    as _i183;
+import 'package:we36/features/settings/presentation/cubit/blocked_accounts_cubit.dart'
+    as _i547;
+import 'package:we36/features/settings/presentation/cubit/close_friends_cubit.dart'
+    as _i465;
+import 'package:we36/features/settings/presentation/cubit/follow_requests_cubit.dart'
+    as _i1025;
+import 'package:we36/features/settings/presentation/cubit/settings_cubit.dart'
+    as _i708;
 import 'package:we36/features/stories/data/create_story_repository.dart'
     as _i674;
 import 'package:we36/features/stories/data/create_story_repository_fake.dart'
@@ -286,6 +323,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i56.FailureMapper>(() => const _i56.FailureMapper());
     gh.lazySingleton<_i222.IdempotencyKeys>(() => _i222.IdempotencyKeys());
     gh.lazySingleton<_i270.AppDatabase>(() => _i270.AppDatabase());
+    gh.lazySingleton<_i18.BlockedUsersStore>(() => _i18.BlockedUsersStore());
     gh.lazySingleton<_i1059.RelationshipStore>(
       () => _i1059.RelationshipStore(),
     );
@@ -299,6 +337,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i417.NotificationsBadge>(
       () => _i417.NotificationsBadge(),
+    );
+    gh.lazySingleton<_i861.PresenceVisibility>(
+      () => _i861.PresenceVisibility(),
     );
     gh.lazySingleton<_i605.StoryImageComposer>(
       () => const _i605.StoryImageComposer(),
@@ -328,6 +369,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i943.SaveToCollectionLauncher>(
       () => const _i805.SaveToCollectionLauncherImpl(),
     );
+    gh.lazySingleton<_i316.AppPreferences>(() => _i316.AppPreferencesImpl());
     gh.lazySingleton<_i299.LocalFlags>(() => _i299.LocalFlagsImpl());
     gh.factory<_i772.GalleryCubit>(
       () => _i772.GalleryCubit(gh<_i613.PhotoLibraryService>()),
@@ -344,8 +386,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i897.WatchOwnStoryChanges>(
       () => _i897.WatchOwnStoryChanges(gh<_i767.OwnStoryStore>()),
     );
+    gh.lazySingleton<_i183.AppSettingsCubit>(
+      () => _i183.AppSettingsCubit(gh<_i316.AppPreferences>()),
+    );
     gh.lazySingleton<_i724.ReelsRepository>(
       () => _i713.FakeReelsRepository(gh<_i270.AppDatabase>()),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i1043.SettingsRepository>(
+      () => _i143.FakeSettingsRepository(),
       registerFor: {_fake},
     );
     gh.lazySingleton<_i552.CommentsRepository>(
@@ -376,6 +425,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i214.FakeProfileRepository(gh<_i1059.RelationshipStore>()),
       registerFor: {_fake},
     );
+    gh.lazySingleton<_i42.CloseFriendsRepository>(
+      () => _i1068.FakeCloseFriendsRepository(),
+      registerFor: {_fake},
+    );
     gh.lazySingleton<_i1044.MessagingRepository>(
       () => _i900.FakeMessagingRepository(),
       registerFor: {_fake},
@@ -392,6 +445,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i792.FakeCreatePostRepository(gh<_i270.AppDatabase>()),
       registerFor: {_fake},
     );
+    gh.lazySingleton<_i524.BlockRepository>(
+      () => _i617.FakeBlockRepository(),
+      registerFor: {_fake},
+    );
     gh.lazySingleton<_i200.TokenRefresher>(
       () => _i200.FakeTokenRefresher(),
       registerFor: {_fake},
@@ -404,8 +461,16 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i751.FakeDiscoveryRepository(gh<_i270.AppDatabase>()),
       registerFor: {_fake},
     );
+    gh.lazySingleton<_i323.FollowRequestsRepository>(
+      () => _i426.FakeFollowRequestsRepository(),
+      registerFor: {_fake},
+    );
     gh.lazySingleton<_i247.UserRepository>(
       () => _i156.FakeUserRepository(),
+      registerFor: {_fake},
+    );
+    gh.lazySingleton<_i172.ReportRepository>(
+      () => _i172.FakeReportRepository(),
       registerFor: {_fake},
     );
     gh.lazySingleton<_i500.RealtimeClient>(
@@ -415,6 +480,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i850.FeedRepository>(
       () => _i144.FakeFeedRepository(gh<_i270.AppDatabase>()),
       registerFor: {_fake},
+    );
+    gh.lazySingleton<_i951.MessagingRealtimeService>(
+      () => _i951.MessagingRealtimeService(
+        gh<_i500.RealtimeClient>(),
+        gh<_i270.AppDatabase>(),
+        gh<_i433.AppLogger>(),
+        gh<_i861.PresenceVisibility>(),
+      ),
     );
     gh.lazySingleton<_i200.TokenRefresher>(
       () => _i266.RealTokenRefresher(
@@ -433,13 +506,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i297.PushPermissionCubit>(
       () => _i297.PushPermissionCubit(gh<_i862.PushService>()),
-    );
-    gh.lazySingleton<_i951.MessagingRealtimeService>(
-      () => _i951.MessagingRealtimeService(
-        gh<_i500.RealtimeClient>(),
-        gh<_i270.AppDatabase>(),
-        gh<_i433.AppLogger>(),
-      ),
     );
     gh.lazySingleton<_i485.MeRepository>(
       () => _i211.FakeMeRepository(
@@ -501,6 +567,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i746.ReelsRemoteDataSource>(
       () => _i746.ReelsRemoteDataSource(gh<_i784.ApiClient>()),
     );
+    gh.lazySingleton<_i710.SettingsRemoteDataSource>(
+      () => _i710.SettingsRemoteDataSource(gh<_i784.ApiClient>()),
+    );
+    gh.lazySingleton<_i625.FollowRequestsRemoteDataSource>(
+      () => _i625.FollowRequestsRemoteDataSource(gh<_i784.ApiClient>()),
+    );
     gh.lazySingleton<_i528.UserRemoteDataSource>(
       () => _i528.UserRemoteDataSource(gh<_i784.ApiClient>()),
     );
@@ -521,11 +593,37 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       registerFor: {_real},
     );
+    gh.lazySingleton<_i42.CloseFriendsRepository>(
+      () => _i753.CloseFriendsRepositoryImpl(gh<_i784.ApiClient>()),
+      registerFor: {_real},
+    );
+    gh.lazySingleton<_i323.FollowRequestsRepository>(
+      () => _i426.FollowRequestsRepositoryImpl(
+        gh<_i625.FollowRequestsRemoteDataSource>(),
+        gh<_i1059.RelationshipStore>(),
+      ),
+      registerFor: {_real},
+    );
+    gh.factory<_i1025.FollowRequestsCubit>(
+      () => _i1025.FollowRequestsCubit(gh<_i323.FollowRequestsRepository>()),
+    );
+    gh.lazySingleton<_i524.BlockRepository>(
+      () => _i221.BlockRepositoryImpl(gh<_i784.ApiClient>()),
+      registerFor: {_real},
+    );
     gh.lazySingleton<_i1030.CreatePostRepository>(
       () => _i794.RealCreatePostRepository(
         gh<_i784.ApiClient>(),
         gh<_i270.AppDatabase>(),
       ),
+      registerFor: {_real},
+    );
+    gh.lazySingleton<_i1043.SettingsRepository>(
+      () => _i996.SettingsRepositoryImpl(gh<_i710.SettingsRemoteDataSource>()),
+      registerFor: {_real},
+    );
+    gh.lazySingleton<_i172.ReportRepository>(
+      () => _i172.ReportRepositoryImpl(gh<_i784.ApiClient>()),
       registerFor: {_real},
     );
     gh.lazySingleton<_i550.DiscoveryRepository>(
@@ -543,11 +641,20 @@ extension GetItInjectableX on _i174.GetIt {
       ),
       registerFor: {_real},
     );
+    gh.factory<_i708.SettingsCubit>(
+      () => _i708.SettingsCubit(
+        gh<_i1043.SettingsRepository>(),
+        gh<_i861.PresenceVisibility>(),
+      ),
+    );
     gh.lazySingleton<_i631.FollowAction>(
       () => _i631.FollowAction(
         gh<_i124.ProfileRepository>(),
         gh<_i1059.RelationshipStore>(),
       ),
+    );
+    gh.factory<_i465.CloseFriendsCubit>(
+      () => _i465.CloseFriendsCubit(gh<_i42.CloseFriendsRepository>()),
     );
     gh.factory<_i305.LoadEditForm>(
       () => _i305.LoadEditForm(gh<_i485.MeRepository>()),
@@ -557,6 +664,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i983.WatchMe>(() => _i983.WatchMe(gh<_i485.MeRepository>()));
     gh.factory<_i983.FetchMe>(() => _i983.FetchMe(gh<_i485.MeRepository>()));
+    gh.lazySingleton<_i111.BlockActions>(
+      () => _i111.BlockActions(
+        gh<_i524.BlockRepository>(),
+        gh<_i1059.RelationshipStore>(),
+        gh<_i18.BlockedUsersStore>(),
+      ),
+    );
     gh.factory<_i351.LoadStoryReels>(
       () => _i351.LoadStoryReels(gh<_i112.StoriesRepository>()),
     );
@@ -677,6 +791,19 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i531.LoadConnections>(),
         gh<_i631.FollowAction>(),
         gh<_i1059.RelationshipStore>(),
+      ),
+    );
+    gh.factory<_i547.BlockedAccountsCubit>(
+      () => _i547.BlockedAccountsCubit(
+        gh<_i524.BlockRepository>(),
+        gh<_i111.BlockActions>(),
+        gh<_i18.BlockedUsersStore>(),
+      ),
+    );
+    gh.factory<_i321.WatchFeed>(
+      () => _i321.WatchFeed(
+        gh<_i850.FeedRepository>(),
+        gh<_i18.BlockedUsersStore>(),
       ),
     );
     gh.factory<_i619.LoadHashtagPage>(
@@ -896,9 +1023,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i93.LoadExploreNext>(),
       ),
     );
-    gh.factory<_i321.WatchFeed>(
-      () => _i321.WatchFeed(gh<_i850.FeedRepository>()),
-    );
     gh.factory<_i321.LoadFeed>(
       () => _i321.LoadFeed(gh<_i850.FeedRepository>()),
     );
@@ -994,19 +1118,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i416.CreateCollection>(),
       ),
     );
-    gh.lazySingleton<_i958.SessionController>(
-      () => _i958.SessionController(
-        gh<_i665.TokenStore>(),
-        gh<_i485.MeRepository>(),
-        gh<_i299.LocalFlags>(),
-        gh<_i270.AppDatabase>(),
-        gh<_i767.OwnStoryStore>(),
-        gh<_i1059.RelationshipStore>(),
-        gh<_i35.RealtimeConnectionManager>(),
-        gh<_i315.PushRegistrationService>(),
-        gh<_i242.AuthEventsSink>(),
-      ),
-    );
     gh.factory<_i764.ForgotPasswordCubit>(
       () => _i764.ForgotPasswordCubit(
         gh<_i95.RequestPasswordReset>(),
@@ -1019,20 +1130,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1008.LoadCollections>(),
       ),
     );
-    gh.factory<_i915.SignInWithApple>(
-      () => _i915.SignInWithApple(
-        gh<_i873.OAuthTokenSource>(),
-        gh<_i163.AuthRepository>(),
-        gh<_i958.SessionController>(),
-      ),
-    );
-    gh.factory<_i594.SignInWithGoogle>(
-      () => _i594.SignInWithGoogle(
-        gh<_i873.OAuthTokenSource>(),
-        gh<_i163.AuthRepository>(),
-        gh<_i958.SessionController>(),
-      ),
-    );
     gh.factory<_i192.CollectionDetailCubit>(
       () => _i192.CollectionDetailCubit(
         gh<_i706.LoadCollectionItems>(),
@@ -1040,11 +1137,19 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i706.FullUnsave>(),
       ),
     );
-    gh.factory<_i902.OnboardingCubit>(
-      () => _i902.OnboardingCubit(gh<_i958.SessionController>()),
-    );
-    gh.lazySingleton<_i485.AppRouter>(
-      () => _i485.AppRouter(gh<_i958.SessionController>()),
+    gh.lazySingleton<_i958.SessionController>(
+      () => _i958.SessionController(
+        gh<_i665.TokenStore>(),
+        gh<_i485.MeRepository>(),
+        gh<_i299.LocalFlags>(),
+        gh<_i270.AppDatabase>(),
+        gh<_i767.OwnStoryStore>(),
+        gh<_i1059.RelationshipStore>(),
+        gh<_i35.RealtimeConnectionManager>(),
+        gh<_i315.PushRegistrationService>(),
+        gh<_i18.BlockedUsersStore>(),
+        gh<_i242.AuthEventsSink>(),
+      ),
     );
     gh.factory<_i142.CollectionEditCubit>(
       () => _i142.CollectionEditCubit(
@@ -1064,12 +1169,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i601.SignUp(
         gh<_i163.AuthRepository>(),
         gh<_i958.SessionController>(),
-      ),
-    );
-    gh.factory<_i206.OAuthCubit>(
-      () => _i206.OAuthCubit(
-        gh<_i594.SignInWithGoogle>(),
-        gh<_i915.SignInWithApple>(),
       ),
     );
     gh.factory<_i942.SignInCubit>(() => _i942.SignInCubit(gh<_i53.SignIn>()));
@@ -1122,9 +1221,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i973.EmitTyping>(
       () => _i973.EmitTyping(gh<_i1044.MessagingRepository>()),
     );
-    gh.factory<_i534.WatchConversations>(
-      () => _i534.WatchConversations(gh<_i1044.MessagingRepository>()),
-    );
     gh.factory<_i534.LoadConversations>(
       () => _i534.LoadConversations(gh<_i1044.MessagingRepository>()),
     );
@@ -1133,6 +1229,26 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i587.OpenOrStartConversation>(
       () => _i587.OpenOrStartConversation(gh<_i1044.MessagingRepository>()),
+    );
+    gh.factory<_i915.SignInWithApple>(
+      () => _i915.SignInWithApple(
+        gh<_i873.OAuthTokenSource>(),
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i594.SignInWithGoogle>(
+      () => _i594.SignInWithGoogle(
+        gh<_i873.OAuthTokenSource>(),
+        gh<_i163.AuthRepository>(),
+        gh<_i958.SessionController>(),
+      ),
+    );
+    gh.factory<_i902.OnboardingCubit>(
+      () => _i902.OnboardingCubit(gh<_i958.SessionController>()),
+    );
+    gh.lazySingleton<_i485.AppRouter>(
+      () => _i485.AppRouter(gh<_i958.SessionController>()),
     );
     gh.lazySingleton<_i779.MessagingLauncher>(
       () => _i297.MessagingLauncherImpl(gh<_i1044.MessagingRepository>()),
@@ -1152,11 +1268,23 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i30.SignUpCubit>(() => _i30.SignUpCubit(gh<_i601.SignUp>()));
+    gh.factory<_i534.WatchConversations>(
+      () => _i534.WatchConversations(
+        gh<_i1044.MessagingRepository>(),
+        gh<_i18.BlockedUsersStore>(),
+      ),
+    );
     gh.factory<_i550.NewMessageCubit>(
       () => _i550.NewMessageCubit(
         gh<_i587.SearchPeople>(),
         gh<_i587.OpenOrStartConversation>(),
         gh<_i973.SendSharedPost>(),
+      ),
+    );
+    gh.factory<_i206.OAuthCubit>(
+      () => _i206.OAuthCubit(
+        gh<_i594.SignInWithGoogle>(),
+        gh<_i915.SignInWithApple>(),
       ),
     );
     gh.factory<_i16.ProfileSetupCubit>(

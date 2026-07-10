@@ -5,6 +5,7 @@ import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/messaging/fake_messaging_repository.dart';
 import 'package:we36/core/data/messaging/message.dart';
 import 'package:we36/core/data/realtime/fake_realtime_client.dart';
+import 'package:we36/core/services/preferences/presence_visibility.dart';
 import 'package:we36/core/services/realtime/messaging_realtime_service.dart';
 import 'package:we36/core/theme/app_theme.dart';
 import 'package:we36/core/utils/app_logger.dart';
@@ -29,7 +30,12 @@ void main() {
       repo = FakeMessagingRepository();
       db = AppDatabase.forTesting(NativeDatabase.memory());
       client = FakeRealtimeClient();
-      service = MessagingRealtimeService(client, db, const AppLogger());
+      service = MessagingRealtimeService(
+        client,
+        db,
+        const AppLogger(),
+        PresenceVisibility(),
+      );
       cubit = ChatCubit(
         WatchThread(repo),
         LoadHistory(repo),

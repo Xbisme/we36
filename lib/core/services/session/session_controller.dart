@@ -6,6 +6,7 @@ import 'package:we36/core/data/auth/dto/session.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/me/me_profile.dart';
 import 'package:we36/core/data/me/me_repository.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/core/data/profile/relationship_store.dart';
 import 'package:we36/core/data/stories/own_story_store.dart';
 import 'package:we36/core/services/push/push_registration_service.dart';
@@ -34,6 +35,7 @@ class SessionController extends ChangeNotifier {
     this._relationships,
     this._realtime,
     this._pushRegistration,
+    this._blockedUsers,
     AuthEventsSink authEvents,
   ) {
     _unauthSub = authEvents.unauthenticated.listen((_) => _forceSignOut());
@@ -47,6 +49,7 @@ class SessionController extends ChangeNotifier {
   final RelationshipStore _relationships;
   final RealtimeConnectionManager _realtime;
   final PushRegistrationService _pushRegistration;
+  final BlockedUsersStore _blockedUsers;
   late final StreamSubscription<void> _unauthSub;
 
   AuthStatus _status = AuthStatus.unknown;
@@ -158,6 +161,8 @@ class SessionController extends ChangeNotifier {
     await _db.clearUserScoped();
     _ownStories.clear();
     _relationships.clear();
+    // Drop the blocked-users set so it doesn't leak to the next account (#014).
+    _blockedUsers.clear();
     await _flags.clearProfileCompleted();
   }
 

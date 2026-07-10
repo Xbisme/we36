@@ -8,6 +8,7 @@ import 'package:we36/core/router/app_router.dart';
 import 'package:we36/core/services/push/push_service.dart';
 import 'package:we36/core/utils/app_logger.dart';
 import 'package:we36/features/notifications/domain/usecases/push_usecases.dart';
+import 'package:we36/features/settings/presentation/cubit/app_settings_cubit.dart';
 
 /// Pre-runApp setup (Constitution XI): register the flavor config, wire DI, hook
 /// sync + async errors into the logger, then start the app.
@@ -42,7 +43,13 @@ Future<void> bootstrap(AppConfig config) async {
   // Startup push init (real: Firebase + background handler; no-op in fake mode).
   await push.initialize();
   _wirePushDeepLinks(router, push);
-  runApp(We36App(router: router.router));
+
+  // Load the device-scoped appearance/language selection before first frame
+  // (#014, US5) so the app opens in the chosen theme/locale.
+  final appSettings = getIt<AppSettingsCubit>();
+  await appSettings.load();
+
+  runApp(We36App(router: router.router, appSettings: appSettings));
 }
 
 /// Route a tapped push to its coarse destination (#013 US2/US5): a DM push →

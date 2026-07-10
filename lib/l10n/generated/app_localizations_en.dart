@@ -1196,4 +1196,235 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushEnableAffordance => 'Turn on notifications';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsSectionAccount => 'Account';
+
+  @override
+  String get settingsSectionPrivacy => 'Privacy';
+
+  @override
+  String get settingsSectionNotifications => 'Notifications';
+
+  @override
+  String get settingsSectionPreferences => 'Preferences';
+
+  @override
+  String get settingsSectionAbout => 'About';
+
+  @override
+  String get settingsEditProfile => 'Edit profile';
+
+  @override
+  String get settingsPrivacySecurity => 'Privacy & security';
+
+  @override
+  String get settingsFollowRequests => 'Follow requests';
+
+  @override
+  String get settingsBlocked => 'Blocked accounts';
+
+  @override
+  String get settingsCloseFriends => 'Close friends';
+
+  @override
+  String get settingsNotificationPrefs => 'Notification preferences';
+
+  @override
+  String get settingsTwoFactor => 'Two-factor authentication';
+
+  @override
+  String get settingsDataExport => 'Download your data';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get settingsTheme => 'Appearance';
+
+  @override
+  String settingsAboutVersion(String version, String build) {
+    return 'Version $version ($build)';
+  }
+
+  @override
+  String get settingsLogOut => 'Log out';
+
+  @override
+  String get settingsLogOutConfirmTitle => 'Log out?';
+
+  @override
+  String get settingsLogOutConfirmBody =>
+      'You\'ll need to sign in again to use We36.';
+
+  @override
+  String get settingsLogOutConfirmAction => 'Log out';
+
+  @override
+  String get settingsPrivateAccount => 'Private account';
+
+  @override
+  String get settingsPrivateAccountDesc =>
+      'When your account is private, only people you approve can see your posts and stories.';
+
+  @override
+  String get settingsActivityStatus => 'Show activity status';
+
+  @override
+  String get settingsActivityStatusDesc =>
+      'Let people you follow and message see when you\'re active. When this is off, you won\'t see their activity status either.';
+
+  @override
+  String get settingsUpdateFailed =>
+      'Couldn\'t update your settings. Try again.';
+
+  @override
+  String get followRequestsTitle => 'Follow requests';
+
+  @override
+  String get followRequestsEmpty => 'No pending requests';
+
+  @override
+  String get followRequestsEmptyBody =>
+      'When someone asks to follow your private account, they\'ll show up here.';
+
+  @override
+  String get followRequestsError => 'Couldn\'t load your follow requests';
+
+  @override
+  String get followRequestApprove => 'Approve';
+
+  @override
+  String get followRequestDecline => 'Decline';
+
+  @override
+  String get followRequestActionFailed => 'Couldn\'t complete that. Try again.';
+
+  @override
+  String get reportTitle => 'Report';
+
+  @override
+  String get reportReasonSpam => 'Spam';
+
+  @override
+  String get reportReasonNudity => 'Nudity or sexual content';
+
+  @override
+  String get reportReasonHarassment => 'Harassment or bullying';
+
+  @override
+  String get reportReasonHate => 'Hate speech';
+
+  @override
+  String get reportReasonViolence => 'Violence';
+
+  @override
+  String get reportReasonSelfHarm => 'Self-harm';
+
+  @override
+  String get reportReasonFalseInfo => 'False information';
+
+  @override
+  String get reportReasonIp => 'Intellectual-property violation';
+
+  @override
+  String get reportReasonOther => 'Something else';
+
+  @override
+  String get reportAck => 'Thanks — we\'ll review this.';
+
+  @override
+  String get reportFailed => 'Couldn\'t send your report. Try again.';
+
+  @override
+  String get blockAction => 'Block';
+
+  @override
+  String blockConfirmTitle(String name) {
+    return 'Block @$name?';
+  }
+
+  @override
+  String get blockConfirmBody =>
+      'They won\'t be able to find your profile, posts or story, and you won\'t see theirs. They won\'t be notified.';
+
+  @override
+  String get blockAck => 'Blocked';
+
+  @override
+  String get unblockAction => 'Unblock';
+
+  @override
+  String get unblockFailed => 'Couldn\'t unblock. Try again.';
+
+  @override
+  String get blockedTitle => 'Blocked accounts';
+
+  @override
+  String get blockedEmpty => 'You haven\'t blocked anyone';
+
+  @override
+  String get blockedEmptyBody => 'Accounts you block will appear here.';
+
+  @override
+  String get blockedError => 'Couldn\'t load blocked accounts';
+
+  @override
+  String get closeFriendsSubtitle =>
+      'Share stories with only these people. They\'re never notified that they\'re on your list.';
+
+  @override
+  String get closeFriendsEmpty => 'No close friends yet';
+
+  @override
+  String get closeFriendsEmptyBody =>
+      'Add people to share Close Friends stories with them.';
+
+  @override
+  String get closeFriendsError => 'Couldn\'t load your close friends';
+
+  @override
+  String get closeFriendsAdd => 'Add';
+
+  @override
+  String get closeFriendsRemove => 'Remove';
+
+  @override
+  String get closeFriendsAddTitle => 'Add close friends';
+
+  @override
+  String get closeFriendsPickerEmpty => 'No one to add right now';
+
+  @override
+  String get closeFriendsUpdateFailed =>
+      'Couldn\'t update close friends. Try again.';
+
+  @override
+  String get settingsSystemDefault => 'System default';
+
+  @override
+  String get settingsLanguageEnglish => 'English';
+
+  @override
+  String get settingsLanguageVietnamese => 'Tiếng Việt';
+
+  @override
+  String get settingsThemeLight => 'Light';
+
+  @override
+  String get settingsThemeDark => 'Dark';
+
+  @override
+  String get twoFactorEntryBody =>
+      'Add an extra layer of security. Two-factor authentication asks for a code when you log in on a new device. Setup is coming soon.';
+
+  @override
+  String get dataExportEntryBody =>
+      'Request a copy of your We36 data — your posts, profile info, and activity. This can take a little while and is coming soon.';
+
+  @override
+  String get comingSoon => 'Coming soon';
 }

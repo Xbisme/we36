@@ -7,6 +7,7 @@ import 'package:we36/core/data/messaging/conversation.dart';
 import 'package:we36/core/data/messaging/message.dart';
 import 'package:we36/core/data/realtime/fake_realtime_client.dart';
 import 'package:we36/core/data/realtime/realtime_event.dart';
+import 'package:we36/core/services/preferences/presence_visibility.dart';
 import 'package:we36/core/services/realtime/messaging_realtime_service.dart';
 import 'package:we36/core/utils/app_logger.dart';
 
@@ -21,7 +22,12 @@ void main() {
   setUp(() {
     db = AppDatabase.forTesting(NativeDatabase.memory());
     client = FakeRealtimeClient();
-    service = MessagingRealtimeService(client, db, const AppLogger());
+    service = MessagingRealtimeService(
+      client,
+      db,
+      const AppLogger(),
+      PresenceVisibility(),
+    );
   });
   tearDown(() async {
     await service.dispose();

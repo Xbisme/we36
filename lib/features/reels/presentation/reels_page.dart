@@ -265,6 +265,9 @@ class _ReelOverlay extends StatelessWidget {
                 onMore: () => showReelMoreSheet(
                   context,
                   isOwn: _isOwn,
+                  reelId: reel.id,
+                  authorId: reel.author.id,
+                  authorUsername: reel.author.username ?? reel.author.id,
                   onDeleteConfirmed: () => _delete(context),
                 ),
               ),

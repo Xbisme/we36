@@ -1,16 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:we36/core/di/injection.dart';
+import 'package:we36/core/data/moderation/report.dart';
 import 'package:we36/core/presentation/action_sheet.dart';
 import 'package:we36/core/presentation/app_icon.dart';
-import 'package:we36/core/presentation/toast.dart';
+import 'package:we36/core/presentation/block_report_actions.dart';
+import 'package:we36/core/presentation/report_sheet.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 
-/// The per-reel overflow action sheet (#008). **Report** is reachable from every
-/// reel (surface-only ack — Constitution I, FR-024a); the viewer's own reel gets
-/// **Delete** instead of report (FR-024, confirmed via [onDeleteConfirmed]).
+/// The per-reel overflow action sheet (#008/#014). **Report** + **Block** are
+/// reachable from every non-own reel (Constitution I, FR-013/018); the viewer's
+/// own reel gets **Delete** instead (FR-024, confirmed via [onDeleteConfirmed]).
 Future<void> showReelMoreSheet(
   BuildContext context, {
   required bool isOwn,
+  required String reelId,
+  required String authorId,
+  required String authorUsername,
   required Future<void> Function() onDeleteConfirmed,
 }) {
   final l10n = context.l10n;
@@ -30,18 +36,27 @@ Future<void> showReelMoreSheet(
             if (confirmed) await onDeleteConfirmed();
           },
         )
-      else
+      else ...[
         ActionSheetItem(
-          icon: AppIcons.more,
-          label: l10n.reelReport,
-          onTap: () {
-            getIt<ToastService>().show(
+          icon: AppIcons.report,
+          label: l10n.reportTitle,
+          onTap: () => unawaited(
+            showReportSheet(
               context,
-              message: l10n.reelReported,
-              tone: ToastTone.success,
-            );
-          },
+              targetType: ReportTargetType.reel,
+              targetId: reelId,
+            ),
+          ),
         ),
+        ActionSheetItem(
+          icon: AppIcons.block,
+          label: l10n.blockAction,
+          destructive: true,
+          onTap: () => unawaited(
+            confirmAndBlock(context, authorId, authorUsername),
+          ),
+        ),
+      ],
     ],
   );
 }

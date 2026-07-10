@@ -5,12 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/data/discovery/explore_item.dart';
+import 'package:we36/core/data/moderation/block_actions.dart';
+import 'package:we36/core/data/moderation/report.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/action_sheet.dart';
 import 'package:we36/core/presentation/app_button.dart';
+import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_icon_button.dart';
 import 'package:we36/core/presentation/max_width_box.dart';
+import 'package:we36/core/presentation/report_sheet.dart';
 import 'package:we36/core/presentation/slots/messaging_launcher.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
@@ -82,28 +86,55 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   void _showMore() {
     final l10n = context.l10n;
+    final state = context.read<ProfileCubit>().state;
+    if (state is! ProfileLoaded) return;
+    final user = state.view.user;
     unawaited(
       showAppActionSheet(
         context,
         cancelLabel: l10n.commonCancel,
         items: [
           ActionSheetItem(
-            icon: AppIcons.more,
-            label: l10n.profileReport,
-            onTap: () => getIt<ToastService>().show(
-              context,
-              message: l10n.profileReportAck,
+            icon: AppIcons.report,
+            label: l10n.reportTitle,
+            onTap: () => unawaited(
+              showReportSheet(
+                context,
+                targetType: ReportTargetType.user,
+                targetId: user.id,
+              ),
             ),
           ),
           ActionSheetItem(
-            icon: AppIcons.close,
-            label: l10n.profileBlock,
-            onTap: () => getIt<ToastService>().show(
-              context,
-              message: l10n.profileBlockAck,
-            ),
+            icon: AppIcons.block,
+            label: l10n.blockAction,
+            destructive: true,
+            onTap: () => unawaited(_confirmBlock(user.id, user.username)),
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _confirmBlock(String userId, String username) async {
+    final l10n = context.l10n;
+    final ok = await showAppDialog(
+      context,
+      title: l10n.blockConfirmTitle(username),
+      body: l10n.blockConfirmBody,
+      primaryLabel: l10n.blockAction,
+      secondaryLabel: l10n.commonCancel,
+      destructive: true,
+    );
+    if (!ok || !mounted) return;
+    final result = await getIt<BlockActions>().block(userId);
+    if (!mounted) return;
+    result.fold(
+      (_) => getIt<ToastService>().show(context, message: l10n.blockAck),
+      (_) => getIt<ToastService>().show(
+        context,
+        message: l10n.unblockFailed,
+        tone: ToastTone.error,
       ),
     );
   }

@@ -27,6 +27,20 @@ abstract final class AppIcons {
   static const IconData music = LucideIcons.music;
   static const IconData eye = LucideIcons.eye;
   static const IconData eyeOff = LucideIcons.eyeOff;
+
+  // Settings, Privacy & Safety (#014).
+  static const IconData chevronRight = LucideIcons.chevronRight;
+  static const IconData logOut = LucideIcons.logOut;
+  static const IconData lock = LucideIcons.lock;
+  static const IconData language = LucideIcons.globe;
+  static const IconData theme = LucideIcons.moon;
+  static const IconData closeFriends = LucideIcons.userRoundCheck;
+  static const IconData block = LucideIcons.userRoundX;
+  static const IconData report = LucideIcons.flag;
+  static const IconData shield = LucideIcons.shieldCheck;
+  static const IconData download = LucideIcons.download;
+  static const IconData info = LucideIcons.info;
+  static const IconData activity = LucideIcons.activity;
 }
 
 /// Single icon wrapper: 24px default, token-colored. `active` switches to the

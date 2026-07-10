@@ -17,6 +17,7 @@ import 'package:we36/features/feed/presentation/feed_state.dart';
 import 'package:we36/features/feed/presentation/home_page.dart';
 import 'package:we36/features/stories/presentation/stories_rail_cubit.dart';
 
+import '../../helpers/app_settings_double.dart';
 import '../../helpers/explore_test_doubles.dart';
 import '../../helpers/feed_test_doubles.dart';
 import '../../support/auth_test_doubles.dart';
@@ -67,7 +68,9 @@ Future<void> _pumpAppAt(WidgetTester tester, Size size) async {
   addTearDown(harness.dispose);
   await harness.controller.bootstrap();
   final router = AppRouter(harness.controller).router;
-  await tester.pumpWidget(We36App(router: router));
+  await tester.pumpWidget(
+    We36App(router: router, appSettings: testAppSettings()),
+  );
   await tester.pumpAndSettle();
 }
 

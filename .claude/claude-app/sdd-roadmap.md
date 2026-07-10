@@ -180,7 +180,7 @@ Create Story     Post Detail &    Create Post      Reels
 - **Scope**: conversation list (unread, presence, typing preview); 1-1 chat over the **Socket.IO** channel (text, photo, **shared post**, stickers); typing/presence; optimistic send + idempotency + delivery state; new-message compose. Tablet **master/detail two-pane** (select swaps the pane, no push); phone push. **Shipped US1–US6**: first live wiring of the #002 `RealtimeClient` (`RealtimeConnectionManager` + `MessagingRealtimeService`); **REST-send + inbound-authoritative socket** (idempotent via `clientKey`); drift **v8→v9** (`Conversations` + `Messages`/outbox); `MessagingLauncher` cross-feature seam (profile "Message" + post "share to DM"); coarse presence, no requests-inbox (clarified). Backend B#012 shapes DERIVED (reconcile at cutover). No new pub dependency.
 - **Out of scope**: group chats, calls, message-requests inbox, message push (#013) — deferred.
 
-### Spec #013: Notifications & Push  🔵 (implemented — 56/56; pending PR/merge)
+### Spec #013: Notifications & Push  ✅ (merged — 56/56, PR #13)
 - **Depends on**: #002 (realtime), #004/#006/#010 (activity sources).
 - **Design**: Screen 29 (Activity).
 - **Scope**: activity feed (likes/comments/follows/mentions, New / This week) with follow-back; **FCM/APNs push** + contextual permission + deep-link a notification into its screen; in-app live notifications via realtime.

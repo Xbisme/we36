@@ -42,7 +42,6 @@ import 'package:we36/features/messaging/presentation/new_message_page.dart';
 import 'package:we36/features/notifications/presentation/cubit/notifications_cubit.dart';
 import 'package:we36/features/notifications/presentation/cubit/push_permission_cubit.dart';
 import 'package:we36/features/notifications/presentation/notifications_page.dart';
-import 'package:we36/features/placeholder_page.dart';
 import 'package:we36/features/post/presentation/cubit/comments_cubit.dart';
 import 'package:we36/features/post/presentation/post_detail_page.dart';
 import 'package:we36/features/profile/domain/usecases/follow_list_usecases.dart';
@@ -58,6 +57,18 @@ import 'package:we36/features/reels/presentation/cubit/reel_compose_cubit.dart';
 import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart';
 import 'package:we36/features/reels/presentation/reel_compose_page.dart';
 import 'package:we36/features/reels/presentation/reels_page.dart';
+import 'package:we36/features/settings/presentation/cubit/blocked_accounts_cubit.dart';
+import 'package:we36/features/settings/presentation/cubit/close_friends_cubit.dart';
+import 'package:we36/features/settings/presentation/cubit/follow_requests_cubit.dart';
+import 'package:we36/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:we36/features/settings/presentation/pages/blocked_accounts_page.dart';
+import 'package:we36/features/settings/presentation/pages/close_friends_page.dart';
+import 'package:we36/features/settings/presentation/pages/follow_requests_page.dart';
+import 'package:we36/features/settings/presentation/pages/language_page.dart';
+import 'package:we36/features/settings/presentation/pages/privacy_page.dart';
+import 'package:we36/features/settings/presentation/pages/settings_page.dart';
+import 'package:we36/features/settings/presentation/pages/theme_page.dart';
+import 'package:we36/features/settings/presentation/pages/two_factor_entry_page.dart';
 import 'package:we36/features/stories/presentation/compose/story_compose_page.dart';
 import 'package:we36/features/stories/presentation/compose/story_pick_page.dart';
 import 'package:we36/features/stories/presentation/cubit/story_compose_cubit.dart';
@@ -172,7 +183,40 @@ class AppRouter {
             child: const NotificationsPage(),
           ),
         ),
-        _flow(AppRoutes.settings, const PlaceholderPage(title: 'Settings')),
+        _flow(AppRoutes.settings, const SettingsPage()),
+        // #014 child surfaces (placeholders until their user stories land).
+        _flow(
+          AppRoutes.settingsPrivacy,
+          BlocProvider(
+            create: (_) => getIt<SettingsCubit>(),
+            child: const PrivacyPage(),
+          ),
+        ),
+        _flow(
+          AppRoutes.settingsFollowRequests,
+          BlocProvider(
+            create: (_) => getIt<FollowRequestsCubit>(),
+            child: const FollowRequestsPage(),
+          ),
+        ),
+        _flow(
+          AppRoutes.settingsBlocked,
+          BlocProvider(
+            create: (_) => getIt<BlockedAccountsCubit>(),
+            child: const BlockedAccountsPage(),
+          ),
+        ),
+        _flow(
+          AppRoutes.settingsCloseFriends,
+          BlocProvider(
+            create: (_) => getIt<CloseFriendsCubit>(),
+            child: const CloseFriendsPage(),
+          ),
+        ),
+        _flow(AppRoutes.settingsLanguage, const LanguagePage()),
+        _flow(AppRoutes.settingsTheme, const ThemePage()),
+        _flow(AppRoutes.settingsTwoFactor, const TwoFactorEntryPage()),
+        _flow(AppRoutes.settingsDataExport, const DataExportEntryPage()),
         // Search (#009 Screens 17+18) — full-screen nav-less; page-scoped
         // SearchCubit (live results) + RecentsCubit (history, loaded on open).
         GoRoute(

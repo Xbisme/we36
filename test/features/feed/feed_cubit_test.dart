@@ -5,6 +5,7 @@ import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/feed/fake_feed_repository.dart';
 import 'package:we36/core/data/feed/feed_repository.dart';
 import 'package:we36/core/data/feed/post.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/core/domain/app_failure.dart';
 import 'package:we36/core/domain/result.dart';
 import 'package:we36/features/feed/domain/usecases/feed_usecases.dart';
@@ -14,7 +15,7 @@ import 'package:we36/features/feed/presentation/feed_state.dart';
 class _MockFeedRepository extends Mock implements FeedRepository {}
 
 FeedCubit _cubitFor(FeedRepository repo) => FeedCubit(
-  WatchFeed(repo),
+  WatchFeed(repo, BlockedUsersStore()),
   LoadFeed(repo),
   LoadMoreFeed(repo),
   ToggleLike(repo),

@@ -2359,6 +2359,438 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Turn on notifications'**
   String get pushEnableAffordance;
+
+  /// #014 Settings hub title (Screen 30)
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsSectionAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get settingsSectionAccount;
+
+  /// No description provided for @settingsSectionPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get settingsSectionPrivacy;
+
+  /// No description provided for @settingsSectionNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsSectionNotifications;
+
+  /// No description provided for @settingsSectionPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get settingsSectionPreferences;
+
+  /// No description provided for @settingsSectionAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingsSectionAbout;
+
+  /// No description provided for @settingsEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get settingsEditProfile;
+
+  /// No description provided for @settingsPrivacySecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & security'**
+  String get settingsPrivacySecurity;
+
+  /// No description provided for @settingsFollowRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow requests'**
+  String get settingsFollowRequests;
+
+  /// No description provided for @settingsBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked accounts'**
+  String get settingsBlocked;
+
+  /// No description provided for @settingsCloseFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Close friends'**
+  String get settingsCloseFriends;
+
+  /// No description provided for @settingsNotificationPrefs.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification preferences'**
+  String get settingsNotificationPrefs;
+
+  /// No description provided for @settingsTwoFactor.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication'**
+  String get settingsTwoFactor;
+
+  /// No description provided for @settingsDataExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Download your data'**
+  String get settingsDataExport;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get settingsTheme;
+
+  /// About: app version + build
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} ({build})'**
+  String settingsAboutVersion(String version, String build);
+
+  /// No description provided for @settingsLogOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get settingsLogOut;
+
+  /// No description provided for @settingsLogOutConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out?'**
+  String get settingsLogOutConfirmTitle;
+
+  /// No description provided for @settingsLogOutConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll need to sign in again to use We36.'**
+  String get settingsLogOutConfirmBody;
+
+  /// No description provided for @settingsLogOutConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get settingsLogOutConfirmAction;
+
+  /// No description provided for @settingsPrivateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Private account'**
+  String get settingsPrivateAccount;
+
+  /// No description provided for @settingsPrivateAccountDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'When your account is private, only people you approve can see your posts and stories.'**
+  String get settingsPrivateAccountDesc;
+
+  /// No description provided for @settingsActivityStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Show activity status'**
+  String get settingsActivityStatus;
+
+  /// No description provided for @settingsActivityStatusDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Let people you follow and message see when you\'re active. When this is off, you won\'t see their activity status either.'**
+  String get settingsActivityStatusDesc;
+
+  /// No description provided for @settingsUpdateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update your settings. Try again.'**
+  String get settingsUpdateFailed;
+
+  /// No description provided for @followRequestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow requests'**
+  String get followRequestsTitle;
+
+  /// No description provided for @followRequestsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending requests'**
+  String get followRequestsEmpty;
+
+  /// No description provided for @followRequestsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'When someone asks to follow your private account, they\'ll show up here.'**
+  String get followRequestsEmptyBody;
+
+  /// No description provided for @followRequestsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your follow requests'**
+  String get followRequestsError;
+
+  /// No description provided for @followRequestApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get followRequestApprove;
+
+  /// No description provided for @followRequestDecline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get followRequestDecline;
+
+  /// No description provided for @followRequestActionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t complete that. Try again.'**
+  String get followRequestActionFailed;
+
+  /// No description provided for @reportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get reportTitle;
+
+  /// No description provided for @reportReasonSpam.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam'**
+  String get reportReasonSpam;
+
+  /// No description provided for @reportReasonNudity.
+  ///
+  /// In en, this message translates to:
+  /// **'Nudity or sexual content'**
+  String get reportReasonNudity;
+
+  /// No description provided for @reportReasonHarassment.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment or bullying'**
+  String get reportReasonHarassment;
+
+  /// No description provided for @reportReasonHate.
+  ///
+  /// In en, this message translates to:
+  /// **'Hate speech'**
+  String get reportReasonHate;
+
+  /// No description provided for @reportReasonViolence.
+  ///
+  /// In en, this message translates to:
+  /// **'Violence'**
+  String get reportReasonViolence;
+
+  /// No description provided for @reportReasonSelfHarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Self-harm'**
+  String get reportReasonSelfHarm;
+
+  /// No description provided for @reportReasonFalseInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'False information'**
+  String get reportReasonFalseInfo;
+
+  /// No description provided for @reportReasonIp.
+  ///
+  /// In en, this message translates to:
+  /// **'Intellectual-property violation'**
+  String get reportReasonIp;
+
+  /// No description provided for @reportReasonOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get reportReasonOther;
+
+  /// No description provided for @reportAck.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks — we\'ll review this.'**
+  String get reportAck;
+
+  /// No description provided for @reportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t send your report. Try again.'**
+  String get reportFailed;
+
+  /// No description provided for @blockAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get blockAction;
+
+  /// No description provided for @blockConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Block @{name}?'**
+  String blockConfirmTitle(String name);
+
+  /// No description provided for @blockConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'They won\'t be able to find your profile, posts or story, and you won\'t see theirs. They won\'t be notified.'**
+  String get blockConfirmBody;
+
+  /// No description provided for @blockAck.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get blockAck;
+
+  /// No description provided for @unblockAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Unblock'**
+  String get unblockAction;
+
+  /// No description provided for @unblockFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t unblock. Try again.'**
+  String get unblockFailed;
+
+  /// No description provided for @blockedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked accounts'**
+  String get blockedTitle;
+
+  /// No description provided for @blockedEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t blocked anyone'**
+  String get blockedEmpty;
+
+  /// No description provided for @blockedEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts you block will appear here.'**
+  String get blockedEmptyBody;
+
+  /// No description provided for @blockedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load blocked accounts'**
+  String get blockedError;
+
+  /// No description provided for @closeFriendsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share stories with only these people. They\'re never notified that they\'re on your list.'**
+  String get closeFriendsSubtitle;
+
+  /// No description provided for @closeFriendsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No close friends yet'**
+  String get closeFriendsEmpty;
+
+  /// No description provided for @closeFriendsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add people to share Close Friends stories with them.'**
+  String get closeFriendsEmptyBody;
+
+  /// No description provided for @closeFriendsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your close friends'**
+  String get closeFriendsError;
+
+  /// No description provided for @closeFriendsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get closeFriendsAdd;
+
+  /// No description provided for @closeFriendsRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get closeFriendsRemove;
+
+  /// No description provided for @closeFriendsAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add close friends'**
+  String get closeFriendsAddTitle;
+
+  /// No description provided for @closeFriendsPickerEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No one to add right now'**
+  String get closeFriendsPickerEmpty;
+
+  /// No description provided for @closeFriendsUpdateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update close friends. Try again.'**
+  String get closeFriendsUpdateFailed;
+
+  /// No description provided for @settingsSystemDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get settingsSystemDefault;
+
+  /// No description provided for @settingsLanguageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get settingsLanguageEnglish;
+
+  /// No description provided for @settingsLanguageVietnamese.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiếng Việt'**
+  String get settingsLanguageVietnamese;
+
+  /// No description provided for @settingsThemeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsThemeLight;
+
+  /// No description provided for @settingsThemeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsThemeDark;
+
+  /// No description provided for @twoFactorEntryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an extra layer of security. Two-factor authentication asks for a code when you log in on a new device. Setup is coming soon.'**
+  String get twoFactorEntryBody;
+
+  /// No description provided for @dataExportEntryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a copy of your We36 data — your posts, profile info, and activity. This can take a little while and is coming soon.'**
+  String get dataExportEntryBody;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get comingSoon;
 }
 
 class _AppLocalizationsDelegate

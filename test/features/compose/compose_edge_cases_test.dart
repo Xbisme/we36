@@ -31,6 +31,7 @@ import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart';
 import 'package:we36/features/compose/presentation/pages/pick_page.dart';
 import 'package:we36/l10n/generated/app_localizations.dart';
 
+import '../../helpers/app_settings_double.dart';
 import '../../support/auth_test_doubles.dart';
 
 class _MockSignIn extends Mock implements SignIn {}
@@ -154,7 +155,9 @@ void main() {
       await harness.controller.bootstrap();
 
       final router = AppRouter(harness.controller).router;
-      await tester.pumpWidget(We36App(router: router));
+      await tester.pumpWidget(
+        We36App(router: router, appSettings: testAppSettings()),
+      );
       await tester.pumpAndSettle();
 
       router.go(AppRoutes.composePick);

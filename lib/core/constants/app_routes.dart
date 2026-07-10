@@ -89,6 +89,18 @@ abstract final class AppRoutes {
   static String messageThreadPath(String conversationId) =>
       '/messages/$conversationId';
 
+  // Settings, Privacy & Safety (#014), Screens 30–32. The Settings hub
+  // (`settings`, declared above) is a nav-less pushed route off the profile
+  // gear; each child surface is its own pushed full-screen route.
+  static const String settingsPrivacy = '/settings/privacy';
+  static const String settingsFollowRequests = '/settings/follow-requests';
+  static const String settingsBlocked = '/settings/blocked';
+  static const String settingsCloseFriends = '/settings/close-friends';
+  static const String settingsLanguage = '/settings/language';
+  static const String settingsTheme = '/settings/theme';
+  static const String settingsTwoFactor = '/settings/two-factor';
+  static const String settingsDataExport = '/settings/data-export';
+
   // Dev harness (dev flavor only)
   static const String devGallery = '/dev/gallery';
   static const String devStates = '/dev/states';

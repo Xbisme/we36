@@ -1192,4 +1192,234 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get pushEnableAffordance => 'Bật thông báo';
+
+  @override
+  String get settingsTitle => 'Cài đặt';
+
+  @override
+  String get settingsSectionAccount => 'Tài khoản';
+
+  @override
+  String get settingsSectionPrivacy => 'Quyền riêng tư';
+
+  @override
+  String get settingsSectionNotifications => 'Thông báo';
+
+  @override
+  String get settingsSectionPreferences => 'Tùy chọn';
+
+  @override
+  String get settingsSectionAbout => 'Giới thiệu';
+
+  @override
+  String get settingsEditProfile => 'Chỉnh sửa trang cá nhân';
+
+  @override
+  String get settingsPrivacySecurity => 'Quyền riêng tư & bảo mật';
+
+  @override
+  String get settingsFollowRequests => 'Yêu cầu theo dõi';
+
+  @override
+  String get settingsBlocked => 'Tài khoản đã chặn';
+
+  @override
+  String get settingsCloseFriends => 'Bạn thân';
+
+  @override
+  String get settingsNotificationPrefs => 'Tùy chọn thông báo';
+
+  @override
+  String get settingsTwoFactor => 'Xác thực hai lớp';
+
+  @override
+  String get settingsDataExport => 'Tải dữ liệu của bạn';
+
+  @override
+  String get settingsLanguage => 'Ngôn ngữ';
+
+  @override
+  String get settingsTheme => 'Giao diện';
+
+  @override
+  String settingsAboutVersion(String version, String build) {
+    return 'Phiên bản $version ($build)';
+  }
+
+  @override
+  String get settingsLogOut => 'Đăng xuất';
+
+  @override
+  String get settingsLogOutConfirmTitle => 'Đăng xuất?';
+
+  @override
+  String get settingsLogOutConfirmBody =>
+      'Bạn sẽ cần đăng nhập lại để dùng We36.';
+
+  @override
+  String get settingsLogOutConfirmAction => 'Đăng xuất';
+
+  @override
+  String get settingsPrivateAccount => 'Tài khoản riêng tư';
+
+  @override
+  String get settingsPrivateAccountDesc =>
+      'Khi tài khoản ở chế độ riêng tư, chỉ người bạn phê duyệt mới xem được bài viết và tin của bạn.';
+
+  @override
+  String get settingsActivityStatus => 'Hiển thị trạng thái hoạt động';
+
+  @override
+  String get settingsActivityStatusDesc =>
+      'Cho phép người bạn theo dõi và nhắn tin thấy khi bạn đang hoạt động. Khi tắt, bạn cũng sẽ không thấy trạng thái của họ.';
+
+  @override
+  String get settingsUpdateFailed => 'Không thể cập nhật cài đặt. Thử lại.';
+
+  @override
+  String get followRequestsTitle => 'Yêu cầu theo dõi';
+
+  @override
+  String get followRequestsEmpty => 'Không có yêu cầu nào';
+
+  @override
+  String get followRequestsEmptyBody =>
+      'Khi ai đó yêu cầu theo dõi tài khoản riêng tư của bạn, họ sẽ xuất hiện ở đây.';
+
+  @override
+  String get followRequestsError => 'Không thể tải yêu cầu theo dõi';
+
+  @override
+  String get followRequestApprove => 'Phê duyệt';
+
+  @override
+  String get followRequestDecline => 'Từ chối';
+
+  @override
+  String get followRequestActionFailed => 'Không thể hoàn tất. Thử lại.';
+
+  @override
+  String get reportTitle => 'Báo cáo';
+
+  @override
+  String get reportReasonSpam => 'Spam';
+
+  @override
+  String get reportReasonNudity => 'Ảnh khỏa thân hoặc nội dung tình dục';
+
+  @override
+  String get reportReasonHarassment => 'Quấy rối hoặc bắt nạt';
+
+  @override
+  String get reportReasonHate => 'Ngôn từ thù ghét';
+
+  @override
+  String get reportReasonViolence => 'Bạo lực';
+
+  @override
+  String get reportReasonSelfHarm => 'Tự làm hại bản thân';
+
+  @override
+  String get reportReasonFalseInfo => 'Thông tin sai lệch';
+
+  @override
+  String get reportReasonIp => 'Vi phạm sở hữu trí tuệ';
+
+  @override
+  String get reportReasonOther => 'Lý do khác';
+
+  @override
+  String get reportAck => 'Cảm ơn — chúng tôi sẽ xem xét.';
+
+  @override
+  String get reportFailed => 'Không thể gửi báo cáo. Thử lại.';
+
+  @override
+  String get blockAction => 'Chặn';
+
+  @override
+  String blockConfirmTitle(String name) {
+    return 'Chặn @$name?';
+  }
+
+  @override
+  String get blockConfirmBody =>
+      'Họ sẽ không tìm thấy trang cá nhân, bài viết hay tin của bạn, và bạn cũng không thấy của họ. Họ sẽ không được thông báo.';
+
+  @override
+  String get blockAck => 'Đã chặn';
+
+  @override
+  String get unblockAction => 'Bỏ chặn';
+
+  @override
+  String get unblockFailed => 'Không thể bỏ chặn. Thử lại.';
+
+  @override
+  String get blockedTitle => 'Tài khoản đã chặn';
+
+  @override
+  String get blockedEmpty => 'Bạn chưa chặn ai';
+
+  @override
+  String get blockedEmptyBody => 'Các tài khoản bạn chặn sẽ xuất hiện ở đây.';
+
+  @override
+  String get blockedError => 'Không thể tải danh sách đã chặn';
+
+  @override
+  String get closeFriendsSubtitle =>
+      'Chỉ chia sẻ tin với những người này. Họ không bao giờ được thông báo là có trong danh sách của bạn.';
+
+  @override
+  String get closeFriendsEmpty => 'Chưa có bạn thân';
+
+  @override
+  String get closeFriendsEmptyBody =>
+      'Thêm người để chia sẻ tin Bạn thân với họ.';
+
+  @override
+  String get closeFriendsError => 'Không thể tải danh sách bạn thân';
+
+  @override
+  String get closeFriendsAdd => 'Thêm';
+
+  @override
+  String get closeFriendsRemove => 'Xóa';
+
+  @override
+  String get closeFriendsAddTitle => 'Thêm bạn thân';
+
+  @override
+  String get closeFriendsPickerEmpty => 'Hiện không có ai để thêm';
+
+  @override
+  String get closeFriendsUpdateFailed =>
+      'Không thể cập nhật bạn thân. Thử lại.';
+
+  @override
+  String get settingsSystemDefault => 'Theo hệ thống';
+
+  @override
+  String get settingsLanguageEnglish => 'English';
+
+  @override
+  String get settingsLanguageVietnamese => 'Tiếng Việt';
+
+  @override
+  String get settingsThemeLight => 'Sáng';
+
+  @override
+  String get settingsThemeDark => 'Tối';
+
+  @override
+  String get twoFactorEntryBody =>
+      'Thêm một lớp bảo mật. Xác thực hai lớp yêu cầu mã khi bạn đăng nhập trên thiết bị mới. Tính năng thiết lập sẽ sớm ra mắt.';
+
+  @override
+  String get dataExportEntryBody =>
+      'Yêu cầu bản sao dữ liệu We36 của bạn — bài viết, thông tin trang cá nhân và hoạt động. Việc này có thể mất chút thời gian và sẽ sớm ra mắt.';
+
+  @override
+  String get comingSoon => 'Sắp ra mắt';
 }

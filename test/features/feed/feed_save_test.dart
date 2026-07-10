@@ -3,13 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/feed/fake_feed_repository.dart';
 import 'package:we36/core/data/feed/post.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/features/feed/domain/usecases/feed_usecases.dart';
 import 'package:we36/features/feed/presentation/feed_cubit.dart';
 
 /// US3 — optimistic save (bookmark): instant toggle, rollback on failure,
 /// idempotent, persisted via the canonical cached post.
 FeedCubit _cubitFor(FakeFeedRepository repo) => FeedCubit(
-  WatchFeed(repo),
+  WatchFeed(repo, BlockedUsersStore()),
   LoadFeed(repo),
   LoadMoreFeed(repo),
   ToggleLike(repo),

@@ -4,11 +4,13 @@ import 'package:drift/native.dart';
 import 'package:we36/core/data/auth/fake_auth_backend.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/me/fake_me_repository.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/core/data/notifications/fake_notifications_repository.dart';
 import 'package:we36/core/data/profile/relationship_store.dart';
 import 'package:we36/core/data/realtime/fake_realtime_client.dart';
 import 'package:we36/core/data/stories/own_story_store.dart';
 import 'package:we36/core/services/notifications/notifications_badge.dart';
+import 'package:we36/core/services/preferences/presence_visibility.dart';
 import 'package:we36/core/services/push/fake_push_service.dart';
 import 'package:we36/core/services/push/push_registration_service.dart';
 import 'package:we36/core/services/realtime/messaging_realtime_service.dart';
@@ -82,7 +84,12 @@ class SessionHarness {
       RealtimeConnectionManager(
         realtimeClient,
         tokenStore,
-        MessagingRealtimeService(realtimeClient, db, const AppLogger()),
+        MessagingRealtimeService(
+          realtimeClient,
+          db,
+          const AppLogger(),
+          PresenceVisibility(),
+        ),
         NotificationsRealtimeService(
           realtimeClient,
           FakeNotificationsRepository(),
@@ -91,6 +98,7 @@ class SessionHarness {
         ),
       ),
       PushRegistrationService(FakePushService(), FakeNotificationsRepository()),
+      BlockedUsersStore(),
       authEvents,
     );
   }
