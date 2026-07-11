@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:we36/core/data/api/dev_media_url.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_gradients.dart';
@@ -25,11 +26,25 @@ class Avatar extends StatelessWidget {
   final bool showCreateBadge;
   final String? semanticLabel;
 
+  /// Dev-only: rewrite a `localhost` avatar URL (often from the drift cache,
+  /// which predates the API-response interceptor) to the LAN host so avatars
+  /// load on a physical device. One place → covers every `Avatar` call site.
+  /// No-op in prod / when unset. See `rewriteLocalhostUrl`.
+  ImageProvider<Object>? get _resolvedImage {
+    final provider = image;
+    if (provider is NetworkImage) {
+      final url = rewriteLocalhostUrl(provider.url, DevMediaHost.host);
+      if (url != provider.url) return NetworkImage(url);
+    }
+    return provider;
+  }
+
   @override
   Widget build(BuildContext context) {
     final tokens = context.tokens;
     final hasRing = ring != AvatarRing.none;
     final ringPad = hasRing ? 3.0 : 0.0;
+    final display = _resolvedImage;
 
     Widget core = Container(
       width: size,
@@ -37,9 +52,9 @@ class Avatar extends StatelessWidget {
       decoration: BoxDecoration(
         color: tokens.surface2,
         shape: BoxShape.circle,
-        image: image == null
+        image: display == null
             ? null
-            : DecorationImage(image: image!, fit: BoxFit.cover),
+            : DecorationImage(image: display, fit: BoxFit.cover),
       ),
     );
 

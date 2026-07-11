@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:we36/app/app.dart';
 import 'package:we36/core/config/app_config.dart';
+import 'package:we36/core/data/api/dev_media_http_overrides.dart';
+import 'package:we36/core/data/api/dev_media_url.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/router/app_router.dart';
 import 'package:we36/core/services/push/push_service.dart';
@@ -24,6 +27,19 @@ Future<void> bootstrap(AppConfig config) async {
   await getIt.reset();
   getIt.registerSingleton<AppConfig>(config);
   configureDependencies(environment: config.diEnvironment);
+
+  // Dev-only: rewrite backend `localhost` media URLs to the LAN API host so
+  // images/video load on a physical device (localhost = the phone there). Three
+  // layers: (1) `HttpOverrides` catches every Dart image load (NetworkImage /
+  // CachedNetworkImage, fresh or drift-cached) at the network layer; (2) the
+  // `ApiClient` response interceptor keeps the drift cache itself clean; (3) the
+  // reel `VideoReelPlayer` rewrites its own URL since native `video_player`
+  // bypasses Dart's HttpClient. No-op in prod.
+  final devHost = config.isDev ? Uri.tryParse(config.apiBaseUrl)?.host : null;
+  DevMediaHost.host = devHost;
+  if (devHost != null && devHost.isNotEmpty) {
+    HttpOverrides.global = DevMediaHttpOverrides(devHost);
+  }
 
   final logger = getIt<AppLogger>()
     ..info('Bootstrapping We36', data: {'flavor': config.flavor.name});

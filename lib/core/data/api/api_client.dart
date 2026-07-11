@@ -5,6 +5,7 @@ import 'package:we36/core/config/app_config.dart';
 import 'package:we36/core/data/api/failure_mapper.dart';
 import 'package:we36/core/data/api/idempotency.dart';
 import 'package:we36/core/data/api/interceptors/auth_token_interceptor.dart';
+import 'package:we36/core/data/api/interceptors/dev_media_url_interceptor.dart';
 import 'package:we36/core/data/api/interceptors/logging_interceptor.dart';
 import 'package:we36/core/data/api/interceptors/refresh_interceptor.dart';
 import 'package:we36/core/domain/app_failure.dart';
@@ -86,6 +87,10 @@ class ApiClient {
       AuthTokenInterceptor(tokenStore),
       refresh,
       LoggingInterceptor(logger),
+      // Dev-only: rewrite backend `localhost` media URLs to the LAN API host so
+      // images load on a physical device (no-op in prod / when host is empty).
+      if (config.isDev)
+        DevMediaUrlInterceptor(Uri.tryParse(config.apiBaseUrl)?.host ?? ''),
     ]);
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:video_player/video_player.dart';
+import 'package:we36/core/data/api/dev_media_url.dart';
 
 /// A single reel's video player, abstracted so `ReelPlaybackController`'s
 /// lifecycle logic (Constitution II) is unit-testable without a real platform
@@ -47,7 +48,11 @@ class VideoReelPlayer implements ReelPlayer {
   @override
   Future<void> initialize() async {
     if (_controller != null) return;
-    final controller = VideoPlayerController.networkUrl(Uri.parse(_url));
+    // Rewrite a dev `localhost` rendition URL (which may come from the drift
+    // cache, bypassing the API-response interceptor) to the LAN host so the
+    // video loads on a physical device. No-op in prod / when unset.
+    final url = rewriteLocalhostUrl(_url, DevMediaHost.host);
+    final controller = VideoPlayerController.networkUrl(Uri.parse(url));
     _controller = controller;
     await controller.initialize();
   }
