@@ -1427,4 +1427,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get comingSoon => 'Coming soon';
+
+  @override
+  String get notifPrefLikes => 'Likes';
+
+  @override
+  String get notifPrefComments => 'Comments';
+
+  @override
+  String get notifPrefMentions => 'Mentions';
+
+  @override
+  String get notifPrefFollows => 'New followers';
+
+  @override
+  String get notifPrefFollowRequests => 'Follow requests';
+
+  @override
+  String get notifPrefDirectMessages => 'Direct messages';
+
+  @override
+  String get notifPrefPauseAll => 'Pause all';
+
+  @override
+  String get notifPrefPauseAllDesc =>
+      'Temporarily stop all push notifications.';
 }

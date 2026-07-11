@@ -2791,6 +2791,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming soon'**
   String get comingSoon;
+
+  /// No description provided for @notifPrefLikes.
+  ///
+  /// In en, this message translates to:
+  /// **'Likes'**
+  String get notifPrefLikes;
+
+  /// No description provided for @notifPrefComments.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get notifPrefComments;
+
+  /// No description provided for @notifPrefMentions.
+  ///
+  /// In en, this message translates to:
+  /// **'Mentions'**
+  String get notifPrefMentions;
+
+  /// No description provided for @notifPrefFollows.
+  ///
+  /// In en, this message translates to:
+  /// **'New followers'**
+  String get notifPrefFollows;
+
+  /// No description provided for @notifPrefFollowRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow requests'**
+  String get notifPrefFollowRequests;
+
+  /// No description provided for @notifPrefDirectMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct messages'**
+  String get notifPrefDirectMessages;
+
+  /// No description provided for @notifPrefPauseAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause all'**
+  String get notifPrefPauseAll;
+
+  /// No description provided for @notifPrefPauseAllDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporarily stop all push notifications.'**
+  String get notifPrefPauseAllDesc;
 }
 
 class _AppLocalizationsDelegate

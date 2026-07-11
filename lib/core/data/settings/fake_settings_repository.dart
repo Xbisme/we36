@@ -40,4 +40,12 @@ class FakeSettingsRepository implements SettingsRepository {
     _settings = _settings.copyWith(activityStatusVisible: visible);
     return Result<AccountSettings>.ok(_settings);
   }
+
+  @override
+  Future<Result<AccountSettings>> setNotifications(
+    NotificationPrefs prefs,
+  ) async {
+    _settings = _settings.copyWith(notifications: prefs);
+    return Result<AccountSettings>.ok(_settings);
+  }
 }

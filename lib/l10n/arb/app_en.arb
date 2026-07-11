@@ -745,5 +745,13 @@
   "settingsThemeDark": "Dark",
   "twoFactorEntryBody": "Add an extra layer of security. Two-factor authentication asks for a code when you log in on a new device. Setup is coming soon.",
   "dataExportEntryBody": "Request a copy of your We36 data — your posts, profile info, and activity. This can take a little while and is coming soon.",
-  "comingSoon": "Coming soon"
+  "comingSoon": "Coming soon",
+  "notifPrefLikes": "Likes",
+  "notifPrefComments": "Comments",
+  "notifPrefMentions": "Mentions",
+  "notifPrefFollows": "New followers",
+  "notifPrefFollowRequests": "Follow requests",
+  "notifPrefDirectMessages": "Direct messages",
+  "notifPrefPauseAll": "Pause all",
+  "notifPrefPauseAllDesc": "Temporarily stop all push notifications."
 }

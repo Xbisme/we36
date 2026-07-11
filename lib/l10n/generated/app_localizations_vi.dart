@@ -1422,4 +1422,28 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get comingSoon => 'Sắp ra mắt';
+
+  @override
+  String get notifPrefLikes => 'Lượt thích';
+
+  @override
+  String get notifPrefComments => 'Bình luận';
+
+  @override
+  String get notifPrefMentions => 'Nhắc đến';
+
+  @override
+  String get notifPrefFollows => 'Người theo dõi mới';
+
+  @override
+  String get notifPrefFollowRequests => 'Yêu cầu theo dõi';
+
+  @override
+  String get notifPrefDirectMessages => 'Tin nhắn';
+
+  @override
+  String get notifPrefPauseAll => 'Tạm dừng tất cả';
+
+  @override
+  String get notifPrefPauseAllDesc => 'Tạm thời dừng mọi thông báo đẩy.';
 }

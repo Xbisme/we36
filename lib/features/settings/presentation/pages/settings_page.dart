@@ -93,7 +93,7 @@ class SettingsPage extends StatelessWidget {
           SettingsRow(
             icon: AppIcons.notification,
             label: l10n.settingsNotificationPrefs,
-            onTap: () => go(AppRoutes.settingsPrivacy),
+            onTap: () => go(AppRoutes.settingsNotifications),
           ),
 
           SettingsSectionHeader(l10n.settingsSectionPreferences),

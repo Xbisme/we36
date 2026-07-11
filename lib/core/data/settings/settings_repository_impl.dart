@@ -21,4 +21,18 @@ class SettingsRepositoryImpl implements SettingsRepository {
   @override
   Future<Result<AccountSettings>> setActivityStatus({required bool visible}) =>
       _remote.patch({'activityStatusVisible': visible});
+
+  @override
+  Future<Result<AccountSettings>> setNotifications(NotificationPrefs prefs) =>
+      _remote.patch({
+        'notifications': {
+          'likes': prefs.likes,
+          'comments': prefs.comments,
+          'mentions': prefs.mentions,
+          'follows': prefs.follows,
+          'followRequests': prefs.followRequests,
+          'directMessages': prefs.directMessages,
+          'globalMute': prefs.globalMute,
+        },
+      });
 }

@@ -44,6 +44,12 @@ class SettingsCubit extends AppCubit<AccountSettings> {
     );
   }
 
+  /// Toggle one notification preference (optimistic + rollback).
+  Future<void> setNotifications(NotificationPrefs prefs) => _optimistic(
+    (s) => s.copyWith(notifications: prefs),
+    () => _repo.setNotifications(prefs),
+  );
+
   Future<void> _optimistic(
     AccountSettings Function(AccountSettings current) mutate,
     Future<Result<AccountSettings>> Function() call,

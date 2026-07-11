@@ -469,5 +469,13 @@
   "settingsThemeDark": "Tối",
   "twoFactorEntryBody": "Thêm một lớp bảo mật. Xác thực hai lớp yêu cầu mã khi bạn đăng nhập trên thiết bị mới. Tính năng thiết lập sẽ sớm ra mắt.",
   "dataExportEntryBody": "Yêu cầu bản sao dữ liệu We36 của bạn — bài viết, thông tin trang cá nhân và hoạt động. Việc này có thể mất chút thời gian và sẽ sớm ra mắt.",
-  "comingSoon": "Sắp ra mắt"
+  "comingSoon": "Sắp ra mắt",
+  "notifPrefLikes": "Lượt thích",
+  "notifPrefComments": "Bình luận",
+  "notifPrefMentions": "Nhắc đến",
+  "notifPrefFollows": "Người theo dõi mới",
+  "notifPrefFollowRequests": "Yêu cầu theo dõi",
+  "notifPrefDirectMessages": "Tin nhắn",
+  "notifPrefPauseAll": "Tạm dừng tất cả",
+  "notifPrefPauseAllDesc": "Tạm thời dừng mọi thông báo đẩy."
 }

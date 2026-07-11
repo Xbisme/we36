@@ -65,6 +65,7 @@ import 'package:we36/features/settings/presentation/pages/blocked_accounts_page.
 import 'package:we36/features/settings/presentation/pages/close_friends_page.dart';
 import 'package:we36/features/settings/presentation/pages/follow_requests_page.dart';
 import 'package:we36/features/settings/presentation/pages/language_page.dart';
+import 'package:we36/features/settings/presentation/pages/notifications_settings_page.dart';
 import 'package:we36/features/settings/presentation/pages/privacy_page.dart';
 import 'package:we36/features/settings/presentation/pages/settings_page.dart';
 import 'package:we36/features/settings/presentation/pages/theme_page.dart';
@@ -190,6 +191,13 @@ class AppRouter {
           BlocProvider(
             create: (_) => getIt<SettingsCubit>(),
             child: const PrivacyPage(),
+          ),
+        ),
+        _flow(
+          AppRoutes.settingsNotifications,
+          BlocProvider(
+            create: (_) => getIt<SettingsCubit>(),
+            child: const NotificationsSettingsPage(),
           ),
         ),
         _flow(

@@ -93,6 +93,7 @@ abstract final class AppRoutes {
   // (`settings`, declared above) is a nav-less pushed route off the profile
   // gear; each child surface is its own pushed full-screen route.
   static const String settingsPrivacy = '/settings/privacy';
+  static const String settingsNotifications = '/settings/notifications';
   static const String settingsFollowRequests = '/settings/follow-requests';
   static const String settingsBlocked = '/settings/blocked';
   static const String settingsCloseFriends = '/settings/close-friends';

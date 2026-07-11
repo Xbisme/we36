@@ -49,6 +49,17 @@ class _StubSettingsRepo implements SettingsRepository {
     _s = _s.copyWith(activityStatusVisible: visible);
     return Result<AccountSettings>.ok(_s);
   }
+
+  @override
+  Future<Result<AccountSettings>> setNotifications(
+    NotificationPrefs prefs,
+  ) async {
+    if (fail) {
+      return const Result<AccountSettings>.err(AppFailure.networkError());
+    }
+    _s = _s.copyWith(notifications: prefs);
+    return Result<AccountSettings>.ok(_s);
+  }
 }
 
 void main() {
@@ -90,6 +101,17 @@ void main() {
       await cubit.load();
       await cubit.setActivityStatus(value: false);
       expect(cubit.state.dataOrNull?.activityStatusVisible, isFalse);
+      await cubit.close();
+    });
+
+    test('setNotifications updates the prefs optimistically', () async {
+      final cubit = SettingsCubit(_StubSettingsRepo(), PresenceVisibility());
+      await cubit.load();
+      await cubit.setNotifications(
+        _seed.notifications.copyWith(likes: false, globalMute: true),
+      );
+      expect(cubit.state.dataOrNull?.notifications.likes, isFalse);
+      expect(cubit.state.dataOrNull?.notifications.globalMute, isTrue);
       await cubit.close();
     });
   });
