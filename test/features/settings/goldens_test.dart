@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:we36/core/data/social/fake_follow_requests_repository.dart';
 import 'package:we36/core/theme/app_theme.dart';
-import 'package:we36/features/settings/presentation/cubit/follow_requests_cubit.dart';
-import 'package:we36/features/settings/presentation/pages/follow_requests_page.dart';
 import 'package:we36/features/settings/presentation/pages/settings_page.dart';
 import 'package:we36/l10n/generated/app_localizations.dart';
 
@@ -49,28 +45,8 @@ void main() {
         matchesGoldenFile('goldens/settings_hub_$name.png'),
       );
     });
-
-    testWidgets('follow requests golden — $name', (tester) async {
-      tester.view.physicalSize = const Size(430, 1000);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-
-      await tester.pumpWidget(
-        _host(
-          BlocProvider(
-            create: (_) => FollowRequestsCubit(FakeFollowRequestsRepository()),
-            child: const FollowRequestsPage(),
-          ),
-          mode,
-        ),
-      );
-      await tester.pumpAndSettle();
-
-      await expectLater(
-        find.byType(FollowRequestsPage),
-        matchesGoldenFile('goldens/follow_requests_$name.png'),
-      );
-    });
+    // NOTE: the follow-requests page renders wall-clock relative time
+    // ("1d"/"2d") so it's intentionally covered by the deterministic widget
+    // test (follow_requests_page_test), not a time-dependent golden.
   }
 }

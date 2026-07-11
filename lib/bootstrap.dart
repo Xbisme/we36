@@ -44,10 +44,12 @@ Future<void> bootstrap(AppConfig config) async {
   await push.initialize();
   _wirePushDeepLinks(router, push);
 
-  // Load the device-scoped appearance/language selection before first frame
-  // (#014, US5) so the app opens in the chosen theme/locale.
+  // Kick off loading the device-scoped appearance/language selection (#014,
+  // US5). Non-blocking so app boot never waits on the prefs backend; the
+  // `AppSettingsCubit` starts at system defaults and rebuilds `We36App` when the
+  // persisted values resolve (a frame later on real devices).
   final appSettings = getIt<AppSettingsCubit>();
-  await appSettings.load();
+  unawaited(appSettings.load());
 
   runApp(We36App(router: router.router, appSettings: appSettings));
 }

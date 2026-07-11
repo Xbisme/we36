@@ -188,12 +188,12 @@ description: "Task list for Settings, Privacy & Safety (#014)"
 
 **Independent Test**: 2× text, light+dark, phone+tablet, screen reader → labels present, correct reflow, no clipping. (SC-007, FR-030/031)
 
-- [ ] T063 [P] a11y sweep: `Semantics` labels + states on all settings pages/rows/toggles/sheets (privacy, follow-requests, blocked, close-friends, language, theme, report, entries).
-- [ ] T064 [P] Text-scaling (2×) + light/dark audit across all #014 surfaces; fix any clipping.
-- [ ] T065 [P] Adaptive: settings surfaces use sidebar/adaptive chrome + centered content on tablet/iPad width (reuse `MaxWidthBox`/`AppBreakpoints`).
-- [ ] T066 [P] Golden sweep (light+dark) for remaining #014 pages not covered per-story.
-- [ ] T067 Run [quickstart.md](quickstart.md) scenarios 1–10 in fake mode; fix gaps.
-- [ ] T068 Pre-commit gate: `dart format .`, `flutter analyze` (zero warnings), `flutter test` (all pass), `dart run bloc_tools:bloc lint .` (note if no local CLI). Update `.claude/claude-app/changelog.md` + `project-context.md` (#014 status) + roadmap.
+- [X] T063 [P] a11y sweep: `Semantics` labels + states on all settings pages/rows/toggles/sheets (privacy, follow-requests, blocked, close-friends, language, theme, report, entries).
+- [X] T064 [P] Text-scaling (2×) + light/dark audit across all #014 surfaces; fix any clipping.
+- [X] T065 [P] Adaptive: settings surfaces use sidebar/adaptive chrome + centered content on tablet/iPad width (reuse `MaxWidthBox`/`AppBreakpoints`).
+- [X] T066 [P] Golden sweep (light+dark) for remaining #014 pages not covered per-story.
+- [X] T067 Run [quickstart.md](quickstart.md) scenarios 1–10 in fake mode; fix gaps.
+- [X] T068 Pre-commit gate: `dart format .`, `flutter analyze` (zero warnings), `flutter test` (all pass), `dart run bloc_tools:bloc lint .` (note if no local CLI). Update `.claude/claude-app/changelog.md` + `project-context.md` (#014 status) + roadmap.
 
 ---
 

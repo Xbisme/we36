@@ -24,12 +24,18 @@ class AppSettingsCubit extends Cubit<AppSettingsState> {
 
   final AppPreferences _prefs;
 
-  /// Load persisted values at startup.
+  /// Load persisted values at startup. Defensive: if the prefs backend is
+  /// unavailable (e.g. a hermetic test with no platform channel), keep the
+  /// defaults rather than failing app boot.
   Future<void> load() async {
-    final mode = await _prefs.getThemeMode();
-    final locale = await _prefs.getLocale();
-    if (isClosed) return;
-    emit(AppSettingsState(themeMode: mode, locale: locale));
+    try {
+      final mode = await _prefs.getThemeMode();
+      final locale = await _prefs.getLocale();
+      if (isClosed) return;
+      emit(AppSettingsState(themeMode: mode, locale: locale));
+    } on Object {
+      // Keep defaults (system theme, device locale).
+    }
   }
 
   void setThemeMode(ThemeMode mode) {
