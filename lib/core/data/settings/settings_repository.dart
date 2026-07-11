@@ -14,4 +14,7 @@ abstract interface class SettingsRepository {
 
   /// Set reciprocal activity-status visibility.
   Future<Result<AccountSettings>> setActivityStatus({required bool visible});
+
+  /// Update the on/off notification preferences.
+  Future<Result<AccountSettings>> setNotifications(NotificationPrefs prefs);
 }
