@@ -594,7 +594,10 @@ extension GetItInjectableX on _i174.GetIt {
       registerFor: {_real},
     );
     gh.lazySingleton<_i42.CloseFriendsRepository>(
-      () => _i753.CloseFriendsRepositoryImpl(gh<_i784.ApiClient>()),
+      () => _i753.CloseFriendsRepositoryImpl(
+        gh<_i784.ApiClient>(),
+        gh<_i485.MeRepository>(),
+      ),
       registerFor: {_real},
     );
     gh.lazySingleton<_i323.FollowRequestsRepository>(
