@@ -7,6 +7,7 @@ import 'package:we36/core/constants/app_breakpoints.dart';
 import 'package:we36/core/data/comments/comment.dart';
 import 'package:we36/core/data/feed/post.dart';
 import 'package:we36/core/data/messaging/message.dart' show PostKind, PostRef;
+import 'package:we36/core/data/moderation/report.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/domain/app_failure.dart';
 import 'package:we36/core/presentation/action_sheet.dart';
@@ -15,6 +16,7 @@ import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/presentation/post_card.dart';
+import 'package:we36/core/presentation/report_sheet.dart';
 import 'package:we36/core/presentation/slots/messaging_launcher.dart';
 import 'package:we36/core/presentation/slots/save_to_collection_launcher.dart';
 import 'package:we36/core/presentation/toast.dart';
@@ -129,9 +131,15 @@ class _PostDetailBodyState extends State<PostDetailBody> {
           )
         else
           ActionSheetItem(
-            icon: AppIcons.more,
+            icon: AppIcons.report,
             label: l10n.commentReport,
-            onTap: () => unawaited(_report(context, cubit, comment)),
+            onTap: () => unawaited(
+              showReportSheet(
+                context,
+                targetType: ReportTargetType.comment,
+                targetId: comment.id,
+              ),
+            ),
           ),
       ],
     );
@@ -158,22 +166,6 @@ class _PostDetailBodyState extends State<PostDetailBody> {
         context,
         message: l10n.commentDeleteFailed,
         tone: ToastTone.error,
-      );
-    }
-  }
-
-  Future<void> _report(
-    BuildContext context,
-    CommentsCubit cubit,
-    Comment comment,
-  ) async {
-    final l10n = context.l10n;
-    await cubit.reportComment(comment);
-    if (context.mounted) {
-      getIt<ToastService>().show(
-        context,
-        message: l10n.commentReported,
-        tone: ToastTone.success,
       );
     }
   }

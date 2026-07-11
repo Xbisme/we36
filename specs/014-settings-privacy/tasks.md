@@ -36,7 +36,7 @@ description: "Task list for Settings, Privacy & Safety (#014)"
 
 - [X] T006 [P] Build shared `SettingsRow` in `lib/core/presentation/settings_row.dart` — label + optional leading icon + trailing (switch | chevron+value | none), tokens-only, `Semantics` + text-scaling + light/dark; compose from `Pressable`/`AppSwitch`/`AppIcon`.
 - [X] T007 [P] Build shared `SettingsSectionHeader` in `lib/core/presentation/settings_section_header.dart` (group label, tokenized).
-- [ ] T008 [P] Widget + golden test for `SettingsRow` (switch/chevron/value variants, light+dark) in `test/core/presentation/settings_row_test.dart`.
+- [X] T008 [P] Widget + golden test for `SettingsRow` (switch/chevron/value variants, light+dark) in `test/core/presentation/settings_row_test.dart`.
 
 **Checkpoint**: shared row/header ready — user stories can begin.
 
@@ -54,7 +54,7 @@ description: "Task list for Settings, Privacy & Safety (#014)"
 - [X] T012 [US1] Logout `SettingsRow` → `showAppDialog` confirm → `getIt<SessionController>().signOut()` (no cross-feature import; via DI).
 - [X] T013 [P] [US1] EN+VI ARB copy for hub group headers, About labels, logout confirm.
 - [X] T014 [P] [US1] Widget test `test/features/settings/settings_page_test.dart` — groups render, rows navigate (stubbed router), About shows version, logout triggers confirm. (Seed a stub — no real drift I/O per [memory gotcha].)
-- [ ] T015 [P] [US1] Golden `settings_page` light + dark.
+- [X] T015 [P] [US1] Golden `settings_page` light + dark.
 - [X] T016 [US1] a11y labels on every hub row (screen-reader label + role).
 
 **Checkpoint**: US1 independently functional — the MVP shell ships.
@@ -111,7 +111,7 @@ description: "Task list for Settings, Privacy & Safety (#014)"
 ### Cross-surface enforcement (Constitution XI — via core store, no feature imports)
 
 - [X] T036 [US3] Wire feed to filter `BlockedUsersStore.blockedIds` reactively (`lib/features/feed/...` read core store); blocked authors drop in-session.
-- [ ] T037 [P] [US3] Wire search results + explore to filter `BlockedUsersStore`.
+- [X] T037 [P] [US3] Wire search results + explore to filter `BlockedUsersStore`.
 - [X] T038 [P] [US3] Wire messaging conversation list to hide/remove blocked participants; wire notifications to filter blocked actors.
 
 ### UI + wiring existing stubs
@@ -121,10 +121,10 @@ description: "Task list for Settings, Privacy & Safety (#014)"
 - [X] T041 [US3] Replace surface-only stubs with real calls: profile more-sheet (`user_profile_page.dart` block/report), reel more-sheet (`reel_more_sheet.dart` report), comment report → route to block use case / `ReportSheet`.
 - [X] T069 [US3] Add block + report entry points to the **DM surface** (FR-013/018, Constitution I) — conversation/chat overflow more-menu in `lib/features/messaging/presentation/` → block use case (`targetType: user`) + `ReportSheet` (`targetType: message|user`). None exists today (seam scan); wire via DI, no cross-feature import.
 - [X] T070 [US3] Add block + report entry points to the **story viewer** more-menu (FR-013/018, Constitution I) in `lib/features/stories/presentation/` → block use case + `ReportSheet` (`targetType: story|user`).
-- [ ] T071 [P] [US3] Widget test: block/report reachable from DM overflow + story viewer; blocking from a conversation removes it from the list (ties to T038).
+- [X] T071 [P] [US3] Widget test: block/report reachable from DM overflow + story viewer; blocking from a conversation removes it from the list (ties to T038).
 - [X] T042 [P] [US3] EN+VI ARB for block/unblock confirms, blocked-accounts, report reasons (9 backend-aligned), ack.
 - [X] T043 [P] [US3] Tests: `blocked_users_store_test`, `fake_block_repository_test`, block use-case (optimistic + rollback + mutual-sever + idempotent), `fake_report_repository_test`, cross-surface filter test (feed/search hide blocked), `blocked_accounts_cubit_test`.
-- [ ] T044 [P] [US3] Widget + golden `BlockedAccountsPage` + `ReportSheet` (light+dark) with stub cubits.
+- [X] T044 [P] [US3] Widget + golden `BlockedAccountsPage` + `ReportSheet` (light+dark) with stub cubits.
 - [X] T045 [US3] Log-redaction test: block/unblock/report actions leak no tokens/PII (FR-034/SC-008).
 
 **Checkpoint**: US1–US3 (all P1) independently functional — core privacy/safety shipped.

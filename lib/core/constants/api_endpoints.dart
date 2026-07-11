@@ -166,9 +166,8 @@ abstract final class ApiEndpoints {
   /// (`POST`/`DELETE /users/:id/block` → `RelationshipState`; atomic bidirectional
   /// sever server-side). Report (`POST /reports` → 202 `{accepted}`, surface-only).
   /// Close friends (`GET /me/close-friends` cursor; `POST`/`DELETE
-  /// /me/close-friends/:userId`, 204). NOTE: a list-blocked read
-  /// (`GET /me/blocks`) is a **PENDING backend addition (B#014)** — the real
-  /// `listBlocked()` binds to it at cutover; fake-complete until then.
+  /// /me/close-friends/:userId`, 204). Blocked-list read
+  /// (`GET /me/blocks`, cursor `UserSummary`) is implemented in B#014.
   static const String meSettings = '/me/settings';
   static const String followRequests = '/me/follow-requests';
   static String followRequestAccept(String userId) =>
@@ -176,7 +175,7 @@ abstract final class ApiEndpoints {
   static String followRequestReject(String userId) =>
       '/me/follow-requests/$userId/reject';
   static String userBlock(String userId) => '/users/$userId/block';
-  static const String meBlocks = '/me/blocks'; // PENDING B#014 (see doc above)
+  static const String meBlocks = '/me/blocks'; // blocked-list (B#014)
   static const String reports = '/reports';
   static const String closeFriends = '/me/close-friends';
   static String closeFriend(String userId) => '/me/close-friends/$userId';

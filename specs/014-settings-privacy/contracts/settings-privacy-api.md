@@ -55,8 +55,8 @@ Follow of a private account: `POST /users/:id/follow` returns `FollowResultDto{r
 - `DELETE /users/:id/block` (200) → `RelationshipStateDto`
 - Server semantics (`social.service.ts` `blockTx`): **atomic bidirectional sever** — removes follows both directions + cancels pending requests; block masked as `NOT_FOUND` on follow attempts either way; unblock does **not** restore follows.
 
-### ⚠ REQUIRED BACKEND ADDITION (B#014 deviation) — `GET /me/blocks`
-**No list-blocked read endpoint exists.** The "Blocked accounts" management screen (FR-016) is built against the **fake** repository now; the real `BlockRepository.listBlocked()` binds to a **pending `GET /me/blocks?cursor=&limit=` → `{ items: UserSummaryDto[], nextCursor, hasMore }`** to be added at real-backend cutover. Proposed shape above; confirm field names with backend when added. (Precedent: #011 set-cover / #012 shape deviations recorded for cutover.)
+### `GET /me/blocks?cursor=&limit=` → `BlockedUserPageDto` — IMPLEMENTED (B#014)
+Added to the social module (`social.controller`/`service`/`repository`, `dto/blocked-user.dto.ts`): a cursor page `{ items: UserSummaryDto[], nextCursor, hasMore }` of the accounts the signed-in user has blocked, newest-first keyset over the `Block` table, with avatar URLs resolved via `MediaService.resolveAvatarUrls` — mirrors the followers/following list. The client `RealBlockRepository.listBlocked()` binds to it directly.
 
 ---
 

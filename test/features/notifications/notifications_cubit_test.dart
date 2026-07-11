@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/core/data/notifications/fake_notifications_repository.dart';
 import 'package:we36/core/data/profile/fake_profile_repository.dart';
 import 'package:we36/core/data/profile/relationship_store.dart';
@@ -16,7 +17,7 @@ void main() {
     repo = FakeNotificationsRepository()..clock = () => frozen;
     badge = NotificationsBadge();
     return NotificationsCubit(
-      WatchNotifications(repo),
+      WatchNotifications(repo, BlockedUsersStore()),
       LoadNotificationsPage(repo),
       RefreshNotifications(repo),
       MarkAllNotificationsRead(repo),

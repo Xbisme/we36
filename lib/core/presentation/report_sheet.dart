@@ -75,27 +75,39 @@ class _ReportSheet extends StatelessWidget {
               style: AppTypography.h3.copyWith(color: tokens.textPrimary),
             ),
           ),
-          for (final reason in ReportReason.values)
-            Semantics(
-              button: true,
-              label: reportReasonLabel(l10n, reason),
-              child: Pressable(
-                onTap: () => Navigator.of(context).pop(reason),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
-                  child: Text(
-                    reportReasonLabel(l10n, reason),
-                    style: AppTypography.body16.copyWith(
-                      color: tokens.textPrimary,
+          // Scrollable so the full reason set never overflows a short sheet or
+          // at large text scale (a11y).
+          Flexible(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final reason in ReportReason.values)
+                    Semantics(
+                      button: true,
+                      label: reportReasonLabel(l10n, reason),
+                      child: Pressable(
+                        onTap: () => Navigator.of(context).pop(reason),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
+                          ),
+                          child: Text(
+                            reportReasonLabel(l10n, reason),
+                            style: AppTypography.body16.copyWith(
+                              color: tokens.textPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  const SizedBox(height: 8),
+                ],
               ),
             ),
-          const SizedBox(height: 8),
+          ),
         ],
       ),
     );

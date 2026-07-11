@@ -683,6 +683,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i351.LikeStorySegment>(
       () => _i351.LikeStorySegment(gh<_i112.StoriesRepository>()),
     );
+    gh.factory<_i93.WatchExplore>(
+      () => _i93.WatchExplore(
+        gh<_i550.DiscoveryRepository>(),
+        gh<_i18.BlockedUsersStore>(),
+      ),
+    );
     gh.lazySingleton<_i552.CommentsRepository>(
       () => _i440.CommentsRepositoryImpl(gh<_i814.CommentsRemoteDataSource>()),
       registerFor: {_real},
@@ -768,6 +774,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1059.RelationshipStore>(),
       ),
     );
+    gh.factory<_i685.WatchNotifications>(
+      () => _i685.WatchNotifications(
+        gh<_i342.NotificationsRepository>(),
+        gh<_i18.BlockedUsersStore>(),
+      ),
+    );
     gh.factory<_i685.FollowBack>(
       () => _i685.FollowBack(gh<_i124.ProfileRepository>()),
     );
@@ -811,9 +823,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i619.LoadPlacePage>(
       () => _i619.LoadPlacePage(gh<_i550.DiscoveryRepository>()),
-    );
-    gh.factory<_i93.WatchExplore>(
-      () => _i93.WatchExplore(gh<_i550.DiscoveryRepository>()),
     );
     gh.factory<_i93.LoadExploreFirst>(
       () => _i93.LoadExploreFirst(gh<_i550.DiscoveryRepository>()),
@@ -901,9 +910,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i605.StoryImageComposer>(),
         gh<_i222.IdempotencyKeys>(),
       ),
-    );
-    gh.factory<_i685.WatchNotifications>(
-      () => _i685.WatchNotifications(gh<_i342.NotificationsRepository>()),
     );
     gh.factory<_i685.LoadNotificationsPage>(
       () => _i685.LoadNotificationsPage(gh<_i342.NotificationsRepository>()),

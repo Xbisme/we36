@@ -1,4 +1,6 @@
 import 'package:injectable/injectable.dart';
+import 'package:we36/core/data/moderation/block_filter.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/core/data/notifications/notification_entry.dart';
 import 'package:we36/core/data/notifications/notifications_repository.dart';
 import 'package:we36/core/data/pagination/cursor_page.dart';
@@ -19,9 +21,17 @@ class NotificationSectionGroup {
 /// Watch the one canonical Activity feed (reactive cache).
 @injectable
 class WatchNotifications {
-  const WatchNotifications(this._repo);
+  const WatchNotifications(this._repo, this._blocked);
   final NotificationsRepository _repo;
-  Stream<List<NotificationEntry>> call() => _repo.watchFeed();
+  final BlockedUsersStore _blocked;
+
+  /// The Activity feed with notifications from blocked actors filtered out
+  /// reactively (#014).
+  Stream<List<NotificationEntry>> call() => filterBlocked(
+    _repo.watchFeed(),
+    _blocked,
+    (n) => n.leadActor?.id ?? '',
+  );
 }
 
 /// Load a page of the feed from the server into the cache (cursor).

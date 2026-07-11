@@ -29,7 +29,9 @@ void main() {
         isTrue,
       );
       expect(
-        isBenignRealtimeDisconnect(_FakeError('SocketException: Connection reset')),
+        isBenignRealtimeDisconnect(
+          _FakeError('SocketException: Connection reset'),
+        ),
         isTrue,
       );
     });

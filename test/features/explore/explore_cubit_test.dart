@@ -2,6 +2,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:we36/core/data/cache/app_database.dart';
 import 'package:we36/core/data/discovery/fake_discovery_repository.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/features/explore/domain/usecases/explore_usecases.dart';
 import 'package:we36/features/explore/presentation/cubit/explore_cubit.dart';
 import 'package:we36/features/explore/presentation/cubit/explore_state.dart';
@@ -12,7 +13,7 @@ void main() {
   late FakeDiscoveryRepository repo;
 
   ExploreCubit build() => ExploreCubit(
-    WatchExplore(repo),
+    WatchExplore(repo, BlockedUsersStore()),
     LoadExploreFirst(repo),
     LoadExploreNext(repo),
   );

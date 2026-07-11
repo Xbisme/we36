@@ -58,7 +58,7 @@ The app is a clean-architecture Flutter client over a custom backend. A single *
 | 011 | Saved Collections | ✅ **Merged** (51/51) | `011-collections` (PR #11) |
 | 012 | Direct Messages (Realtime) | ✅ **Merged** (59/59, 625 tests) | `012-direct-messages` (PR #12) |
 | 013 | Notifications & Push | ✅ **Merged** (56/56, PR #13) | `013-notifications-push` (PR #13) |
-| 014 | Settings, Privacy & Safety | 🔵 **Implemented** (67/72; 723 tests; pending PR/merge) | `014-settings-privacy` |
+| 014 | Settings, Privacy & Safety | 🔵 **Implemented** (72/72; 738 tests; pending PR/merge) | `014-settings-privacy` |
 | 015 | Polish & v1.0 Release | 🟡 **Next** | `015-polish-v1-release` |
 
 For per-spec scope + dependency see [`sdd-roadmap.md`](sdd-roadmap.md). For ship history see [`changelog.md`](changelog.md).

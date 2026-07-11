@@ -7,9 +7,9 @@ import 'package:we36/core/data/moderation/block_repository.dart';
 import 'package:we36/core/data/pagination/cursor_page.dart';
 import 'package:we36/core/domain/result.dart';
 
-/// Live blocking over the backend (#014, B#014). `listBlocked` binds to a
-/// PENDING `GET /me/blocks` endpoint — until it ships, it returns an empty page
-/// (the app runs `environment: 'fake'`, so this real path is not yet exercised).
+/// Live blocking over the backend (#014, B#014). `block`/`unblock` +
+/// `listBlocked` (`GET /me/blocks`, cursor page of `UserSummary`) are all backed
+/// by real endpoints (the blocked-list route was added in B#014).
 @LazySingleton(as: BlockRepository, env: ['real'])
 class BlockRepositoryImpl implements BlockRepository {
   const BlockRepositoryImpl(this._api);
@@ -34,7 +34,6 @@ class BlockRepositoryImpl implements BlockRepository {
 
   @override
   Future<Result<CursorPage<UserSummary>>> listBlocked({String? cursor}) =>
-      // TODO(#014): bind to GET /me/blocks once the backend adds it (B#014).
       _api.get<CursorPage<UserSummary>>(
         ApiEndpoints.meBlocks,
         query: cursor == null ? null : {'cursor': cursor},

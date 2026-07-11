@@ -1,6 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:we36/core/data/discovery/discovery_repository.dart';
 import 'package:we36/core/data/discovery/explore_item.dart';
+import 'package:we36/core/data/moderation/block_filter.dart';
+import 'package:we36/core/data/moderation/blocked_users_store.dart';
 import 'package:we36/core/data/pagination/cursor_page.dart';
 import 'package:we36/core/domain/result.dart';
 
@@ -10,9 +12,13 @@ import 'package:we36/core/domain/result.dart';
 /// Reactive canonical Explore grid read (drift stream).
 @injectable
 class WatchExplore {
-  const WatchExplore(this._repo);
+  const WatchExplore(this._repo, this._blocked);
   final DiscoveryRepository _repo;
-  Stream<List<ExploreItem>> call() => _repo.watchExplore();
+  final BlockedUsersStore _blocked;
+
+  /// The Explore grid with blocked authors filtered out reactively (#014).
+  Stream<List<ExploreItem>> call() =>
+      filterBlocked(_repo.watchExplore(), _blocked, (i) => i.author.id);
 }
 
 /// Load the first page (also used for pull-to-refresh); replaces the cache.
