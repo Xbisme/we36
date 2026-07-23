@@ -27,9 +27,9 @@ void main() {
   );
 
   test(
-    'the database is at schema v10 (SavedCollections present since v8)',
+    'the database is at schema v11 (SavedCollections present since v8)',
     () {
-      expect(db.schemaVersion, 10);
+      expect(db.schemaVersion, 11);
     },
   );
 
