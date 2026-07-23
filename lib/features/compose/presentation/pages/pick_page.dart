@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,6 +99,9 @@ class _PickPageState extends State<PickPage> {
     final gallery = context.watch<GalleryCubit>();
     final state = gallery.state;
     final selected = state.selectedIds;
+    final heroId = selected.isNotEmpty
+        ? selected.first
+        : (state.assets.isNotEmpty ? state.assets.first.id : null);
 
     return Scaffold(
       backgroundColor: tokens.bgApp,
@@ -127,62 +131,128 @@ class _PickPageState extends State<PickPage> {
         GalleryInitial() || GalleryLoading() => const Center(
           child: CircularProgressIndicator(),
         ),
-        _ => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-              child: Row(
-                children: [
-                  Text(
-                    context.l10n.composeRecents,
-                    style: AppTypography.label.copyWith(
-                      color: tokens.textSecondary,
+        _ => LayoutBuilder(
+          builder: (context, constraints) {
+            // Full-bleed square hero on phones (design), but cap its height so
+            // the grid keeps room on short/wide viewports (tablet, landscape).
+            final heroSide = math.min(
+              constraints.maxWidth,
+              (constraints.maxHeight - 168).clamp(0.0, constraints.maxWidth),
+            );
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (heroId != null)
+                  SizedBox(
+                    width: double.infinity,
+                    height: heroSide,
+                    child: _HeroPreview(
+                      image: gallery.library.thumbnail(
+                        AssetRef(id: heroId, width: 0, height: 0),
+                        pixelSize: 1080,
+                      ),
                     ),
                   ),
-                  const Spacer(),
-                  if (selected.length > 1)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.sm,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: tokens.accentSoft,
-                        borderRadius: BorderRadius.circular(AppRadius.full),
-                      ),
-                      child: Text(
-                        context.l10n.composeCarousel,
-                        style: AppTypography.caption.copyWith(
-                          color: tokens.accent,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                  child: Row(
+                    children: [
+                      Text(
+                        context.l10n.composeRecents,
+                        style: AppTypography.label.copyWith(
+                          color: tokens.textPrimary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: GalleryGrid(
-                assets: state.assets,
-                selectedIds: selected,
-                library: gallery.library,
-                onToggle: (id) {
-                  if (!gallery.toggleSelect(id)) {
-                    getIt<ToastService>().show(
-                      context,
-                      message: context.l10n.composeMaxReached(
-                        kCarouselMaxItems,
+                      const Spacer(),
+                      Row(
+                        children: [
+                          AppIcon(
+                            AppIcons.camera,
+                            size: 22,
+                            color: tokens.icon,
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          AppIcon(AppIcons.reels, size: 22, color: tokens.icon),
+                        ],
                       ),
-                    );
-                  }
-                },
-                onEndReached: gallery.loadMore,
-              ),
-            ),
-          ],
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: GalleryGrid(
+                    assets: state.assets,
+                    selectedIds: selected,
+                    library: gallery.library,
+                    onToggle: (id) {
+                      if (!gallery.toggleSelect(id)) {
+                        getIt<ToastService>().show(
+                          context,
+                          message: context.l10n.composeMaxReached(
+                            kCarouselMaxItems,
+                          ),
+                        );
+                      }
+                    },
+                    onEndReached: gallery.loadMore,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       },
+    );
+  }
+}
+
+/// Full-bleed square hero of the selected photo with a translucent "Carousel"
+/// chip top-right (Screen 11). Colour earns its place only on the chip scrim.
+class _HeroPreview extends StatelessWidget {
+  const _HeroPreview({required this.image});
+
+  final ImageProvider image;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = context.tokens;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Image(image: image, fit: BoxFit.cover, gaplessPlayback: true),
+        Positioned(
+          top: AppSpacing.md,
+          right: AppSpacing.md,
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.xs,
+            ),
+            decoration: BoxDecoration(
+              color: tokens.overlay,
+              borderRadius: BorderRadius.circular(AppRadius.full),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppIcon(
+                  AppIcons.plus,
+                  size: 14,
+                  color: tokens.textOnBrand,
+                ),
+                const SizedBox(width: AppSpacing.xs),
+                Text(
+                  context.l10n.composeCarousel,
+                  style: AppTypography.caption.copyWith(
+                    color: tokens.textOnBrand,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

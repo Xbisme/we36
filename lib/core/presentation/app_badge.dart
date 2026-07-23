@@ -14,23 +14,23 @@ class AppBadge extends StatelessWidget {
     final tokens = context.tokens;
     if (count == null) {
       return Container(
-        width: 8,
-        height: 8,
+        width: 10,
+        height: 10,
         decoration: BoxDecoration(
           color: tokens.accent,
           shape: BoxShape.circle,
-          border: Border.all(color: tokens.surface, width: 1.5),
+          border: Border.all(color: tokens.surface, width: 2),
         ),
       );
     }
     final text = count! > 99 ? '99+' : '$count';
     return Container(
-      constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      constraints: const BoxConstraints(minWidth: 20, minHeight: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 7),
       decoration: BoxDecoration(
         color: tokens.accent,
         borderRadius: BorderRadius.circular(9999),
-        border: Border.all(color: tokens.surface, width: 1.5),
+        border: Border.all(color: tokens.surface, width: 2),
       ),
       alignment: Alignment.center,
       child: Text(
@@ -38,7 +38,7 @@ class AppBadge extends StatelessWidget {
         style: AppTypography.caption.copyWith(
           color: tokens.textOnBrand,
           fontWeight: FontWeight.w700,
-          fontSize: 11,
+          fontSize: 12,
           height: 1,
         ),
       ),

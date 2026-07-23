@@ -6,13 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/di/injection.dart';
-import 'package:we36/core/presentation/app_button.dart';
 import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/services/photo_library_service.dart';
 import 'package:we36/core/theme/app_dimens.dart';
-import 'package:we36/core/theme/app_typography.dart';
+import 'package:we36/core/theme/app_gradients.dart';
+import 'package:we36/core/theme/app_shadows.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 import 'package:we36/features/stories/domain/models/story_compose_draft.dart';
 import 'package:we36/features/stories/presentation/cubit/story_compose_cubit.dart';
@@ -108,135 +108,150 @@ class _StoryComposePageState extends State<StoryComposePage> {
         return Scaffold(
           backgroundColor: Colors.black,
           body: SafeArea(
-            child: Column(
+            child: Stack(
+              fit: StackFit.expand,
               children: [
-                // Top row: close + Share/Retry.
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.md,
-                    vertical: AppSpacing.sm,
-                  ),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: uploading
-                            ? null
-                            : () => unawaited(
-                                _onClose(draft),
-                              ),
-                        icon: const AppIcon(
-                          AppIcons.close,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const Spacer(),
-                      AppButton(
-                        label: failed
-                            ? context.l10n.composeRetry
-                            : context.l10n.storyShare,
-                        size: AppButtonSize.sm,
-                        onPressed: (draft == null || uploading)
-                            ? null
-                            : () => unawaited(
-                                failed
-                                    ? cubit.retry()
-                                    : cubit.publish(boundaryKey: _boundaryKey),
-                              ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (uploading)
-                  StoryUploadProgress(
-                    progress: progress,
-                    onCancel: cubit.cancel,
-                  ),
-                // 9:16 canvas — flattened WYSIWYG at publish (FR-005).
-                Expanded(
-                  child: Center(
-                    child: AspectRatio(
-                      aspectRatio: 9 / 16,
-                      child: RepaintBoundary(
-                        key: _boundaryKey,
-                        child: ColoredBox(
-                          color: Colors.black,
-                          child: draft == null
-                              ? const SizedBox.shrink()
-                              : Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    Image(
-                                      image: library.thumbnail(
-                                        AssetRef(
-                                          id: draft.assetId,
-                                          width: 0,
-                                          height: 0,
-                                        ),
-                                        pixelSize: 1080,
-                                      ),
-                                      fit: BoxFit.cover,
-                                      gaplessPlayback: true,
-                                    ),
-                                    // Baked into the export by the RepaintBoundary.
-                                    StoryOverlayLayer(
-                                      draft: draft,
-                                      onMoveText: cubit.moveText,
-                                      onMoveSticker: cubit.moveSticker,
-                                      onRemoveText: cubit.removeText,
-                                      onRemoveSticker: cubit.removeSticker,
-                                    ),
-                                  ],
+                // Full-bleed media + overlays — flattened WYSIWYG at publish
+                // (FR-005). The RepaintBoundary spans the whole frame so the
+                // export matches exactly what the creator sees.
+                RepaintBoundary(
+                  key: _boundaryKey,
+                  child: ColoredBox(
+                    color: Colors.black,
+                    child: draft == null
+                        ? const SizedBox.shrink()
+                        : Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image(
+                                image: library.thumbnail(
+                                  AssetRef(
+                                    id: draft.assetId,
+                                    width: 0,
+                                    height: 0,
+                                  ),
+                                  pixelSize: 1080,
                                 ),
-                        ),
-                      ),
-                    ),
+                                fit: BoxFit.cover,
+                                gaplessPlayback: true,
+                              ),
+                              // Baked into the export by the RepaintBoundary.
+                              StoryOverlayLayer(
+                                draft: draft,
+                                onMoveText: cubit.moveText,
+                                onMoveSticker: cubit.moveSticker,
+                                onRemoveText: cubit.removeText,
+                                onRemoveSticker: cubit.removeSticker,
+                              ),
+                            ],
+                          ),
                   ),
                 ),
-                // Overlay tools (US2) — hidden while uploading.
-                if (draft != null && !uploading)
-                  Padding(
+                // Bottom protection gradient for control legibility.
+                const Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: IgnorePointer(child: _ComposeGradient()),
+                ),
+                // Top controls: close (left) + tool chips (right).
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.lg,
                       vertical: AppSpacing.sm,
                     ),
                     child: Row(
                       children: [
-                        _ToolButton(
-                          icon: AppIcons.sticker,
-                          label: context.l10n.storyAddText,
-                          onTap: () => unawaited(_addText()),
+                        IconButton(
+                          onPressed: uploading
+                              ? null
+                              : () => unawaited(_onClose(draft)),
+                          icon: const AppIcon(
+                            AppIcons.close,
+                            size: 26,
+                            color: Colors.white,
+                          ),
                         ),
-                        const SizedBox(width: AppSpacing.lg),
-                        _ToolButton(
+                        const Spacer(),
+                        _ToolChip(
+                          icon: AppIcons.camera,
+                          semanticLabel: context.l10n.storyComingSoon,
+                        ),
+                        const SizedBox(width: AppSpacing.md),
+                        _ToolChip(
                           icon: AppIcons.plus,
-                          label: context.l10n.storyStickers,
-                          onTap: () => unawaited(_addSticker()),
+                          semanticLabel: context.l10n.storyStickers,
+                          onTap: (draft == null || uploading)
+                              ? null
+                              : () => unawaited(_addSticker()),
+                        ),
+                        const SizedBox(width: AppSpacing.md),
+                        _ToolChip(
+                          icon: AppIcons.more,
+                          semanticLabel: context.l10n.storyAddText,
+                          onTap: (draft == null || uploading)
+                              ? null
+                              : () => unawaited(_addText()),
+                        ),
+                        const SizedBox(width: AppSpacing.md),
+                        _ToolChip(
+                          icon: AppIcons.settings,
+                          semanticLabel: context.l10n.storyComingSoon,
                         ),
                       ],
                     ),
                   ),
-                // Footer: audience (default "Your story"; toggle arrives US3).
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.lg,
-                    vertical: AppSpacing.md,
+                ),
+                if (uploading)
+                  Positioned(
+                    top: 64,
+                    left: AppSpacing.lg,
+                    right: AppSpacing.lg,
+                    child: StoryUploadProgress(
+                      progress: progress,
+                      onCancel: cubit.cancel,
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      if (draft != null && !uploading)
-                        AudienceToggle(
-                          value: draft.audience,
-                          onChanged: cubit.setAudience,
-                        )
-                      else
-                        Text(
-                          context.l10n.yourStory,
-                          style: AppTypography.body16.copyWith(
-                            color: Colors.white,
+                // Bottom controls: audience pills (left) + publish (right).
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.lg,
+                      AppSpacing.md,
+                      AppSpacing.lg,
+                      AppSpacing.lg,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        if (draft != null)
+                          Flexible(
+                            child: AudienceToggle(
+                              value: draft.audience,
+                              onChanged: uploading ? (_) {} : cubit.setAudience,
+                            ),
                           ),
+                        const SizedBox(width: AppSpacing.md),
+                        _PublishButton(
+                          onTap: (draft == null || uploading)
+                              ? null
+                              : () => unawaited(
+                                  failed
+                                      ? cubit.retry()
+                                      : cubit.publish(
+                                          boundaryKey: _boundaryKey,
+                                        ),
+                                ),
                         ),
-                      const Spacer(),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -248,26 +263,88 @@ class _StoryComposePageState extends State<StoryComposePage> {
   }
 }
 
-/// A compact icon+label story tool (Add text / Stickers) on the dark canvas.
-class _ToolButton extends StatelessWidget {
-  const _ToolButton({
+/// Bottom-to-top protection scrim so the audience/publish controls stay legible
+/// over bright photos.
+class _ComposeGradient extends StatelessWidget {
+  const _ComposeGradient();
+
+  @override
+  Widget build(BuildContext context) => Container(
+    height: 150,
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.bottomCenter,
+        end: Alignment.center,
+        colors: [Colors.black54, Colors.transparent],
+      ),
+    ),
+  );
+}
+
+/// A 40x40 translucent-dark circular tool chip (top-right cluster). Inert chips
+/// (no [onTap]) mirror the design mock and render as disabled affordances.
+class _ToolChip extends StatelessWidget {
+  const _ToolChip({
     required this.icon,
-    required this.label,
-    required this.onTap,
+    required this.semanticLabel,
+    this.onTap,
   });
 
   final IconData icon;
-  final String label;
-  final VoidCallback onTap;
+  final String semanticLabel;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      onPressed: onTap,
-      icon: AppIcon(icon, size: 18, color: Colors.white),
-      label: Text(
-        label,
-        style: AppTypography.label.copyWith(color: Colors.white),
+    return Semantics(
+      button: true,
+      enabled: onTap != null,
+      label: semanticLabel,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          width: 40,
+          height: 40,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.black.withValues(alpha: 0.35),
+          ),
+          child: AppIcon(icon, size: 20, color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+/// The bottom-right publish control: a 54x54 brand-gradient circle with a white
+/// share glyph and a brand shadow (Constitution VI — gradient earns its place).
+class _PublishButton extends StatelessWidget {
+  const _PublishButton({this.onTap});
+
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      enabled: onTap != null,
+      label: context.l10n.storyShare,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          width: 54,
+          height: 54,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: AppGradients.brand,
+            boxShadow: AppShadows.brand,
+          ),
+          child: const AppIcon(AppIcons.share, color: Colors.white),
+        ),
       ),
     );
   }

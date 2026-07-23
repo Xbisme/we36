@@ -51,28 +51,41 @@ class ConversationsPage extends StatelessWidget {
 
     return Column(
       children: [
-        // Header: title + new-message action.
-        Padding(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.sm,
-            AppSpacing.sm,
-            0,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.dmTitle,
-                  style: AppTypography.h2.copyWith(color: tokens.textPrimary),
+        // Header: back-to-home chevron + username title + new-message action.
+        SizedBox(
+          height: 52,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+            child: Row(
+              children: [
+                AppIconButton(
+                  icon: AppIcons.back,
+                  semanticLabel: MaterialLocalizations.of(
+                    context,
+                  ).backButtonTooltip,
+                  onPressed: () => context.go(AppRoutes.home),
                 ),
-              ),
-              AppIconButton(
-                icon: AppIcons.plus,
-                semanticLabel: l10n.dmNewMessage,
-                onPressed: () => unawaited(context.push(AppRoutes.newMessage)),
-              ),
-            ],
+                const SizedBox(width: AppSpacing.xs),
+                Expanded(
+                  child: Text(
+                    l10n.dmTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.h3.copyWith(
+                      color: tokens.textPrimary,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                AppIconButton(
+                  icon: AppIcons.plus,
+                  semanticLabel: l10n.dmNewMessage,
+                  onPressed: () =>
+                      unawaited(context.push(AppRoutes.newMessage)),
+                ),
+              ],
+            ),
           ),
         ),
         Expanded(

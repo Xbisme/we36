@@ -130,27 +130,53 @@ class _CommentInputState extends State<CommentInput> {
                 children: [
                   const Avatar(size: 32),
                   const SizedBox(width: AppSpacing.md),
+                  // Design B7: composer is a rounded pill (surface2, r-full, 40h)
+                  // holding the field + a trailing sticker glyph.
                   Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      focusNode: _focus,
-                      minLines: 1,
-                      maxLines: 4,
-                      textInputAction: TextInputAction.send,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(Comment.maxLength),
-                      ],
-                      onSubmitted: (_) => _submit(),
-                      style: AppTypography.body16.copyWith(
-                        color: tokens.textPrimary,
+                    child: Container(
+                      height: 40,
+                      padding: const EdgeInsets.only(
+                        left: AppSpacing.lg,
+                        right: AppSpacing.md,
                       ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        border: InputBorder.none,
-                        hintText: l10n.commentAddHint,
-                        hintStyle: AppTypography.body16.copyWith(
-                          color: tokens.textTertiary,
-                        ),
+                      decoration: BoxDecoration(
+                        color: tokens.surface2,
+                        borderRadius: BorderRadius.circular(AppRadius.full),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _controller,
+                              focusNode: _focus,
+                              textInputAction: TextInputAction.send,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(
+                                  Comment.maxLength,
+                                ),
+                              ],
+                              onSubmitted: (_) => _submit(),
+                              style: AppTypography.body16.copyWith(
+                                color: tokens.textPrimary,
+                              ),
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                hintText: l10n.commentAddHint,
+                                hintStyle: AppTypography.body16.copyWith(
+                                  color: tokens.textTertiary,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          AppIcon(
+                            AppIcons.sticker,
+                            size: 22,
+                            color: tokens.icon,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -159,6 +185,7 @@ class _CommentInputState extends State<CommentInput> {
                     child: Text(
                       l10n.commentPost,
                       style: AppTypography.label.copyWith(
+                        fontWeight: FontWeight.w700,
                         color: _canPost ? tokens.accent : tokens.textTertiary,
                       ),
                     ),

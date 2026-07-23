@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -15,7 +16,6 @@ import 'package:we36/core/presentation/top_bar.dart';
 import 'package:we36/core/services/photo_library_service.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
-import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 import 'package:we36/features/compose/domain/models/filter_matrices.dart';
 import 'package:we36/features/compose/domain/models/media_edit_state.dart';
@@ -25,12 +25,10 @@ import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart';
 import 'package:we36/features/compose/presentation/widgets/adjust_slider.dart';
 import 'package:we36/features/compose/presentation/widgets/filter_row.dart';
 
-/// Which editing tool is showing under the preview.
-enum _EditTab { filters, adjust }
-
-/// Step 2 (Screen 12): edit the active photo — 4:5 crop, preset filters, and
-/// brightness/contrast/warmth previewed live via `ColorFilter.matrix` (the same
-/// matrix the isolate bakes at publish, R3). Edits are per-photo (Q4).
+/// Step 2 (Screen 12): edit the active photo — a full-bleed square preview, the
+/// preset-filter strip, and brightness/contrast/warmth sliders stacked together
+/// (no tabs, matching the mockup) — all previewed live via `ColorFilter.matrix`
+/// (the same matrix the isolate bakes at publish, R3). Edits are per-photo (Q4).
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
 
@@ -39,7 +37,6 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
-  _EditTab _tab = _EditTab.filters;
   bool _cropMode = false;
 
   @override
@@ -56,7 +53,10 @@ class _EditPageState extends State<EditPage> {
     if (items.isEmpty) {
       return Scaffold(
         backgroundColor: tokens.bgApp,
-        appBar: TopBar(title: context.l10n.composeTitle, onBack: context.pop),
+        appBar: TopBar(
+          title: context.l10n.composeEditTitle,
+          onBack: context.pop,
+        ),
         body: const SizedBox.shrink(),
       );
     }
@@ -78,10 +78,12 @@ class _EditPageState extends State<EditPage> {
       );
     }
 
+    final multi = items.length > 1;
+
     return Scaffold(
       backgroundColor: tokens.bgApp,
       appBar: TopBar(
-        title: context.l10n.composeTitle,
+        title: context.l10n.composeEditTitle,
         onBack: context.pop,
         actions: [
           AppIconButton(
@@ -97,54 +99,57 @@ class _EditPageState extends State<EditPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.lg),
-                child: AspectRatio(
-                  aspectRatio: 4 / 5,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.matrix(
-                        FilterMatrices.resolve(edit),
-                      ),
-                      child: Image(
-                        image: library.thumbnail(assetRef, pixelSize: 1080),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          // Full-bleed square on phones (design), but cap the height so the
+          // filter strip + sliders always keep room on short/wide viewports.
+          final reserved = (multi ? 56.0 : 0.0) + AppSpacing.md + 96 + 140;
+          final previewSide = math.min(
+            constraints.maxWidth,
+            (constraints.maxHeight - reserved).clamp(0.0, constraints.maxWidth),
+          );
+          return Column(
+            children: [
+              // Full-bleed square preview — no padding, no rounded corners.
+              SizedBox(
+                width: double.infinity,
+                height: previewSide,
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.matrix(FilterMatrices.resolve(edit)),
+                  child: Image(
+                    image: library.thumbnail(assetRef, pixelSize: 1080),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-            ),
-          ),
-          if (items.length > 1)
-            _ItemStrip(
-              assetIds: [for (final it in items) it.assetId],
-              activeIndex: index,
-              library: library,
-              onSelect: context.read<ComposeCubit>().setActiveItem,
-            ),
-          _TabBar(
-            tab: _tab,
-            onChanged: (t) => setState(() => _tab = t),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          SizedBox(
-            height: 132,
-            child: _tab == _EditTab.filters
-                ? FilterRow(
-                    preview: library.thumbnail(assetRef, pixelSize: 160),
-                    selected: edit.filter,
-                    onSelect: context.read<ComposeCubit>().setFilter,
-                  )
-                : _AdjustPanel(edit: edit, cubit: context.read<ComposeCubit>()),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-        ],
+              if (multi)
+                _ItemStrip(
+                  assetIds: [for (final it in items) it.assetId],
+                  activeIndex: index,
+                  library: library,
+                  onSelect: context.read<ComposeCubit>().setActiveItem,
+                ),
+              const SizedBox(height: AppSpacing.md),
+              FilterRow(
+                preview: library.thumbnail(assetRef, pixelSize: 160),
+                selected: edit.filter,
+                onSelect: context.read<ComposeCubit>().setFilter,
+              ),
+              // Sliders sit below the filter strip, separated by a hairline.
+              Expanded(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(color: tokens.divider)),
+                  ),
+                  child: _AdjustPanel(
+                    edit: edit,
+                    cubit: context.read<ComposeCubit>(),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -212,67 +217,6 @@ class _ItemStrip extends StatelessWidget {
   }
 }
 
-class _TabBar extends StatelessWidget {
-  const _TabBar({required this.tab, required this.onChanged});
-
-  final _EditTab tab;
-  final ValueChanged<_EditTab> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _TabButton(
-          label: context.l10n.composeFilters,
-          active: tab == _EditTab.filters,
-          onTap: () => onChanged(_EditTab.filters),
-        ),
-        const SizedBox(width: AppSpacing.xl),
-        _TabButton(
-          label: context.l10n.composeAdjust,
-          active: tab == _EditTab.adjust,
-          onTap: () => onChanged(_EditTab.adjust),
-        ),
-      ],
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final tokens = context.tokens;
-    return Pressable(
-      onTap: onTap,
-      child: Semantics(
-        selected: active,
-        button: true,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-          child: Text(
-            label,
-            style: AppTypography.label.copyWith(
-              color: active ? tokens.textPrimary : tokens.textTertiary,
-              fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _AdjustPanel extends StatelessWidget {
   const _AdjustPanel({required this.edit, required this.cubit});
 
@@ -282,7 +226,7 @@ class _AdjustPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
       children: [
         AdjustSlider(
           label: context.l10n.composeAdjustBrightness,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
-import 'package:we36/core/presentation/app_text_field.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_theme.dart';
 import 'package:we36/features/profile/presentation/cubit/edit_profile_cubit.dart';
@@ -65,7 +64,8 @@ void main() {
   testWidgets('renders pre-filled fields', (tester) async {
     await tester.pumpWidget(host(_editing()));
     await tester.pump();
-    expect(find.byType(AppTextField), findsNWidgets(5));
+    // Edit profile now uses table-style rows with inline TextFields (design D4).
+    expect(find.byType(TextField), findsNWidgets(5));
     expect(find.text('Change profile photo'), findsOneWidget);
     expect(find.text('Demo'), findsOneWidget); // name field pre-filled
   });

@@ -75,62 +75,78 @@ class _SignInPageState extends State<SignInPage> {
                   ? l10n.authPasswordTooShort
                   : null;
 
-              return SingleChildScrollView(
-                padding: const EdgeInsets.all(AppSpacing.xl),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: AppSpacing.xxl),
-                    const Center(child: Wordmark(fontSize: 40)),
-                    const SizedBox(height: AppSpacing.sm),
-                    Center(
-                      child: Text(
-                        l10n.authSignInSubtitle,
-                        style: AppTypography.body16.copyWith(
-                          color: tokens.textSecondary,
-                        ),
+              return Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(AppSpacing.xl),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const SizedBox(height: AppSpacing.xxl),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Wordmark(fontSize: 40),
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          Text(
+                            l10n.authSignInSubtitle,
+                            style: AppTypography.body16.copyWith(
+                              color: tokens.textSecondary,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xxl),
+                          AppTextField(
+                            label: l10n.authEmailLabel,
+                            controller: _email,
+                            hint: l10n.authEmailHint,
+                            errorText: emailError,
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            autofillHints: const [AutofillHints.email],
+                            enabled: !submitting,
+                          ),
+                          const SizedBox(height: AppSpacing.lg),
+                          AppTextField(
+                            label: l10n.authPasswordLabel,
+                            controller: _password,
+                            errorText: passwordError,
+                            obscure: true,
+                            textInputAction: TextInputAction.done,
+                            autofillHints: const [AutofillHints.password],
+                            enabled: !submitting,
+                            onSubmitted: (_) => _submit(context),
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: _LinkText(
+                              label: l10n.authForgotPasswordLink,
+                              onTap: () =>
+                                  context.push(AppRoutes.forgotPassword),
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.lg),
+                          AppButton(
+                            label: l10n.authSignInCta,
+                            fullWidth: true,
+                            onPressed: submitting
+                                ? null
+                                : () => _submit(context),
+                          ),
+                          const SizedBox(height: AppSpacing.xl),
+                          const OAuthButtons(),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.xxl),
-                    AppTextField(
-                      label: l10n.authEmailLabel,
-                      controller: _email,
-                      hint: l10n.authEmailHint,
-                      errorText: emailError,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      autofillHints: const [AutofillHints.email],
-                      enabled: !submitting,
+                  ),
+                  // Pinned footer bar with a hairline top divider (design A3).
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(top: BorderSide(color: tokens.divider)),
                     ),
-                    const SizedBox(height: AppSpacing.lg),
-                    AppTextField(
-                      label: l10n.authPasswordLabel,
-                      controller: _password,
-                      errorText: passwordError,
-                      obscure: true,
-                      textInputAction: TextInputAction.done,
-                      autofillHints: const [AutofillHints.password],
-                      enabled: !submitting,
-                      onSubmitted: (_) => _submit(context),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: _LinkText(
-                        label: l10n.authForgotPasswordLink,
-                        onTap: () => context.push(AppRoutes.forgotPassword),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    AppButton(
-                      label: l10n.authSignInCta,
-                      fullWidth: true,
-                      onPressed: submitting ? null : () => _submit(context),
-                    ),
-                    const SizedBox(height: AppSpacing.xl),
-                    const OAuthButtons(),
-                    const SizedBox(height: AppSpacing.xl),
-                    Row(
+                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -146,8 +162,8 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
           ),

@@ -26,12 +26,12 @@ class BottomNav extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: tokens.surface,
-        border: Border(top: BorderSide(color: tokens.divider)),
+        border: Border(top: BorderSide(color: tokens.border)),
       ),
       child: SafeArea(
         top: false,
         child: SizedBox(
-          height: 56,
+          height: 64,
           child: Row(
             children: [
               for (var i = 0; i < items.length; i++)
@@ -47,7 +47,11 @@ class BottomNav extends StatelessWidget {
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
-                            AppIcon(items[i].icon, active: i == currentIndex),
+                            AppIcon(
+                              items[i].icon,
+                              size: 26,
+                              active: i == currentIndex,
+                            ),
                             if (items[i].badgeCount != null &&
                                 items[i].badgeCount! > 0)
                               Positioned(

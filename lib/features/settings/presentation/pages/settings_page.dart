@@ -59,6 +59,7 @@ class SettingsPage extends StatelessWidget {
           SettingsRow(
             icon: AppIcons.shield,
             label: l10n.settingsTwoFactor,
+            tone: SettingsRowTone.mint,
             onTap: () => go(AppRoutes.settingsTwoFactor),
           ),
           SettingsRow(

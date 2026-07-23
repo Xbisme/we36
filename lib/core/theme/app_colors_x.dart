@@ -28,6 +28,8 @@ class AppColorsX extends ThemeExtension<AppColorsX> {
     required this.warning,
     required this.error,
     required this.info,
+    required this.online,
+    required this.statusActive,
   });
 
   factory AppColorsX.light() => const AppColorsX(
@@ -53,6 +55,8 @@ class AppColorsX extends ThemeExtension<AppColorsX> {
     warning: AppColors.warning,
     error: AppColors.error,
     info: AppColors.info,
+    online: AppColors.mint400,
+    statusActive: AppColors.mint500,
   );
 
   factory AppColorsX.dark() => const AppColorsX(
@@ -78,6 +82,8 @@ class AppColorsX extends ThemeExtension<AppColorsX> {
     warning: AppColors.warning,
     error: AppColors.error,
     info: AppColors.info,
+    online: AppColors.mint400,
+    statusActive: AppColors.mint500,
   );
 
   final Color bgApp;
@@ -103,6 +109,12 @@ class AppColorsX extends ThemeExtension<AppColorsX> {
   final Color error;
   final Color info;
 
+  /// Presence dot (mint-400) — distinct from [success] green.
+  final Color online;
+
+  /// "Active now" / typing status text (mint-500).
+  final Color statusActive;
+
   @override
   AppColorsX copyWith({
     Color? bgApp,
@@ -127,6 +139,8 @@ class AppColorsX extends ThemeExtension<AppColorsX> {
     Color? warning,
     Color? error,
     Color? info,
+    Color? online,
+    Color? statusActive,
   }) {
     return AppColorsX(
       bgApp: bgApp ?? this.bgApp,
@@ -151,6 +165,8 @@ class AppColorsX extends ThemeExtension<AppColorsX> {
       warning: warning ?? this.warning,
       error: error ?? this.error,
       info: info ?? this.info,
+      online: online ?? this.online,
+      statusActive: statusActive ?? this.statusActive,
     );
   }
 
@@ -180,6 +196,8 @@ class AppColorsX extends ThemeExtension<AppColorsX> {
       warning: Color.lerp(warning, other.warning, t)!,
       error: Color.lerp(error, other.error, t)!,
       info: Color.lerp(info, other.info, t)!,
+      online: Color.lerp(online, other.online, t)!,
+      statusActive: Color.lerp(statusActive, other.statusActive, t)!,
     );
   }
 }

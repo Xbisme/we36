@@ -33,23 +33,43 @@ class ExplorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final tokens = context.tokens;
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: AppSearchBar(
-              hint: l10n.searchHint,
-              readOnly: true,
-              onTap: () => unawaited(context.push(AppRoutes.search)),
+          // Search bar + category chips share one surface panel with a hairline
+          // bottom divider, lifting them off the page background (explore.jsx C1).
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: tokens.surface,
+              border: Border(bottom: BorderSide(color: tokens.divider)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg,
+                    10,
+                    AppSpacing.lg,
+                    0,
+                  ),
+                  child: AppSearchBar(
+                    hint: l10n.searchHint,
+                    readOnly: true,
+                    onTap: () => unawaited(context.push(AppRoutes.search)),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                CategoryChips(
+                  onSelect: (tag) =>
+                      unawaited(context.push(AppRoutes.hashtagPath(tag))),
+                ),
+                const SizedBox(height: 10),
+              ],
             ),
           ),
-          CategoryChips(
-            onSelect: (tag) =>
-                unawaited(context.push(AppRoutes.hashtagPath(tag))),
-          ),
-          const SizedBox(height: AppSpacing.md),
           Expanded(
             child: BlocBuilder<ExploreCubit, ExploreState>(
               builder: (context, state) {

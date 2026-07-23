@@ -86,9 +86,12 @@ class _CaptionPageState extends State<CaptionPage> {
             actions: [
               AppButton(
                 // Same idempotency key on retry → no duplicate (FR-018/019).
+                // Plain rose text action (ghost) — matches the "Next" actions on
+                // the pick/edit steps; never a filled gradient here (Screen 13).
                 label: failed
                     ? context.l10n.composeRetry
                     : context.l10n.composeShare,
+                kind: AppButtonKind.ghost,
                 size: AppButtonSize.sm,
                 onPressed: (draft == null || uploading)
                     ? null
@@ -111,19 +114,22 @@ class _CaptionPageState extends State<CaptionPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (firstAssetId != null)
-                            SizedBox(
-                              width: 64,
-                              height: 80,
-                              child: Image(
-                                image: library.thumbnail(
-                                  AssetRef(
-                                    id: firstAssetId,
-                                    width: 0,
-                                    height: 0,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(AppRadius.sm),
+                              child: SizedBox(
+                                width: 72,
+                                height: 72,
+                                child: Image(
+                                  image: library.thumbnail(
+                                    AssetRef(
+                                      id: firstAssetId,
+                                      width: 0,
+                                      height: 0,
+                                    ),
+                                    pixelSize: 160,
                                   ),
-                                  pixelSize: 160,
+                                  fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.cover,
                               ),
                             ),
                           const SizedBox(width: 12),
@@ -287,7 +293,11 @@ class _OptionRow extends StatelessWidget {
                 ),
               ),
             const SizedBox(width: AppSpacing.sm),
-            AppIcon(AppIcons.back, size: 16, color: tokens.textTertiary),
+            AppIcon(
+              AppIcons.chevronRight,
+              size: 16,
+              color: tokens.textTertiary,
+            ),
           ],
         ),
       ),

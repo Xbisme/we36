@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:we36/core/constants/app_breakpoints.dart';
 import 'package:we36/core/data/discovery/explore_item.dart';
+import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/features/explore/presentation/widgets/discovery_grid_tile.dart';
 
 /// The discovery grid (#009 US2/US4, FR-014/FR-031). On phones (<700) it's a
@@ -31,15 +32,20 @@ class DiscoveryGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final isTablet = width >= AppBreakpoints.tablet;
-    return CustomScrollView(
-      slivers: [
-        if (isTablet || items.length < 3)
-          _responsiveGrid(isTablet)
-        else
-          ..._quiltedPhone(width),
-        ?footer,
-        const SliverToBoxAdapter(child: SizedBox(height: 8)),
-      ],
+    // Surface-2 backdrop so the 2px inter-tile gaps read as light seams rather
+    // than the page background bleeding through (explore.jsx C1 grid).
+    return ColoredBox(
+      color: context.tokens.surface2,
+      child: CustomScrollView(
+        slivers: [
+          if (isTablet || items.length < 3)
+            _responsiveGrid(isTablet)
+          else
+            ..._quiltedPhone(width),
+          ?footer,
+          const SliverToBoxAdapter(child: SizedBox(height: 8)),
+        ],
+      ),
     );
   }
 

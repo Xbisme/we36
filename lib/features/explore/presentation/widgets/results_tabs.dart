@@ -21,47 +21,77 @@ class ResultsTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tokens = context.tokens;
-    return Row(
-      children: [
-        for (final tab in SearchTab.values)
-          Expanded(
-            child: Semantics(
-              button: true,
-              selected: tab == active,
-              label: labels[tab],
-              excludeSemantics: true,
-              child: InkWell(
+    // Left-aligned, intrinsic-width tabs on a divider-underlined row; the active
+    // underline hugs its own label rather than spanning an equal column
+    // (explore.jsx C3).
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: tokens.divider)),
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+        child: Row(
+          children: [
+            for (final tab in SearchTab.values) ...[
+              if (tab != SearchTab.values.first) const SizedBox(width: 22),
+              _Tab(
+                label: labels[tab] ?? '',
+                active: tab == active,
                 onTap: () => onSelect(tab),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-                  child: Column(
-                    children: [
-                      Text(
-                        labels[tab] ?? '',
-                        style: AppTypography.label.copyWith(
-                          color: tab == active
-                              ? tokens.textPrimary
-                              : tokens.textTertiary,
-                          fontWeight: tab == active
-                              ? FontWeight.w700
-                              : FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      Container(
-                        height: 2,
-                        width: 28,
-                        color: tab == active
-                            ? tokens.accent
-                            : Colors.transparent,
-                      ),
-                    ],
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Tab extends StatelessWidget {
+  const _Tab({
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool active;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = context.tokens;
+    return Semantics(
+      button: true,
+      selected: active,
+      label: label,
+      excludeSemantics: true,
+      child: InkWell(
+        onTap: onTap,
+        child: IntrinsicWidth(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: AppTypography.label.copyWith(
+                    color: active ? tokens.textPrimary : tokens.textSecondary,
+                    fontWeight: active ? FontWeight.w700 : FontWeight.w500,
                   ),
                 ),
               ),
-            ),
+              Container(
+                height: 2,
+                color: active ? tokens.accent : Colors.transparent,
+              ),
+            ],
           ),
-      ],
+        ),
+      ),
     );
   }
 }

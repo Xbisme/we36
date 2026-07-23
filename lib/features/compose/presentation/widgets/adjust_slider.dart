@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
+import 'package:we36/core/theme/app_gradients.dart';
 import 'package:we36/core/theme/app_typography.dart';
 
 /// A labelled -1..1 adjustment slider (Brightness / Contrast / Warmth) with a
@@ -46,7 +47,10 @@ class AdjustSlider extends StatelessWidget {
               child: SliderTheme(
                 data: SliderThemeData(
                   trackHeight: 3,
-                  activeTrackColor: tokens.accent,
+                  trackShape: _GradientTrackShape(
+                    gradient: AppGradients.brand,
+                    inactiveColor: tokens.surface2,
+                  ),
                   inactiveTrackColor: tokens.surface2,
                   thumbColor: tokens.textOnBrand,
                   overlayColor: tokens.accent.withValues(alpha: 0.12),
@@ -77,6 +81,71 @@ class AdjustSlider extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// A slider track whose active segment is painted with the brand gradient
+/// instead of a flat colour (Screen 12) — colour earns its place on the active
+/// fill only (Constitution VI). The inactive remainder stays neutral.
+class _GradientTrackShape extends SliderTrackShape with BaseSliderTrackShape {
+  const _GradientTrackShape({
+    required this.gradient,
+    required this.inactiveColor,
+  });
+
+  final Gradient gradient;
+  final Color inactiveColor;
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset offset, {
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required TextDirection textDirection,
+    required Offset thumbCenter,
+    Offset? secondaryOffset,
+    bool isDiscrete = false,
+    bool isEnabled = false,
+    double additionalActiveTrackHeight = 2,
+  }) {
+    final trackRect = getPreferredRect(
+      parentBox: parentBox,
+      offset: offset,
+      sliderTheme: sliderTheme,
+      isEnabled: isEnabled,
+      isDiscrete: isDiscrete,
+    );
+    final radius = Radius.circular(trackRect.height / 2);
+
+    // Inactive full track underneath.
+    final canvas = context.canvas
+      ..drawRRect(
+        RRect.fromRectAndRadius(trackRect, radius),
+        Paint()..color = inactiveColor,
+      );
+
+    // Active segment from the leading edge to the thumb, gradient-filled.
+    final ltr = textDirection == TextDirection.ltr;
+    final activeRect = ltr
+        ? Rect.fromLTRB(
+            trackRect.left,
+            trackRect.top,
+            thumbCenter.dx,
+            trackRect.bottom,
+          )
+        : Rect.fromLTRB(
+            thumbCenter.dx,
+            trackRect.top,
+            trackRect.right,
+            trackRect.bottom,
+          );
+    if (activeRect.width <= 0) return;
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(activeRect, radius),
+      Paint()..shader = gradient.createShader(activeRect),
     );
   }
 }

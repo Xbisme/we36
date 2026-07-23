@@ -3,6 +3,7 @@ import 'package:we36/core/data/api/dev_media_url.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_gradients.dart';
+import 'package:we36/core/theme/app_typography.dart';
 
 enum AvatarRing { none, unseen, seen }
 
@@ -12,6 +13,7 @@ class Avatar extends StatelessWidget {
   const Avatar({
     required this.size,
     this.image,
+    this.initials,
     this.ring = AvatarRing.none,
     this.online = false,
     this.showCreateBadge = false,
@@ -21,6 +23,10 @@ class Avatar extends StatelessWidget {
 
   final double size;
   final ImageProvider<Object>? image;
+
+  /// Shown (on a soft brand gradient) when [image] is null — e.g. the first
+  /// letter of a username. Keeps avatar-less rows from reading as empty.
+  final String? initials;
   final AvatarRing ring;
   final bool online;
   final bool showCreateBadge;
@@ -43,33 +49,48 @@ class Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final tokens = context.tokens;
     final hasRing = ring != AvatarRing.none;
-    final ringPad = hasRing ? 3.0 : 0.0;
+    // Design: ring width & gap scale with the avatar (2px ≤44, 3px ≥56).
+    final ringWidth = size >= 56 ? 3.0 : 2.0;
     final display = _resolvedImage;
 
     Widget core = Container(
       width: size,
       height: size,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: tokens.surface2,
+        // With an image: neutral surface behind it while it loads. Without one:
+        // the design's soft brand gradient (never a flat gray) — Constitution VI.
+        color: display != null ? tokens.surface2 : null,
+        gradient: display == null ? AppGradients.brandSoft : null,
         shape: BoxShape.circle,
         image: display == null
             ? null
             : DecorationImage(image: display, fit: BoxFit.cover),
       ),
+      child: display == null && (initials?.isNotEmpty ?? false)
+          ? Text(
+              initials!,
+              style: AppTypography.stat.copyWith(
+                color: Colors.white,
+                fontSize: size * 0.38,
+                height: 1,
+              ),
+            )
+          : null,
     );
 
     if (hasRing) {
       core = Container(
-        padding: EdgeInsets.all(ringPad),
+        padding: EdgeInsets.all(ringWidth),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           gradient: ring == AvatarRing.unseen ? AppGradients.story : null,
-          color: ring == AvatarRing.seen ? tokens.border : null,
+          color: ring == AvatarRing.seen ? tokens.borderStrong : null,
         ),
         child: Container(
-          padding: const EdgeInsets.all(2),
+          padding: EdgeInsets.all(ringWidth),
           decoration: BoxDecoration(
-            color: tokens.bgApp,
+            color: tokens.surface,
             shape: BoxShape.circle,
           ),
           child: core,
@@ -86,25 +107,29 @@ class Avatar extends StatelessWidget {
           core,
           if (online)
             Positioned(
-              right: 0,
-              bottom: 0,
-              child: _Dot(color: tokens.success, border: tokens.surface),
+              right: hasRing ? ringWidth : 0,
+              bottom: hasRing ? ringWidth : 0,
+              child: _Dot(
+                size: (size * 0.28).clamp(10.0, double.infinity),
+                color: tokens.online,
+                border: tokens.surface,
+              ),
             ),
           if (showCreateBadge)
             Positioned(
               right: -2,
               bottom: -2,
               child: Container(
-                width: size * 0.34,
-                height: size * 0.34,
+                width: 22,
+                height: 22,
                 decoration: BoxDecoration(
                   gradient: AppGradients.brand,
                   shape: BoxShape.circle,
                   border: Border.all(color: tokens.surface, width: 2),
                 ),
-                child: Icon(
+                child: const Icon(
                   AppIcons.plus,
-                  size: size * 0.2,
+                  size: 13,
                   color: Colors.white,
                 ),
               ),
@@ -116,16 +141,17 @@ class Avatar extends StatelessWidget {
 }
 
 class _Dot extends StatelessWidget {
-  const _Dot({required this.color, required this.border});
+  const _Dot({required this.color, required this.border, this.size = 12});
 
   final Color color;
   final Color border;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 12,
-      height: 12,
+      width: size,
+      height: size,
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.circle,

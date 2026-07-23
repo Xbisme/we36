@@ -156,7 +156,7 @@ class _Empty extends StatelessWidget {
     final tokens = context.tokens;
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(AppSpacing.xxl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

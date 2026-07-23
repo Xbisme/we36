@@ -20,6 +20,8 @@ class SidebarRail extends StatelessWidget {
     required this.compact,
     this.profileImage,
     this.profileName,
+    this.profileSubtitle,
+    this.profileActive = false,
     super.key,
   });
 
@@ -29,6 +31,12 @@ class SidebarRail extends StatelessWidget {
   final bool compact;
   final ImageProvider<Object>? profileImage;
   final String? profileName;
+
+  /// Optional secondary line under [profileName] (e.g. the display name).
+  final String? profileSubtitle;
+
+  /// When true, the profile chip's avatar shows the active (brand) ring.
+  final bool profileActive;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +55,9 @@ class SidebarRail extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
-              child: compact ? const Wordmark(fontSize: 18) : const Wordmark(),
+              child: compact
+                  ? const Wordmark(fontSize: 22)
+                  : const Wordmark(fontSize: 28),
             ),
             const SizedBox(height: AppSpacing.sm),
             for (var i = 0; i < items.length; i++)
@@ -66,17 +76,33 @@ class SidebarRail extends StatelessWidget {
                   Avatar(
                     size: 36,
                     image: profileImage,
+                    ring: profileActive ? AvatarRing.unseen : AvatarRing.none,
                     semanticLabel: profileName,
                   ),
                   if (!compact && profileName != null) ...[
                     const SizedBox(width: AppSpacing.sm),
                     Flexible(
-                      child: Text(
-                        profileName!,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTypography.label.copyWith(
-                          color: tokens.textPrimary,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            profileName!,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTypography.label.copyWith(
+                              color: tokens.textPrimary,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          if (profileSubtitle != null)
+                            Text(
+                              profileSubtitle!,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.caption.copyWith(
+                                color: tokens.textSecondary,
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   ],
@@ -134,7 +160,7 @@ class _RailItem extends StatelessWidget {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    AppIcon(item.icon, active: active),
+                    AppIcon(item.icon, size: 26, active: active),
                     if (item.badgeCount != null && item.badgeCount! > 0)
                       Positioned(
                         top: -4,
@@ -150,6 +176,7 @@ class _RailItem extends StatelessWidget {
                       item.label,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.label.copyWith(
+                        fontSize: 16,
                         color: active ? tokens.iconActive : tokens.textPrimary,
                         fontWeight: active ? FontWeight.w700 : FontWeight.w600,
                       ),

@@ -34,14 +34,17 @@ Future<bool> showAppDialog(
               children: [
                 Text(
                   title,
+                  textAlign: TextAlign.center,
                   style: AppTypography.h3.copyWith(
                     color: tokens.textPrimary,
                     fontSize: 19,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   body,
+                  textAlign: TextAlign.center,
                   style: AppTypography.body16.copyWith(
                     color: tokens.textSecondary,
                   ),

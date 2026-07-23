@@ -6,11 +6,11 @@ import 'package:flutter/painting.dart';
 abstract final class AppColors {
   // Brand rose
   static const rose50 = Color(0xFFFFF1F3);
-  static const rose300 = Color(0xFFFF99A8);
+  static const rose300 = Color(0xFFFF94A6);
   static const rose400 = Color(0xFFFF6B82);
   static const rose500 = Color(0xFFFF4E64);
-  static const rose600 = Color(0xFFE63E54);
-  static const rose700 = Color(0xFFCC2E44);
+  static const rose600 = Color(0xFFED3853);
+  static const rose700 = Color(0xFFC72741);
 
   // Accent violet
   static const violet500 = Color(0xFF8B5CF6);
@@ -19,6 +19,7 @@ abstract final class AppColors {
   // Warm / cool accents
   static const amber400 = Color(0xFFFFB627);
   static const mint400 = Color(0xFF2DD4BF);
+  static const mint500 = Color(0xFF16B6A2);
 
   // Neutral
   static const ink = Color(0xFF1A1A2E); // never pure black

@@ -3,12 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:we36/core/data/moderation/report.dart';
 import 'package:we36/core/data/stories/story.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/avatar.dart';
-import 'package:we36/core/presentation/block_report_actions.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
@@ -268,11 +266,14 @@ class _ViewerHeader extends StatelessWidget {
     );
     return Row(
       children: [
-        Avatar(size: 32, semanticLabel: reel.username),
+        Avatar(size: 36, semanticLabel: reel.username),
         const SizedBox(width: AppSpacing.sm),
         Text(
           reel.username,
-          style: AppTypography.label.copyWith(color: Colors.white),
+          style: AppTypography.label.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         const SizedBox(width: AppSpacing.sm),
         Text(
@@ -297,22 +298,6 @@ class _ViewerHeader extends StatelessWidget {
           ),
         ],
         const Spacer(),
-        Semantics(
-          button: true,
-          label: l10n.reportTitle,
-          child: IconButton(
-            icon: const AppIcon(AppIcons.more, color: Colors.white),
-            onPressed: () => unawaited(
-              showBlockReportActions(
-                context,
-                userId: reel.authorId,
-                username: reel.username,
-                reportTargetType: ReportTargetType.story,
-                reportTargetId: segment.id,
-              ),
-            ),
-          ),
-        ),
         Semantics(
           button: true,
           label: l10n.storyClose,
@@ -351,12 +336,18 @@ class _ViewerFooter extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(999),
-                border: Border.all(color: Colors.white54),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  width: 1.5,
+                ),
               ),
               alignment: Alignment.centerLeft,
               child: Text(
                 l10n.storySendMessage,
-                style: AppTypography.body16.copyWith(color: Colors.white70),
+                style: AppTypography.body16.copyWith(
+                  fontSize: 14,
+                  color: Colors.white.withValues(alpha: 0.8),
+                ),
               ),
             ),
           ),

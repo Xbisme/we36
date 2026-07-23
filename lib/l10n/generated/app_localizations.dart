@@ -800,6 +800,12 @@ abstract class AppLocalizations {
   /// **'New post'**
   String get composeTitle;
 
+  /// Create Post edit-step top-bar title (Screen 12)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get composeEditTitle;
+
   /// Advance to the next compose step
   ///
   /// In en, this message translates to:

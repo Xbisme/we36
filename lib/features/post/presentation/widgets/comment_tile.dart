@@ -63,63 +63,38 @@ class CommentTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Avatar(
-                size: isReply ? 28 : 36,
+                size: isReply ? 28 : 34,
                 image: _avatar(comment.author.avatarUrl),
+                initials: name.isEmpty
+                    ? null
+                    : name.characters.first.toUpperCase(),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            name,
-                            style: AppTypography.label.copyWith(
-                              color: tokens.textPrimary,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.sm),
-                        Text(
-                          time.format(comment.createdAt, now: DateTime.now()),
-                          style: AppTypography.caption.copyWith(
-                            color: tokens.textSecondary,
-                          ),
-                        ),
-                      ],
+                    // Name row only — time moves into the meta row (design B7).
+                    Text(
+                      name,
+                      style: AppTypography.label.copyWith(
+                        color: tokens.textPrimary,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 2),
                     CommentText(comment.text),
                     const SizedBox(height: AppSpacing.xs),
-                    Row(
-                      children: [
-                        if (comment.likeCount > 0)
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              right: AppSpacing.md,
-                            ),
-                            child: Text(
+                    // Meta row: `time · N likes · Reply` (gap 16, 12/600, tertiary).
+                    _MetaRow(
+                      time: time.format(comment.createdAt, now: DateTime.now()),
+                      likes: comment.likeCount > 0
+                          ? l10n.feedLikesCount(
                               counts.format(comment.likeCount),
-                              style: AppTypography.caption.copyWith(
-                                color: tokens.textSecondary,
-                              ),
-                            ),
-                          ),
-                        if (!comment.pending)
-                          GestureDetector(
-                            onTap: onReply,
-                            child: Text(
-                              l10n.commentReply,
-                              style: AppTypography.caption.copyWith(
-                                color: tokens.textSecondary,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                      ],
+                            )
+                          : null,
+                      replyLabel: comment.pending ? null : l10n.commentReply,
+                      onReply: onReply,
                     ),
                   ],
                 ),
@@ -145,6 +120,47 @@ class CommentTile extends StatelessWidget {
   }
 }
 
+/// The single meta row under a comment: `time · N likes · Reply` (design B7 —
+/// gap 16, 12px / weight 600, tertiary). Segments render only when present.
+class _MetaRow extends StatelessWidget {
+  const _MetaRow({
+    required this.time,
+    required this.likes,
+    required this.replyLabel,
+    this.onReply,
+  });
+
+  final String time;
+  final String? likes;
+  final String? replyLabel;
+  final VoidCallback? onReply;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = context.tokens;
+    final style = AppTypography.caption.copyWith(
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      color: tokens.textTertiary,
+    );
+    // Wrap (not Row) so the segments reflow instead of overflowing on an
+    // indented reply at large text scales.
+    return Wrap(
+      spacing: AppSpacing.lg,
+      runSpacing: AppSpacing.xs,
+      children: [
+        Text(time, style: style),
+        if (likes != null) Text(likes!, style: style),
+        if (replyLabel != null)
+          GestureDetector(
+            onTap: onReply,
+            child: Text(replyLabel!, style: style),
+          ),
+      ],
+    );
+  }
+}
+
 class _LikeButton extends StatelessWidget {
   const _LikeButton({required this.liked, required this.label, this.onTap});
 
@@ -163,7 +179,7 @@ class _LikeButton extends StatelessWidget {
         visualDensity: VisualDensity.compact,
         icon: AppIcon(
           AppIcons.like,
-          size: 18,
+          size: 15,
           active: liked,
           color: liked ? tokens.accent : null,
         ),

@@ -5,6 +5,8 @@ import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/theme/app_colors.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
+import 'package:we36/core/theme/app_gradients.dart';
+import 'package:we36/core/theme/app_shadows.dart';
 import 'package:we36/core/theme/app_typography.dart';
 
 /// The feed's primary surface: header, 4:5 media, action row, likes, caption,
@@ -65,6 +67,7 @@ class PostCard extends StatelessWidget {
         color: tokens.surface,
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: tokens.border),
+        boxShadow: AppShadows.sm,
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -72,11 +75,22 @@ class PostCard extends StatelessWidget {
         children: [
           // Header
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: const EdgeInsets.symmetric(
+              vertical: AppSpacing.md,
+              horizontal: AppSpacing.lg,
+            ),
             child: Row(
               children: [
-                Avatar(size: 36, image: avatar, semanticLabel: username),
-                const SizedBox(width: AppSpacing.sm),
+                Avatar(
+                  size: 44,
+                  image: avatar,
+                  initials: username.isEmpty
+                      ? null
+                      : username.characters.first.toUpperCase(),
+                  ring: AvatarRing.unseen,
+                  semanticLabel: username,
+                ),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,6 +106,7 @@ class PostCard extends StatelessWidget {
                           location!,
                           style: AppTypography.caption.copyWith(
                             color: tokens.textSecondary,
+                            fontSize: 12,
                           ),
                         ),
                     ],
@@ -100,6 +115,7 @@ class PostCard extends StatelessWidget {
                 AppIconButton(
                   icon: AppIcons.more,
                   semanticLabel: 'More options',
+                  size: AppIconButtonSize.sm,
                   onPressed: onMore,
                 ),
               ],
@@ -112,12 +128,17 @@ class PostCard extends StatelessWidget {
             child: (mediaCarousel != null && mediaCarousel!.length > 1)
                 ? _MediaCarousel(pages: mediaCarousel!)
                 : media == null
-                ? ColoredBox(color: tokens.surface2)
+                ? const DecoratedBox(
+                    decoration: BoxDecoration(gradient: AppGradients.brandSoft),
+                  )
                 : Image(image: media!, fit: BoxFit.cover),
           ),
           // Action row
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.sm,
+            ),
             child: Row(
               children: [
                 AppIconButton(
@@ -152,27 +173,31 @@ class PostCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
-              AppSpacing.md,
+              AppSpacing.lg,
               0,
-              AppSpacing.md,
-              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.lg,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   likesText,
-                  style: AppTypography.stat.copyWith(
+                  // Design: likes use the body face (Inter) bold, not the
+                  // display/stat face.
+                  style: AppTypography.body16.copyWith(
                     color: tokens.textPrimary,
                     fontSize: 14,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 4),
                 RichText(
                   text: TextSpan(
                     style: AppTypography.body16.copyWith(
                       color: tokens.textPrimary,
                       fontSize: 14,
+                      height: 20 / 14,
                     ),
                     children: [
                       TextSpan(
@@ -184,7 +209,7 @@ class PostCard extends StatelessWidget {
                   ),
                 ),
                 if (commentsText != null) ...[
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 6),
                   Text(
                     commentsText!,
                     style: AppTypography.caption.copyWith(
@@ -192,11 +217,14 @@ class PostCard extends StatelessWidget {
                     ),
                   ),
                 ],
-                const SizedBox(height: 2),
+                const SizedBox(height: 6),
+                // Design: timestamp is a small uppercase, wide-tracked label.
                 Text(
-                  timeText,
+                  timeText.toUpperCase(),
                   style: AppTypography.caption.copyWith(
                     color: tokens.textTertiary,
+                    fontSize: 11,
+                    letterSpacing: 0.44,
                   ),
                 ),
               ],

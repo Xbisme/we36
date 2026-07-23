@@ -116,13 +116,12 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('edit page tabs + sliders are labelled ($label)', (
+    testWidgets('edit page sliders are labelled ($label)', (
       tester,
     ) async {
       await compose.startFromAssets(['fake-asset-0']);
       await pump(tester, const EditPage(), mode, 1.3);
-      await tester.tap(find.text('Adjust'));
-      await tester.pump(const Duration(milliseconds: 300));
+      // Filters + sliders are shown stacked (no tabs) — sliders are visible.
       expect(find.byType(AdjustSlider), findsNWidgets(3));
       // Sliders expose a Semantics slider node for screen readers.
       expect(find.byType(Slider), findsNWidgets(3));

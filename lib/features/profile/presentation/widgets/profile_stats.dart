@@ -78,14 +78,20 @@ class _Stat extends StatelessWidget {
                 value,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTypography.h3.copyWith(color: tokens.textPrimary),
+                // Design D1/D2: stat value = display face, 18/w700.
+                style: AppTypography.stat.copyWith(
+                  fontSize: 18,
+                  color: tokens.textPrimary,
+                ),
               ),
               Text(
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+                // Design: 12px label in textSecondary.
                 style: AppTypography.caption.copyWith(
-                  color: tokens.textTertiary,
+                  fontSize: 12,
+                  color: tokens.textSecondary,
                 ),
               ),
             ],

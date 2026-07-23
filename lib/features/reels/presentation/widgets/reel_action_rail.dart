@@ -31,6 +31,9 @@ class ReelActionRail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final counts = CountFormatter(Localizations.localeOf(context).toString());
+    // Design order: like → comment → share (with count) → save (glyph only) →
+    // more, with a 20px vertical rhythm between actions.
+    const gap = SizedBox(height: 20);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -42,29 +45,28 @@ class ReelActionRail extends StatelessWidget {
           onTap: onLike,
           semanticLabel: reel.viewerHasLiked ? 'Unlike' : 'Like',
         ),
-        const SizedBox(height: AppSpacing.lg),
+        gap,
         _RailButton(
           icon: AppIcons.comment,
           label: counts.format(reel.commentCount),
           onTap: onComment,
           semanticLabel: 'Comments',
         ),
-        const SizedBox(height: AppSpacing.lg),
+        gap,
+        _RailButton(
+          icon: AppIcons.share,
+          label: counts.format(reel.saveCount),
+          onTap: onShare,
+          semanticLabel: 'Share',
+        ),
+        gap,
         _RailButton(
           icon: AppIcons.save,
-          label: counts.format(reel.saveCount),
           active: reel.viewerHasSaved,
           onTap: onSave,
           semanticLabel: reel.viewerHasSaved ? 'Remove from saved' : 'Save',
         ),
-        const SizedBox(height: AppSpacing.lg),
-        _RailButton(
-          icon: AppIcons.share,
-          label: 'Share',
-          onTap: onShare,
-          semanticLabel: 'Share',
-        ),
-        const SizedBox(height: AppSpacing.lg),
+        gap,
         _RailButton(
           icon: AppIcons.more,
           onTap: onMore,
@@ -115,7 +117,11 @@ class _RailButton extends StatelessWidget {
               const SizedBox(height: AppSpacing.xs),
               Text(
                 label!,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ],

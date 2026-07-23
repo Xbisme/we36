@@ -53,7 +53,7 @@ class DiscoveryGridTile extends StatelessWidget {
                 const Positioned(
                   top: 6,
                   right: 6,
-                  child: AppIcon(AppIcons.reels, size: 16, color: Colors.white),
+                  child: AppIcon(AppIcons.reels, size: 18, color: Colors.white),
                 ),
             ],
           ),

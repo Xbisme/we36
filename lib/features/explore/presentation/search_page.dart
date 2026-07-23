@@ -133,7 +133,6 @@ class _SearchPageState extends State<SearchPage> {
                         },
                         onSelect: _cubit.changeTab,
                       ),
-                      Divider(height: 1, color: tokens.divider),
                       Expanded(
                         child: _ResultsBody(state: state, page: this),
                       ),
@@ -166,15 +165,18 @@ class _ResultsBody extends StatelessWidget {
         hasMore: state.hasMore,
         loadingMore: state.loadingMore,
         onLoadMore: page._cubit.loadMore,
-        itemBuilder: (a) =>
-            AccountResultRow(result: a, onTap: () => page._openAccount(a)),
+        itemBuilder: (a, i) => AccountResultRow(
+          result: a,
+          first: i == 0,
+          onTap: () => page._openAccount(a),
+        ),
       ),
       SearchTab.tags => _TypedList<HashtagResult>(
         items: state.tags,
         hasMore: state.hasMore,
         loadingMore: state.loadingMore,
         onLoadMore: page._cubit.loadMore,
-        itemBuilder: (h) =>
+        itemBuilder: (h, _) =>
             HashtagResultRow(result: h, onTap: () => page._openHashtag(h.tag)),
       ),
       SearchTab.places => _TypedList<PlaceResult>(
@@ -182,7 +184,7 @@ class _ResultsBody extends StatelessWidget {
         hasMore: state.hasMore,
         loadingMore: state.loadingMore,
         onLoadMore: page._cubit.loadMore,
-        itemBuilder: (p) =>
+        itemBuilder: (p, _) =>
             PlaceResultRow(result: p, onTap: () => page._openPlace(p)),
       ),
     };
@@ -212,8 +214,12 @@ class _TopView extends StatelessWidget {
             title: l10n.searchTabAccounts,
             onSeeMore: () => page._cubit.changeTab(SearchTab.accounts),
           ),
-          for (final a in top.accounts)
-            AccountResultRow(result: a, onTap: () => page._openAccount(a)),
+          for (final (i, a) in top.accounts.indexed)
+            AccountResultRow(
+              result: a,
+              first: i == 0,
+              onTap: () => page._openAccount(a),
+            ),
         ],
         if (top.hashtags.isNotEmpty) ...[
           _SectionHeader(
@@ -249,7 +255,7 @@ class _TypedList<T> extends StatelessWidget {
   final bool hasMore;
   final bool loadingMore;
   final VoidCallback onLoadMore;
-  final Widget Function(T) itemBuilder;
+  final Widget Function(T, int) itemBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +280,7 @@ class _TypedList<T> extends StatelessWidget {
               child: Center(child: CircularProgressIndicator()),
             );
           }
-          return itemBuilder(items[i]);
+          return itemBuilder(items[i], i);
         },
       ),
     );

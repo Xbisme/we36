@@ -73,7 +73,7 @@ class _FollowListPageState extends State<FollowListPage> {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          '@${widget.username}',
+          widget.username,
           style: AppTypography.h3.copyWith(color: tokens.textPrimary),
         ),
       ),
@@ -190,8 +190,9 @@ class _Tab extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
+              // Design D3: inactive tab in textSecondary (not textTertiary).
               style: AppTypography.label.copyWith(
-                color: selected ? tokens.textPrimary : tokens.textTertiary,
+                color: selected ? tokens.textPrimary : tokens.textSecondary,
               ),
             ),
           ),

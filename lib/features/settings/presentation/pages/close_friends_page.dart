@@ -100,7 +100,12 @@ class _CloseFriendsPageState extends State<CloseFriendsPage> {
             AppLoaded(:final data) => ListView(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg,
+                    AppSpacing.md,
+                    AppSpacing.lg,
+                    AppSpacing.sm,
+                  ),
                   child: Text(
                     l10n.closeFriendsSubtitle,
                     style: AppTypography.caption.copyWith(
@@ -110,7 +115,7 @@ class _CloseFriendsPageState extends State<CloseFriendsPage> {
                 ),
                 if (data.isEmpty)
                   Padding(
-                    padding: const EdgeInsets.all(32),
+                    padding: const EdgeInsets.all(AppSpacing.xxl),
                     child: Text(
                       l10n.closeFriendsEmptyBody,
                       style: AppTypography.body16.copyWith(
@@ -163,7 +168,7 @@ class _AddPicker extends StatelessWidget {
             ),
             if (candidates.isEmpty)
               Padding(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(AppSpacing.xl),
                 child: Text(
                   l10n.closeFriendsPickerEmpty,
                   style: AppTypography.body16.copyWith(

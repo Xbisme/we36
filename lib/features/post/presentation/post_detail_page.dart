@@ -14,6 +14,7 @@ import 'package:we36/core/presentation/action_sheet.dart';
 import 'package:we36/core/presentation/app_button.dart';
 import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
+import 'package:we36/core/presentation/app_icon_button.dart';
 import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/presentation/post_card.dart';
 import 'package:we36/core/presentation/report_sheet.dart';
@@ -42,7 +43,20 @@ class PostDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.tokens.bgApp,
-      appBar: TopBar(title: context.l10n.postTitle),
+      // Design B6: back chevron + trailing "more" (opens the post action sheet).
+      appBar: TopBar(
+        title: context.l10n.postTitle,
+        onBack: () => Navigator.of(context).maybePop(),
+        actions: [
+          AppIconButton(
+            icon: AppIcons.more,
+            semanticLabel: MaterialLocalizations.of(
+              context,
+            ).moreButtonTooltip,
+            onPressed: () => unawaited(_showPostActions(context)),
+          ),
+        ],
+      ),
       body: SafeArea(
         top: false,
         child: BlocBuilder<CommentsCubit, CommentsState>(
@@ -57,6 +71,43 @@ class PostDetailPage extends StatelessWidget {
       ),
     );
   }
+}
+
+/// The post-level overflow sheet (design B6 TopBar "more"): share to a DM or
+/// report the post. Reuses the shared `showAppActionSheet` + existing launchers.
+Future<void> _showPostActions(BuildContext context) async {
+  final post = context.read<CommentsCubit>().state.post;
+  if (post == null) return;
+  final l10n = context.l10n;
+  await showAppActionSheet(
+    context,
+    cancelLabel: l10n.commentActionsCancel,
+    items: [
+      ActionSheetItem(
+        icon: AppIcons.share,
+        label: l10n.actionShare,
+        onTap: () => getIt<MessagingLauncher>().shareToDm(
+          context,
+          PostRef(
+            id: post.id,
+            kind: PostKind.post,
+            authorName: post.author.username,
+          ),
+        ),
+      ),
+      ActionSheetItem(
+        icon: AppIcons.report,
+        label: l10n.reportTitle,
+        onTap: () => unawaited(
+          showReportSheet(
+            context,
+            targetType: ReportTargetType.post,
+            targetId: post.id,
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
 class _ErrorState extends StatelessWidget {

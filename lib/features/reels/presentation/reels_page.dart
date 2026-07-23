@@ -6,9 +6,11 @@ import 'package:we36/core/constants/app_breakpoints.dart';
 import 'package:we36/core/data/reels/reel.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
+import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_colors.dart';
 import 'package:we36/core/theme/app_dimens.dart';
+import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 import 'package:we36/features/post/presentation/widgets/comment_text.dart';
 import 'package:we36/features/reels/presentation/cubit/reels_cubit.dart';
@@ -237,6 +239,32 @@ class _ReelOverlay extends StatelessWidget {
     return SafeArea(
       child: Stack(
         children: [
+          // Top bar: "Reels" title (display face) + camera shortcut (FR design).
+          const Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 18,
+                left: AppSpacing.lg,
+                right: AppSpacing.lg,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    'Reels',
+                    style: TextStyle(
+                      fontFamily: AppTypography.display,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Spacer(),
+                  AppIcon(AppIcons.camera, color: Colors.white),
+                ],
+              ),
+            ),
+          ),
           if (reel.isProcessing)
             const Align(
               alignment: Alignment.topLeft,
@@ -250,7 +278,7 @@ class _ReelOverlay extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(
                 right: AppSpacing.md,
-                bottom: AppSpacing.xl,
+                bottom: 40,
               ),
               child: ReelActionRail(
                 reel: reel,
@@ -286,13 +314,19 @@ class _ReelOverlay extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        Avatar(
+                          size: 36,
+                          image: reel.author.avatarUrl == null
+                              ? null
+                              : NetworkImage(reel.author.avatarUrl!),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
                         Text(
-                          '@${reel.author.username ?? 'someone'}',
+                          reel.author.username ?? 'someone',
                           style: const TextStyle(
                             color: Colors.white,
-                            fontFamily: 'PlusJakartaSans',
-                            fontWeight: FontWeight.w800,
-                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
                           ),
                         ),
                         if (!_isOwn) ...[

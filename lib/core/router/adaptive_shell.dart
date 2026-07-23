@@ -104,6 +104,7 @@ class AdaptiveShell extends StatelessWidget {
             currentIndex: _index,
             compact: mode.railCompact,
             profileName: 'you',
+            profileActive: _index == NavDestination.profile.index,
             onSelect: (i) {
               if (i < NavDestination.values.length) {
                 _goBranch(i);

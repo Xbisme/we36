@@ -6,6 +6,7 @@ import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/sticker_tray.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
+import 'package:we36/core/theme/app_gradients.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 
@@ -79,12 +80,30 @@ class _ChatComposerState extends State<ChatComposer> {
             top: false,
             child: Row(
               children: [
-                if (widget.onPickPhoto != null)
-                  IconButton(
-                    onPressed: widget.onPickPhoto,
-                    icon: AppIcon(AppIcons.camera, color: tokens.icon),
-                    tooltip: l10n.dmPhoto,
+                if (widget.onPickPhoto != null) ...[
+                  Semantics(
+                    button: true,
+                    label: l10n.dmPhoto,
+                    child: GestureDetector(
+                      onTap: widget.onPickPhoto,
+                      child: Container(
+                        width: 38,
+                        height: 38,
+                        decoration: const BoxDecoration(
+                          gradient: AppGradients.brand,
+                          shape: BoxShape.circle,
+                        ),
+                        alignment: Alignment.center,
+                        child: AppIcon(
+                          AppIcons.camera,
+                          size: 20,
+                          color: tokens.textOnBrand,
+                        ),
+                      ),
+                    ),
                   ),
+                  const SizedBox(width: AppSpacing.sm),
+                ],
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -134,9 +153,11 @@ class _ChatComposerState extends State<ChatComposer> {
                     ),
                   ),
                 ),
+                // Idle action is a like/heart affordance (Screen E2); it still
+                // sends any typed text.
                 IconButton(
                   onPressed: _send,
-                  icon: AppIcon(AppIcons.share, color: tokens.accent),
+                  icon: AppIcon(AppIcons.like, color: tokens.icon),
                   tooltip: l10n.dmNewMessage,
                 ),
               ],

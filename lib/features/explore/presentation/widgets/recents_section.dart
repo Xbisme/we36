@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:we36/core/data/discovery/search_recent.dart';
@@ -6,6 +7,7 @@ import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
+import 'package:we36/core/utils/count_formatter.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 import 'package:we36/features/explore/presentation/cubit/recents_cubit.dart';
 import 'package:we36/features/explore/presentation/cubit/recents_state.dart';
@@ -50,7 +52,7 @@ class RecentsSection extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.lg,
                 AppSpacing.md,
-                AppSpacing.sm,
+                AppSpacing.lg,
                 AppSpacing.xs,
               ),
               child: Row(
@@ -63,9 +65,21 @@ class RecentsSection extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  TextButton(
-                    onPressed: cubit.clearAll,
-                    child: Text(l10n.recentClearAll),
+                  // Inline accent text action (not a Material TextButton) —
+                  // matches explore.jsx C2's lightweight "Clear all".
+                  GestureDetector(
+                    onTap: cubit.clearAll,
+                    behavior: HitTestBehavior.opaque,
+                    child: Semantics(
+                      button: true,
+                      child: Text(
+                        l10n.recentClearAll,
+                        style: AppTypography.caption.copyWith(
+                          color: tokens.accent,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -127,12 +141,26 @@ class _RecentRow extends StatelessWidget {
               _leading(context),
               const SizedBox(width: AppSpacing.md),
               Expanded(
-                child: Text(
-                  _title,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.label.copyWith(
-                    color: tokens.textPrimary,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _title,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.label.copyWith(
+                        color: tokens.textPrimary,
+                        fontSize: 15,
+                      ),
+                    ),
+                    if (_subtitle(context) case final sub?)
+                      Text(
+                        sub,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.caption.copyWith(
+                          color: tokens.textSecondary,
+                        ),
+                      ),
+                  ],
                 ),
               ),
               IconButton(
@@ -153,9 +181,20 @@ class _RecentRow extends StatelessWidget {
 
   String get _title => switch (recent.type) {
     SearchRecentType.term => recent.term ?? '',
-    SearchRecentType.account => '@${recent.account?.username ?? ''}',
+    SearchRecentType.account => recent.account?.username ?? '',
     SearchRecentType.hashtag => '#${recent.hashtag?.tag ?? ''}',
     SearchRecentType.place => recent.place?.name ?? '',
+  };
+
+  /// Secondary line: display name (account), post count (hashtag). Terms and
+  /// places carry no secondary text (explore.jsx C2).
+  String? _subtitle(BuildContext context) => switch (recent.type) {
+    SearchRecentType.account => recent.account?.displayName,
+    SearchRecentType.hashtag =>
+      recent.hashtag == null
+          ? null
+          : '${CountFormatter(Localizations.localeOf(context).toString()).format(recent.hashtag!.postCount)} ${context.l10n.postsLabel}',
+    SearchRecentType.term || SearchRecentType.place => null,
   };
 
   String _label(BuildContext context) => _title;
@@ -164,7 +203,13 @@ class _RecentRow extends StatelessWidget {
     final tokens = context.tokens;
     switch (recent.type) {
       case SearchRecentType.account:
-        return const Avatar(size: 36);
+        final avatarUrl = recent.account?.avatarUrl;
+        return Avatar(
+          size: 44,
+          image: avatarUrl == null
+              ? null
+              : CachedNetworkImageProvider(avatarUrl),
+        );
       case SearchRecentType.term:
         return _circle(
           tokens.surface2,
@@ -184,8 +229,8 @@ class _RecentRow extends StatelessWidget {
   }
 
   Widget _circle(Color bg, Widget child) => Container(
-    width: 36,
-    height: 36,
+    width: 44,
+    height: 44,
     alignment: Alignment.center,
     decoration: BoxDecoration(color: bg, shape: BoxShape.circle),
     child: child,

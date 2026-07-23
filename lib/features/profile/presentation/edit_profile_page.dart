@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_dialog.dart';
 import 'package:we36/core/presentation/app_icon.dart';
-import 'package:we36/core/presentation/app_text_field.dart';
 import 'package:we36/core/presentation/avatar.dart';
+import 'package:we36/core/presentation/settings_section_header.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/services/photo_library_service.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
@@ -173,11 +173,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final l10n = context.l10n;
     final cubit = context.read<EditProfileCubit>();
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.zero,
       children: [
         Center(
           child: Column(
             children: [
+              const SizedBox(height: AppSpacing.xl),
               Stack(
                 alignment: Alignment.center,
                 children: [
@@ -204,42 +205,158 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     : () => unawaited(_changePhoto()),
                 child: Text(l10n.editChangePhoto),
               ),
+              const SizedBox(height: AppSpacing.sm),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.md),
-        AppTextField(
+        // Design D4: table-style rows (fixed left label + inline field).
+        _EditRow(
           label: l10n.editName,
-          controller: _name,
-          onChanged: cubit.updateDisplayName,
+          child: _fieldInput(
+            context,
+            controller: _name,
+            onChanged: cubit.updateDisplayName,
+          ),
         ),
-        const SizedBox(height: AppSpacing.md),
-        AppTextField(
+        _EditRow(
           label: l10n.editUsername,
-          controller: _username,
           errorText: _usernameError(state, l10n),
-          onChanged: (v) => unawaited(cubit.updateUsername(v)),
+          child: _fieldInput(
+            context,
+            controller: _username,
+            onChanged: (v) => unawaited(cubit.updateUsername(v)),
+          ),
         ),
-        const SizedBox(height: AppSpacing.md),
-        AppTextField(
+        _EditRow(
           label: l10n.editPronouns,
-          controller: _pronouns,
-          onChanged: cubit.updatePronouns,
+          child: _fieldInput(
+            context,
+            controller: _pronouns,
+            onChanged: cubit.updatePronouns,
+          ),
         ),
-        const SizedBox(height: AppSpacing.md),
-        AppTextField(
+        _EditRow(
           label: l10n.editWebsite,
-          controller: _website,
-          keyboardType: TextInputType.url,
-          onChanged: cubit.updateWebsite,
+          child: _fieldInput(
+            context,
+            controller: _website,
+            keyboardType: TextInputType.url,
+            onChanged: cubit.updateWebsite,
+          ),
         ),
-        const SizedBox(height: AppSpacing.md),
-        AppTextField(
+        _EditRow(
           label: l10n.editBio,
-          controller: _bio,
-          onChanged: cubit.updateBio,
+          child: _fieldInput(
+            context,
+            controller: _bio,
+            onChanged: cubit.updateBio,
+          ),
+        ),
+        // Professional section (design D4). Static placeholders — no server
+        // fields wired yet; copy is not localized pending l10n keys.
+        const SettingsSectionHeader('Professional'),
+        const _EditRow(
+          label: 'Category',
+          child: _PlaceholderValue('Photography'),
+        ),
+        const _EditRow(
+          label: 'Contact',
+          child: _PlaceholderValue('Email · Phone'),
         ),
       ],
+    );
+  }
+
+  /// A bare, borderless inline input sized for the table rows (design D4).
+  Widget _fieldInput(
+    BuildContext context, {
+    required TextEditingController controller,
+    ValueChanged<String>? onChanged,
+    TextInputType? keyboardType,
+  }) {
+    final tokens = context.tokens;
+    return TextField(
+      controller: controller,
+      onChanged: onChanged,
+      keyboardType: keyboardType,
+      style: AppTypography.body16.copyWith(
+        fontSize: 15,
+        color: tokens.textPrimary,
+      ),
+      decoration: const InputDecoration.collapsed(hintText: ''),
+    );
+  }
+}
+
+/// One edit-profile table row (design D4): a fixed 96px left label and the
+/// value/field on the right, closed by a 1px divider. Optional [errorText]
+/// renders beneath the field.
+class _EditRow extends StatelessWidget {
+  const _EditRow({required this.label, required this.child, this.errorText});
+
+  final String label;
+  final Widget child;
+  final String? errorText;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = context.tokens;
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: tokens.divider)),
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 96,
+                child: Text(
+                  label,
+                  style: AppTypography.label.copyWith(
+                    color: tokens.textSecondary,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(child: child),
+            ],
+          ),
+          if (errorText != null) ...[
+            const SizedBox(height: AppSpacing.xs),
+            Padding(
+              padding: const EdgeInsets.only(left: 96 + AppSpacing.md),
+              child: Text(
+                errorText!,
+                style: AppTypography.caption.copyWith(color: tokens.error),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// A non-editable placeholder value shown in a table row (design D4).
+class _PlaceholderValue extends StatelessWidget {
+  const _PlaceholderValue(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: AppTypography.body16.copyWith(
+        fontSize: 15,
+        color: context.tokens.textTertiary,
+      ),
     );
   }
 }

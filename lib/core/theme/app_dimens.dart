@@ -17,7 +17,7 @@ abstract final class AppSpacing {
   static const double tapTarget = 44;
 
   /// Centered content max widths on wide layouts.
-  static const double feedMaxWidth = 560;
+  static const double feedMaxWidth = 470;
   static const double profileMaxWidth = 900;
   static const double notificationsMaxWidth = 620;
 }

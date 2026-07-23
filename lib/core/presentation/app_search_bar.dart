@@ -34,14 +34,14 @@ class AppSearchBar extends StatelessWidget {
       label: hint,
       child: Container(
         height: 44,
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
         decoration: BoxDecoration(
           color: tokens.surface2,
           borderRadius: BorderRadius.circular(AppRadius.full),
         ),
         child: Row(
           children: [
-            AppIcon(AppIcons.search, size: 20, color: tokens.textTertiary),
+            AppIcon(AppIcons.search, size: 18, color: tokens.textTertiary),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: readOnly

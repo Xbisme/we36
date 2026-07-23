@@ -203,8 +203,12 @@ class _TopBar extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              '@$username',
-              style: AppTypography.h3.copyWith(color: tokens.textPrimary),
+              username,
+              // Design D1: display face, 18/w700 (no leading '@').
+              style: AppTypography.stat.copyWith(
+                fontSize: 18,
+                color: tokens.textPrimary,
+              ),
             ),
           ),
           AppIconButton(

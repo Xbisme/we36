@@ -17,7 +17,10 @@ void main() {
           diEnvironment: 'fake',
         ),
       );
-      await tester.pumpAndSettle();
+      // The splash shows a perpetual loading spinner (design), so pumpAndSettle
+      // never settles — pump a bounded couple of frames instead.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
       expect(find.byType(We36App), findsOneWidget);
     },
   );

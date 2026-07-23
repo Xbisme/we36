@@ -7,6 +7,7 @@ import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/domain/app_failure_messages.dart';
 import 'package:we36/core/presentation/app_button.dart';
+import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_text_field.dart';
 import 'package:we36/core/presentation/toast.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
@@ -149,6 +150,25 @@ class _EmailStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // Rose "recovery" tile (design-specific 64 / radius-20).
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Container(
+            width: 64,
+            height: 64,
+            alignment: Alignment.center,
+            margin: const EdgeInsets.only(bottom: AppSpacing.lg),
+            decoration: BoxDecoration(
+              color: tokens.accentSoft,
+              borderRadius: BorderRadius.circular(AppRadius.lg),
+            ),
+            child: AppIcon(
+              AppIcons.notification,
+              size: 30,
+              color: tokens.accent,
+            ),
+          ),
+        ),
         Text(l10n.authForgotTitle, style: AppTypography.h1),
         const SizedBox(height: AppSpacing.sm),
         Text(

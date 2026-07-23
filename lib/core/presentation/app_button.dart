@@ -9,7 +9,7 @@ import 'package:we36/core/theme/app_typography.dart';
 
 enum AppButtonKind { primary, secondary, ghost }
 
-enum AppButtonSize { sm, md }
+enum AppButtonSize { sm, md, lg }
 
 /// The We36 button: gradient pill (primary), bordered pill (secondary), or
 /// transparent (ghost). Press = scale 0.97. Constitution VI.
@@ -39,8 +39,13 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final tokens = context.tokens;
     final disabled = onPressed == null;
-    final height = size == AppButtonSize.sm ? 36.0 : 48.0;
-    final hPad = size == AppButtonSize.sm ? AppSpacing.lg : AppSpacing.xl;
+    // Design SIZES (_ds Button): sm 36/14px pad/font14/icon16 · md 44/20/15/18
+    // · lg 52/28/16/20.
+    final (height, hPad, fontSize, iconSize) = switch (size) {
+      AppButtonSize.sm => (36.0, 14.0, 14.0, 16.0),
+      AppButtonSize.md => (44.0, 20.0, 15.0, 18.0),
+      AppButtonSize.lg => (52.0, 28.0, 16.0, 20.0),
+    };
 
     final isPrimary = kind == AppButtonKind.primary;
     final fg = switch (kind) {
@@ -54,7 +59,7 @@ class AppButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (leadingIcon != null) ...[
-          AppIcon(leadingIcon!, size: 18, color: fg),
+          AppIcon(leadingIcon!, size: iconSize, color: fg),
           const SizedBox(width: AppSpacing.sm),
         ],
         Flexible(
@@ -64,14 +69,14 @@ class AppButton extends StatelessWidget {
             softWrap: false,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: AppTypography.label.copyWith(color: fg),
+            style: AppTypography.label.copyWith(color: fg, fontSize: fontSize),
           ),
         ),
       ],
     );
 
     return Opacity(
-      opacity: disabled ? 0.5 : 1,
+      opacity: disabled ? 0.45 : 1,
       child: Pressable(
         onTap: onPressed,
         child: Semantics(
@@ -87,14 +92,16 @@ class AppButton extends StatelessWidget {
               gradient: isPrimary && !danger ? AppGradients.brand : null,
               color: switch (kind) {
                 AppButtonKind.primary => danger ? tokens.error : null,
-                AppButtonKind.secondary => tokens.surface2,
+                AppButtonKind.secondary => tokens.surface,
                 AppButtonKind.ghost => Colors.transparent,
               },
               borderRadius: BorderRadius.circular(AppRadius.full),
               border: kind == AppButtonKind.secondary
-                  ? Border.all(color: tokens.border)
+                  ? Border.all(color: tokens.borderStrong)
                   : null,
-              boxShadow: isPrimary && !disabled ? AppShadows.brand : null,
+              // Design: primary rests on shadow-sm; the heavier brand glow is a
+              // hover-only affordance (no hover on touch).
+              boxShadow: isPrimary && !disabled ? AppShadows.sm : null,
             ),
             child: content,
           ),

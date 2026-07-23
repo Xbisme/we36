@@ -51,6 +51,7 @@ class NotificationTile extends StatelessWidget {
             image: actor?.avatarUrl == null
                 ? null
                 : NetworkImage(actor!.avatarUrl!),
+            initials: name.isEmpty ? null : name.characters.first.toUpperCase(),
             semanticLabel: name,
           ),
           const SizedBox(width: AppSpacing.md),

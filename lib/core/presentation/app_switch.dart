@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
+import 'package:we36/core/theme/app_gradients.dart';
 import 'package:we36/core/theme/app_motion.dart';
+import 'package:we36/core/theme/app_shadows.dart';
 
 /// Pill switch with a spring knob; on = accent. Constitution VI.
 class AppSwitch extends StatelessWidget {
@@ -32,7 +34,8 @@ class AppSwitch extends StatelessWidget {
           height: 28,
           padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
-            color: value ? tokens.accent : tokens.border,
+            gradient: value ? AppGradients.brand : null,
+            color: value ? null : tokens.borderStrong,
             borderRadius: BorderRadius.circular(9999),
           ),
           child: AnimatedAlign(
@@ -42,9 +45,10 @@ class AppSwitch extends StatelessWidget {
             child: Container(
               width: 22,
               height: 22,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
+                boxShadow: AppShadows.sm,
               ),
             ),
           ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
-import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
 
 /// 6-box numeric OTP entry (Group A · Screen 5 — design delta: 6 boxes, not 4).
@@ -49,19 +48,24 @@ class _OtpInputState extends State<OtpInput> {
               children: List.generate(widget.length, (i) {
                 final filled = i < text.length;
                 return Container(
-                  width: 48,
-                  height: 56,
+                  width: 52,
+                  height: 60,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: tokens.surface,
-                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    // Design-specific OTP box radius (14).
+                    borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: filled ? tokens.accent : tokens.border,
+                      width: 2,
                     ),
                   ),
                   child: Text(
                     filled ? text[i] : '',
-                    style: AppTypography.h2.copyWith(color: tokens.textPrimary),
+                    style: AppTypography.h2.copyWith(
+                      color: tokens.textPrimary,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 );
               }),

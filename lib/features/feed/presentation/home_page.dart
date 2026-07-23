@@ -11,6 +11,7 @@ import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/domain/app_state.dart';
 import 'package:we36/core/domain/result.dart';
 import 'package:we36/core/presentation/action_sheet.dart';
+import 'package:we36/core/presentation/app_badge.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_icon_button.dart';
 import 'package:we36/core/presentation/max_width_box.dart';
@@ -71,7 +72,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final tokens = context.tokens;
     return SafeArea(
       child: Column(
         children: [
@@ -102,11 +102,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   _ => RefreshIndicator(
                     onRefresh: context.read<FeedCubit>().refresh,
-                    child: _FeedList(
-                      scroll: _scroll,
-                      state: state,
-                      dividerColor: tokens.divider,
-                    ),
+                    child: _FeedList(scroll: _scroll, state: state),
                   ),
                 },
               ),
@@ -122,54 +118,73 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return SizedBox(
-      height: 52,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-        child: Row(
-          children: [
-            const Wordmark(fontSize: 24),
-            const Spacer(),
-            // Contextual Create entry — a menu to compose a post / reel / story
-            // (#007/#008/#005). Create is contextual, not a tab (Constitution VI).
-            AppIconButton(
-              icon: AppIcons.plus,
-              semanticLabel: l10n.navCreate,
-              onPressed: () => unawaited(_showCreateMenu(context)),
-            ),
-            // Activity (Notifications, #013) — opens the Activity screen; the
-            // unread badge streams from the core `NotificationsBadge` seam
-            // (core→core, no features import; guarded for a minimal DI).
-            StreamBuilder<int>(
-              stream: getIt.isRegistered<NotificationsBadge>()
-                  ? getIt<NotificationsBadge>().unreadCount
-                  : null,
-              initialData: 0,
-              builder: (context, snap) {
-                final unread = snap.data ?? 0;
-                return AppIconButton(
-                  icon: AppIcons.notification,
-                  semanticLabel: l10n.feedActivity,
-                  badgeCount: unread > 0 ? unread : null,
-                  onPressed: () =>
-                      unawaited(context.push(AppRoutes.notifications)),
-                );
-              },
-            ),
-            // Messages stays an inert placeholder here — the real Messages tab
-            // (#012) owns the conversation surface + its own badge.
-            AppIconButton(
-              icon: AppIcons.messages,
-              semanticLabel: l10n.feedMessages,
-            ),
-          ],
+    final tokens = context.tokens;
+    // Design B1: 52px header on a `surface` plate with a 1px bottom divider so
+    // it reads as chrome above the `bgApp` feed (not blended into it).
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: tokens.surface,
+        border: Border(bottom: BorderSide(color: tokens.divider)),
+      ),
+      child: SizedBox(
+        height: 52,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          child: Row(
+            children: [
+              const Wordmark(fontSize: 24),
+              const Spacer(),
+              // Contextual Create entry — a menu to compose a post / reel /
+              // story (#005/#007/#008). Create is contextual, not a tab
+              // (Constitution VI); on phone it lives as the header's `+`.
+              AppIconButton(
+                icon: AppIcons.plus,
+                semanticLabel: l10n.navCreate,
+                onPressed: () => unawaited(_showCreateMenu(context)),
+              ),
+              // Activity (Notifications, #013) — opens the Activity screen; an
+              // unread state renders as a plain rose dot (design B1), never a
+              // numeric badge. Streams from the core `NotificationsBadge` seam
+              // (core→core, no features import; guarded for a minimal DI).
+              StreamBuilder<int>(
+                stream: getIt.isRegistered<NotificationsBadge>()
+                    ? getIt<NotificationsBadge>().unreadCount
+                    : null,
+                initialData: 0,
+                builder: (context, snap) {
+                  final unread = snap.data ?? 0;
+                  final button = AppIconButton(
+                    icon: AppIcons.notification,
+                    semanticLabel: l10n.feedActivity,
+                    onPressed: () =>
+                        unawaited(context.push(AppRoutes.notifications)),
+                  );
+                  if (unread == 0) return button;
+                  return Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    children: [
+                      button,
+                      const Positioned(top: 8, right: 6, child: AppBadge()),
+                    ],
+                  );
+                },
+              ),
+              // Messages stays an inert placeholder here — the real Messages tab
+              // (#012) owns the conversation surface + its own badge.
+              AppIconButton(
+                icon: AppIcons.messages,
+                semanticLabel: l10n.feedMessages,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-/// The contextual Create menu — choose what to compose (post / reel / story).
+/// Contextual create menu (post / reel / story) opened from the home header.
 Future<void> _showCreateMenu(BuildContext context) {
   final l10n = context.l10n;
   return showAppActionSheet(
@@ -196,15 +211,10 @@ Future<void> _showCreateMenu(BuildContext context) {
 }
 
 class _FeedList extends StatelessWidget {
-  const _FeedList({
-    required this.scroll,
-    required this.state,
-    required this.dividerColor,
-  });
+  const _FeedList({required this.scroll, required this.state});
 
   final ScrollController scroll;
   final FeedState state;
-  final Color dividerColor;
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +225,7 @@ class _FeedList extends StatelessWidget {
       itemCount: posts.length + 2,
       itemBuilder: (context, i) {
         if (i == 0) {
-          return _StoriesRailSlot(dividerColor: dividerColor);
+          return const _StoriesRailSlot();
         }
         if (i == posts.length + 1) {
           return _Footer(state: state);
@@ -230,8 +240,7 @@ class _FeedList extends StatelessWidget {
 /// tapping opens the story viewer at the tapped account. "Your story" with no
 /// active segments is inert (FR-017).
 class _StoriesRailSlot extends StatelessWidget {
-  const _StoriesRailSlot({required this.dividerColor});
-  final Color dividerColor;
+  const _StoriesRailSlot();
 
   @override
   Widget build(BuildContext context) {
@@ -244,41 +253,39 @@ class _StoriesRailSlot extends StatelessWidget {
           for (final r in reels)
             StoryItem(
               label: r.isYou ? l10n.yourStory : r.username,
+              image: r.avatarUrl == null || !r.avatarUrl!.startsWith('http')
+                  ? null
+                  : CachedNetworkImageProvider(r.avatarUrl!),
               seen: !r.hasUnseen,
               isYou: r.isYou,
             ),
         ];
-        return Column(
-          children: [
-            StoriesRail(
-              items: items,
-              onTap: (i) {
-                final reel = reels[i];
-                // "Your story" with no active segments → open the composer (#005).
-                if (reel.isYou && reel.segments.isEmpty) {
-                  unawaited(context.push(AppRoutes.storyComposePick));
-                  return;
-                }
-                if (reel.segments.isEmpty) return; // inert (no active story)
-                final openable = reels
-                    .where((r) => r.segments.isNotEmpty)
-                    .toList();
-                final start = openable.indexWhere(
-                  (r) => r.authorId == reel.authorId,
-                );
-                unawaited(
-                  context.push(
-                    AppRoutes.storyViewer,
-                    extra: StoryViewerArgs(
-                      reels: openable,
-                      startIndex: start < 0 ? 0 : start,
-                    ),
-                  ),
-                );
-              },
-            ),
-            Divider(height: 1, color: dividerColor),
-          ],
+        // StoriesRail renders its own `surface` plate + bottom divider, so no
+        // extra Divider is added here (avoids a doubled 2px seam under the rail).
+        return StoriesRail(
+          items: items,
+          onTap: (i) {
+            final reel = reels[i];
+            // "Your story" with no active segments → open the composer (#005).
+            if (reel.isYou && reel.segments.isEmpty) {
+              unawaited(context.push(AppRoutes.storyComposePick));
+              return;
+            }
+            if (reel.segments.isEmpty) return; // inert (no active story)
+            final openable = reels.where((r) => r.segments.isNotEmpty).toList();
+            final start = openable.indexWhere(
+              (r) => r.authorId == reel.authorId,
+            );
+            unawaited(
+              context.push(
+                AppRoutes.storyViewer,
+                extra: StoryViewerArgs(
+                  reels: openable,
+                  startIndex: start < 0 ? 0 : start,
+                ),
+              ),
+            );
+          },
         );
       },
     );
@@ -344,8 +351,9 @@ class _PostTile extends StatelessWidget {
     final cubit = context.read<FeedCubit>();
 
     return Padding(
+      // Design B1 feed gutter: 8px horizontal (`12px 8px 0`).
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
+        horizontal: AppSpacing.sm,
         vertical: AppSpacing.md,
       ),
       child: PostCard(

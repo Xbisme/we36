@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:we36/core/data/stories/story.dart';
+import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/pressable.dart';
-import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
@@ -53,7 +53,9 @@ class _Pill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tokens = context.tokens;
+    // Both pills stay translucent white on the media (Constitution VI — no
+    // solid brand fill here). Selection reads as a brighter scrim + a leading
+    // check, not a rose block.
     return Pressable(
       onTap: onTap,
       child: Semantics(
@@ -66,17 +68,24 @@ class _Pill extends StatelessWidget {
             vertical: AppSpacing.sm,
           ),
           decoration: BoxDecoration(
-            color: selected
-                ? tokens.accent
-                : Colors.white.withValues(alpha: 0.18),
+            color: Colors.white.withValues(alpha: selected ? 0.32 : 0.18),
             borderRadius: BorderRadius.circular(AppRadius.full),
           ),
-          child: Text(
-            label,
-            style: AppTypography.label.copyWith(
-              color: Colors.white,
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (selected) ...[
+                const AppIcon(AppIcons.check, size: 16, color: Colors.white),
+                const SizedBox(width: AppSpacing.xs),
+              ],
+              Text(
+                label,
+                style: AppTypography.label.copyWith(
+                  color: Colors.white,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
       ),

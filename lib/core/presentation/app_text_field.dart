@@ -44,32 +44,56 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   late bool _obscured = widget.obscure;
+  late final FocusNode _focus = FocusNode()..addListener(_onFocusChange);
+  bool _focused = false;
+
+  void _onFocusChange() {
+    if (_focus.hasFocus != _focused) {
+      setState(() => _focused = _focus.hasFocus);
+    }
+  }
+
+  @override
+  void dispose() {
+    _focus
+      ..removeListener(_onFocusChange)
+      ..dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final tokens = context.tokens;
     final hasError = widget.errorText != null;
+    final borderColor = hasError
+        ? tokens.error
+        : _focused
+        ? tokens.accent
+        : tokens.borderStrong;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.label,
-          style: AppTypography.label.copyWith(color: tokens.textSecondary),
+          style: AppTypography.label.copyWith(color: tokens.textPrimary),
         ),
         const SizedBox(height: AppSpacing.sm),
         Container(
           decoration: BoxDecoration(
             color: tokens.surface,
             borderRadius: BorderRadius.circular(AppRadius.md),
-            border: Border.all(
-              color: hasError ? tokens.error : tokens.border,
-            ),
+            border: Border.all(color: borderColor, width: 1.5),
+            // Design: 4px accent-soft glow ring while focused.
+            boxShadow: _focused && !hasError
+                ? [BoxShadow(color: tokens.accentSoft, spreadRadius: 4)]
+                : null,
           ),
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           child: Row(
             children: [
               Expanded(
                 child: TextField(
+                  focusNode: _focus,
                   controller: widget.controller,
                   obscureText: _obscured,
                   enabled: widget.enabled,

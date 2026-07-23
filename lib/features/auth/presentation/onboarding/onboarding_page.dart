@@ -6,9 +6,12 @@ import 'package:go_router/go_router.dart';
 import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_button.dart';
+import 'package:we36/core/presentation/app_icon.dart';
+import 'package:we36/core/theme/app_colors.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_gradients.dart';
+import 'package:we36/core/theme/app_shadows.dart';
 import 'package:we36/core/theme/app_typography.dart';
 import 'package:we36/core/utils/l10n_extension.dart';
 import 'package:we36/features/auth/presentation/onboarding/onboarding_cubit.dart';
@@ -50,7 +53,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
             backgroundColor: tokens.bgApp,
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.lg),
+                // Design outer gutter: 24 horizontal, small top, roomy bottom.
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.xl,
+                  AppSpacing.sm,
+                  AppSpacing.xl,
+                  AppSpacing.xl,
+                ),
                 child: Column(
                   children: [
                     Align(
@@ -114,15 +123,35 @@ class _Slide extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // Photo card (design-specific 240×300 / radius-24). Brand gradient
+        // stands in for the hero image until media assets land.
         Container(
-          height: 260,
+          width: 240,
+          height: 300,
           margin: const EdgeInsets.only(bottom: AppSpacing.xxl),
           decoration: BoxDecoration(
             gradient: AppGradients.brand,
-            borderRadius: BorderRadius.circular(AppRadius.lg),
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: AppShadows.lg,
+          ),
+          child: const Stack(
+            children: [
+              Positioned(
+                left: AppSpacing.md,
+                bottom: AppSpacing.md,
+                child: _FloatingPill(),
+              ),
+            ],
           ),
         ),
-        Text(title, style: AppTypography.h1, textAlign: TextAlign.center),
+        Text(
+          title,
+          style: AppTypography.h2.copyWith(
+            fontSize: 26,
+            fontWeight: FontWeight.w800,
+          ),
+          textAlign: TextAlign.center,
+        ),
         const SizedBox(height: AppSpacing.sm),
         Text(
           body,
@@ -130,6 +159,40 @@ class _Slide extends StatelessWidget {
           style: AppTypography.body16.copyWith(color: tokens.textSecondary),
         ),
       ],
+    );
+  }
+}
+
+/// Floating glass pill on the hero card ("reels · stories · feed"). Sits on the
+/// media card, so it uses a fixed white/ink pairing regardless of theme.
+class _FloatingPill extends StatelessWidget {
+  const _FloatingPill();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.92),
+        borderRadius: BorderRadius.circular(AppRadius.full),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const AppIcon(AppIcons.camera, size: 14, color: AppColors.ink),
+          const SizedBox(width: AppSpacing.xs),
+          Text(
+            'reels · stories · feed',
+            style: AppTypography.label.copyWith(
+              fontSize: 12,
+              color: AppColors.ink,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -150,11 +213,11 @@ class _Dots extends StatelessWidget {
         return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           margin: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
-          width: isActive ? 24 : 8,
+          width: isActive ? 22 : 8,
           height: 8,
           decoration: BoxDecoration(
             gradient: isActive ? AppGradients.brand : null,
-            color: isActive ? null : tokens.border,
+            color: isActive ? null : tokens.borderStrong,
             borderRadius: BorderRadius.circular(AppRadius.full),
           ),
         );

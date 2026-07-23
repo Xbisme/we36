@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:we36/core/constants/app_breakpoints.dart';
+import 'package:we36/core/presentation/top_bar.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 
 /// Reusable master/detail primitive (FR-014). On tablet width it renders the
@@ -86,7 +87,10 @@ class _TwoPaneScaffoldState<T> extends State<TwoPaneScaffold<T>> {
       Navigator.of(context).push(
         MaterialPageRoute<void>(
           builder: (context) => Scaffold(
-            appBar: AppBar(title: Text(widget.detailTitle(item))),
+            appBar: TopBar(
+              title: widget.detailTitle(item),
+              onBack: () => Navigator.of(context).pop(),
+            ),
             body: widget.detailBuilder(context, item),
           ),
         ),

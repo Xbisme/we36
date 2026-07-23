@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/domain/app_failure_messages.dart';
 import 'package:we36/core/presentation/app_button.dart';
-import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_text_field.dart';
 import 'package:we36/core/presentation/toast.dart';
+import 'package:we36/core/presentation/top_bar.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
 import 'package:we36/core/theme/app_typography.dart';
@@ -55,15 +55,10 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       create: (_) => getIt<ProfileSetupCubit>(),
       child: Scaffold(
         backgroundColor: tokens.bgApp,
-        appBar: AppBar(
-          backgroundColor: tokens.bgApp,
-          elevation: 0,
-          // Back = abandon registration → sign out → router returns to Sign in.
-          leading: IconButton(
-            icon: AppIcon(AppIcons.back, color: tokens.textPrimary),
-            onPressed: () => unawaited(getIt<SignOut>().call()),
-            tooltip: context.l10n.authSignOut,
-          ),
+        // Back = abandon registration → sign out → router returns to Sign in.
+        appBar: TopBar(
+          title: context.l10n.authProfileSetupTitle,
+          onBack: () => unawaited(getIt<SignOut>().call()),
         ),
         body: SafeArea(
           child: BlocConsumer<ProfileSetupCubit, ProfileSetupState>(
@@ -91,8 +86,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: AppSpacing.xl),
-                    Text(l10n.authProfileSetupTitle, style: AppTypography.h1),
-                    const SizedBox(height: AppSpacing.sm),
+                    // Title lives in the TopBar; this line frames the fields.
                     Text(
                       l10n.authProfileSetupSubtitle,
                       style: AppTypography.body16.copyWith(
@@ -122,12 +116,11 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                       enabled: !state.submitting,
                     ),
                     const SizedBox(height: AppSpacing.lg),
-                    AppTextField(
+                    _BioField(
                       label: l10n.authBioLabel,
-                      controller: _bio,
                       hint: l10n.authBioHint,
+                      controller: _bio,
                       enabled: !state.submitting,
-                      inputFormatters: [LengthLimitingTextInputFormatter(150)],
                     ),
                     const SizedBox(height: AppSpacing.xxl),
                     AppButton(
@@ -153,6 +146,94 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         displayName: _displayName.text,
         bio: _bio.text,
       ),
+    );
+  }
+}
+
+/// Multiline bio input (design A6: min-height ~76). Mirrors [AppTextField]'s
+/// bordered, focus-ring styling — the shared atom is single-line only, so this
+/// local variant covers the multiline case without touching core.
+class _BioField extends StatefulWidget {
+  const _BioField({
+    required this.label,
+    required this.hint,
+    required this.controller,
+    required this.enabled,
+  });
+
+  final String label;
+  final String hint;
+  final TextEditingController controller;
+  final bool enabled;
+
+  @override
+  State<_BioField> createState() => _BioFieldState();
+}
+
+class _BioFieldState extends State<_BioField> {
+  late final FocusNode _focus = FocusNode()..addListener(_onFocusChange);
+  bool _focused = false;
+
+  void _onFocusChange() {
+    if (_focus.hasFocus != _focused) {
+      setState(() => _focused = _focus.hasFocus);
+    }
+  }
+
+  @override
+  void dispose() {
+    _focus
+      ..removeListener(_onFocusChange)
+      ..dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = context.tokens;
+    final borderColor = _focused ? tokens.accent : tokens.borderStrong;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.label,
+          style: AppTypography.label.copyWith(color: tokens.textPrimary),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Container(
+          decoration: BoxDecoration(
+            color: tokens.surface,
+            borderRadius: BorderRadius.circular(AppRadius.md),
+            border: Border.all(color: borderColor, width: 1.5),
+            boxShadow: _focused
+                ? [BoxShadow(color: tokens.accentSoft, spreadRadius: 4)]
+                : null,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+          child: TextField(
+            focusNode: _focus,
+            controller: widget.controller,
+            enabled: widget.enabled,
+            minLines: 3,
+            maxLines: 6,
+            keyboardType: TextInputType.multiline,
+            textAlignVertical: TextAlignVertical.top,
+            inputFormatters: [LengthLimitingTextInputFormatter(150)],
+            style: AppTypography.body16.copyWith(color: tokens.textPrimary),
+            decoration: InputDecoration(
+              isDense: true,
+              border: InputBorder.none,
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: AppSpacing.md,
+              ),
+              hintText: widget.hint,
+              hintStyle: AppTypography.body16.copyWith(
+                color: tokens.textTertiary,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

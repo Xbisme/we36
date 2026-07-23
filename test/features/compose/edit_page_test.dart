@@ -96,16 +96,14 @@ void main() {
     expect(find.byType(ColorFiltered), findsWidgets);
   });
 
-  testWidgets('adjust tab exposes sliders that mutate the edit', (
+  testWidgets('adjust sliders (always visible) mutate the edit', (
     tester,
   ) async {
     await compose.startFromAssets(['fake-asset-0']);
     await tester.pumpWidget(host(const EditPage()));
     await settle(tester);
 
-    await tester.tap(find.text('Adjust'));
-    await settle(tester);
-
+    // Sliders are stacked below the filter strip (no tabs) — always present.
     expect(find.byType(AdjustSlider), findsNWidgets(3));
     await tester.drag(find.byType(Slider).first, const Offset(60, 0));
     await settle(tester);

@@ -21,6 +21,7 @@ import 'package:we36/features/compose/presentation/cubit/compose_cubit.dart';
 import 'package:we36/features/compose/presentation/cubit/gallery_cubit.dart';
 import 'package:we36/features/compose/presentation/pages/caption_page.dart';
 import 'package:we36/features/compose/presentation/pages/pick_page.dart';
+import 'package:we36/features/compose/presentation/widgets/gallery_grid.dart';
 import 'package:we36/features/compose/presentation/widgets/selection_badge.dart';
 import 'package:we36/l10n/generated/app_localizations.dart';
 
@@ -96,7 +97,15 @@ void main() {
     expect(find.byType(SelectionBadge), findsWidgets); // a badge per cell
     expect(find.text('1'), findsNothing); // nothing selected yet
 
-    await tester.tap(find.byType(Image).first);
+    // Tap a grid cell (not the hero preview, which sits above the grid).
+    await tester.tap(
+      find
+          .descendant(
+            of: find.byType(GalleryGrid),
+            matching: find.byType(Image),
+          )
+          .first,
+    );
     await settle(tester);
 
     // One selected cell now carries a "1" order badge.

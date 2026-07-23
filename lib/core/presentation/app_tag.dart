@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:we36/core/presentation/pressable.dart';
-import 'package:we36/core/theme/app_colors.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
-import 'package:we36/core/theme/app_gradients.dart';
 import 'package:we36/core/theme/app_typography.dart';
 
-/// Pill chip. `active` fills with the brand gradient; `hashtag` prefixes a
-/// violet `#` glyph. Constitution VI.
+/// Pill chip. `active` = soft-rose fill with an accent border and accent text;
+/// inactive = neutral surface with secondary text. `hashtag` prefixes a `#`
+/// glyph. Constitution VI.
 class AppTag extends StatelessWidget {
   const AppTag({
     required this.label,
@@ -25,21 +24,19 @@ class AppTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tokens = context.tokens;
-    final fg = active ? tokens.textOnBrand : tokens.textPrimary;
+    final fg = active ? tokens.accent : tokens.textSecondary;
     return Pressable(
       onTap: onTap,
       child: Semantics(
         button: onTap != null,
         label: label,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.sm,
-          ),
+          height: 32,
+          padding: const EdgeInsets.symmetric(horizontal: 14),
           decoration: BoxDecoration(
-            gradient: active ? AppGradients.brand : null,
-            color: active ? null : tokens.surface2,
+            color: active ? tokens.accentSoft : tokens.surface2,
             borderRadius: BorderRadius.circular(AppRadius.full),
+            border: active ? Border.all(color: tokens.accent) : null,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -48,7 +45,7 @@ class AppTag extends StatelessWidget {
                 Text(
                   '#',
                   style: AppTypography.label.copyWith(
-                    color: active ? fg : AppColors.violet500,
+                    color: active ? tokens.accent : tokens.textTertiary,
                   ),
                 ),
               Text(label, style: AppTypography.label.copyWith(color: fg)),

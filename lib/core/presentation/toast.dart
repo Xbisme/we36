@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/theme/app_colors.dart';
 import 'package:we36/core/theme/app_dimens.dart';
+import 'package:we36/core/theme/app_shadows.dart';
 import 'package:we36/core/theme/app_typography.dart';
 
 enum ToastTone { success, info, error, neutral }
@@ -55,11 +57,18 @@ class _ToastView extends StatelessWidget {
   final String? actionLabel;
   final VoidCallback? onAction;
 
-  Color get _dotColor => switch (tone) {
+  Color get _markColor => switch (tone) {
     ToastTone.success => AppColors.mint400,
     ToastTone.info => AppColors.violet500,
     ToastTone.error => AppColors.rose500,
     ToastTone.neutral => AppColors.gray400,
+  };
+
+  IconData get _markIcon => switch (tone) {
+    ToastTone.success => AppIcons.check,
+    ToastTone.info => AppIcons.notification,
+    ToastTone.error => AppIcons.close,
+    ToastTone.neutral => AppIcons.check,
   };
 
   @override
@@ -82,17 +91,20 @@ class _ToastView extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.ink,
                 borderRadius: BorderRadius.circular(AppRadius.full),
+                boxShadow: AppShadows.lg,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    width: 10,
-                    height: 10,
+                    width: 28,
+                    height: 28,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: _dotColor,
+                      color: _markColor,
                       shape: BoxShape.circle,
                     ),
+                    child: AppIcon(_markIcon, size: 16, color: Colors.white),
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Flexible(

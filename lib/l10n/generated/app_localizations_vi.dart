@@ -375,6 +375,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get composeTitle => 'Bài viết mới';
 
   @override
+  String get composeEditTitle => 'Chỉnh sửa';
+
+  @override
   String get composeNext => 'Tiếp';
 
   @override

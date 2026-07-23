@@ -42,7 +42,8 @@ void main() {
 
     expect(find.byType(ConversationTile), findsNWidgets(2));
     expect(find.text('Ava Nguyen'), findsWidgets);
-    expect(find.text('See you tomorrow!'), findsOneWidget);
+    // Preview now inlines the timestamp: "{last message} · {time}".
+    expect(find.textContaining('See you tomorrow!'), findsOneWidget);
     // The new-message (+) action is present.
     expect(find.bySemanticsLabel('New message'), findsOneWidget);
   });

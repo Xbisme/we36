@@ -80,6 +80,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
                 icon: AppIcons.lock,
                 label: l10n.settingsPrivateAccount,
                 description: l10n.settingsPrivateAccountDesc,
+                tone: SettingsRowTone.rose,
                 trailing: SettingsRowTrailing.toggle,
                 switchValue: settings.isPrivate,
                 onSwitchChanged: (v) => cubit.setPrivate(value: v),

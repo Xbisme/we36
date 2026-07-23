@@ -39,6 +39,8 @@ Future<void> showBlockReportActions(
             context,
             targetType: reportTargetType,
             targetId: reportTargetId ?? userId,
+            blockUsername: username,
+            onBlock: () => confirmAndBlock(context, userId, username),
           ),
         ),
       ),

@@ -68,56 +68,84 @@ class _SignUpPageState extends State<SignUpPage> {
                 _ => const <String, String>{},
               };
 
-              return SingleChildScrollView(
-                padding: const EdgeInsets.all(AppSpacing.xl),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: AppSpacing.xxl),
-                    Text(l10n.authSignUpTitle, style: AppTypography.h1),
-                    const SizedBox(height: AppSpacing.xxl),
-                    AppTextField(
-                      label: l10n.authEmailLabel,
-                      controller: _email,
-                      hint: l10n.authEmailHint,
-                      errorText: fields.containsKey('email')
-                          ? l10n.authEmailInvalid
-                          : null,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      autofillHints: const [AutofillHints.email],
-                      enabled: !submitting,
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    AppTextField(
-                      label: l10n.authPasswordLabel,
-                      controller: _password,
-                      errorText: fields.containsKey('password')
-                          ? l10n.authPasswordTooShort
-                          : null,
-                      obscure: true,
-                      textInputAction: TextInputAction.done,
-                      autofillHints: const [AutofillHints.newPassword],
-                      enabled: !submitting,
-                      onSubmitted: (_) => _submit(context),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      l10n.authSignUpTerms,
-                      style: AppTypography.caption.copyWith(
-                        color: tokens.textTertiary,
+              return Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(AppSpacing.xl),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const SizedBox(height: AppSpacing.xxl),
+                          Text(
+                            l10n.authSignUpTitle,
+                            style: AppTypography.h2.copyWith(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          // Design subtitle (no dedicated l10n key yet — English copy).
+                          Text(
+                            'Join the community in a minute.',
+                            style: AppTypography.body16.copyWith(
+                              color: tokens.textSecondary,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xxl),
+                          AppTextField(
+                            label: l10n.authEmailLabel,
+                            controller: _email,
+                            hint: l10n.authEmailHint,
+                            errorText: fields.containsKey('email')
+                                ? l10n.authEmailInvalid
+                                : null,
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            autofillHints: const [AutofillHints.email],
+                            enabled: !submitting,
+                          ),
+                          const SizedBox(height: AppSpacing.lg),
+                          AppTextField(
+                            label: l10n.authPasswordLabel,
+                            controller: _password,
+                            errorText: fields.containsKey('password')
+                                ? l10n.authPasswordTooShort
+                                : null,
+                            obscure: true,
+                            textInputAction: TextInputAction.done,
+                            autofillHints: const [AutofillHints.newPassword],
+                            enabled: !submitting,
+                            onSubmitted: (_) => _submit(context),
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          Text(
+                            l10n.authSignUpTerms,
+                            style: AppTypography.caption.copyWith(
+                              color: tokens.textTertiary,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.lg),
+                          AppButton(
+                            label: l10n.authSignUpCta,
+                            fullWidth: true,
+                            onPressed: submitting
+                                ? null
+                                : () => _submit(context),
+                          ),
+                          const SizedBox(height: AppSpacing.xl),
+                          const OAuthButtons(),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.lg),
-                    AppButton(
-                      label: l10n.authSignUpCta,
-                      fullWidth: true,
-                      onPressed: submitting ? null : () => _submit(context),
+                  ),
+                  // Pinned footer bar with a hairline top divider (design A4).
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(top: BorderSide(color: tokens.divider)),
                     ),
-                    const SizedBox(height: AppSpacing.xl),
-                    const OAuthButtons(),
-                    const SizedBox(height: AppSpacing.xl),
-                    Row(
+                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -143,8 +171,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
           ),

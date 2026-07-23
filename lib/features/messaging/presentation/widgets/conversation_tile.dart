@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:we36/core/data/messaging/conversation.dart';
+import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
@@ -32,6 +33,11 @@ class ConversationTile extends StatelessWidget {
     final name = c.participant.displayName ?? c.participant.username ?? '';
     final unread = c.hasUnread;
     final avatarUrl = c.participant.avatarUrl;
+    final previewBody = c.isTyping
+        ? l10n.dmTyping
+        : (c.lastMessagePreview ?? '');
+    // Time is inline in the preview line: "{msg} · {time}".
+    final preview = '$previewBody · ${_time.format(c.lastActivityAt)}';
 
     return Semantics(
       button: true,
@@ -50,9 +56,12 @@ class ConversationTile extends StatelessWidget {
             child: Row(
               children: [
                 Avatar(
-                  size: 56,
+                  size: 52,
                   online: c.participantOnline,
                   image: avatarUrl == null ? null : NetworkImage(avatarUrl),
+                  initials: name.isEmpty
+                      ? null
+                      : name.characters.first.toUpperCase(),
                   semanticLabel: name,
                 ),
                 const SizedBox(width: AppSpacing.md),
@@ -73,14 +82,14 @@ class ConversationTile extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        c.isTyping
-                            ? l10n.dmTyping
-                            : (c.lastMessagePreview ?? ''),
+                        preview,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.caption.copyWith(
                           color: c.isTyping
-                              ? tokens.success
+                              ? tokens.statusActive
+                              : unread
+                              ? tokens.textPrimary
                               : tokens.textSecondary,
                           fontWeight: unread
                               ? FontWeight.w600
@@ -91,27 +100,18 @@ class ConversationTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      _time.format(c.lastActivityAt),
-                      style: AppTypography.caption.copyWith(
-                        color: tokens.textTertiary,
-                      ),
+                // Trailing: a small rose unread dot, else a camera affordance.
+                if (unread)
+                  Container(
+                    width: 9,
+                    height: 9,
+                    decoration: BoxDecoration(
+                      color: tokens.accent,
+                      shape: BoxShape.circle,
                     ),
-                    const SizedBox(height: 6),
-                    if (unread)
-                      Container(
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: tokens.accent,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                  ],
-                ),
+                  )
+                else
+                  AppIcon(AppIcons.camera, size: 22, color: tokens.icon),
               ],
             ),
           ),

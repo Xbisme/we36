@@ -377,6 +377,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get composeTitle => 'New post';
 
   @override
+  String get composeEditTitle => 'Edit';
+
+  @override
   String get composeNext => 'Next';
 
   @override

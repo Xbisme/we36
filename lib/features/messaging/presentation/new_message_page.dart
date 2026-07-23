@@ -9,7 +9,6 @@ import 'package:we36/core/data/messaging/message.dart' show PostRef;
 import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/app_icon_button.dart';
-import 'package:we36/core/presentation/app_search_bar.dart';
 import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
 import 'package:we36/core/theme/app_dimens.dart';
@@ -69,45 +68,102 @@ class _NewMessageView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                AppIconButton(
-                  icon: AppIcons.close,
-                  semanticLabel: MaterialLocalizations.of(
-                    context,
-                  ).closeButtonTooltip,
-                  onPressed: () => Navigator.of(context).maybePop(),
-                ),
-                Expanded(
-                  child: Text(
-                    l10n.dmNewMessage,
-                    style: AppTypography.label.copyWith(
-                      color: tokens.textPrimary,
-                    ),
+            // Header: close + title, closed by a bottom divider.
+            DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: tokens.divider)),
+              ),
+              child: SizedBox(
+                height: 52,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                  ),
+                  child: Row(
+                    children: [
+                      AppIconButton(
+                        icon: AppIcons.close,
+                        semanticLabel: MaterialLocalizations.of(
+                          context,
+                        ).closeButtonTooltip,
+                        onPressed: () => Navigator.of(context).maybePop(),
+                      ),
+                      const SizedBox(width: AppSpacing.xs),
+                      Expanded(
+                        child: Text(
+                          l10n.dmNewMessage,
+                          style: AppTypography.h3.copyWith(
+                            color: tokens.textPrimary,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 48),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 48),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.lg,
-                vertical: AppSpacing.sm,
-              ),
-              child: AppSearchBar(
-                hint: l10n.dmTo,
-                autofocus: true,
-                onChanged: (q) => context.read<NewMessageCubit>().search(q),
               ),
             ),
+            // Flat inline "To:" recipient field with a bottom divider.
+            DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: tokens.divider)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
+                  vertical: AppSpacing.md,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      l10n.dmTo,
+                      style: AppTypography.label.copyWith(
+                        color: tokens.textSecondary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: TextField(
+                        autofocus: true,
+                        onChanged: (q) =>
+                            context.read<NewMessageCubit>().search(q),
+                        style: AppTypography.label.copyWith(
+                          color: tokens.textPrimary,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        decoration: InputDecoration(
+                          isDense: true,
+                          border: InputBorder.none,
+                          hintText: l10n.dmSearchConversations,
+                          hintStyle: AppTypography.label.copyWith(
+                            color: tokens.textTertiary,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                AppSpacing.md,
+                AppSpacing.lg,
+                AppSpacing.xs,
+              ),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  l10n.dmSuggested,
+                  l10n.dmSuggested.toUpperCase(),
                   style: AppTypography.caption.copyWith(
                     color: tokens.textSecondary,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 13 * 0.03,
                   ),
                 ),
               ),
@@ -182,7 +238,7 @@ class _PersonRow extends StatelessWidget {
           child: Row(
             children: [
               Avatar(
-                size: 44,
+                size: 48,
                 image: avatarUrl == null ? null : NetworkImage(avatarUrl),
                 semanticLabel: name,
               ),
@@ -195,16 +251,27 @@ class _PersonRow extends StatelessWidget {
                       name,
                       style: AppTypography.label.copyWith(
                         color: tokens.textPrimary,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     if (user.username != null)
                       Text(
-                        '@${user.username}',
+                        user.username!,
                         style: AppTypography.caption.copyWith(
-                          color: tokens.textTertiary,
+                          color: tokens.textSecondary,
                         ),
                       ),
                   ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              // Empty selector circle (unselected recipient).
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: tokens.borderStrong, width: 2),
                 ),
               ),
             ],

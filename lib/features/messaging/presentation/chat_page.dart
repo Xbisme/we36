@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:we36/core/constants/app_routes.dart';
 import 'package:we36/core/data/messaging/conversation.dart';
 import 'package:we36/core/data/messaging/message.dart';
@@ -136,17 +137,23 @@ class _ChatHeader extends StatelessWidget {
                   name,
                   style: AppTypography.label.copyWith(
                     color: tokens.textPrimary,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 if (online)
                   Text(
                     l10n.dmActiveNow,
                     style: AppTypography.caption.copyWith(
-                      color: tokens.success,
+                      color: tokens.statusActive,
                     ),
                   ),
               ],
             ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: AppIcon(AppIcons.camera, color: tokens.icon),
+            tooltip: l10n.dmPhoto,
           ),
           if (peer != null)
             IconButton(
@@ -157,7 +164,7 @@ class _ChatHeader extends StatelessWidget {
                   username: peer.username ?? peer.id,
                 ),
               ),
-              icon: AppIcon(AppIcons.more, color: tokens.textPrimary),
+              icon: AppIcon(AppIcons.more, color: tokens.icon),
               tooltip: l10n.reportTitle,
             ),
         ],
@@ -211,12 +218,18 @@ class _Thread extends StatelessWidget {
         ),
       );
     }
+    // A single centered date/time separator opens the thread (Screen E2).
+    final separatorAt = messages.isNotEmpty
+        ? messages.first.createdAt
+        : DateTime.now();
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-      itemCount: messages.length + (peerTyping ? 1 : 0),
+      itemCount: 1 + messages.length + (peerTyping ? 1 : 0),
       itemBuilder: (context, i) {
-        if (i == messages.length) return const TypingIndicator();
-        final m = messages[i];
+        if (i == 0) return _DateSeparator(time: separatorAt);
+        final index = i - 1;
+        if (index == messages.length) return const TypingIndicator();
+        final m = messages[index];
         return MessageBubble(
           message: m,
           onRetry: () => context.read<ChatCubit>().retry(m.clientKey),
@@ -225,6 +238,34 @@ class _Thread extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// A centered, muted date/time marker separating the thread by day (Screen E2).
+class _DateSeparator extends StatelessWidget {
+  const _DateSeparator({required this.time});
+
+  final DateTime time;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = context.tokens;
+    final locale = Localizations.localeOf(context).toString();
+    final label =
+        '${DateFormat.MMMd(locale).format(time)} '
+        '${DateFormat.jm(locale).format(time)}';
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Center(
+        child: Text(
+          label,
+          style: AppTypography.caption.copyWith(
+            color: tokens.textTertiary,
+            fontSize: 12,
+          ),
+        ),
+      ),
     );
   }
 }

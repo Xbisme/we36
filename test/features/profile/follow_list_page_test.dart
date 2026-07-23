@@ -38,7 +38,9 @@ AccountRow _row(String username, {required bool following}) => AccountRow(
   user: UserSummary(
     id: 'u_$username',
     username: username,
-    displayName: username,
+    // Distinct from the handle: the row shows the bare handle over the real
+    // name (design D3), so a distinct name avoids a duplicate-text match.
+    displayName: username.replaceAll('_', ' '),
     isVerified: false,
   ),
   relationship: ViewerRelationship(
@@ -88,7 +90,7 @@ void main() {
     expect(find.text('Following'), findsOneWidget); // the tab label
     expect(find.byType(AppSearchBar), findsOneWidget);
     expect(find.byType(AccountRowTile), findsNWidgets(2));
-    expect(find.text('@bob_makes'), findsOneWidget);
+    expect(find.text('bob_makes'), findsOneWidget);
     expect(find.text('Follow'), findsNWidgets(2)); // both row controls
   });
 

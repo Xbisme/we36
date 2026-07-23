@@ -152,7 +152,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          '@${widget.username}',
+          widget.username,
           style: AppTypography.h3.copyWith(color: tokens.textPrimary),
         ),
         actions: [
@@ -191,6 +191,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: ProfileHeader(
               view: view,
+              showInlineHandle: true,
               onTapFollowers: view.canOpenConnections
                   ? () => unawaited(
                       context.push(
@@ -242,6 +243,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                             ),
                           ),
                         ),
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      // Design D2: trailing 44px options control alongside
+                      // Follow + Message (opens the block/report action sheet).
+                      AppIconButton(
+                        icon: AppIcons.more,
+                        semanticLabel: l10n.profileReport,
+                        onPressed: _showMore,
                       ),
                     ],
                   ),

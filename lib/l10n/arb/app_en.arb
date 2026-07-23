@@ -265,6 +265,8 @@
 
   "composeTitle": "New post",
   "@composeTitle": { "description": "Create Post flow top-bar title (Screens 11–13)" },
+  "composeEditTitle": "Edit",
+  "@composeEditTitle": { "description": "Create Post edit-step top-bar title (Screen 12)" },
   "composeNext": "Next",
   "@composeNext": { "description": "Advance to the next compose step" },
   "composeShare": "Share",

@@ -41,7 +41,7 @@ class AccountRowTile extends StatelessWidget {
         child: Row(
           children: [
             Avatar(
-              size: 44,
+              size: 48,
               image: u.avatarUrl == null ? null : NetworkImage(u.avatarUrl!),
               semanticLabel: u.displayName,
             ),
@@ -50,30 +50,39 @@ class AccountRowTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Design D3: bare handle (15/w600) over the real name.
                   Text(
-                    '@$username',
+                    username,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTypography.label.copyWith(
+                      fontSize: 15,
                       color: tokens.textPrimary,
                     ),
                   ),
                   if (u.displayName != null)
                     Text(
                       u.displayName!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTypography.caption.copyWith(
-                        color: tokens.textTertiary,
+                        color: tokens.textSecondary,
                       ),
                     ),
                 ],
               ),
             ),
             const SizedBox(width: AppSpacing.sm),
-            FollowButton(
-              relationship: row.relationship,
-              username: username,
-              busy: busy,
-              onFollow: onFollow,
-              onUnfollow: onUnfollow,
-              onWithdraw: onUnfollow,
+            ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: 96),
+              child: FollowButton(
+                relationship: row.relationship,
+                username: username,
+                busy: busy,
+                onFollow: onFollow,
+                onUnfollow: onUnfollow,
+                onWithdraw: onUnfollow,
+              ),
             ),
           ],
         ),

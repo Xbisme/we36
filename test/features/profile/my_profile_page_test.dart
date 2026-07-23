@@ -85,7 +85,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 50));
 
     expect(find.text('You'), findsOneWidget);
-    expect(find.text('@demo'), findsWidgets);
+    expect(find.text('demo'), findsWidgets);
     expect(find.byType(ProfileStats), findsOneWidget);
     expect(find.byType(ProfileGrid), findsOneWidget);
     // Own profile shows Edit profile, never a Follow control (FR-012).

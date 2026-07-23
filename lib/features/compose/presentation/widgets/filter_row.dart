@@ -87,17 +87,17 @@ class _FilterChip extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 60,
-              height: 60,
+              width: 64,
+              height: 64,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.sm),
+                borderRadius: BorderRadius.circular(AppRadius.md),
                 border: Border.all(
                   color: selected ? tokens.accent : tokens.border,
                   width: selected ? 2 : 1,
                 ),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppRadius.sm - 1),
+                borderRadius: BorderRadius.circular(AppRadius.md - 1),
                 child: ColorFiltered(
                   colorFilter: ColorFilter.matrix(
                     FilterMatrices.forPreset(preset),
