@@ -1,0 +1,61 @@
+/* We36 — Typography tokens
+   Heading/logo: Plus Jakarta Sans (characterful sans)
+   Body: Inter (highly readable) */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Families */
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Weights */
+  --fw-regular: 400;   /* @kind font */
+  --fw-medium: 500;    /* @kind font */
+  --fw-semibold: 600;  /* @kind font */
+  --fw-bold: 700;      /* @kind font */
+  --fw-extrabold: 800; /* @kind font */
+
+  /* Type scale — size / line-height / weight bundled as helpers */
+  --text-display-size: 44px;
+  --text-display-lh: 52px;
+  --text-display-weight: var(--fw-extrabold);
+
+  --text-h1-size: 32px;
+  --text-h1-lh: 40px;
+  --text-h1-weight: var(--fw-bold);
+
+  --text-h2-size: 24px;
+  --text-h2-lh: 32px;
+  --text-h2-weight: var(--fw-bold);
+
+  --text-h3-size: 20px;
+  --text-h3-lh: 28px;
+  --text-h3-weight: var(--fw-semibold);
+
+  --text-body-size: 16px;
+  --text-body-lh: 24px;
+  --text-body-weight: var(--fw-regular);
+
+  --text-caption-size: 13px;
+  --text-caption-lh: 18px;
+  --text-caption-weight: var(--fw-regular);
+
+  --text-label-size: 14px;
+  --text-label-lh: 20px;
+  --text-label-weight: var(--fw-semibold);
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em; /* @kind font */
+  --tracking-normal: 0;      /* @kind font */
+  --tracking-wide: 0.04em;   /* @kind font */
+}
+
+/* Convenience classes (optional for consumers) */
+.we36-display { font-family: var(--font-display); font-size: var(--text-display-size); line-height: var(--text-display-lh); font-weight: var(--text-display-weight); letter-spacing: var(--tracking-tight); }
+.we36-h1 { font-family: var(--font-display); font-size: var(--text-h1-size); line-height: var(--text-h1-lh); font-weight: var(--text-h1-weight); letter-spacing: var(--tracking-tight); }
+.we36-h2 { font-family: var(--font-display); font-size: var(--text-h2-size); line-height: var(--text-h2-lh); font-weight: var(--text-h2-weight); }
+.we36-h3 { font-family: var(--font-display); font-size: var(--text-h3-size); line-height: var(--text-h3-lh); font-weight: var(--text-h3-weight); }
+.we36-body { font-family: var(--font-body); font-size: var(--text-body-size); line-height: var(--text-body-lh); font-weight: var(--text-body-weight); }
+.we36-caption { font-family: var(--font-body); font-size: var(--text-caption-size); line-height: var(--text-caption-lh); font-weight: var(--text-caption-weight); color: var(--text-secondary); }
+.we36-label { font-family: var(--font-body); font-size: var(--text-label-size); line-height: var(--text-label-lh); font-weight: var(--text-label-weight); }

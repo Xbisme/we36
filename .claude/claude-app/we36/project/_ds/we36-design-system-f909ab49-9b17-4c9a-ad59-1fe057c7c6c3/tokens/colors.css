@@ -1,0 +1,133 @@
+/* We36 — Color tokens
+   Base palette + tonal scales + semantic aliases for light & dark modes.
+   Principle: surfaces stay neutral & clean; vivid color only on accents. */
+
+:root {
+  /* ---- Brand: Rose (primary) ---- */
+  --rose-50:  #FFF1F3;
+  --rose-100: #FFE0E5;
+  --rose-200: #FFC2CC;
+  --rose-300: #FF94A6;
+  --rose-400: #FF6B82;
+  --rose-500: #FF4E64; /* base */
+  --rose-600: #ED3853;
+  --rose-700: #C72741;
+  --rose-800: #9E1E33;
+  --rose-900: #7A1828;
+
+  /* ---- Accent: Violet ---- */
+  --violet-50:  #F5F1FF;
+  --violet-100: #EBE3FF;
+  --violet-200: #D6C7FF;
+  --violet-300: #B69CFF;
+  --violet-400: #9D7BFA;
+  --violet-500: #8B5CF6; /* base */
+  --violet-600: #7C45EE;
+  --violet-700: #6730D4;
+  --violet-800: #5326A8;
+  --violet-900: #3F1E80;
+
+  /* ---- Accent: Amber ---- */
+  --amber-50:  #FFF8EB;
+  --amber-100: #FFEFCC;
+  --amber-200: #FFDF99;
+  --amber-300: #FFCB5C;
+  --amber-400: #FFB627; /* base */
+  --amber-500: #F59E0B;
+  --amber-600: #D98307;
+  --amber-700: #B36705;
+
+  /* ---- Accent: Mint ---- */
+  --mint-50:  #ECFDF9;
+  --mint-100: #CFFAF0;
+  --mint-200: #9DF3E1;
+  --mint-300: #5FE6CE;
+  --mint-400: #2DD4BF; /* base */
+  --mint-500: #16B6A2;
+  --mint-600: #0E9484;
+  --mint-700: #0B7268;
+
+  /* ---- Neutral ramp ---- */
+  --ink:       #1A1A2E; /* near-black, brand-tinted */
+  --gray-500:  #6B7280;
+  --gray-400:  #9CA3AF;
+  --gray-300:  #D1D5DB;
+  --gray-200:  #E5E7EB;
+  --gray-100:  #F3F4F6;
+  --gray-50:   #F9FAFB;
+  --white:     #FFFFFF;
+
+  /* ---- Status ---- */
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --error:   #EF4444;
+  --info:    #3B82F6;
+  --success-soft: #DCFCE7;
+  --warning-soft: #FEF3C7;
+  --error-soft:   #FEE2E2;
+  --info-soft:    #DBEAFE;
+
+  /* ---- Signature gradient ---- */
+  --gradient-brand: linear-gradient(135deg, #FF4E64 0%, #8B5CF6 100%); /* @kind color */
+  --gradient-brand-soft: linear-gradient(135deg, #FF6B82 0%, #9D7BFA 100%); /* @kind color */
+  --gradient-story: linear-gradient(135deg, #FFB627 0%, #FF4E64 45%, #8B5CF6 100%); /* @kind color */
+}
+
+/* ============ LIGHT MODE (default) ============ */
+:root,
+[data-theme="light"] {
+  --bg-app:        var(--gray-50);
+  --surface:       var(--white);
+  --surface-2:     var(--gray-100);
+  --surface-sunken: var(--gray-100);
+  --surface-inverse: var(--ink);
+
+  --border:        var(--gray-200);
+  --border-strong: var(--gray-300);
+  --divider:       var(--gray-100);
+
+  --text-primary:   var(--ink);
+  --text-secondary: var(--gray-500);
+  --text-tertiary:  var(--gray-400);
+  --text-on-brand:  var(--white);
+  --text-inverse:   var(--white);
+
+  --accent:         var(--rose-500);
+  --accent-hover:   var(--rose-600);
+  --accent-press:   var(--rose-700);
+  --accent-soft:    var(--rose-50);
+
+  --icon:           var(--gray-500);
+  --icon-active:    var(--rose-500);
+
+  --overlay: rgba(26, 26, 46, 0.45);
+}
+
+/* ============ DARK MODE ============ */
+[data-theme="dark"] {
+  --bg-app:        #0E0E1A;
+  --surface:       #1A1A2E;
+  --surface-2:     #24243C;
+  --surface-sunken: #131322;
+  --surface-inverse: var(--white);
+
+  --border:        #2E2E48;
+  --border-strong: #3D3D5C;
+  --divider:       #24243C;
+
+  --text-primary:   #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-tertiary:  #6B7280;
+  --text-on-brand:  var(--white);
+  --text-inverse:   var(--ink);
+
+  --accent:         var(--rose-500);
+  --accent-hover:   var(--rose-400);
+  --accent-press:   var(--rose-300);
+  --accent-soft:    rgba(255, 78, 100, 0.16);
+
+  --icon:           #9CA3AF;
+  --icon-active:    var(--rose-400);
+
+  --overlay: rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>We36 — Responsive (mobile + tablet)</title>
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/colors.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/typography.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/_ds_bundle.js"></script>
+<style>
+  html, body { margin: 0; height: 100%; background: #dcdde2; overflow: hidden; }
+  * { box-sizing: border-box; }
+  .frame-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .frame-scroll { scrollbar-width: none; }
+  @keyframes w36-pop { from { transform: translateY(8px) scale(.99); } to { transform: none; } }
+  @keyframes w36-toast { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .w36-seg { display:flex; gap:2px; background: rgba(26,26,46,.06); padding:3px; border-radius:999px; }
+  .w36-seg button { border:0; background:transparent; padding:7px 14px; border-radius:999px; font-family: var(--font-body); font-size:13px; font-weight:600; color: var(--text-secondary); cursor:pointer; display:flex; align-items:center; gap:6px; }
+  .w36-seg button.on { background:#fff; color: var(--text-primary); box-shadow: 0 1px 3px rgba(26,26,46,.14); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="screens/helpers.jsx"></script>
+<script type="text/babel" src="screens/overlays.jsx"></script>
+<script type="text/babel" src="screens/auth.jsx"></script>
+<script type="text/babel" src="screens/feed.jsx"></script>
+<script type="text/babel" src="screens/explore.jsx"></script>
+<script type="text/babel" src="screens/profile.jsx"></script>
+<script type="text/babel" src="screens/messaging.jsx"></script>
+<script type="text/babel" src="screens/settings.jsx"></script>
+<script type="text/babel" src="screens/tablet.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const MOBILE_SCREENS = {
+  splash: SplashScreen, onboarding: OnboardingScreen, signin: SignInScreen, signup: SignUpScreen, forgot: ForgotScreen, setup: ProfileSetupScreen,
+  home: HomeFeedScreen, explore: ExploreScreen, reels: ReelsScreen, myprofile: MyProfileScreen,
+  story: StoryViewerScreen, createstory: CreateStoryScreen,
+  createpick: CreatePickScreen, createedit: CreateEditScreen, createcaption: CreateCaptionScreen,
+  postdetail: PostDetailScreen, comments: CommentsScreen,
+  search: SearchScreen, results: SearchResultsScreen, hashtag: HashtagScreen,
+  otherprofile: OtherProfileScreen, followers: FollowersScreen, editprofile: EditProfileScreen, collections: CollectionsScreen,
+  dmlist: DMListScreen, chat: ChatScreen, stickers: StickerPickerScreen, newmessage: NewMessageScreen,
+  notifications: NotificationsScreen, settings: SettingsScreen, privacy: PrivacyScreen, report: ReportScreen,
+  actionsheet: ActionSheetScreen, dialog: DialogScreen,
+};
+const TAB_TO_SCREEN = { home: 'home', search: 'explore', reels: 'reels', message: 'dmlist', profile: 'myprofile' };
+const AUTH = new Set(['splash', 'onboarding', 'signin', 'signup', 'forgot', 'setup']);
+
+const DEVICES = {
+  mobile:        { label: 'Mobile',   w: 390,  h: 760,  radius: 38, bezel: 12 },
+  ipadPortrait:  { label: 'iPad ↕',   w: 834,  h: 1112, radius: 26, bezel: 16 },
+  ipadLandscape: { label: 'iPad ↔',   w: 1194, h: 834,  radius: 26, bezel: 16 },
+};
+
+function App() {
+  const [device, setDevice] = React.useState('ipadLandscape');
+  const [stack, setStack] = React.useState(['home']);
+  const [toast, setToast] = React.useState(null);
+  const [scale, setScale] = React.useState(1);
+  const toastTimer = React.useRef();
+
+  const nav = React.useMemo(() => ({
+    go: (k) => setStack((s) => (s[s.length - 1] === k ? s : [...s, k])),
+    back: () => setStack((s) => (s.length > 1 ? s.slice(0, -1) : s)),
+    replace: (k) => setStack((s) => [...s.slice(0, -1), k]),
+    tab: (k) => setStack([TAB_TO_SCREEN[k] || k]),
+    reset: (k) => setStack([k]),
+    toast: (msg) => { setToast(msg); clearTimeout(toastTimer.current); toastTimer.current = setTimeout(() => setToast(null), 2400); },
+  }), []);
+
+  const current = stack[stack.length - 1];
+  const dev = DEVICES[device];
+  const isTablet = dev.w >= 700;
+
+  React.useEffect(() => {
+    if (current === 'splash') { const t = setTimeout(() => nav.replace('onboarding'), 1500); return () => clearTimeout(t); }
+  }, [current]);
+
+  React.useEffect(() => {
+    const fit = () => {
+      const ow = dev.w + dev.bezel * 2, oh = dev.h + dev.bezel * 2;
+      setScale(Math.min(1, (window.innerWidth - 40) / ow, (window.innerHeight - 96) / oh));
+    };
+    fit(); window.addEventListener('resize', fit); return () => window.removeEventListener('resize', fit);
+  }, [device]);
+
+  const { Toast } = window;
+
+  // pick the rendered surface
+  let surface;
+  if (AUTH.has(current)) {
+    const Screen = MOBILE_SCREENS[current];
+    surface = isTablet
+      ? <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-app)' }}>
+          <div style={{ width: 390, height: 760, borderRadius: 28, overflow: 'hidden', boxShadow: '0 24px 60px rgba(26,26,46,.22)' }}><Screen /></div>
+        </div>
+      : <Screen />;
+  } else if (isTablet) {
+    surface = <TabletApp width={dev.w} rightRail={dev.w >= 1100} current={current} />;
+  } else {
+    const Screen = MOBILE_SCREENS[current] || HomeFeedScreen;
+    surface = <Screen />;
+  }
+
+  return (
+    <NavCtx.Provider value={nav}>
+      <div style={{ position: 'fixed', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18, background: '#dcdde2' }}>
+        {/* device switcher */}
+        <div className="w36-seg">
+          {Object.keys(DEVICES).map((k) => (
+            <button key={k} className={k === device ? 'on' : ''} onClick={() => setDevice(k)}>{DEVICES[k].label}</button>
+          ))}
+        </div>
+        {/* device */}
+        <div style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}>
+          <div style={{ padding: dev.bezel, background: '#0b0b14', borderRadius: dev.radius + dev.bezel, boxShadow: '0 30px 80px rgba(26,26,46,.4)' }}>
+            <div key={device} style={{ width: dev.w, height: dev.h, borderRadius: dev.radius, overflow: 'hidden', position: 'relative', background: 'var(--surface)' }}>
+              <div key={current} style={{ position: 'absolute', inset: 0, animation: 'w36-pop .26s cubic-bezier(0.2,0,0,1) both', display: 'flex', flexDirection: 'column' }}>
+                {surface}
+              </div>
+              {toast && (
+                <div style={{ position: 'absolute', left: 0, right: 0, bottom: isTablet ? 28 : 96, display: 'flex', justifyContent: 'center', zIndex: 90, animation: 'w36-toast .24s cubic-bezier(0.2,0,0,1)' }}>
+                  <div style={{ width: isTablet ? 380 : '88%' }}><Toast tone="success">{toast}</Toast></div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </NavCtx.Provider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#1A1A2E"/>
+    <text x="50" y="62" font-family="sans-serif" font-weight="800" font-size="26" fill="url(#g)" text-anchor="middle">We36</text>
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF4E64"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
+  </svg>
+</template>
+</body>
+</html>

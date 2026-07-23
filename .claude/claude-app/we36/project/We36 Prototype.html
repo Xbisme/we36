@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>We36 — Prototype</title>
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/colors.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/typography.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/_ds_bundle.js"></script>
+<style>
+  html, body { margin: 0; height: 100%; background: #e9eaee; overflow: hidden; }
+  * { box-sizing: border-box; }
+  .frame-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .frame-scroll { scrollbar-width: none; }
+  @keyframes w36-pop { from { transform: translateY(8px) scale(.985); } to { transform: none; } }
+  @keyframes w36-toast { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="screens/helpers.jsx"></script>
+<script type="text/babel" src="screens/overlays.jsx"></script>
+<script type="text/babel" src="screens/auth.jsx"></script>
+<script type="text/babel" src="screens/feed.jsx"></script>
+<script type="text/babel" src="screens/explore.jsx"></script>
+<script type="text/babel" src="screens/profile.jsx"></script>
+<script type="text/babel" src="screens/messaging.jsx"></script>
+<script type="text/babel" src="screens/settings.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const SCREENS = {
+  splash: SplashScreen, onboarding: OnboardingScreen, signin: SignInScreen, signup: SignUpScreen, forgot: ForgotScreen, setup: ProfileSetupScreen,
+  home: HomeFeedScreen, explore: ExploreScreen, reels: ReelsScreen, myprofile: MyProfileScreen,
+  story: StoryViewerScreen, createstory: CreateStoryScreen,
+  createpick: CreatePickScreen, createedit: CreateEditScreen, createcaption: CreateCaptionScreen,
+  postdetail: PostDetailScreen, comments: CommentsScreen,
+  search: SearchScreen, results: SearchResultsScreen, hashtag: HashtagScreen,
+  otherprofile: OtherProfileScreen, followers: FollowersScreen, editprofile: EditProfileScreen, collections: CollectionsScreen,
+  dmlist: DMListScreen, chat: ChatScreen, stickers: StickerPickerScreen, newmessage: NewMessageScreen,
+  notifications: NotificationsScreen, settings: SettingsScreen, privacy: PrivacyScreen, report: ReportScreen,
+  actionsheet: ActionSheetScreen, dialog: DialogScreen,
+};
+const TAB_TO_SCREEN = { home: 'home', search: 'explore', reels: 'reels', message: 'dmlist', profile: 'myprofile' };
+const OVERLAYS = { actionsheet: 1, dialog: 1 };
+
+function App() {
+  const [stack, setStack] = React.useState(['splash']);
+  const [toast, setToast] = React.useState(null);
+  const [scale, setScale] = React.useState(1);
+  const toastTimer = React.useRef();
+
+  const nav = React.useMemo(() => ({
+    go: (k) => setStack((s) => (s[s.length - 1] === k ? s : [...s, k])),
+    back: () => setStack((s) => (s.length > 1 ? s.slice(0, -1) : s)),
+    replace: (k) => setStack((s) => [...s.slice(0, -1), k]),
+    tab: (k) => setStack([TAB_TO_SCREEN[k] || k]),
+    reset: (k) => setStack([k]),
+    toast: (msg) => { setToast(msg); clearTimeout(toastTimer.current); toastTimer.current = setTimeout(() => setToast(null), 2400); },
+  }), []);
+
+  const current = stack[stack.length - 1];
+  // an overlay screen paints over the screen beneath it
+  const baseKey = OVERLAYS[current] ? [...stack].reverse().find((k) => !OVERLAYS[k]) : null;
+  const Screen = SCREENS[current] || HomeFeedScreen;
+  const Base = baseKey ? SCREENS[baseKey] : null;
+
+  React.useEffect(() => {
+    if (current === 'splash') { const t = setTimeout(() => nav.replace('onboarding'), 1500); return () => clearTimeout(t); }
+  }, [current]);
+
+  React.useEffect(() => {
+    const fit = () => setScale(Math.min(1, (window.innerHeight - 48) / 760, (window.innerWidth - 32) / 390));
+    fit(); window.addEventListener('resize', fit); return () => window.removeEventListener('resize', fit);
+  }, []);
+
+  const { Toast } = window;
+
+  return (
+    <NavCtx.Provider value={nav}>
+      <div style={{ position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#e9eaee' }}>
+        <div style={{ transform: `scale(${scale})`, transformOrigin: 'center' }}>
+          <div style={{ width: 390, height: 760, borderRadius: 38, overflow: 'hidden', position: 'relative', background: 'var(--surface)', boxShadow: '0 30px 70px rgba(26,26,46,.32)' }}>
+            {Base && <div style={{ position: 'absolute', inset: 0 }}><Base /></div>}
+            <div key={current} style={{ position: 'absolute', inset: 0, animation: 'w36-pop .26s cubic-bezier(0.2,0,0,1) both' }}>
+              <Screen />
+            </div>
+            {toast && (
+              <div style={{ position: 'absolute', left: 14, right: 14, bottom: 96, zIndex: 80, animation: 'w36-toast .24s cubic-bezier(0.2,0,0,1)' }}>
+                <Toast tone="success">{toast}</Toast>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </NavCtx.Provider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#1A1A2E"/>
+    <text x="50" y="62" font-family="sans-serif" font-weight="800" font-size="28" fill="url(#g)" text-anchor="middle">We36</text>
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF4E64"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
+  </svg>
+</template>
+</body>
+</html>

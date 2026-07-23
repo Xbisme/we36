@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>We36 — Screen Mockups</title>
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/colors.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/typography.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/we36-design-system-f909ab49-9b17-4c9a-ad59-1fe057c7c6c3/_ds_bundle.js"></script>
+<style>
+  html, body { margin: 0; height: 100%; background: #e9eaee; }
+  * { box-sizing: border-box; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="screens/helpers.jsx"></script>
+<script type="text/babel" src="screens/overlays.jsx"></script>
+<script type="text/babel" src="screens/auth.jsx"></script>
+<script type="text/babel" src="screens/feed.jsx"></script>
+<script type="text/babel" src="screens/explore.jsx"></script>
+<script type="text/babel" src="screens/profile.jsx"></script>
+<script type="text/babel" src="screens/messaging.jsx"></script>
+<script type="text/babel" src="screens/settings.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const Canvas = window.DesignCanvas, Section = window.DCSection, Artboard = window.DCArtboard;
+const W = 390, H = 760;
+
+const SECTIONS = [
+  { id: 'A', title: 'A · Onboarding & Auth', subtitle: 'Splash, intro, sign in/up, recovery, profile setup', boards: [
+    ['a1', 'Splash', <SplashScreen />],
+    ['a2', 'Onboarding', <OnboardingScreen />],
+    ['a3', 'Sign in', <SignInScreen />],
+    ['a4', 'Sign up', <SignUpScreen />],
+    ['a5', 'Forgot password', <ForgotScreen />],
+    ['a6', 'Profile setup', <ProfileSetupScreen />],
+  ]},
+  { id: 'B', title: 'B · Feed & Content', subtitle: 'Home, stories, reels, create flow, post & comments', boards: [
+    ['b1', 'Home feed', <HomeFeedScreen />],
+    ['b2', 'Story viewer', <StoryViewerScreen />],
+    ['b3', 'Create story', <CreateStoryScreen />],
+    ['b4', 'Reels', <ReelsScreen />],
+    ['b5a', 'Create · pick', <CreatePickScreen />],
+    ['b5b', 'Create · edit', <CreateEditScreen />],
+    ['b5c', 'Create · caption', <CreateCaptionScreen />],
+    ['b6', 'Post detail', <PostDetailScreen />],
+    ['b7', 'Comments', <CommentsScreen />],
+  ]},
+  { id: 'C', title: 'C · Explore & Search', subtitle: 'Explore grid, search, results, hashtag page', boards: [
+    ['c1', 'Explore', <ExploreScreen />],
+    ['c2', 'Search', <SearchScreen />],
+    ['c3', 'Search results', <SearchResultsScreen />],
+    ['c4', 'Hashtag / place', <HashtagScreen />],
+  ]},
+  { id: 'D', title: 'D · Profile', subtitle: 'Own & others, followers, edit, collections', boards: [
+    ['d1', 'My profile', <MyProfileScreen />],
+    ['d2', 'Other profile', <OtherProfileScreen />],
+    ['d3', 'Followers', <FollowersScreen />],
+    ['d4', 'Edit profile', <EditProfileScreen />],
+    ['d5', 'Collections', <CollectionsScreen />],
+  ]},
+  { id: 'E', title: 'E · Messaging', subtitle: 'Conversation list, 1-1 chat & sticker picker', boards: [
+    ['e1', 'DM list', <DMListScreen />],
+    ['e2', 'Chat', <ChatScreen />],
+    ['e3', 'New message', <NewMessageScreen />],
+    ['e4', 'Sticker picker', <StickerPickerScreen />],
+  ]},
+  { id: 'F', title: 'F · Notifications & Settings', subtitle: 'Activity, settings, privacy, report', boards: [
+    ['f1', 'Notifications', <NotificationsScreen />],
+    ['f2', 'Settings', <SettingsScreen />],
+    ['f3', 'Privacy & security', <PrivacyScreen />],
+    ['f4', 'Report / block', <ReportScreen />],
+  ]},
+  { id: 'G', title: 'G · System UI & Overlays', subtitle: 'Toast, dialog, action sheet, sticker tray', boards: [
+    ['g1', 'Toast · in context', <ToastScreen />],
+    ['g2', 'Toast · variants', <ToastVariantsScreen />],
+    ['g3', 'Dialog · confirm', <DialogScreen />],
+    ['g4', 'Action sheet', <ActionSheetScreen />],
+    ['g5', 'Sticker tray', <StickerPickerScreen />],
+  ]},
+];
+
+function App() {
+  return (
+    <Canvas>
+      {SECTIONS.map(s => (
+        <Section key={s.id} id={s.id} title={s.title} subtitle={s.subtitle}>
+          {s.boards.map(([id, label, el]) => <Artboard key={id} id={id} label={label} width={W} height={H}>{el}</Artboard>)}
+        </Section>
+      ))}
+    </Canvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" fill="#1A1A2E"/>
+    <text x="50" y="62" font-family="sans-serif" font-weight="800" font-size="30" fill="url(#g)" text-anchor="middle">We36</text>
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF4E64"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs>
+  </svg>
+</template>
+</body>
+</html>
