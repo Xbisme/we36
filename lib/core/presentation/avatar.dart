@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:we36/core/data/api/dev_media_url.dart';
 import 'package:we36/core/presentation/app_icon.dart';
@@ -41,6 +42,9 @@ class Avatar extends StatelessWidget {
     if (provider is NetworkImage) {
       final url = rewriteLocalhostUrl(provider.url, DevMediaHost.host);
       if (url != provider.url) return NetworkImage(url);
+    } else if (provider is CachedNetworkImageProvider) {
+      final url = rewriteLocalhostUrl(provider.url, DevMediaHost.host);
+      if (url != provider.url) return CachedNetworkImageProvider(url);
     }
     return provider;
   }

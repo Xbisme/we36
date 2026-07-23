@@ -20,6 +20,7 @@ abstract class MeProfile with _$MeProfile {
     String? username,
     String? displayName,
     String? avatarMediaId,
+    String? avatarUrl,
     String? bio,
     String? website,
     String? pronouns,

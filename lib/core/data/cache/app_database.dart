@@ -68,7 +68,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 10;
+  int get schemaVersion => 11;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -115,6 +115,19 @@ class AppDatabase extends _$AppDatabase {
       if (from < 10) {
         // v10 (#013): add the persisted Activity (notifications) feed cache.
         await m.createTable(notifications);
+      }
+      if (from >= 2 && from < 11) {
+        // v11: cache the current user's resolved avatar delivery URL so the
+        // reactive `watchMe` carries it (composer avatar, etc.). Only for DBs
+        // that already had `meProfiles` (v2–v10) without the column — a fresh
+        // `meProfiles` created by the `from < 2` step already includes it.
+        // `addColumn` is not IF-NOT-EXISTS, so guard on the live column set
+        // (also lets the step-wise migration tests run on a full-schema DB).
+        final cols = await customSelect('PRAGMA table_info(me_profiles)').get();
+        final hasAvatarUrl = cols.any((r) => r.data['name'] == 'avatar_url');
+        if (!hasAvatarUrl) {
+          await m.addColumn(meProfiles, meProfiles.avatarUrl);
+        }
       }
     },
   );

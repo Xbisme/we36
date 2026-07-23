@@ -240,6 +240,9 @@ class _PersonRow extends StatelessWidget {
               Avatar(
                 size: 48,
                 image: avatarUrl == null ? null : NetworkImage(avatarUrl),
+                initials: name.isEmpty
+                    ? null
+                    : name.characters.first.toUpperCase(),
                 semanticLabel: name,
               ),
               const SizedBox(width: AppSpacing.md),

@@ -75,9 +75,9 @@ MeProfile _me(String id) => MeProfile(
 
 void main() {
   group('AppDatabase migration harness', () {
-    test('schemaVersion is 10', () {
+    test('schemaVersion is 11', () {
       final db = AppDatabase.forTesting(NativeDatabase.memory());
-      expect(db.schemaVersion, 10);
+      expect(db.schemaVersion, 11);
       addTearDown(db.close);
     });
 

@@ -12,6 +12,7 @@ class MeProfiles extends Table {
   TextColumn get username => text().nullable()();
   TextColumn get displayName => text().nullable()();
   TextColumn get avatarMediaId => text().nullable()();
+  TextColumn get avatarUrl => text().nullable()();
   TextColumn get bio => text().nullable()();
   TextColumn get website => text().nullable()();
   TextColumn get pronouns => text().nullable()();

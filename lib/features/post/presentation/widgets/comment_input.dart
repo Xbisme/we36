@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:we36/core/data/comments/comment.dart';
+import 'package:we36/core/data/me/me_profile.dart';
+import 'package:we36/core/data/me/me_repository.dart';
+import 'package:we36/core/di/injection.dart';
 import 'package:we36/core/presentation/app_icon.dart';
 import 'package:we36/core/presentation/avatar.dart';
 import 'package:we36/core/theme/app_colors_x.dart';
@@ -34,6 +37,11 @@ class CommentInput extends StatefulWidget {
 class _CommentInputState extends State<CommentInput> {
   final _controller = TextEditingController();
   final _focus = FocusNode();
+  // Guarded so widget tests without a configured DI graph don't throw — they
+  // fall back to the gradient placeholder avatar.
+  late final Stream<MeProfile?> _me = getIt.isRegistered<MeRepository>()
+      ? getIt<MeRepository>().watchMe()
+      : const Stream<MeProfile?>.empty();
   bool _sending = false;
 
   bool get _canPost => !_sending && _controller.text.trim().isNotEmpty;
@@ -128,7 +136,23 @@ class _CommentInputState extends State<CommentInput> {
               QuickEmojiRow(onSelect: _insert),
               Row(
                 children: [
-                  const Avatar(size: 32),
+                  StreamBuilder<MeProfile?>(
+                    stream: _me,
+                    builder: (context, snap) {
+                      final me = snap.data;
+                      final url = me?.avatarUrl;
+                      final name = me?.displayName ?? me?.username ?? '';
+                      return Avatar(
+                        size: 32,
+                        image: url == null || !url.startsWith('http')
+                            ? null
+                            : NetworkImage(url),
+                        initials: name.isEmpty
+                            ? null
+                            : name.characters.first.toUpperCase(),
+                      );
+                    },
+                  ),
                   const SizedBox(width: AppSpacing.md),
                   // Design B7: composer is a rounded pill (surface2, r-full, 40h)
                   // holding the field + a trailing sticker glyph.

@@ -739,6 +739,17 @@ class $MeProfilesTable extends MeProfiles
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _avatarUrlMeta = const VerificationMeta(
+    'avatarUrl',
+  );
+  @override
+  late final GeneratedColumn<String> avatarUrl = GeneratedColumn<String>(
+    'avatar_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _bioMeta = const VerificationMeta('bio');
   @override
   late final GeneratedColumn<String> bio = GeneratedColumn<String>(
@@ -841,6 +852,7 @@ class $MeProfilesTable extends MeProfiles
     username,
     displayName,
     avatarMediaId,
+    avatarUrl,
     bio,
     website,
     pronouns,
@@ -897,6 +909,12 @@ class $MeProfilesTable extends MeProfiles
           data['avatar_media_id']!,
           _avatarMediaIdMeta,
         ),
+      );
+    }
+    if (data.containsKey('avatar_url')) {
+      context.handle(
+        _avatarUrlMeta,
+        avatarUrl.isAcceptableOrUnknown(data['avatar_url']!, _avatarUrlMeta),
       );
     }
     if (data.containsKey('bio')) {
@@ -989,6 +1007,10 @@ class $MeProfilesTable extends MeProfiles
         DriftSqlType.string,
         data['${effectivePrefix}avatar_media_id'],
       ),
+      avatarUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}avatar_url'],
+      ),
       bio: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}bio'],
@@ -1036,6 +1058,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
   final String? username;
   final String? displayName;
   final String? avatarMediaId;
+  final String? avatarUrl;
   final String? bio;
   final String? website;
   final String? pronouns;
@@ -1050,6 +1073,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
     this.username,
     this.displayName,
     this.avatarMediaId,
+    this.avatarUrl,
     this.bio,
     this.website,
     this.pronouns,
@@ -1072,6 +1096,9 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
     }
     if (!nullToAbsent || avatarMediaId != null) {
       map['avatar_media_id'] = Variable<String>(avatarMediaId);
+    }
+    if (!nullToAbsent || avatarUrl != null) {
+      map['avatar_url'] = Variable<String>(avatarUrl);
     }
     if (!nullToAbsent || bio != null) {
       map['bio'] = Variable<String>(bio);
@@ -1103,6 +1130,9 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
       avatarMediaId: avatarMediaId == null && nullToAbsent
           ? const Value.absent()
           : Value(avatarMediaId),
+      avatarUrl: avatarUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(avatarUrl),
       bio: bio == null && nullToAbsent ? const Value.absent() : Value(bio),
       website: website == null && nullToAbsent
           ? const Value.absent()
@@ -1129,6 +1159,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
       username: serializer.fromJson<String?>(json['username']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       avatarMediaId: serializer.fromJson<String?>(json['avatarMediaId']),
+      avatarUrl: serializer.fromJson<String?>(json['avatarUrl']),
       bio: serializer.fromJson<String?>(json['bio']),
       website: serializer.fromJson<String?>(json['website']),
       pronouns: serializer.fromJson<String?>(json['pronouns']),
@@ -1148,6 +1179,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
       'username': serializer.toJson<String?>(username),
       'displayName': serializer.toJson<String?>(displayName),
       'avatarMediaId': serializer.toJson<String?>(avatarMediaId),
+      'avatarUrl': serializer.toJson<String?>(avatarUrl),
       'bio': serializer.toJson<String?>(bio),
       'website': serializer.toJson<String?>(website),
       'pronouns': serializer.toJson<String?>(pronouns),
@@ -1165,6 +1197,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
     Value<String?> username = const Value.absent(),
     Value<String?> displayName = const Value.absent(),
     Value<String?> avatarMediaId = const Value.absent(),
+    Value<String?> avatarUrl = const Value.absent(),
     Value<String?> bio = const Value.absent(),
     Value<String?> website = const Value.absent(),
     Value<String?> pronouns = const Value.absent(),
@@ -1181,6 +1214,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
     avatarMediaId: avatarMediaId.present
         ? avatarMediaId.value
         : this.avatarMediaId,
+    avatarUrl: avatarUrl.present ? avatarUrl.value : this.avatarUrl,
     bio: bio.present ? bio.value : this.bio,
     website: website.present ? website.value : this.website,
     pronouns: pronouns.present ? pronouns.value : this.pronouns,
@@ -1201,6 +1235,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
       avatarMediaId: data.avatarMediaId.present
           ? data.avatarMediaId.value
           : this.avatarMediaId,
+      avatarUrl: data.avatarUrl.present ? data.avatarUrl.value : this.avatarUrl,
       bio: data.bio.present ? data.bio.value : this.bio,
       website: data.website.present ? data.website.value : this.website,
       pronouns: data.pronouns.present ? data.pronouns.value : this.pronouns,
@@ -1224,6 +1259,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
           ..write('username: $username, ')
           ..write('displayName: $displayName, ')
           ..write('avatarMediaId: $avatarMediaId, ')
+          ..write('avatarUrl: $avatarUrl, ')
           ..write('bio: $bio, ')
           ..write('website: $website, ')
           ..write('pronouns: $pronouns, ')
@@ -1243,6 +1279,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
     username,
     displayName,
     avatarMediaId,
+    avatarUrl,
     bio,
     website,
     pronouns,
@@ -1261,6 +1298,7 @@ class CachedMeProfile extends DataClass implements Insertable<CachedMeProfile> {
           other.username == this.username &&
           other.displayName == this.displayName &&
           other.avatarMediaId == this.avatarMediaId &&
+          other.avatarUrl == this.avatarUrl &&
           other.bio == this.bio &&
           other.website == this.website &&
           other.pronouns == this.pronouns &&
@@ -1277,6 +1315,7 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
   final Value<String?> username;
   final Value<String?> displayName;
   final Value<String?> avatarMediaId;
+  final Value<String?> avatarUrl;
   final Value<String?> bio;
   final Value<String?> website;
   final Value<String?> pronouns;
@@ -1292,6 +1331,7 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
     this.username = const Value.absent(),
     this.displayName = const Value.absent(),
     this.avatarMediaId = const Value.absent(),
+    this.avatarUrl = const Value.absent(),
     this.bio = const Value.absent(),
     this.website = const Value.absent(),
     this.pronouns = const Value.absent(),
@@ -1308,6 +1348,7 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
     this.username = const Value.absent(),
     this.displayName = const Value.absent(),
     this.avatarMediaId = const Value.absent(),
+    this.avatarUrl = const Value.absent(),
     this.bio = const Value.absent(),
     this.website = const Value.absent(),
     this.pronouns = const Value.absent(),
@@ -1330,6 +1371,7 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
     Expression<String>? username,
     Expression<String>? displayName,
     Expression<String>? avatarMediaId,
+    Expression<String>? avatarUrl,
     Expression<String>? bio,
     Expression<String>? website,
     Expression<String>? pronouns,
@@ -1346,6 +1388,7 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
       if (username != null) 'username': username,
       if (displayName != null) 'display_name': displayName,
       if (avatarMediaId != null) 'avatar_media_id': avatarMediaId,
+      if (avatarUrl != null) 'avatar_url': avatarUrl,
       if (bio != null) 'bio': bio,
       if (website != null) 'website': website,
       if (pronouns != null) 'pronouns': pronouns,
@@ -1364,6 +1407,7 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
     Value<String?>? username,
     Value<String?>? displayName,
     Value<String?>? avatarMediaId,
+    Value<String?>? avatarUrl,
     Value<String?>? bio,
     Value<String?>? website,
     Value<String?>? pronouns,
@@ -1380,6 +1424,7 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
       username: username ?? this.username,
       displayName: displayName ?? this.displayName,
       avatarMediaId: avatarMediaId ?? this.avatarMediaId,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
       bio: bio ?? this.bio,
       website: website ?? this.website,
       pronouns: pronouns ?? this.pronouns,
@@ -1409,6 +1454,9 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
     }
     if (avatarMediaId.present) {
       map['avatar_media_id'] = Variable<String>(avatarMediaId.value);
+    }
+    if (avatarUrl.present) {
+      map['avatar_url'] = Variable<String>(avatarUrl.value);
     }
     if (bio.present) {
       map['bio'] = Variable<String>(bio.value);
@@ -1448,6 +1496,7 @@ class MeProfilesCompanion extends UpdateCompanion<CachedMeProfile> {
           ..write('username: $username, ')
           ..write('displayName: $displayName, ')
           ..write('avatarMediaId: $avatarMediaId, ')
+          ..write('avatarUrl: $avatarUrl, ')
           ..write('bio: $bio, ')
           ..write('website: $website, ')
           ..write('pronouns: $pronouns, ')
@@ -7265,6 +7314,7 @@ typedef $$MeProfilesTableCreateCompanionBuilder =
       Value<String?> username,
       Value<String?> displayName,
       Value<String?> avatarMediaId,
+      Value<String?> avatarUrl,
       Value<String?> bio,
       Value<String?> website,
       Value<String?> pronouns,
@@ -7282,6 +7332,7 @@ typedef $$MeProfilesTableUpdateCompanionBuilder =
       Value<String?> username,
       Value<String?> displayName,
       Value<String?> avatarMediaId,
+      Value<String?> avatarUrl,
       Value<String?> bio,
       Value<String?> website,
       Value<String?> pronouns,
@@ -7324,6 +7375,11 @@ class $$MeProfilesTableFilterComposer
 
   ColumnFilters<String> get avatarMediaId => $composableBuilder(
     column: $table.avatarMediaId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get avatarUrl => $composableBuilder(
+    column: $table.avatarUrl,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7402,6 +7458,11 @@ class $$MeProfilesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get avatarUrl => $composableBuilder(
+    column: $table.avatarUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get bio => $composableBuilder(
     column: $table.bio,
     builder: (column) => ColumnOrderings(column),
@@ -7471,6 +7532,9 @@ class $$MeProfilesTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get avatarUrl =>
+      $composableBuilder(column: $table.avatarUrl, builder: (column) => column);
+
   GeneratedColumn<String> get bio =>
       $composableBuilder(column: $table.bio, builder: (column) => column);
 
@@ -7536,6 +7600,7 @@ class $$MeProfilesTableTableManager
                 Value<String?> username = const Value.absent(),
                 Value<String?> displayName = const Value.absent(),
                 Value<String?> avatarMediaId = const Value.absent(),
+                Value<String?> avatarUrl = const Value.absent(),
                 Value<String?> bio = const Value.absent(),
                 Value<String?> website = const Value.absent(),
                 Value<String?> pronouns = const Value.absent(),
@@ -7551,6 +7616,7 @@ class $$MeProfilesTableTableManager
                 username: username,
                 displayName: displayName,
                 avatarMediaId: avatarMediaId,
+                avatarUrl: avatarUrl,
                 bio: bio,
                 website: website,
                 pronouns: pronouns,
@@ -7568,6 +7634,7 @@ class $$MeProfilesTableTableManager
                 Value<String?> username = const Value.absent(),
                 Value<String?> displayName = const Value.absent(),
                 Value<String?> avatarMediaId = const Value.absent(),
+                Value<String?> avatarUrl = const Value.absent(),
                 Value<String?> bio = const Value.absent(),
                 Value<String?> website = const Value.absent(),
                 Value<String?> pronouns = const Value.absent(),
@@ -7583,6 +7650,7 @@ class $$MeProfilesTableTableManager
                 username: username,
                 displayName: displayName,
                 avatarMediaId: avatarMediaId,
+                avatarUrl: avatarUrl,
                 bio: bio,
                 website: website,
                 pronouns: pronouns,
